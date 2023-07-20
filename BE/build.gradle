@@ -26,14 +26,24 @@ ext {
 }
 
 dependencies {
+	// spring data jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// spring validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// spring web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// spring cloud openfeign
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	// jasypt
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
+	// h2 db
+	runtimeOnly 'com.h2database:h2'
+	// mysql db
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	// spring test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

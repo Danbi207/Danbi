@@ -40,3 +40,6 @@ feign:
       default: # 전역 처리
         connectTimeout: 5000 # 3-way handshake 시간 제한
         readTimeout: 5000
+
+jasypt:
+  password: ${PASSWORD}
