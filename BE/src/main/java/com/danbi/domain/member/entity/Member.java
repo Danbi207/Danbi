@@ -1,6 +1,7 @@
 package com.danbi.domain.member.entity;
 
 import com.danbi.domain.common.BaseEntity;
+import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.constant.OauthType;
 import com.danbi.domain.member.constant.Role;
@@ -53,4 +54,8 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private State state;
+
+    @OneToOne
+    @JoinColumn(name = "guestbook_id")
+    private GuestBook guestBook;
 }
