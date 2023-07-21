@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "jua";
+    src: url("./fonts/BMJUA_ttf.ttf");
+}
+
+*,*::after,*::before{
+    font-family: "jua";
+}
