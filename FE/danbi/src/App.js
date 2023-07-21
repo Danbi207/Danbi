@@ -26,7 +26,7 @@ function App() {
                 <Route
                   key={e.path}
                   path={e.path}
-                  element={<e.compoonent />}
+                  element={<e.component />}
                 />
               );
             })}
