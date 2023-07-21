@@ -1,0 +1,20 @@
+import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { setAccessToken } from "../../store/Slice/userSlice.js";
+import styled from 'styled-components';
+const Login = () => {
+  const accessToken = useSelector((state) => state.user.accessToken);
+  const dispatch = useDispatch();
+  return (
+    <div>
+      <TESTBTN onClick={()=>{dispatch(setAccessToken("TEST"));}}>테스트</TESTBTN>
+      <div>토큰 : {accessToken}</div>
+    </div>
+  )
+}
+const TESTBTN = styled.button`
+  width: 5rem;
+  height: 3rem;
+  background-color: blue;
+`
+export default Login
