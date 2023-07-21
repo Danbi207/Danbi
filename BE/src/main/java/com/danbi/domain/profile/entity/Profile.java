@@ -1,4 +1,4 @@
-package com.danbi.domain.guestbook.entity;
+package com.danbi.domain.profile.entity;
 
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.member.entity.Member;
@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class GuestBook extends BaseEntity {
+public class Profile extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
