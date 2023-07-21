@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { useDispatch,useSelector } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import routes from "./router";
+import {dark,light} from "./style/theme.js";
+import { ThemeProvider } from 'styled-components';
+import { useEffect } from 'react';
+import { getCookie} from './cookie';
+import {setTheme } from "./store/Slice/settingSlice.js";
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    //DO : 쿠키에 저장된 theme을 불러와 redux에 저장
+    const savedTheme = getCookie('theme');
+    dispatch(setTheme(savedTheme));
+  },[dispatch])
+  const themeMode = useSelector((state) => state.setting.theme);
+  const theme = themeMode === 'light' ? light : dark;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            {routes.map((e) => {
+              return (
+                <Route
+                  key={e.path}
+                  path={e.path}
+                  element={<e.component />}
+                />
+              );
+            })}
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 
