@@ -2,7 +2,10 @@ import React from 'react'
 import styled from 'styled-components';
 const Footer = () => {
   return (
-    <FooterWrap>Footer</FooterWrap>
+    <FooterWrap>
+      
+
+    </FooterWrap>
   )
 }
 const FooterWrap = styled.div`
@@ -10,7 +13,7 @@ const FooterWrap = styled.div`
     height: 4rem;
     position: fixed;
     bottom: 0;
-    background-color: red;
+    background-color: black;
     
 `
 export default Footer
