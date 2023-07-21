@@ -5,10 +5,10 @@ server:
 
 spring:
   # 개발 데이터베이스 연결
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/danbi?characterEncoding=UTF-8
-    username: root
-    password:
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/danbi?characterEncoding=UTF-8
+#    username: root
+#    password:
 
   jpa:
     hibernate:
@@ -43,3 +43,14 @@ feign:
 
 jasypt:
   password: ${PASSWORD}
+
+#springdoc swagger
+springdoc:
+  packages-to-scan: com.danbi.api
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
