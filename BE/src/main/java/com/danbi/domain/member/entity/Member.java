@@ -55,7 +55,4 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 30)
     private State state;
 
-    @OneToOne
-    @JoinColumn(name = "guestbook_id")
-    private GuestBook guestBook;
 }
