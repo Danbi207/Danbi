@@ -1,0 +1,57 @@
+package com.danbi.domain.helppost.service;
+
+import com.danbi.domain.helppost.constant.State;
+import com.danbi.domain.helppost.entity.HelpPost;
+import com.danbi.domain.helppost.repository.HelpPostRepository;
+import com.danbi.domain.member.entity.Member;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class HelpPostService {
+
+    private final HelpPostRepository helpPostRepository;
+
+    public HelpPost create(HelpPost helpPost) {
+        return helpPostRepository.save(helpPost);
+    }
+
+    public HelpPost update(Long id, HelpPost helpPost) {
+        HelpPost updatedHelpPost = helpPostRepository.findById(id).get();
+        updatedHelpPost.update(helpPost);
+        return updatedHelpPost;
+    }
+
+    public void delete(Long id) {
+        HelpPost deletedHelpPost = helpPostRepository.findById(id).get();
+        if (deletedHelpPost.getState() == State.ACTIVATE) {
+            deletedHelpPost.delete(State.DELETE);
+        } else {
+            deletedHelpPost.delete(State.ACTIVATE);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<HelpPost> searchMyHelp(Member member) {
+        List<HelpPost> myHelpList = helpPostRepository.findAllByMember(member);
+        return myHelpList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<HelpPost> searchAllList() {
+        List<HelpPost> allHelpList = helpPostRepository.findAllByState(State.ACTIVATE);
+        return allHelpList;
+    }
+
+    @Transactional(readOnly = true)
+    public HelpPost detailHelpPost(Long id) {
+        HelpPost helpPost = helpPostRepository.findById(id).get();
+        return helpPost;
+    }
+
+}
