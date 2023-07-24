@@ -9,10 +9,10 @@ const KaKaoOauth = () => {
       method : "post",
       url : process.env.REACT_APP_KAKAO_OUATH__URI,
       data : {code}
-    }).then(()=>{
-      alert("성공");
-    }).catch(()=>{
-      alert("실패");
+    }).then(({data})=>{
+      console.log(data);
+    }).catch((err)=>{
+      console.log(err);
     });
   },[])
   return (
