@@ -30,10 +30,7 @@ const FooterWrap = styled.div`
     justify-content: center;
     align-items: center;
 `
-const Img = styled.img`
-  width : 48px;
-  height : 48px;
-`
+
 
 
 export default Footer
