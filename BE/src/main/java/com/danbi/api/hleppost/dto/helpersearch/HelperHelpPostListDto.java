@@ -1,10 +1,9 @@
 package com.danbi.api.hleppost.dto.helpersearch;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import javax.persistence.Lob;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,9 +16,10 @@ public class HelperHelpPostListDto {
     private Position position;
     private boolean faceFlag;
     private boolean reservationFlag;
-    @Lob
     private String content;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
     private int totalTime;
     private boolean friendFlag;
