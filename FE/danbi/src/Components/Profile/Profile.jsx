@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Header from '../Common/Header/Header';
 const Profile = () => {
     return(
-        <ProfileWrap>Profile</ProfileWrap>
+        <ProfileWrap><Header></Header>Profile</ProfileWrap>
     )
 }
 
