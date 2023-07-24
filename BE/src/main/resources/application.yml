@@ -44,10 +44,11 @@ feign:
 jasypt:
   password: ${PASSWORD}
 
+# OAuth - KAKAO
 kakao:
   client:
-    id: ENC(lYTapmjJ7a1nPouCHTkGwVn6xZdShj5O84Fy6m8xnYKtOAHU8rXBRAeT6ZjTj6AJ) # REST API 키
-    secret: ENC(kVPZLe5OnASCfn1WLV4B64TwW800F+qXrHIb7W/wkqWLOs5+V9HfQrMTlethgbnU) # 보안 - Client Secret
+    id: ENC(AoNqVDwYDOo8uphRuyhw0eAk9i18yW1ppZqGWe1cBsc06V87gLBMSjHGd9JZsyXv) # REST API 키
+    secret: ENC(VO10nYMY7rGaEqT1yVX5CJSBrNeUJaQo8IjkHnduJKHK7pIsPFcLgDhGqmLE3NiY) # 보안 - Client Secret
 
 #springdoc swagger
 springdoc:
