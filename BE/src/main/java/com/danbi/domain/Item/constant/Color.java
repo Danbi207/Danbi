@@ -1,13 +1,15 @@
 package com.danbi.domain.Item.constant;
 
-import com.danbi.domain.member.constant.Gender;
 
+import lombok.Getter;
+
+@Getter
 public enum Color {
 
     // TODO: Color RGB값 넣기
-    YELLOW("FFFFFF"),
-    BLACK("FFFFFF"),
-    GREEN("FFFFFF")
+    YELLOW("YYYYYY"),
+    BLACK("BBBBBB"),
+    GREEN("GGGGGG")
     ;
 
     public static Color from(String color) {
