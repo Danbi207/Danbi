@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.Map;
 
-@FeignClient(url = "http://192.168.100.83:8080/api/v1", name = "kakaoAccessTokenClient")
+@FeignClient(url = "http://localhost:8080/api/v1", name = "kakaoAccessTokenClient")
 public interface KakaoAccessTokenClient {
 
     @PostMapping(value = "/oauth/login", consumes = "application/json")
