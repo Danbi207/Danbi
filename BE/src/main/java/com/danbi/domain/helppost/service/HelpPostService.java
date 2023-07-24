@@ -8,12 +8,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class HelpPostService {
+
+    @PersistenceContext
+    private final EntityManager em;
 
     private final HelpPostRepository helpPostRepository;
 
@@ -24,6 +29,7 @@ public class HelpPostService {
     public HelpPost update(Long id, HelpPost helpPost) {
         HelpPost updatedHelpPost = helpPostRepository.findById(id).get();
         updatedHelpPost.update(helpPost);
+        em.flush();
         return updatedHelpPost;
     }
 
