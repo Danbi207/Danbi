@@ -42,15 +42,17 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
                 .order(1) // 가장 먼저 인증 인터셉터가 실행
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/oauth/login",
-                        "/api/access-token/issue",
-                        "/api/logout",
-                        "/api/health");
+                .addPathPatterns("/api/v1/**")
+                .excludePathPatterns(
+                        "/api/v1/oauth/kakao/callback",
+                        "/api/v1/oauth/login",
+                        "/api/v1/access-token/issue",
+                        "/api/v1/logout",
+                        "/api/v1/health");
 
         registry.addInterceptor(adminAuthorizationInterceptor)
                 .order(2)
-                .addPathPatterns("/api/admin/**");
+                .addPathPatterns("/api/v1/admin/**");
     }
 
     @Override
