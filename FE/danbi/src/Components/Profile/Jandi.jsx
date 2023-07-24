@@ -1,80 +1,87 @@
-import React from "react";
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const DummyCommitData = [
+  { date: '2023-07-01', count: 40 },
+  { date: '2023-07-02', count: 1 },
+  // 이런식으로 데이터를 구성합니다.
+];
+
+const GrassTile = ({ count }) => {
+  const tileColor =
+    count === 0 ? '#ebedf0' : count <= 3 ? '#9be9a8' : count <= 6 ? '#40c463' : '#30a14e';
+
+  return <Tile color={tileColor} />;
+};
+
+const GrassRow = ({ dates, commitData }) => {
+  return (
+    <Row>
+      {dates.map((date) => {
+        const data = commitData.find((item) => item.date === date);
+        const count = data ? data.count : 0;
+        return <GrassTile key={date} count={count} />;
+      })}
+    </Row>
+  );
+};
+
+const getDaysInMonth = (year, month) => {
+  return new Date(year, month + 1, 0).getDate();
+};
 
 const Jandi = () => {
-    return (
-        <JandiWrap>
-            <JandiHeader>
-                나의 도움을 기록해주세요
-            </JandiHeader>
-            <TableWrap>
-                <JandiTableBefore>
-                {[...Array(35)].map((_, Index) => (
-                    <JandiTr key={Index} />))}
-                </JandiTableBefore>
-                <JandiTableNow>
-                {[...Array(35)].map((_, Index) => (
-                    <JandiTr key={Index} />))}
-                </JandiTableNow>
-            </TableWrap>
-            <JandiFooter>
-                밑에 짜잘한 정보
-            </JandiFooter>
-        </JandiWrap>
-    )
-}
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
 
-const JandiWrap = styled.div`
-    width: 100%;
-    height: auto;
-    margin-top: 1.5rem;
-`
-const JandiHeader = styled.div`
-    font-size: 24px;
-    height: 24px;
-    padding-left: 1rem;
-    margin-bottom: 0.5rem;
-`
+  const daysInMonth = getDaysInMonth(year, month);
+  const startDate = new Date(year, month, 1);
+  const dates = [...Array(daysInMonth)].map((_, index) => {
+    const newDate = new Date(startDate);
+    newDate.setDate(startDate.getDate() + index);
+    return newDate.toISOString().slice(0, 10);
+  });
 
-const JandiTableBefore = styled.div`
-    width: 100%;
-    display: grid;
-    grid-template-rows: repeat(7, 1fr);
-    grid-template-columns: repeat(5, 1fr);
-    border-collapse: collapse; 
-    margin-left: 1rem;
-    justify-items: center;
-    row-gap: 3px;
-`
+  const [commitData, setCommitData] = useState(DummyCommitData);
 
-const JandiTableNow = styled.div`
-    width: 100%;
-    display: grid;
-    grid-template-rows: repeat(7, 1fr);
-    grid-template-columns: repeat(5, 1fr);
-    border-collapse: collapse;
-    margin-right: 1rem;
-    justify-items: center;
-    row-gap: 3px;
-`
+  const weeks = [];
+  for (let i = 0; i < dates.length; i += 7) {
+    weeks.push(dates.slice(i, i + 7));
+  }
 
-const JandiTr = styled.td`
-    display: flex;
-    flex-direction: row;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-`
+  return (
+    <Chart>
+      <ChartHeader>나의 도움을 기록해주세요</ChartHeader>
+      {weeks.map((week, index) => (
+        <GrassRow key={index} dates={week} commitData={commitData} />
+      ))}
+    </Chart>
+  );
+};
 
-const TableWrap = styled.div`
-    display: flex;
-    height: 116px;
-`
+export default Jandi;
 
-const JandiFooter = styled.div`
-    margin-top:0.5rem;
-    padding-left: 1rem;
-    height: auto;
-`
+const Chart = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 1rem 1rem;
+`;
 
-export default Jandi
+const ChartHeader = styled.div`
+  padding-bottom: 1rem;
+`;
+
+const Row = styled.div`
+  display: flex;
+  margin-bottom: 5px;
+`;
+
+const Tile = styled.div`
+  width: 20px;
+  height: 20px;
+  margin: 1px;
+  background-color: ${(props) => props.color};
+  border-radius: 3px;
+`;
