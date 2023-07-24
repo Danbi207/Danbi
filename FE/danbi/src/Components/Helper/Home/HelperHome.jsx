@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import Header from "../../Common/Header/Header.jsx"
-import Footer from "../../Common/Footer/Fppter.jsx"
+import Footer from "../../Common/Footer/Footer.jsx"
 import HelpList from "./HelpList/HelpList.jsx"
 import HelpMap from "./HelpMap/HelpMap.jsx"
 const HelperHome = () => {
