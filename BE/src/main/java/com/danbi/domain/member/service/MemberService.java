@@ -37,4 +37,20 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
+    @Transactional(readOnly = true)
+    public Member findMemberByRefreshToken(String refreshToken) {
+        Member member = memberRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new AuthenticationException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
+        LocalDateTime tokenExpirationTime = member.getTokenExpirationTime();
+        if(tokenExpirationTime.isBefore(LocalDateTime.now())) {
+            throw new AuthenticationException(ErrorCode.REFRESH_TOKEN_EXPIRED);
+        }
+        return member;
+    }
+
+    public Member findMemberByMemberId(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+    }
+
 }
