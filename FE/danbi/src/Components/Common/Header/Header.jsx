@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import NavBar from '../NavBar/NavBar';
 const Header = () => {
   const [navFlag,setNavFlag] = useState(false);
@@ -11,32 +11,88 @@ const Header = () => {
     setAlramFlag(!alramFlag);
   }
   return (
+    <>
     <HeaderWrap>
-      {navFlag ? <NavBarWrap><NavBar setNavFlag={setNavFlag} /></NavBarWrap>:null}
       <Logo onClick={mvHome}></Logo>
       <IconWrap>
         <AlramBtn onClick={toggleAlram}></AlramBtn>
         <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
-        {alramFlag ? <AlramWrap></AlramWrap>:null}
       </IconWrap>
+      <AlramWrap out={alramFlag}></AlramWrap>
     </HeaderWrap>
+    <NavBarWrap out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
+    </>
   )
 }
 const NavBarWrap = styled.div`
   position: absolute;
+  top: 0;
   right: 0;
   width: 25%;
+  height: 100%;
   @media screen and (max-width: 500px) {
     width: 100%;
   }
   z-index: 1;
+  visibility: ${props => props.out ? 'visible' : 'hidden'};
+  animation: ${props => props.out ? fadeIn : fadeOut} 0.5s linear;
+  transition: visibility 0.5s linear;
+  transform-origin : 100% 0 0
+
+  
 `
+const fadeIn = keyframes`
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+`;
+
+const slideIn = keyframes`
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleY(0);
+    opacity: 1;
+  }
+`;
 
 const IconWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 8rem;
-  position: relative;
 `
 
 const AlramBtn = styled.div`
@@ -49,9 +105,15 @@ const AlramWrap = styled.div`
   position: absolute;
   width: 15rem;
   height: 30rem;
-  top: 3rem;
+  bottom: -30rem;
   right: 0;
   background-color: red;
+
+  z-index: 1;
+  visibility: ${props => props.out ? 'visible' : 'hidden'};
+  animation: ${props => props.out ? slideIn : slideOut} 0.5s linear;
+  transition: visibility 0.5s linear;
+  transform-origin : 100% 0 0
 `
 
 const NavBarBtn = styled.div`
@@ -69,6 +131,7 @@ const Logo = styled.div`
   cursor: pointer;
 `
 const HeaderWrap = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;

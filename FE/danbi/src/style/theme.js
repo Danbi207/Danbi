@@ -17,6 +17,9 @@ export const dark ={
     homeFilled : `${process.env.PUBLIC_URL}/assets/Home-Filled-black.svg`,
     profileFiiled : `${process.env.PUBLIC_URL}/assets/Profile-Filled-black.svg`,
 
+    sun : `${process.env.PUBLIC_URL}/assets/Sun-black.svg`,
+    moon : `${process.env.PUBLIC_URL}/assets/Moon-black.svg`,
+    system : `${process.env.PUBLIC_URL}/assets/System-black.svg`,
   }
 } 
 
@@ -38,5 +41,9 @@ export const light ={
     friendsFille : `${process.env.PUBLIC_URL}/assets/Friends-Filled-white .svg`,
     homeFilled : `${process.env.PUBLIC_URL}/assets/Home-Filled-white.svg`,
     profileFiiled : `${process.env.PUBLIC_URL}/assets/Profile-Filled-white.svg`,
+
+    sun : `${process.env.PUBLIC_URL}/assets/Sun-white.svg`,
+    moon : `${process.env.PUBLIC_URL}/assets/Moon-white.svg`,
+    system : `${process.env.PUBLIC_URL}/assets/System-white.svg`,
   }
 }
