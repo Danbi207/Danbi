@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { useEffect } from 'react';
 import { getCookie} from './cookie';
 import {setTheme } from "./store/Slice/settingSlice.js";
+import styled from 'styled-components';
 function App() {
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -18,7 +19,7 @@ function App() {
   const theme = themeMode === 'light' ? light : dark;
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <AppWrap className="App">
         <BrowserRouter>
           <Routes>
             {routes.map((e) => {
@@ -32,9 +33,12 @@ function App() {
             })}
           </Routes>
         </BrowserRouter>
-      </div>
+      </AppWrap>
     </ThemeProvider>
   );
 }
 
+const AppWrap = styled.div`
+  background-color: ${props=>props.theme.colors.bgColor};
+`
 export default App;
