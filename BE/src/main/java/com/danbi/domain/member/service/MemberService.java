@@ -32,4 +32,9 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Member> findMemberByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
 }
