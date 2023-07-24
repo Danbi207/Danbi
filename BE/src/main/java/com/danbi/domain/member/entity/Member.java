@@ -7,6 +7,7 @@ import com.danbi.domain.member.constant.OauthType;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.constant.State;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,13 +25,16 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private OauthType memberType;
+    private OauthType oauthType;
 
     @Column(unique = true, length = 50, nullable = false)
     private String email;
 
     @Column(length = 200)
     private String password;
+
+    @Column(nullable = false, length = 30)
+    private String name;
 
     @Column(nullable = false, length = 30)
     private String nickname;
@@ -55,4 +59,15 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 30)
     private State state;
 
+    @Builder
+    public Member(OauthType oauthType, String email, String password, String name,
+                  Gender gender, String profileUrl, Role role) {
+        this.oauthType = oauthType;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.profileUrl = profileUrl;
+        this.role = role;
+        this.gender = gender;
+    }
 }
