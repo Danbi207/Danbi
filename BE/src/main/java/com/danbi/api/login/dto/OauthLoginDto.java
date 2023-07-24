@@ -11,7 +11,7 @@ public class OauthLoginDto {
     @Getter
     @Setter
     public static class Request {
-        private String memberType;
+        private String oauthType;
     }
 
     @Getter @Setter

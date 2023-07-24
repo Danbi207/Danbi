@@ -28,11 +28,12 @@ public class OauthLoginController {
 
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         AuthorizationHeaderUtils.validateAuthorization(authorizationHeader);
-        oauthValidator.validateMemberType(oauthLoginRequestDto.getMemberType());
+        oauthValidator.validateMemberType(oauthLoginRequestDto.getOauthType());
 
+        // TODO: oauth의 access-token
         String accessToken = authorizationHeader.split(" ")[1]; // kakao에서 받은 accesstoken
         OauthLoginDto.Response jwtTokenResponseDto = oauthLoginService
-                .oauthLogin(accessToken, OauthType.from(oauthLoginRequestDto.getMemberType()));
+                .oauthLogin(accessToken, OauthType.from(oauthLoginRequestDto.getOauthType()));
         return ResponseEntity.ok(jwtTokenResponseDto);
     }
 
