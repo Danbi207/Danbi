@@ -1,15 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../Common/Header/Header';
+import Header  from '../Common/Header/Header.jsx';
+import Footer from '../Common/Footer/Footer.jsx';
+import UserInfo from './UserInfo.jsx';
+import PresetButton from './PresetButton.jsx';
+import Jandi from './Jandi.jsx';
+import GuestBook from './GuestBook.jsx';
+
 const Profile = () => {
     return(
-        <ProfileWrap><Header></Header>Profile</ProfileWrap>
+        <ProfileWrap>
+            <Header />
+            <UserInfo />
+            <PresetButton />
+            <Jandi />
+            <GuestBook/>
+            <Footer />
+        </ProfileWrap>
     )
 }
 
 const ProfileWrap = styled.div`
+    width: 100%;
     background-color: ${props=>props.theme.colors.bgColor};
     color: ${props=>props.theme.colors.titleColor};
+    display: flex;
+    flex-direction: column;
 `
 
 export default Profile
