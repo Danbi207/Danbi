@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { useEffect } from 'react';
 import { getCookie} from './cookie';
 import {setTheme } from "./store/Slice/settingSlice.js";
+import Footer from './Components/Common/Footer/Footer'; 
 function App() {
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -31,6 +32,7 @@ function App() {
               );
             })}
           </Routes>
+          <Footer></Footer>
         </BrowserRouter>
       </div>
     </ThemeProvider>
