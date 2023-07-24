@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
 
-  let [FriendsFlag, setFriendsFlag] = useState(true);
-  let [HomeFlag, setHomeFlag] = useState(true);
-  let [ProfileFlag, setProfileFlag] = useState(false);
+  let [friendsFlag, setFriendsFlag] = useState(false);
+  let [homeFlag, setHomeFlag] = useState(true);
+  let [profileFlag, setProfileFlag] = useState(false);
 
-  useEffect(()=>{
-    console.log(FriendsFlag);
-  },[FriendsFlag])
+  function FriendsClick(){
+    setFriendsFlag(true); setHomeFlag(false); setProfileFlag(false);
+  };
+  function HomeClick(){
+    setFriendsFlag(false); setHomeFlag(true); setProfileFlag(false);
+  };
+  function ProfileClick(){
+    setFriendsFlag(false); setHomeFlag(false); setProfileFlag(true);
+  };
 
   return (
     <FooterWrap>      
-      <FriendsImg onClick={()=>{setFriendsFlag(true); setHomeFlag(false); setProfileFlag(false); navigate("/friends");}}></FriendsImg>
-      <Homeimg onClick={()=>{setFriendsFlag(true); setHomeFlag(true); setProfileFlag(false); navigate("/") }}></Homeimg>
-      <ProfileImg onClick={()=>{setFriendsFlag(true); setHomeFlag(false); setProfileFlag(true); navigate("/profile") }}></ProfileImg>
+      <FriendsImg friendsFlag={friendsFlag} onClick={()=>{FriendsClick(); navigate("/friends")}}></FriendsImg>
+      <Homeimg homeFlag={homeFlag} onClick={()=>{HomeClick(); navigate("/") }}></Homeimg>
+      <ProfileImg profileFlag={profileFlag} onClick={()=>{ProfileClick(); navigate("/profile") }}></ProfileImg>
     </FooterWrap> 
   )
 }
@@ -36,38 +42,24 @@ const Img = styled.div`
   width : 90%;
   height : 90%;
 ` 
-const FriendsImg = styled(Img).attrs((props) => ({
-  style: {
-    backgroundImage: `url(${
-      props.FriendsFlag
-      ? props.theme.images.friendsFilled // 친구목록 페이지 이동시 이미지 URL
-      : props.theme.images.friends // 그외의 친구목록 이미지 URL
-    })`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: '3rem',
-  },
-}))``;
+const FriendsImg = styled(Img)`
+  background-image : url(${props=> props.friendsFlag ? props.theme.images.friendsFilled : props.theme.images.friends});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2.5rem;
+`
 
-const Homeimg = styled(Img).attrs()`
-  background-image : url(${props=>props.theme.images.homeFilled});
+const Homeimg = styled(Img)`
+  background-image : url(${props=> props.homeFlag ? props.theme.images.homeFilled : props.theme.images.home});
   background-repeat: no-repeat;
   background-position: center;
   background-size: 2.5rem;
 `
 const ProfileImg = styled(Img).attrs()`
-  background-image : url(${props=>props.theme.images.profile});
+  background-image : url(${props=> props.profileFlag ? props.theme.images.profileFiiled : props.theme.images.profile});
   background-repeat: no-repeat;
   background-position: center;
   background-size: 2.2rem;
 `
-
-
-
-
-
-
-
-
 
 export default Footer
