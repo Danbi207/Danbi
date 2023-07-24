@@ -56,6 +56,10 @@ public class Help extends BaseEntity {
         this.helpPost = helpPost;
     }
 
+    public void updateHelper(Member member) {
+        this.helper = member;
+    }
+
     public void updateHelperFlag(boolean helperCompleteFlag) {
         this.helperCompleteFlag = helperCompleteFlag;
         if (ipCompleteFlag && helperCompleteFlag) {

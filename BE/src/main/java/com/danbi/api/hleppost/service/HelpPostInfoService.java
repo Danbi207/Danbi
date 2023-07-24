@@ -7,6 +7,9 @@ import com.danbi.api.hleppost.dto.mysearch.HelpPostListDto;
 import com.danbi.api.hleppost.dto.HelpPostRequestDto;
 import com.danbi.api.hleppost.dto.HelpPostResponseDto;
 import com.danbi.api.hleppost.dto.mysearch.MyHelpPostDto;
+import com.danbi.domain.help.constant.State;
+import com.danbi.domain.help.entity.Help;
+import com.danbi.domain.help.service.HelpService;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.member.entity.Member;
@@ -23,10 +26,21 @@ import java.util.List;
 public class HelpPostInfoService {
 
     private final HelpPostService helpPostService;
+    private final HelpService helpService;
 
     public HelpPostResponseDto getHelpPostInfo(Member member, HelpPostRequestDto helpPostRequestDto) {
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
         HelpPost newHelpPost = helpPostService.create(helpPost);
+
+        Help help = Help.builder()
+                .state(State.ACTIVATE)
+                .ipCompleteFlag(false)
+                .helperCompleteFlag(false)
+                .completeFlag(false)
+                .ip(member)
+                .helpPost(newHelpPost).build();
+        helpService.create(help);
+
         return HelpPostResponseDto.of(newHelpPost);
     }
 

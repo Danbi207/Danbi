@@ -5,6 +5,7 @@ import com.danbi.domain.help.entity.Help;
 import com.danbi.domain.help.repository.HelpRepository;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
+import com.danbi.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +18,15 @@ public class HelpService {
     private final HelpPostRepository helpPostRepository;
     private final HelpRepository helpRepository;
 
-    public Help create(Help help) {
-        return helpRepository.save(help);
+    public void create(Help help) {
+        helpRepository.save(help);
+    }
+
+    public Help assignHelper(Long id, Member member) {
+        HelpPost helpPost = helpPostRepository.findById(id).get();
+        Help help = helpRepository.findByHelpPost(helpPost).get();
+        help.updateHelper(member);
+        return help;
     }
 
     public void cancelHelp(Long helpId) {
