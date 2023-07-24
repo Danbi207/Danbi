@@ -1,5 +1,6 @@
 package com.danbi.global.config;
 
+import com.danbi.global.jwt.service.TokenManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,4 +17,8 @@ public class JwtConfig {
     @Value("${token.secret}")
     private String tokenSecret;
 
+    @Bean
+    public TokenManager tokenManager() {
+        return new TokenManager(accessTokenExpirationTime, refreshTokenExpirationTime, tokenSecret);
+    }
 }

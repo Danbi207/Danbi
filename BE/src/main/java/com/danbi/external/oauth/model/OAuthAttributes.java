@@ -23,6 +23,7 @@ public class OAuthAttributes { // 회원 정보 가져올 때 통일시킴
     public Member toMemberEntity(OauthType oauthType, Role role) {
         return Member.builder()
                 .name(name)
+                .nickname(nickname)
                 .email(email)
                 .oauthType(oauthType)
                 .profileUrl(profileUrl)

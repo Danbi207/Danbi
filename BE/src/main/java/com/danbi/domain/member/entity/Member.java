@@ -6,6 +6,8 @@ import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.constant.OauthType;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.constant.State;
+import com.danbi.global.jwt.dto.JwtDto;
+import com.danbi.global.util.DateTimeUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,17 +59,27 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private State state;
+    private State state = State.ACTIVATE;
 
     @Builder
-    public Member(OauthType oauthType, String email, String password, String name,
+    public Member(OauthType oauthType, String email, String password, String name, String nickname,
                   Gender gender, String profileUrl, Role role) {
+        this.name = name;
+        this.nickname = nickname;
         this.oauthType = oauthType;
         this.email = email;
         this.password = password;
-        this.name = name;
         this.profileUrl = profileUrl;
         this.role = role;
         this.gender = gender;
+    }
+
+    public void updateState(String state) {
+        this.state = State.from(state);
+    }
+
+    public void updateRefreshToken(JwtDto jwtTokenDto) {
+        this.refreshToken = jwtTokenDto.getRefreshToken();
+        this.tokenExpirationTime = DateTimeUtils.convertToLocalDateTime(jwtTokenDto.getRefreshTokenExpireTime());
     }
 }

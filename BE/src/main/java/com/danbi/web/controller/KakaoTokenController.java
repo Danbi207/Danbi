@@ -1,22 +1,27 @@
 package com.danbi.web.controller;
 
+import com.danbi.api.login.dto.OauthLoginDto;
+import com.danbi.global.jwt.constant.GrantType;
+import com.danbi.web.client.KakaoAccessTokenClient;
 import com.danbi.web.client.KakaoTokenClient;
+import com.danbi.web.dto.KakaoAccessTokenRequest;
 import com.danbi.web.dto.KakaoAuthRequestDto;
 import com.danbi.web.dto.KakaoTokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
 @RequestMapping("/api/v1/oauth")
 @RequiredArgsConstructor
 public class KakaoTokenController {
 
     private final KakaoTokenClient kakaoTokenClient;
+    private final KakaoAccessTokenClient kakaoAccessTokenClient;
 
     @Value("${kakao.client.id}")
     private String clientId;
@@ -25,7 +30,7 @@ public class KakaoTokenController {
     private String clientSecret;
 
     @PostMapping("/kakao/callback")
-    public @ResponseBody String loginCallback(@RequestBody KakaoAuthRequestDto request) {
+    public ResponseEntity<OauthLoginDto.Response> loginCallback(@RequestBody KakaoAuthRequestDto request) {
         String contentType = "application/x-www-form-urlencoded;charset=utf-8"; // 공식 문서
         KakaoTokenDto.Request kakaoTokenRequestDto = KakaoTokenDto.Request.builder()
                 .client_id(clientId)
@@ -38,7 +43,17 @@ public class KakaoTokenController {
 
         KakaoTokenDto.Response kakaoToken = kakaoTokenClient.requestKakaoToken(contentType, kakaoTokenRequestDto);
 
-        return "kakao token : " + kakaoToken;
+        String kakaoAccessToken = GrantType.BEARER.getType() + " " + kakaoToken.getAccess_token();
+        String kakaoType = "KAKAO";
+
+        KakaoAccessTokenRequest kakaoAccessTokenRequest = KakaoAccessTokenRequest.builder()
+                .oauthType(kakaoType)
+                .build();
+
+        OauthLoginDto.Response response = kakaoAccessTokenClient.requestKakaoUserInfo(kakaoAccessToken,
+                                                                    kakaoAccessTokenRequest);
+
+        return ResponseEntity.ok(response);
     }
 
 }
