@@ -6,6 +6,8 @@ import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.constant.OauthType;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.constant.State;
+import com.danbi.global.jwt.dto.JwtDto;
+import com.danbi.global.util.DateTimeUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -69,5 +71,10 @@ public class Member extends BaseEntity {
         this.profileUrl = profileUrl;
         this.role = role;
         this.gender = gender;
+    }
+
+    public void updateRefreshToken(JwtDto jwtTokenDto) {
+        this.refreshToken = jwtTokenDto.getRefreshToken();
+        this.tokenExpirationTime = DateTimeUtils.convertToLocalDateTime(jwtTokenDto.getRefreshTokenExpireTime());
     }
 }
