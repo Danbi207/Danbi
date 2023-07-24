@@ -21,6 +21,7 @@ public class ItemInfoService {
     private final PointService pointService;
     private final ProfileService profileService;
 
+    // 아이템 뽑기
     public ItemResponseDto pickItem(Member member) { // 토큰으로 멤버 얻었다고 가정
         Profile profileByMember = profileService.getProfileByMember(member);
         Item item = itemService.pickItem(profileByMember);

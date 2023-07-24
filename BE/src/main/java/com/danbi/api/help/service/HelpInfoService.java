@@ -15,20 +15,24 @@ public class HelpInfoService {
 
     private final HelpService helpService;
 
+    // 도움주기(helper)
     public HelpAssignDto assignHelper(Long helpPostId, Member member) {
         Help help = helpService.assignHelper(helpPostId, member);
         return HelpAssignDto.builder()
                 .helpId(help.getId()).build();
     }
 
+    // 도움 주기 취소
     public void cancelHelp(Long helpId) {
         helpService.cancelHelp(helpId);
     }
 
+    // 도움 완료(Ip)
     public void ipCompleteHelp(Long helpId) {
         helpService.ipComplete(helpId);
     }
 
+    // 도움 완료(helper)
     public void helperCompleteHelp(Long helpId) {
         helpService.helperComplete(helpId);
     }

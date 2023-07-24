@@ -27,7 +27,7 @@ public class HelpPostInfoService {
 
     private final HelpPostService helpPostService;
     private final HelpService helpService;
-
+    // 도움 요청 게시글, 도움 생성
     public HelpPostResponseDto getHelpPostInfo(Member member, HelpPostRequestDto helpPostRequestDto) {
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
         HelpPost newHelpPost = helpPostService.create(helpPost);
@@ -44,10 +44,12 @@ public class HelpPostInfoService {
         return HelpPostResponseDto.of(newHelpPost);
     }
 
+    // 도움 요청 삭제
     public void deleteHelpPostInfo(Long id) {
         helpPostService.delete(id);
     }
 
+    // 도움 요청 수정
     public HelpPostResponseDto updateHelpPostInfo(Long helpPostId, Member member,HelpPostRequestDto helpPostRequestDto) {
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
         HelpPost updatedHelpPost = helpPostService.update(helpPostId, helpPost);
