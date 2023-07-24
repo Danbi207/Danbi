@@ -36,6 +36,7 @@ public class OauthLoginService {
         Member oauthMember;
         if(optionalMember.isEmpty()) { // 신규 회원 가입
             oauthMember = userInfo.toMemberEntity(oauthType, Role.ROLE_UNDEFINED);
+
             oauthMember = memberService.registerMember(oauthMember);
         } else { // 기존 회원일 경우
             oauthMember = optionalMember.get();

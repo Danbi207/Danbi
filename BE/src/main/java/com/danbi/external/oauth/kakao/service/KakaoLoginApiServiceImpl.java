@@ -1,5 +1,6 @@
 package com.danbi.external.oauth.kakao.service;
 
+import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.constant.OauthType;
 import com.danbi.external.oauth.kakao.client.KakaoUserInfoClient;
 import com.danbi.external.oauth.kakao.dto.KakaoUserInfoResponseDto;
@@ -36,6 +37,7 @@ public class KakaoLoginApiServiceImpl implements SocialLoginApiService {
                 .name(kakaoAccount.getName())
                 .profileUrl(kakaoAccount.getProfile().getThumbnailImageUrl())
                 .oauthType(OauthType.KAKAO)
+                .gender(Gender.from(kakaoAccount.getGender()))
                 .build();
     }
 }
