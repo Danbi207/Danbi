@@ -35,7 +35,7 @@ public class HelpController {
     @Tag(name = "Help")
     @Operation(summary = "도움 취소 API", description = "도움 취소 API")
     @PostMapping("/{help_id}/cancel")
-    public ResponseEntity<String> cancelHelp(@PathVariable Long help_id) { // FIXME : 후에 help의 helper와 id가 동일한지 검증
+    public ResponseEntity<String> cancelHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
         helpInfoService.cancelHelp(help_id);
         return ResponseEntity.ok("도움 취소 완료하였습니다.");
     }
@@ -43,7 +43,7 @@ public class HelpController {
     @Tag(name = "Help")
     @Operation(summary = "IP 도움 완료 API", description = "IP 도움 완료 API")
     @PostMapping("/success/ip/{help_id}")
-    public ResponseEntity<String> ipCompleteHelp(@PathVariable Long help_id) { // FIXME : 후에 help의 helper와 id가 동일한지 검증
+    public ResponseEntity<String> ipCompleteHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
         helpInfoService.ipCompleteHelp(help_id);
         return ResponseEntity.ok("도움 완료 승인하였습니다.");
     }
@@ -51,7 +51,7 @@ public class HelpController {
     @Tag(name = "Help")
     @Operation(summary = "Helper 도움 완료 API", description = "Helper 도움 완료 API")
     @PostMapping("/success/helper/{help_id}")
-    public ResponseEntity<String> helperCompleteHelp(@PathVariable Long help_id) { // FIXME : 후에 help의 helper와 id가 동일한지 검증
+    public ResponseEntity<String> helperCompleteHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
         helpInfoService.helperCompleteHelp(help_id);
         return ResponseEntity.ok("도움 완료 승인하였습니다.");
     }

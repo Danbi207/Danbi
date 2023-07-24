@@ -13,6 +13,7 @@ import com.danbi.domain.help.service.HelpService;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,13 @@ public class HelpPostInfoService {
 
     private final HelpPostService helpPostService;
     private final HelpService helpService;
+    private final MemberService memberService;
+
     // 도움 요청 게시글, 도움 생성
-    public HelpPostResponseDto getHelpPostInfo(Member member, HelpPostRequestDto helpPostRequestDto) {
+    public HelpPostResponseDto getHelpPostInfo(Long memberId, HelpPostRequestDto helpPostRequestDto) {
+
+        Member member = memberService.findMemberByMemberId(memberId);
+
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
         HelpPost newHelpPost = helpPostService.create(helpPost);
 
@@ -45,18 +51,29 @@ public class HelpPostInfoService {
     }
 
     // 도움 요청 삭제
-    public void deleteHelpPostInfo(Long id) {
-        helpPostService.delete(id);
+    public void deleteHelpPostInfo(Long helpPostId, Long memberId) {
+
+        HelpPost helpPost = helpPostService.getHelpPost(helpPostId);
+        if (helpPost.getMember().getId().equals(helpPostId)) {
+            helpPostService.delete(helpPostId);
+        }
+
     }
 
     // 도움 요청 수정
-    public HelpPostResponseDto updateHelpPostInfo(Long helpPostId, Member member,HelpPostRequestDto helpPostRequestDto) {
+    public HelpPostResponseDto updateHelpPostInfo(Long helpPostId, Long memberId,HelpPostRequestDto helpPostRequestDto) {
+
+        Member member = memberService.findMemberByMemberId(memberId);
+
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
         HelpPost updatedHelpPost = helpPostService.update(helpPostId, helpPost);
         return HelpPostResponseDto.of(updatedHelpPost);
     }
 
-    public MyHelpPostDto searchMyHelpPost(Member member) {
+    public MyHelpPostDto searchMyHelpPost(Long memberId) {
+
+        Member member = memberService.findMemberByMemberId(memberId);
+
         List<HelpPost> helpPosts = helpPostService.searchMyHelp(member);
         List<HelpPostListDto> helpList = new ArrayList<>();
         for (HelpPost helpPost : helpPosts) {
@@ -89,7 +106,7 @@ public class HelpPostInfoService {
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
                     .totalTime(helpPost.getTotalTime())
-                    .friendFlag(false).build(); // FIXME : 친구관계 후에 수정
+                    .friendFlag(false).build(); // TODO : 친구관계 후에 수정
             helpList.add(post);
         }
         return HelperResponseDto.builder()
@@ -110,7 +127,7 @@ public class HelpPostInfoService {
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
                 .totalTime(helpPost.getTotalTime())
-                .friendFlag(false).build();
+                .friendFlag(false).build(); // TODO : 친구관계 후에 수정
         return detail;
     }
 }
