@@ -42,6 +42,10 @@ public class HelpPostService {
         }
     }
 
+    public HelpPost getHelpPost(Long helpPostId) {
+        return helpPostRepository.findById(helpPostId).get();
+    }
+
     @Transactional(readOnly = true)
     public List<HelpPost> searchMyHelp(Member member) {
         List<HelpPost> myHelpList = helpPostRepository.findAllByMember(member);

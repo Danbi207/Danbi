@@ -23,7 +23,7 @@ public class ItemController {
 
     @Tag(name = "Item")
     @Operation(summary = "아이템 뽑기 API", description = "아이템 뽑기 API")
-    @PostMapping("")  // FIXME : 후에 토큰을 통한 유저정보 얻기 수정
+    @PostMapping("")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
     public ResponseEntity<ItemResponseDto> getAccumulatePoint(Member member) {
         ItemResponseDto itemResponseDto = itemInfoService.pickItem(member);
         return ResponseEntity.ok(itemResponseDto);
