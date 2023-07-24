@@ -5,7 +5,7 @@ const PresetButton = () => {
     return (
         <PresetBtnWrap>
             <Btn>
-                EditButton
+                프리셋 설정
             </Btn>
         </PresetBtnWrap>
     )
@@ -13,7 +13,7 @@ const PresetButton = () => {
 
 const PresetBtnWrap = styled.div`
     width: 100%;
-    height: 2rem;
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,6 +25,7 @@ const Btn = styled.button`
     border-radius: 5px;
     color: black;
     background-color: white;
+    font-size: 17px;
 `
 
 export default PresetButton

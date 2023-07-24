@@ -41,13 +41,16 @@ const UserDetail = styled.div`
 `
 
 const ProfileImage = styled.img`
-    width: 2rem;
+    width: 3rem;
     height: 2rem;
     border-radius: 50%;
 `
 
 const UserName = styled.div`
-    margin-left: 0.25rem;
+    margin: 0 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const ChatSection = styled.div`

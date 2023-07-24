@@ -23,7 +23,7 @@ const UserInfoWrap = styled.div`
 
 const ProfileImage = styled.img`
     height: 6rem;
-    width: 6rem;
+    width: 7rem;
     border-radius: 50%;
 `
 
@@ -36,9 +36,11 @@ const UserDetail = styled.div`
 `
 
 const UserName = styled.div`
+    margin-left: 4.3rem;
     font-size: 17px;
     height: 1rem;
-    text-align: center;
+    text-align: start;
+    margin-bottom: 0.75rem;
 `
 
 const PlusButton = styled.button`
