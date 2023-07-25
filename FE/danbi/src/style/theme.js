@@ -2,6 +2,7 @@ export const dark ={
   colors:{
     titleColor : '#FFFFFF',
     bgColor: '#19191B',
+    boxColor: '#E3E3E3',
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-black.svg`,
@@ -27,6 +28,7 @@ export const light ={
   colors:{
     titleColor : '#19191B',
     bgColor: '#FFFFFF', 
+    boxColor: '#E3E3E3',
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,
