@@ -25,7 +25,6 @@ public class HelpController {
 
     private final HelpInfoService helpInfoService;
 
-    @Tag(name = "Help")
     @Operation(summary = "도움 헬퍼 배정 API", description = "도움 헬퍼 배정 API")
     @PostMapping("/{helppost_id}/start")
     public ResponseEntity<HelpAssignDto> assignHelper(@PathVariable Long helppost_id, @MemberInfo MemberInfoDto memberInfoDto) {
@@ -34,7 +33,6 @@ public class HelpController {
     }
 
 
-    @Tag(name = "Help")
     @Operation(summary = "도움 취소 API", description = "도움 취소 API")
     @PostMapping("/{help_id}/cancel")
     public ResponseEntity<String> cancelHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
@@ -42,7 +40,6 @@ public class HelpController {
         return ResponseEntity.ok("도움 취소 완료하였습니다.");
     }
 
-    @Tag(name = "Help")
     @Operation(summary = "IP 도움 완료 API", description = "IP 도움 완료 API")
     @PostMapping("/success/ip/{help_id}")
     public ResponseEntity<String> ipCompleteHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
@@ -50,7 +47,6 @@ public class HelpController {
         return ResponseEntity.ok("도움 완료 승인하였습니다.");
     }
 
-    @Tag(name = "Help")
     @Operation(summary = "Helper 도움 완료 API", description = "Helper 도움 완료 API")
     @PostMapping("/success/helper/{help_id}")
     public ResponseEntity<String> helperCompleteHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증

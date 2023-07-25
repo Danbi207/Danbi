@@ -23,7 +23,6 @@ public class PointController {
 
     private final PointInfoService pointInfoService;
 
-    @Tag(name = "Point")
     @Operation(summary = "누적 포인트 조회 API", description = "누적 포인트 조회 API")
     @PostMapping("/{profile_id}")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
     public ResponseEntity<AccumulatePointResponseDto> getAccumulatePoint(@PathVariable Long profile_id) {
@@ -31,7 +30,6 @@ public class PointController {
         return ResponseEntity.ok(accumulatePoint);
     }
 
-    @Tag(name = "Point")
     @Operation(summary = "현재 포인트 조회 API", description = "현재 포인트 조회 API")
     @PostMapping("")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
     public ResponseEntity<PointResponseDto> getPoint(@PathVariable Long profile_id) {

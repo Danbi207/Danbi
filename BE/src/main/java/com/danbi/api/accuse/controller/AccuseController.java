@@ -2,6 +2,9 @@ package com.danbi.api.accuse.controller;
 
 import com.danbi.api.accuse.dto.accuse.AccuseRequestDto;
 import com.danbi.api.accuse.dto.accuse.AccuseResponseDto;
+import com.danbi.api.accuse.dto.detail.AccuseDetailResponseDto;
+import com.danbi.api.accuse.dto.myAccuse.MyAccuseListDto;
+import com.danbi.api.accuse.dto.myAccuseStack.MyAccuseStackListDto;
 import com.danbi.api.accuse.service.AccuseInfoService;
 import com.danbi.global.resolver.MemberInfo;
 import com.danbi.global.resolver.MemberInfoDto;
@@ -28,16 +31,30 @@ public class AccuseController {
 
     @Operation(summary = "회원 신고 취소 API", description = "회원 신고 취소 API")
     @PostMapping("/cancel/{accuse_id}") // TODO : 후에 신고자와 취소자 동일한지 검증 필요
-    public ResponseEntity<String> cancelAccuse(@PathVariable Long accuse_id ,@MemberInfo MemberInfoDto memberInfoDto, @RequestBody AccuseRequestDto accuseRequestDto) {
+    public ResponseEntity<String> cancelAccuse(@PathVariable Long accuse_id ,@MemberInfo MemberInfoDto memberInfoDto) {
         accuseInfoService.cancelAccuse(accuse_id);
         return ResponseEntity.ok("신고 성공 하였습니다.");
     }
 
     @Operation(summary = "내가 신고한 목록 조회 API", description = "내가 신고한 목록 조회 API")
-    @PostMapping("/history") //
-    public ResponseEntity<String> myAccuseList(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody AccuseRequestDto accuseRequestDto) {
+    @GetMapping("/history")
+    public ResponseEntity<MyAccuseListDto> myAccuseList(@MemberInfo MemberInfoDto memberInfoDto) {
+        MyAccuseListDto myAccuseListDto = accuseInfoService.myAccuseList(memberInfoDto.getMemberId());
+        return ResponseEntity.ok(myAccuseListDto);
+    }
 
-        return ResponseEntity.ok("신고 성공 하였습니다.");
+    @Operation(summary = "내가 신고당한 목록 조회 API", description = "내가 신고당한 목록 조회 API")
+    @GetMapping("/score")
+    public ResponseEntity<MyAccuseStackListDto> myAccuseStackList(@MemberInfo MemberInfoDto memberInfoDto) {
+        MyAccuseStackListDto myAccuseStackListDto = accuseInfoService.myAccuseStackList(memberInfoDto.getMemberId());
+        return ResponseEntity.ok(myAccuseStackListDto);
+    }
+
+    @Operation(summary = "신고 상세 조회 API", description = "신고 상세 조회 API")
+    @GetMapping("/{accuse_id}}")
+    public ResponseEntity<AccuseDetailResponseDto> detailAccuse(@PathVariable Long accuse_id) {
+        AccuseDetailResponseDto accuseDetailResponseDto = accuseInfoService.detailAccuse(accuse_id);
+        return ResponseEntity.ok(accuseDetailResponseDto);
     }
 
 }
