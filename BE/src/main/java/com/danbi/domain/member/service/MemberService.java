@@ -3,6 +3,7 @@ package com.danbi.domain.member.service;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
+import com.danbi.domain.profile.entity.Profile;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.AuthenticationException;
 import com.danbi.global.error.exception.BusinessException;
@@ -28,7 +29,13 @@ public class MemberService {
                 .member(member)
                 .build();
 
+        Profile profile = Profile.builder()
+                .member(member)
+                .build();
+
         member.makeGuestBook(guestBook);
+        member.makeProfile(profile);
+
         return memberRepository.save(member);
     }
 
