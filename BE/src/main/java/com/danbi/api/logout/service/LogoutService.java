@@ -1,5 +1,6 @@
 package com.danbi.api.logout.service;
 
+import com.danbi.api.fcm.service.FcmService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
@@ -21,7 +22,9 @@ public class LogoutService {
 
     private final MemberService memberService;
     private final TokenManager tokenManager;
+    private final FcmService fcmService;
     private final RedisUtil redisUtil;
+
 
     public void logout(String accessToken) {
 
@@ -40,9 +43,14 @@ public class LogoutService {
         Member member = memberService.findMemberByMemberId(memberId);
         member.expireRefreshToken(LocalDateTime.now());
 
+
+        // TODO 4. FCM토큰 삭제
+//        fcmService.deleteToken(member.getEmail());
+
         // 4. redis에 black-list 등록
         Long tokenExpiration = tokenManager.getTokenExpiration(accessToken);
         redisUtil.setBlackList(accessToken, "access-token", tokenExpiration);
+
     }
 
 }

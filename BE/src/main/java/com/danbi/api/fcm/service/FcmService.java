@@ -4,11 +4,14 @@ import com.danbi.api.fcm.client.FcmClient;
 import com.danbi.api.fcm.dto.FcmMessage;
 import com.danbi.api.fcm.dto.NotificationRequest;
 import com.danbi.api.fcm.repository.FcmTokenRepository;
+import com.danbi.domain.member.entity.Member;
+import com.danbi.domain.member.service.MemberService;
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.jwt.constant.GrantType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.messaging.FirebaseMessaging;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -25,11 +28,12 @@ public class FcmService {
     private final FcmTokenRepository fcmTokenRepository;
     private final FcmClient fcmClient;
     private final ObjectMapper objectMapper;
+    private final MemberService memberService;
     private final String CONTENT_TYPE = "application/x-www-form-urlencoded;charset=utf8";
 
-
-    public void saveToken(String email, String token) {
-        fcmTokenRepository.saveToken(email, token);
+    public void saveToken(Long memberId, String token) {
+        Member member = memberService.findMemberByMemberId(memberId);
+        fcmTokenRepository.saveToken(member.getEmail(), token);
     }
 
     public void deleteToken(String email) {
@@ -44,9 +48,13 @@ public class FcmService {
         return fcmTokenRepository.getToken(email);
     }
 
-    public void sendMessageTo(String targetToken, String title, String body) throws IOException {
+    public void sendMessageTo(NotificationRequest notificationRequest) throws IOException {
+        if(!hasKey(notificationRequest.getEmail())){
+            throw new BusinessException(ErrorCode.NOT_EXIST_FCM_TOKEN);
+        }
 
-        String message = makeMessage(targetToken, title, body);
+        String targetToken = getToken(notificationRequest.getEmail());
+        String message = makeMessage(targetToken, notificationRequest.getTitle(), notificationRequest.getMessage());
         fcmClient.sendDataMessage(CONTENT_TYPE,
                 GrantType.BEARER.getType() + " " + getAccessToken(),message);
     }

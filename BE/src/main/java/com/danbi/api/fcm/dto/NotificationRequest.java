@@ -11,12 +11,12 @@ public class NotificationRequest {
 
     private String title;
     private String message;
-    private String token;
+    private String email;
 
     @Builder
-    public NotificationRequest(String title, String message, String token) {
+    public NotificationRequest(String title, String message, String email) {
         this.title = title;
         this.message = message;
-        this.token = token;
+        this.email = email;
     }
 }
