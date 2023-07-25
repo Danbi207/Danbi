@@ -1,17 +1,49 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback,useEffect, useRef } from 'react'
 import styled from 'styled-components';
-const HelpMap = (props) => {
+import axios from 'axios';
+import { useState } from 'react';
+const HelpMap = () => {
   const {kakao} = window;
   const mapRef = useRef();
-  useEffect(()=>{
+  const [helpList,setHelpList] = useState([]);
+  const [map,setMap] = useState(null);
+  const initkakao = useCallback((position)=>{
+    //DO : 카카오 맵 초기설정
     const mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+      center: new kakao.maps.LatLng(position.coords.latitude,position.coords.longitude), // 지도의 중심좌표
+      level: 3 // 지도의 확대 레벨
     };
+    setMap(new kakao.maps.Map(mapRef.current, mapOption));
+  },[kakao,mapRef]);
 
-    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-    const map = new kakao.maps.Map(mapRef.current, mapOption); 
-  },[mapRef,kakao])
+  useEffect(() => {
+    //DO : gps 현재 위치 얻기
+    if (navigator.geolocation) { // GPS를 지원하면
+      navigator.geolocation.getCurrentPosition(function(position) {
+        initkakao(position);
+      }, function(error) {
+        console.error(error);
+      }, {
+        enableHighAccuracy: false,
+        maximumAge: 0,
+        timeout: Infinity
+      });
+    } else {
+      alert('GPS를 지원하지 않습니다');
+    }
+  }, [initkakao]);
+
+  useEffect(()=>{
+    axios({
+      method:"get",
+      url:`${process.env.PUBLIC_URL}/json/helpList.json`
+    }).then(({data})=>setHelpList(data.help_list)).catch((err)=>console.log(err));
+  },[]);
+
+  useEffect(()=>{
+    
+  },[helpList]);
+
   return (
     <HelpMapWrap>
       <MapWrap ref={mapRef}></MapWrap>
