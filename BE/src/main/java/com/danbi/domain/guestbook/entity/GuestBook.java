@@ -3,6 +3,7 @@ package com.danbi.domain.guestbook.entity;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.member.entity.Member;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,14 @@ public class GuestBook extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public GuestBook(Long id, Member member) {
+        this.id = id;
+        this.member = member;
+    }
+
+    public void assignMember(Member member) {
+        this.member = member;
+    }
 }

@@ -61,6 +61,9 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 30)
     private State state = State.ACTIVATE;
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private GuestBook guestBook;
+
     @Builder
     public Member(OauthType oauthType, String email, String password, String name, String nickname,
                   Gender gender, String profileUrl, Role role) {
@@ -85,5 +88,10 @@ public class Member extends BaseEntity {
 
     public void expireRefreshToken(LocalDateTime now) {
         this.tokenExpirationTime = now;
+    }
+
+    public void makeGuestBook(GuestBook guestBook) {
+        this.guestBook = guestBook;
+        guestBook.assignMember(this);
     }
 }

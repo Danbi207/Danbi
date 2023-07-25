@@ -1,5 +1,6 @@
 package com.danbi.domain.member.service;
 
+import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
 import com.danbi.global.error.ErrorCode;
@@ -22,6 +23,12 @@ public class MemberService {
 
     public Member registerMember(Member member) {
         validateDuplicateMember(member);
+
+        GuestBook guestBook = GuestBook.builder()
+                .member(member)
+                .build();
+
+        member.makeGuestBook(guestBook);
         return memberRepository.save(member);
     }
 
