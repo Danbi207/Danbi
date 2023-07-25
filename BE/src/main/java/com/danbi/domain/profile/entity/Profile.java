@@ -3,6 +3,7 @@ package com.danbi.domain.profile.entity;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.member.entity.Member;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +18,17 @@ public class Profile extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Profile(Long id, Member member) {
+        this.id = id;
+        this.member = member;
+    }
+
+    public void assignMember(Member member) {
+        this.member = member;
+    }
 }
