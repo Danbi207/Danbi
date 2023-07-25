@@ -1,19 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from 'styled-components';
+import PresetModal from './PresetModal.jsx';
 
 const PresetButton = () => {
+
+    const [ModalOpen, setModalOpen] = useState(false);
+    const showModal = () => {
+        setModalOpen(true);
+    };
     return (
         <PresetBtnWrap>
-            <Btn>
+            <Btn onClick={showModal}>
                 프리셋 설정
             </Btn>
+            {ModalOpen && <PresetModal state={ModalOpen} />}
         </PresetBtnWrap>
     )
 }
 
 const PresetBtnWrap = styled.div`
     width: 100%;
-    height: 4rem;
+    height: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
