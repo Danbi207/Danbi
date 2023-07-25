@@ -15,8 +15,9 @@ public class FcmController {
 
     private final FcmService fcmService;
 
+    //TODO 이메일 등록
     @PostMapping("/token")
-    public String registToken(String token) {
+    public String registerToken(String token) {
         fcmService.saveToken("user1",token);
         return "'"+token+"'" ;
     }

@@ -49,6 +49,7 @@ public class FcmService {
         String message = makeMessage(targetToken, title, body);
         fcmClient.sendDataMessage(CONTENT_TYPE,
                 GrantType.BEARER.getType() + " " + getAccessToken(),message);
+//                GrantType.BEARER.getType() + " " + targetToken,message);
     }
 
     //FCM에 push 요청을 보낼 때 인증을 위해 Header에 포함시킬 AccessToken 생성
