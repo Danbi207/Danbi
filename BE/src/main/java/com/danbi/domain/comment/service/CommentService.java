@@ -18,4 +18,8 @@ public class CommentService {
         return commentRepository.findCommentsByGuestBook(guestBook);
     }
 
+    public Comment saveComment(Comment comment) {
+        return commentRepository.save(comment);
+    }
+
 }

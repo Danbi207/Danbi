@@ -32,7 +32,7 @@ public class OauthLoginService {
         log.info("userInfo : {}",  userInfo);
 
         JwtDto jwtTokenDto;
-        Optional<Member> optionalMember = memberService.findMemberByEmail(userInfo.getEmail());
+        Optional<Member> optionalMember = memberService.findByEmail(userInfo.getEmail());
         Member oauthMember;
         if(optionalMember.isEmpty()) { // 신규 회원 가입
             oauthMember = userInfo.toMemberEntity(oauthType, Role.ROLE_UNDEFINED);

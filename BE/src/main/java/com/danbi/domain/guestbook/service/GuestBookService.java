@@ -16,6 +16,16 @@ public class GuestBookService {
 
     private final GuestBookRepository guestBookRepository;
 
+    public GuestBook getGuestBookById(Long id) {
+        Optional<GuestBook> op = guestBookRepository.findById(id);
+
+        if(op.isEmpty()) {
+            throw new GuestBookNotFoundException(ErrorCode.GUESTBOOK_NOT_EXISTS);
+        }
+
+        return op.get();
+    }
+
     public GuestBook getGuestBookByMember(Member member) {
         Optional<GuestBook> op = guestBookRepository.getGuestBookByMember(member);
 
