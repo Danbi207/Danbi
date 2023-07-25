@@ -6,6 +6,7 @@ import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.constant.OauthType;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.constant.State;
+import com.danbi.domain.profile.entity.Profile;
 import com.danbi.global.jwt.dto.JwtDto;
 import com.danbi.global.util.DateTimeUtils;
 import lombok.AccessLevel;
@@ -64,6 +65,9 @@ public class Member extends BaseEntity {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private GuestBook guestBook;
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private Profile profile;
+
     @Builder
     public Member(OauthType oauthType, String email, String password, String name, String nickname,
                   Gender gender, String profileUrl, Role role) {
@@ -93,5 +97,10 @@ public class Member extends BaseEntity {
     public void makeGuestBook(GuestBook guestBook) {
         this.guestBook = guestBook;
         guestBook.assignMember(this);
+    }
+
+    public void makeProfile(Profile profile) {
+        this.profile = profile;
+        profile.assignMember(this);
     }
 }
