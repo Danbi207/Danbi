@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components';
-const HelpMap = () => {
+const HelpMap = (props) => {
   const {kakao} = window;
   const mapRef = useRef();
   useEffect(()=>{
@@ -13,9 +13,17 @@ const HelpMap = () => {
     const map = new kakao.maps.Map(mapRef.current, mapOption); 
   },[mapRef,kakao])
   return (
-    <MapWrap id='map' ref={mapRef}>HelpMap</MapWrap>
+    <HelpMapWrap>
+      <MapWrap ref={mapRef}></MapWrap>
+    </HelpMapWrap>
   )
 }
+
+const HelpMapWrap = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`
 const MapWrap = styled.div`
   width: 100%;
   height: 100%;
