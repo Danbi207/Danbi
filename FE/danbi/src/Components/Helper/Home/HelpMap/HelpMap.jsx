@@ -42,14 +42,17 @@ const HelpMap = () => {
 
   useEffect(()=>{
     //DO : 도움리스트를 조회하여 마커로 등록
-    helpList.forEach(help=>{
+    helpList.forEach((help,idx)=>{
       const markerPosition  = new kakao.maps.LatLng(help.position.latitude, help.position.longitude); 
 
       // 마커를 생성합니다
       const marker = new kakao.maps.Marker({
         position: markerPosition,
-        title:help.content
+        clickable:true
       });
+
+      kakao.maps.event.addListener(marker, 'click', ()=>{console.log(helpList[idx])});
+
       marker.setMap(map);
     });
   },[helpList,kakao,map]);
