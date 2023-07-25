@@ -11,7 +11,7 @@ const HelpMap = () => {
     //DO : 카카오 맵 초기설정
     const mapOption = { 
       center: new kakao.maps.LatLng(position.coords.latitude,position.coords.longitude), // 지도의 중심좌표
-      level: 3 // 지도의 확대 레벨
+      level: 5 // 지도의 확대 레벨
     };
     setMap(new kakao.maps.Map(mapRef.current, mapOption));
   },[kakao,mapRef]);
@@ -35,14 +35,24 @@ const HelpMap = () => {
 
   useEffect(()=>{
     axios({
-      method:"get",
+      method:"get",//backend와 연결시 post로 변경
       url:`${process.env.PUBLIC_URL}/json/helpList.json`
     }).then(({data})=>setHelpList(data.help_list)).catch((err)=>console.log(err));
   },[]);
 
   useEffect(()=>{
-    
-  },[helpList]);
+    //DO : 도움리스트를 조회하여 마커로 등록
+    helpList.forEach(help=>{
+      const markerPosition  = new kakao.maps.LatLng(help.position.latitude, help.position.longitude); 
+
+      // 마커를 생성합니다
+      const marker = new kakao.maps.Marker({
+        position: markerPosition,
+        title:help.content
+      });
+      marker.setMap(map);
+    });
+  },[helpList,kakao,map]);
 
   return (
     <HelpMapWrap>
@@ -59,6 +69,5 @@ const HelpMapWrap = styled.div`
 const MapWrap = styled.div`
   width: 100%;
   height: 100%;
-  z-index: 0;
 `
 export default HelpMap

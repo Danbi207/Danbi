@@ -4,8 +4,8 @@
       "help_post_id": 1,
       "ip_id" : 30,
       "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
+        "longitude" : 128.4112384,
+        "latitude" : 36.110336
       },
       "face_flag": true,
       "reservation_flag": true,
@@ -19,98 +19,8 @@
       "help_post_id": 2,
       "ip_id" : 30,
       "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
-      },
-      "face_flag": true,
-      "reservation_flag": true,
-      "content": "asdf",
-      "start_time" : "2023-01-01 12:00",
-      "end_time" : "2023-01-01 13:00",
-      "total_time" : 60,
-      "friend_flag" : true
-    },
-    {
-      "help_post_id": 3,
-      "ip_id" : 30,
-      "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
-      },
-      "face_flag": true,
-      "reservation_flag": true,
-      "content": "asdf",
-      "start_time" : "2023-01-01 12:00",
-      "end_time" : "2023-01-01 13:00",
-      "total_time" : 60,
-      "friend_flag" : true
-    },
-    {
-      "help_post_id": 4,
-      "ip_id" : 30,
-      "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
-      },
-      "face_flag": true,
-      "reservation_flag": true,
-      "content": "asdf",
-      "start_time" : "2023-01-01 12:00",
-      "end_time" : "2023-01-01 13:00",
-      "total_time" : 60,
-      "friend_flag" : true
-    },
-    {
-      "help_post_id": 5,
-      "ip_id" : 30,
-      "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
-      },
-      "face_flag": true,
-      "reservation_flag": true,
-      "content": "asdf",
-      "start_time" : "2023-01-01 12:00",
-      "end_time" : "2023-01-01 13:00",
-      "total_time" : 60,
-      "friend_flag" : true
-    },
-    {
-      "help_post_id": 6,
-      "ip_id" : 30,
-      "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
-      },
-      "face_flag": true,
-      "reservation_flag": true,
-      "content": "asdf",
-      "start_time" : "2023-01-01 12:00",
-      "end_time" : "2023-01-01 13:00",
-      "total_time" : 60,
-      "friend_flag" : true
-    },
-    {
-      "help_post_id": 7,
-      "ip_id" : 30,
-      "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
-      },
-      "face_flag": true,
-      "reservation_flag": true,
-      "content": "asdf",
-      "start_time" : "2023-01-01 12:00",
-      "end_time" : "2023-01-01 13:00",
-      "total_time" : 60,
-      "friend_flag" : true
-    },
-    {
-      "help_post_id": 8,
-      "ip_id" : 30,
-      "position" : {
-        "latitude" : "128.3444",
-        "longitude" : "36.119485"
+        "longitude" : 128.42,
+        "latitude" : 36.110336
       },
       "face_flag": true,
       "reservation_flag": true,
