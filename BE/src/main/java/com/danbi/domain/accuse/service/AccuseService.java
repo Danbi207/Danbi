@@ -33,7 +33,7 @@ public class AccuseService {
 
     public Accuse createAccuse(Accuse accuse, Long fromId) {
         Accuse savedAccuse = accuseRepository.save(accuse);
-        Member member = memberService.findMemberByMemberId(fromId);
+        Member member = memberService.findByMemberId(fromId);
         createAccuseTable(accuse,member);
         return savedAccuse;
     }

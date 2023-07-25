@@ -3,8 +3,11 @@ package com.danbi.api.accuse.service;
 import com.danbi.api.accuse.dto.accuse.AccuseMemberDto;
 import com.danbi.api.accuse.dto.accuse.AccuseRequestDto;
 import com.danbi.api.accuse.dto.accuse.AccuseResponseDto;
+import com.danbi.api.accuse.dto.detail.AccuseDetailResponseDto;
 import com.danbi.api.accuse.dto.myAccuse.MyAccuseDto;
 import com.danbi.api.accuse.dto.myAccuse.MyAccuseListDto;
+import com.danbi.api.accuse.dto.myAccuseStack.MyAccuseStackDto;
+import com.danbi.api.accuse.dto.myAccuseStack.MyAccuseStackListDto;
 import com.danbi.domain.accuse.constant.State;
 import com.danbi.domain.accuse.entity.Accuse;
 import com.danbi.domain.accuse.service.AccuseService;
@@ -27,7 +30,7 @@ public class AccuseInfoService {
 
     public AccuseResponseDto accuse(AccuseRequestDto accuseRequestDto, Long fromId) {
 
-        Member targetMember = memberService.findMemberByMemberId(accuseRequestDto.getTargetMemberId());
+        Member targetMember = memberService.findByMemberId(accuseRequestDto.getTargetMemberId());
         Accuse build = Accuse.builder()
                 .targetMember(targetMember)
                 .title(accuseRequestDto.getTitle())
@@ -54,7 +57,7 @@ public class AccuseInfoService {
     }
 
     public MyAccuseListDto myAccuseList(Long memberId) {
-        Member member = memberService.findMemberByMemberId(memberId);
+        Member member = memberService.findByMemberId(memberId);
         List<Accuse> accuses = accuseService.myAccuseList(member);
         List<MyAccuseDto> myAccuseList = new ArrayList<>();
         for (Accuse accuse : accuses) {
@@ -65,6 +68,31 @@ public class AccuseInfoService {
         }
         return MyAccuseListDto.builder()
                 .accuseList(myAccuseList).build();
+    }
+
+    public MyAccuseStackListDto myAccuseStackList(Long memberId) {
+        Member member = memberService.findByMemberId(memberId);
+        List<Accuse> accuses = accuseService.myAccuseStack(member);
+        List<MyAccuseStackDto> myAccuseStack = new ArrayList<>();
+        for (Accuse accuse : accuses) {
+            MyAccuseStackDto stack = MyAccuseStackDto.builder()
+                    .accuseId(accuse.getId())
+                    .accuseType(accuse.getAccuseType())
+                    .content(accuse.getContent()).build();
+            myAccuseStack.add(stack);
+        }
+        return MyAccuseStackListDto.builder()
+                .accuseList(myAccuseStack).build();
+    }
+
+    public AccuseDetailResponseDto detailAccuse(Long accuseId) {
+        Accuse accuse = accuseService.searchAccuse(accuseId);
+        return AccuseDetailResponseDto.builder()
+                .accuseId(accuse.getId())
+                .title(accuse.getTitle())
+                .content(accuse.getContent())
+                .accuseType(accuse.getAccuseType())
+                .state(accuse.getState()).build();
     }
 
 }
