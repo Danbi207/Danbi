@@ -2,6 +2,7 @@ package com.danbi.domain.accuse.entity;
 
 import com.danbi.domain.member.entity.Member;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,10 @@ public class AccuseTable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accuse_id")
     private Accuse accuse;
+
+    @Builder
+    public AccuseTable(Member fromMember, Accuse accuse) {
+        this.fromMember = fromMember;
+        this.accuse = accuse;
+    }
 }
