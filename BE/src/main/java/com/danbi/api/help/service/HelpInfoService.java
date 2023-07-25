@@ -19,7 +19,7 @@ public class HelpInfoService {
 
     // 도움주기(helper)
     public HelpAssignDto assignHelper(Long helpPostId, Long memberId) {
-        Member member = memberService.findMemberByMemberId(memberId);
+        Member member = memberService.findByMemberId(memberId);
         Help help = helpService.assignHelper(helpPostId, member);
         return HelpAssignDto.builder()
                 .helpId(help.getId()).build();

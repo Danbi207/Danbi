@@ -1,5 +1,6 @@
 package com.danbi.api.guestbook.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,9 +46,11 @@ public class GuestBookResponseDto {
             private String content;
 
             @Schema(description = "댓글 생성 시간")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
             private LocalDateTime createdTime;
 
             @Schema(description = "댓글 수정 시간")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
             private LocalDateTime updatedTime;
         }
 

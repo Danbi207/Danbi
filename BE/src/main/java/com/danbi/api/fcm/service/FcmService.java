@@ -32,7 +32,7 @@ public class FcmService {
     private final String CONTENT_TYPE = "application/x-www-form-urlencoded;charset=utf8";
 
     public void saveToken(Long memberId, String token) {
-        Member member = memberService.findMemberByMemberId(memberId);
+        Member member = memberService.findByMemberId(memberId);
         fcmTokenRepository.saveToken(member.getEmail(), token);
     }
 
