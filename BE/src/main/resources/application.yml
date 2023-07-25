@@ -44,6 +44,17 @@ feign:
 jasypt:
   password: ${PASSWORD}
 
+# OAuth - KAKAO
+kakao:
+  client:
+    id: ENC(AoNqVDwYDOo8uphRuyhw0eAk9i18yW1ppZqGWe1cBsc06V87gLBMSjHGd9JZsyXv) # REST API 키
+    secret: ENC(VO10nYMY7rGaEqT1yVX5CJSBrNeUJaQo8IjkHnduJKHK7pIsPFcLgDhGqmLE3NiY) # 보안 - Client Secret
+
+token:
+  secret: ENC(CFBlQEwvaa+vMjUqHL0rfC+Tzdhy9RGJ2ClJEDlB+FffWbHDBUaz1RXykDnXEzcl) # JWT secret key
+  access-token-expiration-time: 900000  # 15분 1000(ms) x 60(s) x 15(m)
+  refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
+
 #springdoc swagger
 springdoc:
   packages-to-scan: com.danbi.api

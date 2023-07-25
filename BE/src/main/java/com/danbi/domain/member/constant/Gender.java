@@ -2,11 +2,11 @@ package com.danbi.domain.member.constant;
 
 public enum Gender {
 
-    MALE,
-    FEMALE
+    male,
+    female
     ;
 
     public static Gender from(String gender) {
-        return Gender.valueOf(gender.toUpperCase());
+        return Gender.valueOf(gender.toLowerCase());
     }
 }

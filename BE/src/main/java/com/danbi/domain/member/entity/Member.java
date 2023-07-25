@@ -6,7 +6,10 @@ import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.constant.OauthType;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.constant.State;
+import com.danbi.global.jwt.dto.JwtDto;
+import com.danbi.global.util.DateTimeUtils;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,13 +27,16 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private OauthType memberType;
+    private OauthType oauthType;
 
     @Column(unique = true, length = 50, nullable = false)
     private String email;
 
     @Column(length = 200)
     private String password;
+
+    @Column(nullable = false, length = 30)
+    private String name;
 
     @Column(nullable = false, length = 30)
     private String nickname;
@@ -53,6 +59,31 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private State state;
+    private State state = State.ACTIVATE;
 
+    @Builder
+    public Member(OauthType oauthType, String email, String password, String name, String nickname,
+                  Gender gender, String profileUrl, Role role) {
+        this.name = name;
+        this.nickname = nickname;
+        this.oauthType = oauthType;
+        this.email = email;
+        this.password = password;
+        this.profileUrl = profileUrl;
+        this.role = role;
+        this.gender = gender;
+    }
+
+    public void updateState(String state) {
+        this.state = State.from(state);
+    }
+
+    public void updateRefreshToken(JwtDto jwtTokenDto) {
+        this.refreshToken = jwtTokenDto.getRefreshToken();
+        this.tokenExpirationTime = DateTimeUtils.convertToLocalDateTime(jwtTokenDto.getRefreshTokenExpireTime());
+    }
+
+    public void expireRefreshToken(LocalDateTime now) {
+        this.tokenExpirationTime = now;
+    }
 }
