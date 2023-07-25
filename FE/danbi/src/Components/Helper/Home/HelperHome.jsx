@@ -5,20 +5,41 @@ import Footer from "../../Common/Footer/Footer.jsx"
 import HelpList from "./HelpList/HelpList.jsx"
 import HelpMap from "./HelpMap/HelpMap.jsx"
 const HelperHome = () => {
-  const [mode,setMode] = useState(true);
+  const [mode,setMode] = useState(false);
+  const [position,setPosition] = useState(null);
   return (
     <HelperHomeWrap>
       <Header></Header>
       <ModeToggleWrap>
-        &nbsp;지도&nbsp;
+        &nbsp;리스트&nbsp;
         <ModeSwitch>
-          <input type="checkbox" onChange={()=>setMode(!mode)} />
+          <input type="checkbox" onChange={()=>{
+            if(!mode){
+              //DO : gps 현재 위치 얻기
+              if (navigator.geolocation) { // GPS를 지원하면
+                navigator.geolocation.getCurrentPosition(function(position) {
+                  setPosition(position);
+                  setMode(!mode);
+                }, function(error) {
+                  console.error(error);
+                }, {
+                  enableHighAccuracy: false,
+                  maximumAge: 0,
+                  timeout: Infinity
+                });
+              } else {
+                alert('GPS를 지원하지 않습니다');
+              }
+            }else{
+              setMode(!mode);
+            }
+          }} />
           <ModeSlider></ModeSlider>
         </ModeSwitch>
-        &nbsp;리스트&nbsp;
+        &nbsp;지도&nbsp;
       </ModeToggleWrap>
       {
-        mode ? <HelpMap mode={mode} setMode={setMode} /> : <HelpList mode={mode} setMode={setMode} />
+        mode ? <HelpMap mode={mode} setMode={setMode} position={position} /> : <HelpList mode={mode} setMode={setMode} />
       }
       <Footer></Footer>
     </HelperHomeWrap>
