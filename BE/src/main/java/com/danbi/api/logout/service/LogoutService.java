@@ -1,5 +1,6 @@
 package com.danbi.api.logout.service;
 
+import com.danbi.api.fcm.service.FcmService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
@@ -20,6 +21,7 @@ public class LogoutService {
 
     private final MemberService memberService;
     private final TokenManager tokenManager;
+    private final FcmService fcmService;
 
     public void logout(String accessToken) {
 
@@ -37,6 +39,10 @@ public class LogoutService {
         Long memberId = Long.valueOf((Integer)tokenClaims.get("memberId"));
         Member member = memberService.findMemberByMemberId(memberId);
         member.expireRefreshToken(LocalDateTime.now());
+
+        // TODO 4. FCM토큰 삭제
+//        fcmService.deleteToken(member.getEmail());
+
     }
 
 }
