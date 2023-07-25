@@ -100,6 +100,7 @@ const AlramBtn = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  width: 4rem;
 `
 const AlramWrap = styled.div`
   position: absolute;
@@ -121,6 +122,7 @@ const NavBarBtn = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  width: 4rem;
 `
 
 const Logo = styled.div`
