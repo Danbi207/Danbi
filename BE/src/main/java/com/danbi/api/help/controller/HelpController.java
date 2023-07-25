@@ -6,6 +6,8 @@ import com.danbi.api.hleppost.dto.HelpPostRequestDto;
 import com.danbi.api.hleppost.dto.HelpPostResponseDto;
 import com.danbi.domain.help.service.HelpService;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.global.resolver.MemberInfo;
+import com.danbi.global.resolver.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +28,8 @@ public class HelpController {
     @Tag(name = "Help")
     @Operation(summary = "도움 헬퍼 배정 API", description = "도움 헬퍼 배정 API")
     @PostMapping("/{helppost_id}/start")
-    public ResponseEntity<HelpAssignDto> assignHelper(@PathVariable Long helppost_id, Member helper) {
-        HelpAssignDto helperAssign = helpInfoService.assignHelper(helppost_id, helper);
+    public ResponseEntity<HelpAssignDto> assignHelper(@PathVariable Long helppost_id, @MemberInfo MemberInfoDto memberInfoDto) {
+        HelpAssignDto helperAssign = helpInfoService.assignHelper(helppost_id, memberInfoDto.getMemberId());
         return ResponseEntity.ok(helperAssign);
     }
 

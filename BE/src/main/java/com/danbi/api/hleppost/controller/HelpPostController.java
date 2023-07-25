@@ -27,7 +27,7 @@ public class HelpPostController {
     @Tag(name = "HelpPost")
     @Operation(summary = "도움 요청 게시글 등록 API", description = "도움 요청 게시글 등록 API")
     @PostMapping("/create")  // 도움 요청 게시글, 도움 게시글 생성
-    public ResponseEntity<HelpPostResponseDto> createHelpPost(@MemberInfo MemberInfoDto memberInfoDto, HelpPostRequestDto helpPostRequestDto) {
+    public ResponseEntity<HelpPostResponseDto> createHelpPost(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody HelpPostRequestDto helpPostRequestDto) {
         HelpPostResponseDto helpPostInfo = helpPostInfoService.getHelpPostInfo(memberInfoDto.getMemberId(), helpPostRequestDto);
         return ResponseEntity.ok(helpPostInfo);
     }
@@ -43,7 +43,7 @@ public class HelpPostController {
     @Tag(name = "HelpPost")
     @Operation(summary = "도움 요청 게시글 수정 API", description = "도움 요청 게시글 수정 API")
     @PutMapping("/{helppost_id}")  // TODO : 작성자와 수정 요청자 동일한지 검증 필요
-    public ResponseEntity<HelpPostResponseDto> updateHelpPost(@PathVariable Long helppost_id, @MemberInfo MemberInfoDto memberInfoDto, HelpPostRequestDto helpPostRequestDto) {
+    public ResponseEntity<HelpPostResponseDto> updateHelpPost(@PathVariable Long helppost_id, @MemberInfo MemberInfoDto memberInfoDto,@RequestBody HelpPostRequestDto helpPostRequestDto) {
         HelpPostResponseDto helpPostInfo = helpPostInfoService.updateHelpPostInfo(helppost_id, memberInfoDto.getMemberId(), helpPostRequestDto);
         return ResponseEntity.ok(helpPostInfo);
     }
