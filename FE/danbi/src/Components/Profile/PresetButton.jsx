@@ -1,10 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from 'styled-components';
-import PresetModal from './PresetModal.jsx';
 
-const PresetButton = () => {
-
-    const [ModalOpen, setModalOpen] = useState(false);
+const PresetButton = ({setModalOpen, ModalOpen}) => {
     const showModal = () => {
         setModalOpen(true);
     };
@@ -13,7 +10,6 @@ const PresetButton = () => {
             <Btn onClick={showModal}>
                 프리셋 설정
             </Btn>
-            {ModalOpen && <PresetModal state={ModalOpen} />}
         </PresetBtnWrap>
     )
 }
