@@ -12,20 +12,31 @@ import java.time.LocalDateTime;
 public class HelperHelpPostListDto {
 
     private Long helpPostId;
+
     private Long ipId;
+
     private Position position;
+
     private boolean faceFlag;
+
     private boolean reservationFlag;
+
     private String content;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
+
     private int totalTime;
+
     private boolean friendFlag;
 
 
+    @Getter
     @Builder
+    @AllArgsConstructor
     public static class Position {
         private String latitude;
         private String longitude;

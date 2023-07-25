@@ -97,4 +97,9 @@ public class TokenManager {
         return claims;
     }
 
+    public Long getTokenExpiration(String token) {
+        Date expiration = getTokenClaims(token).getExpiration();
+        return expiration.getTime();
+    }
+
 }

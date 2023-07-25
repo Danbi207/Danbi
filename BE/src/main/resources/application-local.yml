@@ -7,10 +7,9 @@ spring:
 
 
   redis:
-    redis:
-      pool:
-        min-idle: 0 # pool에서 관리하는 idle 최소 커넥션  수
-        max-idle: 8 # pool의 idle 최대 커넥션 수
-        max-active: 8  # pool에 할당될 수 있는 최대 커넥션
+    pool:
+      min-idle: 0 # pool에서 관리하는 idle 최소 커넥션  수
+      max-idle: 8 # pool의 idle 최대 커넥션 수
+      max-active: 8  # pool에 할당될 수 있는 최대 커넥션
     port: 6379
     host: 127.0.0.1 # 레디스 서버 호스트
