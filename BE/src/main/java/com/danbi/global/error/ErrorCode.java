@@ -30,6 +30,10 @@ public enum ErrorCode {
 
     //FCM
     NOT_EXIST_FCM_TOKEN(HttpStatus.BAD_REQUEST, "F-001", "해당 회원의 FCM토큰이 없습니다."),
+
+    //친구관계
+    FRIEND_NOT_EXISTS(HttpStatus.BAD_REQUEST, "FRI-001","해당 친구관계는 존재하지 않습니다."),
+    ALREADY_REGISTERED_FRIEND(HttpStatus.BAD_REQUEST, "FRI-002", "이미 존재하는 친구관계 입니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
