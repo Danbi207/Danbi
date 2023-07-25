@@ -11,10 +11,12 @@ const Profile = () => {
     return(
         <ProfileWrap>
             <Header />
-            <UserInfo />
-            <PresetButton />
-            <Jandi />
-            <GuestBook/>
+            <Wrap>
+                <UserInfo />
+                <PresetButton />
+                <Jandi />
+                <GuestBook/>
+            </Wrap>
             <Footer />
         </ProfileWrap>
     )
@@ -26,6 +28,9 @@ const ProfileWrap = styled.div`
     color: ${props=>props.theme.colors.titleColor};
     display: flex;
     flex-direction: column;
+`
+
+const Wrap = styled.div`
 `
 
 export default Profile

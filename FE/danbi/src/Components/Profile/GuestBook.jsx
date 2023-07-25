@@ -25,8 +25,9 @@ const GuestBook = () => {
 }
 
 const GuestBookWrap = styled.div`
+    margin-top: 0.5rem;
+    height: auto;
     overflow-y: hidden;
-    margin-top: 2.5rem;
 `
 
 const ChatWrap = styled.div`
