@@ -1,9 +1,13 @@
 package com.danbi.api.fcm.controller;
 
+import com.danbi.api.fcm.dto.NotificationRequest;
 import com.danbi.api.fcm.service.FcmService;
+import com.danbi.global.resolver.MemberInfo;
+import com.danbi.global.resolver.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -16,14 +20,14 @@ public class FcmController {
     private final FcmService fcmService;
 
     @PostMapping("/token")
-    public String registToken(String token) {
-        fcmService.saveToken("user1",token);
-        return "'"+token+"'" ;
+    public String registerToken(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody String FcmToken) {
+        fcmService.saveToken(memberInfoDto.getMemberId(), FcmToken);
+        return "'" + FcmToken + "'";
     }
 
     @PostMapping("/sendMessageTo")
-    public void sendMessageTo(String token, String title, String body) throws IOException {
-        fcmService.sendMessageTo(token, title, body);
+    public void sendMessageTo(@RequestBody NotificationRequest notificationRequest) throws IOException {
+        fcmService.sendMessageTo(notificationRequest);
     }
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface FcmClient {
 
     //TODO 프로젝트ID 넣기
-    @PostMapping(value = "/v1/projects/project-ID/messages:send", consumes = "application/json")
+    @PostMapping(value = "/v1/projects/danbi-1fa19/messages:send", consumes = "application/json")
     void sendDataMessage(@RequestHeader(HttpHeaders.CONNECTION) String contentType,
                          @RequestHeader(HttpHeaders.AUTHORIZATION) String accessToken,
                          @RequestBody String message
