@@ -1,0 +1,34 @@
+{
+  "help_list" : [
+    {
+      "help_post_id": 1,
+      "ip_id" : 30,
+      "position" : {
+        "longitude" : 128.4112384,
+        "latitude" : 36.110336
+      },
+      "face_flag": true,
+      "reservation_flag": true,
+      "content": "asdf",
+      "start_time" : "2023-01-01 12:00",
+      "end_time" : "2023-01-01 13:00",
+      "total_time" : 60,
+      "friend_flag" : true
+    },
+    {
+      "help_post_id": 2,
+      "ip_id" : 30,
+      "position" : {
+        "longitude" : 128.42,
+        "latitude" : 36.110336
+      },
+      "face_flag": true,
+      "reservation_flag": true,
+      "content": "asdf",
+      "start_time" : "2023-01-01 12:00",
+      "end_time" : "2023-01-01 13:00",
+      "total_time" : 60,
+      "friend_flag" : true
+    }
+  ]
+}

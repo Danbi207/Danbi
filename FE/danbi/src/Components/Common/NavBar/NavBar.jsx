@@ -103,6 +103,7 @@ const NavBarWrap = styled.div`
   background-color: ${props=>props.theme.colors.bgColor};
   border-left: 1px solid ${props=>props.theme.colors.titleColor};
   padding: 1rem;
+  height: 100%;
 `
 
 
