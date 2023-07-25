@@ -1,14 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const DummyData = [[1, 1, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
+const DummyData = [
+  [1, 1, 1, 1, 1, 1, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+];
 
-const GrassTile = ({data}) => {
+const GrassTile = ({ data }) => {
   const tileColor = data ? '#39D353' : 'white';
   return <Tile color={tileColor} />;
 };
 
-const GrassRow = ({line}) => {
+const GrassRow = ({ line }) => {
   return (
     <Row>
       {line.map((value, index) => (
