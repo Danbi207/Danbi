@@ -4,6 +4,9 @@ import Profile from '../Components/Profile/Profile.jsx';
 import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
 import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
 import IPHome from "../Components/IP/IPHome.jsx";
+import TypeSelect from '../Components/Login/TypeSelect.jsx';
+import DocSubmit from "../Components/Login/DocSubmit.jsx";
+
 const routes = [
   {
     path: "/",
@@ -29,5 +32,14 @@ const routes = [
     path: "/ip",
     component : IPHome,
   },
+  {
+    path: "/typeselect",
+    component : TypeSelect,
+  },
+  {
+    path: "/docsubmit",
+    component : DocSubmit,
+  },
+  
 ];
 export default routes;

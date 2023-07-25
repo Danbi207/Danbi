@@ -30,6 +30,7 @@ const Footer = () => {
   )
 }
 const FooterWrap = styled.div`
+    width: 100%;
     height: 3.2rem;
     position: fixed;
     bottom: 0;

@@ -2,6 +2,7 @@ export const dark ={
   colors:{
     titleColor : '#FFFFFF',
     bgColor: '#19191B',
+    boxColor: '#E3E3E3',
     jandibgColor: '#FFFFFF',
   },
   images:{
@@ -28,6 +29,7 @@ export const light ={
   colors:{
     titleColor : '#19191B',
     bgColor: '#FFFFFF', 
+    boxColor: '#E3E3E3',
     jandibgColor: '#19191B',
   },
   images:{
