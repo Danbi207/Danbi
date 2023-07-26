@@ -5,24 +5,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const InputCalender = () => {
-  let [startDate, setStartDate] = useState(new Date());
-  let [endDate, setEndDate] = useState(null);
-  const onChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
+  const [startDate, setStartDate] = useState(new Date());
+
   return (
     <div>
-        <DatePicker
+      <DatePicker
+        showIcon
         selected={startDate}
-        onChange={onChange}
-        minDate={new Date()}
-        startDate={startDate}
-        endDate={endDate}
-        selectsRange
-        inline
-        showDisabledMonthNavigation/>
+        onChange={(date) => setStartDate(date)}/>
     </div>
   )
 }
