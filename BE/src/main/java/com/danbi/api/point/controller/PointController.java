@@ -31,7 +31,7 @@ public class PointController {
     }
 
     @Operation(summary = "현재 포인트 조회 API", description = "현재 포인트 조회 API")
-    @PostMapping("")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
+    @PostMapping("/now/{profile_id}")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
     public ResponseEntity<PointResponseDto> getPoint(@PathVariable Long profile_id) {
         PointResponseDto point = pointInfoService.getPoint(profile_id);
         return ResponseEntity.ok(point);

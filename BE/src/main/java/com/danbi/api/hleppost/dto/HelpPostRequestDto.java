@@ -9,7 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Empty;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,6 +28,8 @@ public class HelpPostRequestDto {
     @JsonProperty("reservation_flag")
     private boolean reservationFlag;
 
+    @NotBlank(message = "요청글은 필수입니다.")
+    @Length(max = 500, message = "요청글은 최대 500글자 입니다.")
     private String content;
 
     @JsonProperty("start_time")

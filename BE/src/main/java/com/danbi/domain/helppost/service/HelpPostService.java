@@ -35,11 +35,7 @@ public class HelpPostService {
 
     public void delete(Long id) {
         HelpPost deletedHelpPost = helpPostRepository.findById(id).get();
-        if (deletedHelpPost.getState() == State.ACTIVATE) {
-            deletedHelpPost.delete(State.DELETE);
-        } else {
-            deletedHelpPost.delete(State.ACTIVATE);
-        }
+        deletedHelpPost.delete(State.DELETE);
     }
 
     public HelpPost getHelpPost(Long helpPostId) {

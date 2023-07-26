@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -33,10 +35,12 @@ public class HelperHelpPostListDto {
 
     private boolean friendFlag;
 
+//    private HelperHelpIpInfoDto ip;
 
     @Getter
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Position {
         private String latitude;
         private String longitude;

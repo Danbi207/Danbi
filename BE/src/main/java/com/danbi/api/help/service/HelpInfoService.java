@@ -3,6 +3,7 @@ package com.danbi.api.help.service;
 import com.danbi.api.help.dto.assign.HelpAssignDto;
 import com.danbi.domain.help.entity.Help;
 import com.danbi.domain.help.service.HelpService;
+import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,14 @@ public class HelpInfoService {
 
     private final HelpService helpService;
     private final MemberService memberService;
+    private final HelpPostService helpPostService;
 
     // 도움주기(helper)
     public HelpAssignDto assignHelper(Long helpPostId, Long memberId) {
         Member member = memberService.findByMemberId(memberId);
         Help help = helpService.assignHelper(helpPostId, member);
+        helpPostService.delete(helpPostId);
+
         return HelpAssignDto.builder()
                 .helpId(help.getId()).build();
     }
