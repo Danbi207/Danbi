@@ -33,7 +33,8 @@ public enum ErrorCode {
 
     //친구관계
     FRIEND_NOT_EXISTS(HttpStatus.BAD_REQUEST, "FRI-001","해당 친구관계는 존재하지 않습니다."),
-    ALREADY_REGISTERED_FRIEND(HttpStatus.BAD_REQUEST, "FRI-002", "이미 존재하는 친구관계 입니다.")
+    ALREADY_REGISTERED_FRIEND(HttpStatus.BAD_REQUEST, "FRI-002", "이미 존재하는 친구관계 입니다."),
+    NOT_MY_FRIEND_REQUEST(HttpStatus.BAD_REQUEST, "FRI-003", "현재 회원의 친구요청이 아닙니다."),
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

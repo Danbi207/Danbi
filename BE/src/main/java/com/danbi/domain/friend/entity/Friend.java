@@ -30,18 +30,22 @@ public class Friend extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Type type = Type.WAIT;
+    private Type type;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private State state = State.ACTIVATE;
+    private State state;
+
 
 
     @Builder
-    public Friend(Member from, Member to) {
+    public Friend(Member from, Member to, Type type, State state) {
         this.from = from;
         this.to = to;
+        this.type = type;
+        this.state = state;
     }
+
 
     public void update(Friend friend) {
         this.from = friend.getFrom();

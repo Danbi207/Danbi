@@ -2,6 +2,8 @@ package com.danbi.api.friend.controller;
 
 import com.danbi.api.friend.dto.request.RequestFriendDto;
 import com.danbi.api.friend.service.FriendInfoService;
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.resolver.MemberInfo;
 import com.danbi.global.resolver.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,5 +28,13 @@ public class FriendController {
         friendInfoService.requestFriend(memberInfoDto.getMemberId(), requestFriendDto.getTargetId());
     }
 
+    @Operation(summary = "친구 요청 수락 API", description = "친구 요청 수락 API")
+    @PostMapping("/permit")
+    void acceptFriend(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody RequestFriendDto requestFriendDto){
+        if (memberInfoDto.getMemberId() == requestFriendDto.getTargetId()) {
+            throw new BusinessException(ErrorCode.NOT_MY_FRIEND_REQUEST);
+        }
+        friendInfoService.acceptFriend(requestFriendDto.getTargetId(), memberInfoDto.getMemberId());
+    }
 
 }

@@ -2,6 +2,8 @@ package com.danbi.api.friend.service.impl;
 
 import com.danbi.api.friend.dto.response.ResponseFriendDto;
 import com.danbi.api.friend.service.FriendInfoService;
+import com.danbi.domain.friend.constant.State;
+import com.danbi.domain.friend.constant.Type;
 import com.danbi.domain.friend.entity.Friend;
 import com.danbi.domain.friend.service.FriendService;
 import com.danbi.domain.member.entity.Member;
@@ -32,9 +34,14 @@ public class FriendInfoServiceImpl implements FriendInfoService {
         if (friendService.getFriendByFromAndTo(fromMember, toMember).isPresent()) {
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_FRIEND);
         }
+        if (friendService.getFriendByFromAndTo(toMember, fromMember).isPresent()) {
+            throw new BusinessException(ErrorCode.ALREADY_REGISTERED_FRIEND);
+        }
         Friend friend = Friend.builder()
                 .from(fromMember)
                 .to(toMember)
+                .type(Type.WAIT)
+                .state(State.ACTIVATE)
                 .build();
 
         friendService.saveFriend(friend);
@@ -42,6 +49,21 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
     @Override
     public void acceptFriend(Long from, Long to) {
+        Member fromMember = memberService.findByMemberId(from);
+        Member toMember = memberService.findByMemberId(to);
+
+        Friend friend = friendService.getFriendByFromAndTo(fromMember, toMember).orElseThrow(
+                () -> new BusinessException(ErrorCode.FRIEND_NOT_EXISTS)
+        );
+
+        Friend updateFriend = Friend.builder()
+                .from(fromMember)
+                .to(toMember)
+                .type(Type.PERMIT)
+                .state(State.ACTIVATE)
+                .build();
+
+        friendService.updateFriend(friend.getId(), updateFriend);
 
     }
 
