@@ -10,6 +10,7 @@ import com.danbi.domain.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class GuestBookProfileService {
 
@@ -31,7 +33,7 @@ public class GuestBookProfileService {
         GuestBook guestBook = member.getGuestBook();
         log.info("guestBookId={}", guestBook.getId());
 
-        List<Comment> comments = commentService.getCommentsByGuestBook(guestBook);
+        List<Comment> comments = commentService.findByGuestBook(guestBook);
         List<GuestBookResponseDto.GuestBookDto.CommentDto> commentDtos = comments.stream()
                 .map(comment -> GuestBookResponseDto.GuestBookDto.CommentDto.builder()
                         .commentId(comment.getId())
