@@ -3,13 +3,17 @@ import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const PresetDetail = ({ content, showDetail }) => {
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } =
+  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } =
     useSpeechRecognition();
   const [Recording, setRecording] = useState(false);
 
   // 브라우저STT 확인용
   if (!browserSupportsSpeechRecognition) {
     alert('브라우저가 STT를 지원하지 않음');
+  }
+
+  if (!isMicrophoneAvailable){
+    alert('마이크 권한이 없습니다.')
   }
 
   // 녹음 시작 (리셋하면서 시작)

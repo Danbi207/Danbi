@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
 import PickAnimation from './data.json';
 
@@ -10,34 +10,45 @@ const PickModal = ({setPickModalOpen}) => {
         const timeout = setTimeout(() => {
           setShowAnimation(false);
         }, 1500);
-    
+
         return () => clearTimeout(timeout);
       }, []);
 
     const CloseModal = () => {
         setPickModalOpen(false);
     }
+
     return(
         <PickModalWrap>
-            <Wrap>
-                {ShowAnimation ? (
-                        <Lottie animationData={PickAnimation} />
-                ) : (
-                <ContentWrap>
-                    <Content>
-                        대충 뽑은 내용
-                    </Content>
-                    <Btn>
-                        <AcceptBtn onClick={CloseModal}>
-                            확인
-                        </AcceptBtn>
-                    </Btn>
-                </ContentWrap>
-                )}
-            </Wrap>
+            {ShowAnimation ? (
+                <AnimationWrap>
+                    <Lottie animationData={PickAnimation} style={{ width: '100%', height: '100%'}} />
+                </AnimationWrap>
+            ) : (
+                <Wrap>
+                    <ContentWrap>
+                        <Content>대충 뽑은 내용</Content>
+                        <Btn>
+                        <AcceptBtn onClick={CloseModal}>확인</AcceptBtn>
+                        </Btn>
+                    </ContentWrap>
+                </Wrap>
+            )}
         </PickModalWrap>
     )
 }
+
+const fadeIn = keyframes`
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+`
+
 
 const PickModalWrap = styled.div`
     width: 100%;
@@ -61,7 +72,8 @@ const Wrap = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-`
+    animation: ${fadeIn} 0.25s linear;
+    `
 
 const ContentWrap = styled.div`
     width: 100%;
@@ -78,6 +90,7 @@ const Content = styled.div`
     text-align: center;
     border-radius: 5px;
 `
+
 const Btn = styled.div`
     width: 85%;
     display: flex;
@@ -90,6 +103,12 @@ const AcceptBtn = styled.button`
     border-radius: 10px;
     background-color: #6161ff;
     margin-top: 0.25rem;
+`
+
+const AnimationWrap = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: ${props => props.theme.colors.bgColor};
 `
 
 export default PickModal
