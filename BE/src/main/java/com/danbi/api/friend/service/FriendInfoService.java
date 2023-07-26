@@ -13,7 +13,7 @@ public interface FriendInfoService {
     void acceptFriend(Long from, Long to);
 
     //친구 삭제
-    void deleteFriend(Long from, Long to);
+    void deleteFriend(Long memberId,Long friendId);
 
     // 내가 보낸 친구요청 목록 조회
     List<ResponseFriendDto> searchMyWaitingRequests(Long memberId);

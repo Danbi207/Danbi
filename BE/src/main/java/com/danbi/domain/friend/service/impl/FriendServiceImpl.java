@@ -45,6 +45,9 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public void deleteFriend(Long id) {
         Friend deleteFriend = getFriendById(id);
+        if (deleteFriend.getState() == State.DESTROY) {
+            throw new BusinessException(ErrorCode.FRIEND_NOT_EXISTS);
+        }
         deleteFriend.delete();
     }
 
@@ -83,6 +86,9 @@ public class FriendServiceImpl implements FriendService {
     @Transactional(readOnly = true)
     public void validateDuplicateFriend(Friend friend) {
         if (friendRepository.existsByFromAndToAndState(friend.getFrom(), friend.getTo(), State.ACTIVATE)) {
+            throw new BusinessException(ErrorCode.ALREADY_REGISTERED_FRIEND);
+        }
+        if (friendRepository.existsByFromAndToAndState(friend.getTo(), friend.getFrom(), State.ACTIVATE)) {
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_FRIEND);
         }
     }

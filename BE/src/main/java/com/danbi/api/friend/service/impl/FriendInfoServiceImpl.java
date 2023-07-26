@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Slf4j
@@ -68,8 +69,14 @@ public class FriendInfoServiceImpl implements FriendInfoService {
     }
 
     @Override
-    public void deleteFriend(Long from, Long to) {
+    public void deleteFriend(Long memberId, Long friendId) {
+        Friend friend = friendService.getFriendById(friendId);
 
+        if (friend.getFrom().getId() != memberId && friend.getTo().getId() != memberId) {
+            throw new BusinessException(ErrorCode.NOT_MY_FRIEND);
+        }
+
+        friendService.deleteFriend(friendId);
     }
 
     @Override

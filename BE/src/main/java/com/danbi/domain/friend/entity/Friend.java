@@ -36,16 +36,14 @@ public class Friend extends BaseEntity {
     @Column(nullable = false, length = 20)
     private State state;
 
-
-
     @Builder
-    public Friend(Member from, Member to, Type type, State state) {
+    public Friend(Long id, Member from, Member to, Type type, State state) {
+        this.id = id;
         this.from = from;
         this.to = to;
         this.type = type;
         this.state = state;
     }
-
 
     public void update(Friend friend) {
         this.from = friend.getFrom();
