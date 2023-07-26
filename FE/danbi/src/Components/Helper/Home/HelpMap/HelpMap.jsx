@@ -104,7 +104,7 @@ const HelpMap = (props) => {
   return (
     <HelpMapWrap>
       <MapWrap ref={mapRef}></MapWrap>
-      <HelpMapItem detailMode={detailMode} help={helpList[curHelpIdx]}></HelpMapItem>
+      <HelpMapItem setDetailMode={setDetailMode} detailMode={detailMode} help={helpList[curHelpIdx]}></HelpMapItem>
     </HelpMapWrap>
   )
 }
