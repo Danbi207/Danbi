@@ -19,7 +19,7 @@ const UserSubmit = () => {
     <SubmitWrap>
     {
       mode ? <UserType mode={mode} sex={sex} usertype={usertype} setMode={setMode} setSex={setSex} setUserType={setUserType} /> : 
-      <UserFile fileList={fileList} setFileList={setFileList} submit={submit} />
+      <UserFile fileList={fileList} sex={sex} usertype={usertype} setFileList={setFileList} submit={submit} />
     }
   </SubmitWrap>
   )

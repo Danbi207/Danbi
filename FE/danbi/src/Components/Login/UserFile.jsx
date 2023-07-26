@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const UserFile = () => {
+const UserFile = (props) => {
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
 
@@ -12,7 +12,8 @@ const UserFile = () => {
     // 선택된 모든 파일들을 FormData에 추가
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      formData.append(`img_${i}`, file);
+      const fileName = file.name
+      formData.append(fileName, file);
     }
 
     // 이미지 파일 미리보기 생성
@@ -27,7 +28,6 @@ const UserFile = () => {
           setImagePreviews(previewURLs);
         }
       };
-
       reader.readAsDataURL(file);
     }
 
