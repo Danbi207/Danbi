@@ -8,9 +8,7 @@ import PresetButton from './PresetButton.jsx';
 import Jandi from './Jandi.jsx';
 import GuestBook from './GuestBook.jsx';
 import PresetModal from './PresetModal.jsx';
-import PickButton from './PickButton.jsx';
 import PickModal from './PickModal.jsx';
-import DewPoint from './DewPoint.jsx';
 
 const point = 100;
 
@@ -24,11 +22,7 @@ const Profile = () => {
         <UserInfo />
         <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
         <JandiWrap>
-          <Jandi />
-          <PointWrap>
-            <DewPoint point={point} />
-            <PickButton setPickModalOpen={setPickModalOpen} />
-          </PointWrap>
+          <Jandi point={point} setPickModalOpen={setPickModalOpen} />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
         <GuestBook />
@@ -55,14 +49,6 @@ const Wrap = styled.div`
     user-select: all; */
 `;
 
-const JandiWrap = styled.div`
-`
-
-const PointWrap = styled.div`
-  display: flex;
-  justify-content: end;
-  padding-right: 1rem;
-  margin-top: 0.25rem;
-`
+const JandiWrap = styled.div``;
 
 export default Profile;
