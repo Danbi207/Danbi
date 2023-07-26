@@ -78,11 +78,12 @@ const UserName = styled.div`
 `;
 
 const ChatSection = styled.div`
-  width: 70%;
+  width: 14rem;
   display: flex;
   border-bottom: 2px solid white;
   align-items: center;
   justify-content: center;
+  padding-left: 0.5rem;
   ::-webkit-scrollbar {
     display: none;
   }
