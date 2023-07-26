@@ -12,22 +12,24 @@ import java.util.Set;
 public class FcmTokenRepository {
 
     //RedisTemplate : 트랜잭션을 지원한다. 트랜잭션으로 묶게 되면 트랜잭션 내부에서 하나의 로직이 실패하여 오류가 나는 경우 수행한 작업을 모두 취소시킨다.
-    private final StringRedisTemplate tokenRedisTemplate;
+//    private final StringRedisTemplate tokenRedisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
+
     public void saveToken(String key, String value) {
-        tokenRedisTemplate.opsForValue()
+        redisTemplate.opsForValue()
                 .set(key, value);
     }
 
     public String getToken(String key) {
-        return tokenRedisTemplate.opsForValue().get(key);
+        return redisTemplate.opsForValue().get(key);
     }
 
     public void deleteToken(String key) {
-        tokenRedisTemplate.delete(key);
+        redisTemplate.delete(key);
     }
 
     public boolean hasKey(String key) {
-        return tokenRedisTemplate.hasKey(key);
+        return redisTemplate.hasKey(key);
     }
 
 
