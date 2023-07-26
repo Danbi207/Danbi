@@ -20,9 +20,11 @@ const PickWrap = styled.div`
 const PickBtn = styled.button`
     background-color: #6161FF;
     border-radius: 50%;
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: 10px;
+    width:3rem;
+    height: 3rem;
+    font-size: 20px;
+    text-align: center;
+
 `
 
 export default PickButton
