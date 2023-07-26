@@ -1,5 +1,9 @@
 package com.danbi.domain.member.service;
 
+import com.danbi.domain.Item.constant.Color;
+import com.danbi.domain.Item.constant.Rank;
+import com.danbi.domain.Item.entity.Item;
+import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
@@ -24,6 +28,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PointRepository pointRepository;
+    private final ItemRepository itemRepository;
 
     @Transactional
     public Member registerMember(Member member) {
@@ -38,11 +43,16 @@ public class MemberService {
                 .build();
 
         Point point = Point.builder()
-                .dewPoint((long)10)
-                .accumulateDewPoint((long)10)
+                .dewPoint((long)100)
+                .accumulateDewPoint((long)100)
                 .profile(profile).build();
-
         pointRepository.save(point);
+
+        Item item = Item.builder()
+                .color(Color.BLACK)
+                .rank(Rank.SILVER)
+                .profile(profile).build();
+        itemRepository.save(item);
 
         member.makeGuestBook(guestBook);
         member.makeProfile(profile);
