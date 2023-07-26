@@ -19,13 +19,14 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class OauthLoginService {
 
     private final MemberService memberService;
     private final TokenManager tokenManager;
 
+    @Transactional
     public OauthLoginDto.Response oauthLogin(String accessToken, OauthType oauthType) {
         SocialLoginApiService socialLoginApiService = SocialLoginApiServiceFactory.getSocialLoginApiService(oauthType);
         OAuthAttributes userInfo = socialLoginApiService.getUserInfo(accessToken);

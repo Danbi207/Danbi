@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
-@Transactional
 public class LogoutService {
 
     private final MemberService memberService;
@@ -25,7 +25,7 @@ public class LogoutService {
     private final FcmService fcmService;
     private final RedisUtil redisUtil;
 
-
+    @Transactional
     public void logout(String accessToken) {
 
         // 1. 토큰 검증

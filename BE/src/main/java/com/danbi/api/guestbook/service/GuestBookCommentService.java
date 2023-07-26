@@ -10,8 +10,10 @@ import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class GuestBookCommentService {
 
@@ -19,8 +21,9 @@ public class GuestBookCommentService {
     private final GuestBookService guestBookService;
     private final MemberService memberService;
 
+    @Transactional
     public CommentDto.Response saveComment(Long guestBookId, CommentDto.Reqeust reqeust,Long memberId) {
-        GuestBook guestBook = guestBookService.getGuestBookById(guestBookId);
+        GuestBook guestBook = guestBookService.findById(guestBookId);
         Member member = memberService.findByMemberId(memberId);
 
         Comment comment = Comment.builder()

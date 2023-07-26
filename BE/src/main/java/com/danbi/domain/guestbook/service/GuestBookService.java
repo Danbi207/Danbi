@@ -7,16 +7,18 @@ import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.GuestBookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class GuestBookService {
 
     private final GuestBookRepository guestBookRepository;
 
-    public GuestBook getGuestBookById(Long id) {
+    public GuestBook findById(Long id) {
         Optional<GuestBook> op = guestBookRepository.findById(id);
 
         if(op.isEmpty()) {
@@ -26,7 +28,7 @@ public class GuestBookService {
         return op.get();
     }
 
-    public GuestBook getGuestBookByMember(Member member) {
+    public GuestBook findByMember(Member member) {
         Optional<GuestBook> op = guestBookRepository.getGuestBookByMember(member);
 
         if(op.isEmpty()) {

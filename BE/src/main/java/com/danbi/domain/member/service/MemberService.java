@@ -16,12 +16,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Member registerMember(Member member) {
         validateDuplicateMember(member);
 
@@ -46,12 +47,10 @@ public class MemberService {
         }
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 
-    @Transactional(readOnly = true)
     public Member findByRefreshToken(String refreshToken) {
         Member member = memberRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new AuthenticationException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
