@@ -4,8 +4,8 @@ import Profile from '../Components/Profile/Profile.jsx';
 import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
 import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
 import IPHome from "../Components/IP/IPHome.jsx";
-import TypeSelect from '../Components/Login/TypeSelect.jsx';
-import DocSubmit from "../Components/Login/DocSubmit.jsx";
+import UserSubmit from "../Components/Login/UserSubmit.jsx";
+
 
 const routes = [
   {
@@ -33,12 +33,8 @@ const routes = [
     component : IPHome,
   },
   {
-    path: "/typeselect",
-    component : TypeSelect,
-  },
-  {
-    path: "/docsubmit",
-    component : DocSubmit,
+    path: "/userSubmit",
+    component : UserSubmit,
   },
   
 ];

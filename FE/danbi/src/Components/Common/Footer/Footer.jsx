@@ -32,6 +32,7 @@ const Footer = () => {
 const FooterWrap = styled.div`
     width: 100%;
     height: 3.2rem;
+    z-index: 3;
     position: fixed;
     bottom: 0;
     background-color: ${props=>props.theme.colors.bgColor};
