@@ -1,9 +1,9 @@
 import React, { useCallback,useEffect, useRef } from 'react'
-import styled from 'styled-components';
+import styled,{ keyframes }  from 'styled-components';
 import axios from 'axios';
 import { useState } from 'react';
 import "./HelpMap.css";
-
+import HelpMapItem from "./HelpMapItem.jsx";
 const HelpMap = (props) => {
   const {kakao} = window;
   const mapRef = useRef();
@@ -11,7 +11,8 @@ const HelpMap = (props) => {
   const [map,setMap] = useState(null);
   const [markerList,setMarkerList] = useState([]);
   const [overlayList,setOverlayList] = useState([]);
-  
+  const [curHelpIdx,setCurHelpIdx] = useState(0);
+  const [detailMode, setDetailMode] = useState(false);
   const getOverlay = useCallback((help)=>{
     return `
     <div class='UserWrap'>
@@ -81,13 +82,19 @@ const HelpMap = (props) => {
       }
       content.insertAdjacentElement("beforeend",helpDetailBtn);
 
-      var overlay = new kakao.maps.CustomOverlay({
+      var overlay = new kakao.maps.CustomOverlay({//오버레이 생성
         position : marker.getPosition(), 
         content : content,
         clickable:true,
       });
-      kakao.maps.event.addListener(marker, 'click', function() {
-        overlay.setMap(map);
+
+      kakao.maps.event.addListener(marker, 'click', function() {//마커 클릭이벤트
+        setDetailMode(true);
+        if(window.innerWidth <= 500){//모바일 버전은 다르게 표시
+          setCurHelpIdx(idx);
+        }else{
+          overlay.setMap(map);//클릭시 오버레이 맵에 표시
+        }
       });
 
       overlayList.push(overlay);
@@ -97,10 +104,42 @@ const HelpMap = (props) => {
   return (
     <HelpMapWrap>
       <MapWrap ref={mapRef}></MapWrap>
+      <HelpMapItemWrap detailMode = {detailMode}>
+        <HelpMapItem help={helpList[curHelpIdx]}></HelpMapItem>
+      </HelpMapItemWrap>
     </HelpMapWrap>
   )
 }
 
+const HelpMapItemWrap = styled.div`
+  visibility: ${props => props.detailMode ? 'visible' : 'hidden'};
+  animation: ${props => props.detailMode ? slideIn : slideOut} 0.5s linear;
+  transition: visibility 0.5s linear;
+  transform-origin : 0 100% 0
+`
+const slideIn = keyframes`
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleY(0);
+    opacity: 1;
+  }
+`;
 const HelpMapWrap = styled.div`
   position: relative;
   width: 100%;
