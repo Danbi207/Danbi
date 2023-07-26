@@ -34,7 +34,7 @@ const CommentWrap = styled.div`
 `
 
 const GuestImg = styled.img`
-    width: 3rem;
+    width: 2rem;
     height: 2rem;
     border-radius: 50%;
 `
