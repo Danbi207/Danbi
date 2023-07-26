@@ -82,6 +82,7 @@ const HelpContent = styled.textarea`
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: #fff;
+  resize: none;
 `
 
 const RowWrap = styled.div`

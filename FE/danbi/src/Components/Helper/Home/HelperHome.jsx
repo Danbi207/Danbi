@@ -1,12 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import styled from 'styled-components';
 import Header from "../../Common/Header/Header.jsx"
 import Footer from "../../Common/Footer/Footer.jsx"
 import HelpList from "./HelpList/HelpList.jsx"
 import HelpMap from "./HelpMap/HelpMap.jsx"
+import axios from 'axios';
 const HelperHome = () => {
   const [mode,setMode] = useState(false);
   const [position,setPosition] = useState(null);
+  const [helpList,setHelpList] = useState([]);
+  useEffect(()=>{
+    axios({
+      method:"get",//backend와 연결시 post로 변경
+      url:`${process.env.PUBLIC_URL}/json/helpList.json`
+    }).then(({data})=>setHelpList(data.help_list)).catch((err)=>console.log(err));
+  },[]);
+
   return (
     <HelperHomeWrap>
       <div>
@@ -42,7 +51,7 @@ const HelperHome = () => {
         </ModeToggleWrap>
       </div>
       {
-        mode ? <HelpMap mode={mode} setMode={setMode} position={position} /> : <HelpList mode={mode} setMode={setMode} />
+        mode ? <HelpMap helpList={helpList} mode={mode} setMode={setMode} position={position} /> : <HelpList helpList={helpList} mode={mode} setMode={setMode} />
       }
       <Footer></Footer>
     </HelperHomeWrap>

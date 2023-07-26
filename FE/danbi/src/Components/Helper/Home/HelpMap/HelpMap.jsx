@@ -1,13 +1,11 @@
 import React, { useCallback,useEffect, useRef } from 'react'
 import styled  from 'styled-components';
-import axios from 'axios';
 import { useState } from 'react';
 import "./HelpMap.css";
 import HelpMapItem from "./HelpMapItem.jsx";
 const HelpMap = (props) => {
   const {kakao} = window;
   const mapRef = useRef();
-  const [helpList,setHelpList] = useState([]);
   const [map,setMap] = useState(null);
   const [markerList,setMarkerList] = useState([]);
   const [overlayList,setOverlayList] = useState([]);
@@ -40,16 +38,11 @@ const HelpMap = (props) => {
     setMap(new kakao.maps.Map(mapRef.current, mapOption));
   },[props.position,mapRef,kakao]);
 
-  useEffect(()=>{
-    axios({
-      method:"get",//backend와 연결시 post로 변경
-      url:`${process.env.PUBLIC_URL}/json/helpList.json`
-    }).then(({data})=>setHelpList(data.help_list)).catch((err)=>console.log(err));
-  },[]);
+  
 
   useEffect(()=>{
     //DO : 도움리스트를 조회하여 마커로 등록
-    helpList.forEach((help,idx)=>{
+    props.helpList.forEach((help,idx)=>{
       const markerPosition  = new kakao.maps.LatLng(help.position.latitude, help.position.longitude); 
 
       //DO : 마커를 생성
@@ -99,12 +92,12 @@ const HelpMap = (props) => {
 
       overlayList.push(overlay);
     });
-  },[helpList,kakao,map,markerList,overlayList,getOverlay]);
+  },[props.helpList,kakao,map,markerList,overlayList,getOverlay]);
 
   return (
     <HelpMapWrap>
       <MapWrap ref={mapRef}></MapWrap>
-      <HelpMapItem setDetailMode={setDetailMode} detailMode={detailMode} help={helpList[curHelpIdx]}></HelpMapItem>
+      <HelpMapItem setDetailMode={setDetailMode} detailMode={detailMode} help={props.helpList[curHelpIdx]}></HelpMapItem>
     </HelpMapWrap>
   )
 }
