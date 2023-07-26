@@ -1,6 +1,6 @@
 package com.danbi.api.logout.service;
 
-import com.danbi.api.fcm.service.FcmService;
+import com.danbi.domain.fcm.service.FcmService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;

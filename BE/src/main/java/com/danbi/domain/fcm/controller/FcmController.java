@@ -1,7 +1,7 @@
-package com.danbi.api.fcm.controller;
+package com.danbi.domain.fcm.controller;
 
-import com.danbi.api.fcm.dto.NotificationRequest;
-import com.danbi.api.fcm.service.FcmService;
+import com.danbi.domain.fcm.dto.NotificationRequest;
+import com.danbi.domain.fcm.service.FcmService;
 import com.danbi.global.resolver.MemberInfo;
 import com.danbi.global.resolver.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
