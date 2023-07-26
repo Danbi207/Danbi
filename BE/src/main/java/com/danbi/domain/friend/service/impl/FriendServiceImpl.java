@@ -78,7 +78,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Friend> getFriendByFromOrToAndType(Member from, Member to, Type type, State state) {
+    public List<Friend> getFriendByFromOrToAndType(Member from, Member to) {
         return friendRepository.findAllByFromOrToAndTypeAndState(from, to, Type.PERMIT, State.ACTIVATE);
     }
 

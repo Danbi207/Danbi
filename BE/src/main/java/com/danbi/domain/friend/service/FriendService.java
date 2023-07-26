@@ -26,7 +26,7 @@ public interface FriendService {
 
     Optional<Friend> getFriendByFromAndTo(Member from, Member to);
 
-    List<Friend> getFriendByFromOrToAndType(Member from, Member to, Type type, State state);
+    List<Friend> getFriendByFromOrToAndType(Member from, Member to);
 
     void validateDuplicateFriend(Friend friend);
 }

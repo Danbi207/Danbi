@@ -1,6 +1,7 @@
 package com.danbi.api.friend.service;
 
 import com.danbi.api.friend.dto.response.ResponseFriendDto;
+import com.danbi.api.friend.dto.response.ResponseFriendListDto;
 
 import java.util.List;
 
@@ -16,11 +17,11 @@ public interface FriendInfoService {
     void deleteFriend(Long memberId,Long friendId);
 
     // 내가 보낸 친구요청 목록 조회
-    List<ResponseFriendDto> searchMyWaitingRequests(Long memberId);
+    ResponseFriendListDto searchMyWaitingRequests(Long memberId);
 
     // 친구요청 받은 목록 조회
-    List<ResponseFriendDto> searchOtherWaitingRequests(Long memberId);
+    ResponseFriendListDto searchOtherWaitingRequests(Long memberId);
 
     // 내 친구 목록 조회
-    List<ResponseFriendDto> searchMyFriend(Long memberId);
+    ResponseFriendListDto searchMyFriend(Long memberId);
 }

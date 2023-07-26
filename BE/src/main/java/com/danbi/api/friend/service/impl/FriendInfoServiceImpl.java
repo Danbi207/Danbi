@@ -1,6 +1,7 @@
 package com.danbi.api.friend.service.impl;
 
 import com.danbi.api.friend.dto.response.ResponseFriendDto;
+import com.danbi.api.friend.dto.response.ResponseFriendListDto;
 import com.danbi.api.friend.service.FriendInfoService;
 import com.danbi.domain.friend.constant.State;
 import com.danbi.domain.friend.constant.Type;
@@ -8,6 +9,7 @@ import com.danbi.domain.friend.entity.Friend;
 import com.danbi.domain.friend.service.FriendService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
+import com.danbi.domain.profile.service.ProfileService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,7 +29,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
     private final FriendService friendService;
     private final MemberService memberService;
-
+    private final ProfileService profileService;
 
     @Override
     public void requestFriend(Long from, Long to) {
@@ -80,17 +83,67 @@ public class FriendInfoServiceImpl implements FriendInfoService {
     }
 
     @Override
-    public List<ResponseFriendDto> searchMyWaitingRequests(Long memberId) {
-        return null;
+    public ResponseFriendListDto searchMyWaitingRequests(Long memberId) {
+        Member member = memberService.findByMemberId(memberId);
+        List<Friend> friendList = friendService.getFriendByToAndType(member, Type.WAIT);
+
+        List<ResponseFriendDto> result = new ArrayList<>();
+        for (Friend friend : friendList) {
+            ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                            .profileUrl(friend.getFrom().getProfileUrl())
+                            .name(friend.getFrom().getName())
+                            .dewPoint(-1L)
+                            .build();
+            result.add(responseFriendDto);
+        }
+
+        return ResponseFriendListDto.builder().result(result).build();
+
     }
 
     @Override
-    public List<ResponseFriendDto> searchOtherWaitingRequests(Long memberId) {
-        return null;
+    public ResponseFriendListDto searchOtherWaitingRequests(Long memberId) {
+        Member member = memberService.findByMemberId(memberId);
+        List<Friend> friendList = friendService.getFriendByFromAndType(member, Type.WAIT);
+
+        List<ResponseFriendDto> result = new ArrayList<>();
+        for (Friend friend : friendList) {
+            ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .profileUrl(friend.getTo().getProfileUrl())
+                    .name(friend.getTo().getName())
+                    .dewPoint(-1L)
+                    .build();
+            result.add(responseFriendDto);
+        }
+
+        return ResponseFriendListDto.builder().result(result).build();
     }
 
     @Override
-    public List<ResponseFriendDto> searchMyFriend(Long memberId) {
-        return null;
+    public ResponseFriendListDto searchMyFriend(Long memberId) {
+        Member member = memberService.findByMemberId(memberId);
+        List<Friend> friendList = friendService.getFriendByFromAndType(member, Type.PERMIT);
+
+        List<ResponseFriendDto> result = new ArrayList<>();
+        for (Friend friend : friendList) {
+            ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .profileUrl(friend.getTo().getProfileUrl())
+                    .name(friend.getTo().getName())
+                    .dewPoint(-1L)
+                    .build();
+            result.add(responseFriendDto);
+        }
+
+        friendList = friendService.getFriendByToAndType(member, Type.PERMIT);
+        for (Friend friend : friendList) {
+            ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .profileUrl(friend.getFrom().getProfileUrl())
+                    .name(friend.getFrom().getName())
+                    .dewPoint(-1L)
+                    .build();
+            result.add(responseFriendDto);
+        }
+
+        return ResponseFriendListDto.builder().result(result).build();
     }
 }
