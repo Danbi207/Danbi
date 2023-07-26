@@ -1,24 +1,57 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import styled from 'styled-components';
 import Header from "../../Common/Header/Header.jsx"
 import Footer from "../../Common/Footer/Footer.jsx"
 import HelpList from "./HelpList/HelpList.jsx"
 import HelpMap from "./HelpMap/HelpMap.jsx"
+import axios from 'axios';
 const HelperHome = () => {
-  const [mode,setMode] = useState(true);
+  const [mode,setMode] = useState(false);
+  const [position,setPosition] = useState(null);
+  const [helpList,setHelpList] = useState([]);
+  useEffect(()=>{
+    axios({
+      method:"get",//backend와 연결시 post로 변경
+      url:`${process.env.PUBLIC_URL}/json/helpList.json`
+    }).then(({data})=>setHelpList(data.help_list)).catch((err)=>console.log(err));
+  },[]);
+
   return (
     <HelperHomeWrap>
-      <Header></Header>
-      <ModeToggleWrap>
-        &nbsp;지도&nbsp;
+      <div>
+        <Header></Header>
+        <ModeToggleWrap mode = {mode}>
+        &nbsp;리스트&nbsp;
         <ModeSwitch>
-          <input type="checkbox" onChange={()=>setMode(!mode)} />
+          <input type="checkbox" onChange={()=>{
+            if(!mode){
+              //DO : gps 현재 위치 얻기
+              if (navigator.geolocation) { // GPS를 지원하면
+                navigator.geolocation.getCurrentPosition(function(position) {
+                  setPosition(position);
+                  setMode(!mode);
+                }, function(error) {
+                  alert(error.message);
+                  console.error(error);
+                }, {
+                  enableHighAccuracy: false,
+                  maximumAge: 0,
+                  timeout: Infinity
+                });
+              } else {
+                alert('GPS를 지원하지 않습니다');
+              }
+            }else{
+              setMode(!mode);
+            }
+          }} />
           <ModeSlider></ModeSlider>
         </ModeSwitch>
-        &nbsp;리스트&nbsp;
-      </ModeToggleWrap>
+        &nbsp;지도&nbsp;
+        </ModeToggleWrap>
+      </div>
       {
-        mode ? <HelpMap mode={mode} setMode={setMode} /> : <HelpList mode={mode} setMode={setMode} />
+        mode ? <HelpMap helpList={helpList} mode={mode} setMode={setMode} position={position} /> : <HelpList helpList={helpList} mode={mode} setMode={setMode} />
       }
       <Footer></Footer>
     </HelperHomeWrap>
@@ -35,10 +68,9 @@ const HelperHomeWrap = styled.div`
 const ModeToggleWrap = styled.div`
   display: flex;
   position: absolute;
-  top: 2.8rem;
   right: 0;
-  color: #fff;
-  background-color: rgba(0,0,0,0.4);
+  color: ${props=>props.mode? "#fff": props.theme.colors.titleColor};
+  background-color: ${props=>props.mode? "rgba(0,0,0,0.4)" : null};
   width: 12rem;
   height: 3rem;
   padding-top: 0.5rem;

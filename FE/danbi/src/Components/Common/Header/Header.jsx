@@ -12,15 +12,15 @@ const Header = () => {
   }
   return (
     <>
-    <HeaderWrap>
-      <Logo onClick={mvHome}></Logo>
-      <IconWrap>
-        <AlramBtn onClick={toggleAlram}></AlramBtn>
-        <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
-      </IconWrap>
-      <AlramWrap out={alramFlag}></AlramWrap>
-    </HeaderWrap>
-    <NavBarWrap out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
+      <HeaderWrap>
+        <Logo onClick={mvHome}></Logo>
+        <IconWrap>
+          <AlramBtn onClick={toggleAlram}></AlramBtn>
+          <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
+        </IconWrap>
+        <AlramWrap out={alramFlag}></AlramWrap>
+      </HeaderWrap>
+      <NavBarWrap out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
     </>
   )
 }
@@ -33,7 +33,7 @@ const NavBarWrap = styled.div`
   @media screen and (max-width: 500px) {
     width: 100%;
   }
-  z-index: 1;
+  z-index: 4;
   visibility: ${props => props.out ? 'visible' : 'hidden'};
   animation: ${props => props.out ? fadeIn : fadeOut} 0.5s linear;
   transition: visibility 0.5s linear;
