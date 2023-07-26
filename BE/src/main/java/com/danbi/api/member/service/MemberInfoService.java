@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberInfoService {
 
     private final MemberService memberService;
-    
+
     public MemberInfoResponseDto getMemberInfo(Long memberId) {
         Member member = memberService.findByMemberId(memberId);
         return MemberInfoResponseDto.of(member);
