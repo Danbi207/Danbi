@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PickButton = () => {
+const PickButton = ({setPickModalOpen}) => {
+    const PickShowModal = () => {
+        setPickModalOpen(true);
+    }
     return(
         <PickWrap>
-            <PickBtn>
+            <PickBtn onClick={PickShowModal}>
                 뽑기
             </PickBtn>
         </PickWrap>

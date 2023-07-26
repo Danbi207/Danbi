@@ -7,16 +7,29 @@ import PresetButton from './PresetButton.jsx';
 import Jandi from './Jandi.jsx';
 import GuestBook from './GuestBook.jsx';
 import PresetModal from './PresetModal.jsx';
+import PickButton from './PickButton.jsx';
+import PickModal from './PickModal.jsx';
+import DewPoint from './DewPoint.jsx';
+
+const point = 100;
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
+  const [PickModalOpen, setPickModalOpen] = useState(false);
   return (
     <ProfileWrap>
       <Header />
       <Wrap>
         <UserInfo />
         <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
-        <Jandi />
+        <JandiWrap>
+          <Jandi />
+          <PointWrap>
+            <DewPoint point={point} />
+            <PickButton setPickModalOpen={setPickModalOpen} />
+          </PointWrap>
+        </JandiWrap>
+        {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
         <GuestBook />
         {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
       </Wrap>
@@ -40,5 +53,15 @@ const Wrap = styled.div`
     -ms-user-select: all;
     user-select: all; */
 `;
+
+const JandiWrap = styled.div`
+`
+
+const PointWrap = styled.div`
+  display: flex;
+  justify-content: end;
+  padding-right: 1rem;
+  margin-top: 0.25rem;
+`
 
 export default Profile;

@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import PickButton from './PickButton.jsx';
-import DewPoint from './DewPoint.jsx';
+
 
 const DummyData = [
   [1, 1, 1, 1, 1, 1, 1, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-const point = 100;
 
 const GrassTile = ({ data }) => {
   const tileColor = data ? '#39D353' : 'white';
@@ -32,10 +30,6 @@ const Jandi = () => {
       {DummyData.map((line, index) => (
         <GrassRow key={index} line={line} />
       ))}
-      <Wrap>
-        <DewPoint point={point} />
-        <PickButton />
-      </Wrap>
     </Chart>
   );
 };
@@ -46,7 +40,7 @@ const Chart = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
-  padding: 1rem 1rem;
+  padding: 1rem 1rem 0 1rem;
 `;
 
 const ChartHeader = styled.div`
@@ -72,9 +66,3 @@ const Tile = styled.div`
   background-color: ${(props) => props.color};
   border-radius: 3px;
 `;
-
-const Wrap = styled.div`
-  display: flex;
-  justify-content: end;
-  margin-top: 0.25rem;
-`
