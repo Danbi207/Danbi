@@ -51,11 +51,4 @@ const Wrap = styled.div`
 
 const JandiWrap = styled.div``;
 
-const PointWrap = styled.div`
-  display: flex;
-  justify-content: end;
-  padding-right: 1rem;
-  margin-top: 0.25rem;
-`;
-
 export default Profile;
