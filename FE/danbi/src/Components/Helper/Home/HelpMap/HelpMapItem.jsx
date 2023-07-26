@@ -5,13 +5,46 @@ const HelpMapItem = (props) => {
     <>
       {
         props.help?
-          <HelpMapItemWrap detailMode={props.detailMode} >{props.help.content}</HelpMapItemWrap>
-          :<HelpMapItemWrap/>
+          <HelpMapItemWrap detailMode={props.detailMode} >
+            <RowWrap>
+              <UserWrap>
+                <UserProfile src={props.help.ip.profile_url}></UserProfile>
+                <UserTitle>
+                  <UserName>{props.help.ip.name}</UserName>
+                  <UserPoint>{props.help.ip.accumulate_dew_point}Dew</UserPoint>
+                </UserTitle>
+              </UserWrap>
+              <TimeWrap>
+                <div>{props.help.start_time.split(" ")[0]}</div>
+                <div>{props.help.start_time.split(" ")[1]}~{props.help.end_time.split(" ")[1]}</div>
+              </TimeWrap>
+            </RowWrap>
+            <HelpContent readonly value={props.help.content}></HelpContent>
+            <DetailBtn>상세보기</DetailBtn>
+          </HelpMapItemWrap>
+          :null
       }
     </>
   )
 }
+const UserWrap=styled.div`
+  display: flex;
+`
+const UserProfile = styled.img``
+const UserTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+const UserName = styled.div``
+const UserPoint = styled.div``
+const TimeWrap = styled.div``
+const DetailBtn = styled.button``
+const HelpContent = styled.textarea``
 
+const RowWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
 const slideIn = keyframes`
   from {
     transform: translateY(100%);

@@ -9,8 +9,9 @@ const HelperHome = () => {
   const [position,setPosition] = useState(null);
   return (
     <HelperHomeWrap>
-      <Header></Header>
-      <ModeToggleWrap>
+      <div>
+        <Header></Header>
+        <ModeToggleWrap>
         &nbsp;리스트&nbsp;
         <ModeSwitch>
           <input type="checkbox" onChange={()=>{
@@ -21,6 +22,7 @@ const HelperHome = () => {
                   setPosition(position);
                   setMode(!mode);
                 }, function(error) {
+                  alert(error.message);
                   console.error(error);
                 }, {
                   enableHighAccuracy: false,
@@ -37,7 +39,8 @@ const HelperHome = () => {
           <ModeSlider></ModeSlider>
         </ModeSwitch>
         &nbsp;지도&nbsp;
-      </ModeToggleWrap>
+        </ModeToggleWrap>
+      </div>
       {
         mode ? <HelpMap mode={mode} setMode={setMode} position={position} /> : <HelpList mode={mode} setMode={setMode} />
       }
@@ -56,7 +59,6 @@ const HelperHomeWrap = styled.div`
 const ModeToggleWrap = styled.div`
   display: flex;
   position: absolute;
-  top: 2.8rem;
   right: 0;
   color: #fff;
   background-color: rgba(0,0,0,0.4);
