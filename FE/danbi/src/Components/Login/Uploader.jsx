@@ -47,37 +47,62 @@ const Uploader = () => {
 
   return (
     <div>
-      {/* 이미지 슬라이더 */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
-      {/* <UploadWrap>   */}
-        <button onClick={prevImage}>P</button>
+      <UploadWrap>  
+        <PrevBtn onClick={prevImage}>{"<"}-</PrevBtn>
         <ImgDiv>
-        <img
-          src={imagePreviews[currentImageIndex]}
-          alt=''
-          style={{ width: '300px', height: '300px', margin: '5px'}}
-        />
+          <img
+            src={imagePreviews[currentImageIndex]} alt=''
+          />
         </ImgDiv>
-        <button onClick={nextImage}>N</button>
-      </div>
-      {/* </UploadWrap> */}
+        <NextBtn onClick={nextImage}>-{">"}</NextBtn>
+      </UploadWrap>
 
-      <input type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
+      <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
       
     </div>
   );
 };
+const SubmitInput = styled.input`
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    margin-left: calc((100% - 20rem)/2);
+  }
+  width: 30rem;
+  margin-left: calc((100% - 30rem)/2);
+  margin-top: 1rem;
+`
+
+const PrevBtn = styled.button`
+  position: absolute;
+  font-size: 3rem;
+  left: 1rem;
+`
+
+const NextBtn = styled.button`
+  position: absolute;
+  font-size: 3rem;
+  right: 1rem;
+`
 
 const UploadWrap = styled.div `
-  display: 'flex'; 
-  justify-content: 'center'; 
-  align-items: 'center';
-  margin-top: '10px'
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  position: relative;
 `
 
 const ImgDiv = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
-
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    height: 20rem;
+  }
+  width: 30rem;
+  height: 30rem;
+  & img{
+    width: 100%;
+    height: 100%;
+  }
 `
 
 export default Uploader;
