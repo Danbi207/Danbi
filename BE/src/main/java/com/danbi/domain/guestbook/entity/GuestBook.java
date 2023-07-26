@@ -31,4 +31,8 @@ public class GuestBook extends BaseEntity {
     public void assignMember(Member member) {
         this.member = member;
     }
+
+    public boolean checkMember(Member member) {
+        return this.member == member;
+    }
 }

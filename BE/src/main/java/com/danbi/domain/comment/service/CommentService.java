@@ -43,4 +43,9 @@ public class CommentService {
         return comment;
     }
 
+    @Transactional
+    public void deleteComment(Comment comment) {
+        commentRepository.delete(comment);
+    }
+
 }

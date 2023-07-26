@@ -52,4 +52,12 @@ public class GuestBookController {
         CommentModifyDto.Response response = guestBookCommentService.modifyComment(memberInfoDto.getMemberId(), commentId, request);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{guestbookId}/{commentId}")
+    public ResponseEntity<String> modifyComment(@PathVariable("guestbookId") Long guestBookId,
+                                                @PathVariable Long commentId,
+                                                @MemberInfo MemberInfoDto memberInfoDto) {
+        guestBookCommentService.deleteComment(memberInfoDto.getMemberId(), guestBookId, commentId);
+        return ResponseEntity.ok("댓글 삭제 성공했습니다.");
+    }
 }

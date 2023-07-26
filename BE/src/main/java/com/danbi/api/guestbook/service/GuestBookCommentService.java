@@ -11,6 +11,7 @@ import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.CommentMisMatchMemberException;
+import com.danbi.global.error.exception.GuestBookMisMatchMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,5 +65,30 @@ public class GuestBookCommentService {
                 .build();
     }
 
+    @Transactional
+    public void deleteComment(Long memberId, Long guestBookId, Long commentId) {
+        Member member = memberService.findByMemberId(memberId);
+        GuestBook guestBook = guestBookService.findById(guestBookId);
+        Comment comment = commentService.findById(commentId);
+        
+        // 댓글 관리할 수 있는 권한이 있는지 확인
+        validateCommentManager(comment, member, guestBook);
+
+        commentService.deleteComment(comment);
+    }
+
+    /**
+     *  댓글의 관리 권한은 
+     *  댓글을 작성한 유저이거나 
+     *  댓글이 작성되어 있는 방명록의 주인만 가진다.
+     */
+    private void validateCommentManager(Comment comment, Member member, GuestBook guestBook) {
+        if(!comment.checkCommenter(member)) {
+            throw new CommentMisMatchMemberException(ErrorCode.COMMENT_MISMATCH_MEMBER);
+        }
+        if(!guestBook.checkMember(member)) {
+            throw new GuestBookMisMatchMemberException(ErrorCode.GUESTBOOK_MISMATCH_MEMBER);
+        }
+    }
 
 }
