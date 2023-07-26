@@ -40,6 +40,7 @@ const TextArea = styled.textarea`
   word-break: break-word;
   padding: 0.5rem 0;
   width: 100%;
+  height: 6rem;
   &::placeholder {
     color: #8e8b8b;
   }

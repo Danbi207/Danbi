@@ -2,6 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import example from './example-profile.jpg';
 import send from './Send-black.svg';
+import GuestBookComment from './GuestBookComment';
+
+const Comments = [
+  {
+      'name' : '김민규',
+      'profile_url' : './example-profile.jpg',
+      'content' : '저는 쓸개입니다.',
+      'created_time' : '2023-07-26',
+      'updated_time' : '2023-07-26',
+  },
+  {
+      'name' : '윤태웅',
+      'profile_url' : './example-profile.jpg',
+      'content' : '역시 김민규 좀 그렇네요...',
+      'created_time' : '2023-07-25',
+      'updated_time' : '2023-07-25',
+  },
+]
+
 
 const GuestBook = () => {
   return (
@@ -20,6 +39,9 @@ const GuestBook = () => {
           </ChatForm>
         </ChatSection>
       </ChatWrap>
+      {Comments.map((comment, index) => (
+        <GuestBookComment key={index} comment={comment} />
+      ))}
     </GuestBookWrap>
   );
 };
@@ -38,7 +60,7 @@ const ChatWrap = styled.div`
 const UserDetail = styled.div`
   display: flex;
   margin-left: 1rem;
-  width: 5rem;
+  width: 6rem;
 `;
 
 const ProfileImage = styled.img`
@@ -48,7 +70,8 @@ const ProfileImage = styled.img`
 `;
 
 const UserName = styled.div`
-  margin: 0 0.5rem;
+  width: auto;
+  padding: 0 0 0 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,11 +99,12 @@ const ChatForm = styled.form`
 `;
 
 const Chat = styled.textarea`
+  width: 100%;
+  font-size: 20px;
+  height: 0.5rem;
   margin: 0;
   border: 0;
   background-color: transparent;
-  padding: 1rem;
-  padding-right: 2.5rem;
   outline: none;
   resize: none;
   -ms-overflow-style: none;
@@ -91,7 +115,6 @@ const Chat = styled.textarea`
 
 const SendBtn = styled.button`
   display: flex;
-  justify-content: center;
   align-items: center;
   width: auto;
   height: auto;

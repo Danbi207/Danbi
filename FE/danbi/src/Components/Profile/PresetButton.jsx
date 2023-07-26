@@ -14,7 +14,7 @@ const PresetButton = ({ setModalOpen, ModalOpen }) => {
 
 const PresetBtnWrap = styled.div`
   width: 100%;
-  height: 2rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;

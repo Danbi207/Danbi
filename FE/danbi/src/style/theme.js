@@ -22,6 +22,8 @@ export const dark ={
     sun : `${process.env.PUBLIC_URL}/assets/Sun-black.svg`,
     moon : `${process.env.PUBLIC_URL}/assets/Moon-black.svg`,
     system : `${process.env.PUBLIC_URL}/assets/System-black.svg`,
+
+    dew : `${process.env.PUBLIC_URL}/assets/Dew.svg`,
   }
 } 
 
@@ -49,5 +51,7 @@ export const light ={
     sun : `${process.env.PUBLIC_URL}/assets/Sun-white.svg`,
     moon : `${process.env.PUBLIC_URL}/assets/Moon-white.svg`,
     system : `${process.env.PUBLIC_URL}/assets/System-white.svg`,
+
+    dew : `${process.env.PUBLIC_URL}/assets/Dew.svg`,
   }
 }
