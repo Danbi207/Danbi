@@ -1,0 +1,32 @@
+spring:
+
+
+
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  redis:
+    pool:
+      min-idle: 0 # pool에서 관리하는 idle 최소 커넥션  수
+      max-idle: 8 # pool의 idle 최대 커넥션 수
+      max-active: 8  # pool에 할당될 수 있는 최대 커넥션
+    port: 6379
+    host: 127.0.0.1 # 레디스 서버 호스트
+
+jasypt:
+#  password: ${PASSWORD}
+  password: asdffdqwee.13123
+
+# OAuth - KAKAO
+kakao:
+  client:
+    id: qwerwqer # REST API 키
+    secret: qwerweqr # 보안 - Client Secret
+
+token:
+  secret: qwerqwer # JWT secret key
+  access-token-expiration-time: 90000000  # 15분 1000(ms) x 60(s) x 15(m)
+  refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
