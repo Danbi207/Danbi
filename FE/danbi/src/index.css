@@ -28,3 +28,11 @@
     width: 100vw;
     height: 100vh;
 }
+
+button {
+    white-space: nowrap;
+}
+
+body {
+    min-width: 300px;
+}

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const Uploader = () => {
+const UserFile = () => {
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
 
@@ -46,42 +46,44 @@ const Uploader = () => {
   };
 
   return (
-    <div>
+    <SubmitWrap>
+      <Question>서류를 제출해주세요</Question>
       <UploadWrap>  
-        <PrevBtn onClick={prevImage}>{"<"}-</PrevBtn>
+        <ImgPrevBtn onClick={prevImage}>{"<"}-</ImgPrevBtn>
         <ImgDiv>
-          <img
-            src={imagePreviews[currentImageIndex]} alt=''
-          />
+          <img src={imagePreviews[currentImageIndex]} alt=''/>
         </ImgDiv>
-        <NextBtn onClick={nextImage}>-{">"}</NextBtn>
+        <ImgNextBtn onClick={nextImage}>-{">"}</ImgNextBtn>
       </UploadWrap>
-
       <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
-      
-    </div>
+      <NextButton>다음</NextButton>
+    </SubmitWrap>
   );
-};
-const SubmitInput = styled.input`
-  @media screen and (max-width: 500px) {
-    width: 20rem;
-    margin-left: calc((100% - 20rem)/2);
-  }
-  width: 30rem;
-  margin-left: calc((100% - 30rem)/2);
-  margin-top: 1rem;
+}
+
+const SubmitWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${props=>props.theme.colors.bgColor};
+`
+const Question = styled.div`
+  width: 100%;
+  height: 5rem;
+  line-height: 5rem;
+  font-size: 1.5rem;
+  text-align: center;
 `
 
-const PrevBtn = styled.button`
+const NextButton  = styled.button`
   position: absolute;
-  font-size: 3rem;
-  left: 1rem;
-`
-
-const NextBtn = styled.button`
-  position: absolute;
-  font-size: 3rem;
-  right: 1rem;
+  left: calc((100% - 20rem)/2);
+  bottom: 1rem;
+  width: 20rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background-color: #6161FF;
+  color: #fff;
+  font-size : 2rem;
 `
 
 const UploadWrap = styled.div `
@@ -91,18 +93,40 @@ const UploadWrap = styled.div `
   position: relative;
 `
 
+const ImgPrevBtn = styled.button`
+  position: absolute;
+  font-size: 3rem;
+  left: 1rem;
+`
+
 const ImgDiv = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
   @media screen and (max-width: 500px) {
     width: 20rem;
     height: 20rem;
   }
-  width: 30rem;
-  height: 30rem;
+  width: 25rem;
+  height: 25rem;
   & img{
     width: 100%;
     height: 100%;
   }
 `
 
-export default Uploader;
+const ImgNextBtn = styled.button`
+  position: absolute;
+  font-size: 3rem;
+  right: 1rem;
+`
+
+const SubmitInput = styled.input`
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    margin-left: calc((100% - 20rem)/2);
+  }
+  width: 30rem;
+  margin-left: calc((100% - 25rem)/2);
+  margin-top: 1rem;
+`
+
+export default UserFile;
