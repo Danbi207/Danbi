@@ -1,23 +1,22 @@
 package com.danbi.api.friend.service;
 
-import com.danbi.api.friend.dto.ResponseFriendDto;
-import com.danbi.domain.friend.entity.Friend;
+import com.danbi.api.friend.dto.response.ResponseFriendDto;
 
 import java.util.List;
 
 public interface FriendInfoService {
 
     // 친구요청보내기
-    void requestFriend(Long memberId);
+    void requestFriend(Long from, Long to);
 
     // 친구요청받기
-    void acceptFriend(Long memberId);
+    void acceptFriend(Long from, Long to);
 
     //친구 삭제
-    void deleteFriend(Long id);
+    void deleteFriend(Long from, Long to);
 
-    // 친구요청 보낸 목록 조회
-    List<ResponseFriendDto> searchMyWaitingRequests(Long id);
+    // 내가 보낸 친구요청 목록 조회
+    List<ResponseFriendDto> searchMyWaitingRequests(Long memberId);
 
     // 친구요청 받은 목록 조회
     List<ResponseFriendDto> searchOtherWaitingRequests(Long memberId);

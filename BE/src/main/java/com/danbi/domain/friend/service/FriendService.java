@@ -7,6 +7,7 @@ import com.danbi.domain.friend.entity.Friend;
 import com.danbi.domain.member.entity.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FriendService {
 
@@ -23,7 +24,7 @@ public interface FriendService {
 
     List<Friend> getFriendByToAndType(Member to, Type type);
 
-    Friend getFriendByFromAndTo(Member from, Member to);
+    Optional<Friend> getFriendByFromAndTo(Member from, Member to);
 
     List<Friend> getFriendByFromOrToAndType(Member from, Member to, Type type, State state);
 

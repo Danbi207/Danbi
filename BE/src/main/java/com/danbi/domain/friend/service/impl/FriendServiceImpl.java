@@ -24,8 +24,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FriendServiceImpl implements FriendService {
 
-    FriendRepository friendRepository;
-    EntityManager em;
+    private final FriendRepository friendRepository;
+    private final EntityManager em;
 
 
     @Override
@@ -69,8 +69,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     @Transactional(readOnly = true)
-    public Friend getFriendByFromAndTo(Member from, Member to) {
-
+    public Optional<Friend> getFriendByFromAndTo(Member from, Member to) {
         return friendRepository.findByFromAndToAndState(from, to, State.ACTIVATE);
     }
 

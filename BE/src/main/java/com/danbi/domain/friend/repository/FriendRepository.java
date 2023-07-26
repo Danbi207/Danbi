@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FriendRepository extends JpaRepository<Friend, Long> {
@@ -18,7 +19,7 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
 
     List<Friend> findAllByToAndTypeAndState(Member to, Type type, State state);
 
-    Friend findByFromAndToAndState(Member from, Member to, State state);
+    Optional<Friend> findByFromAndToAndState(Member from, Member to, State state);
 
     List<Friend> findAllByFromOrToAndTypeAndState(Member from, Member to, Type type, State state);
 }

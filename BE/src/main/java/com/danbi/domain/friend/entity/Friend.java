@@ -38,11 +38,9 @@ public class Friend extends BaseEntity {
 
 
     @Builder
-    public Friend(Member from, Member to, Type type, State state) {
+    public Friend(Member from, Member to) {
         this.from = from;
         this.to = to;
-        this.type = type;
-        this.state = state;
     }
 
     public void update(Friend friend) {
