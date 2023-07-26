@@ -27,6 +27,7 @@ public enum ErrorCode {
     
     // 방명록
     GUESTBOOK_NOT_EXISTS(HttpStatus.BAD_REQUEST, "G-001", "해당 방명록은 존재하지 않습니다."),
+    GUESTBOOK_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST, "G-002", "해당 방명록은 작성자만 수정할 수 있습니다."),
 
     // 댓글
     COMMENT_NOT_EXISTS(HttpStatus.BAD_REQUEST, "C-001", "해당 댓글은 존재하지 않습니다."),
