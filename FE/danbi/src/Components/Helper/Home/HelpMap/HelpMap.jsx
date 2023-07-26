@@ -1,5 +1,5 @@
 import React, { useCallback,useEffect, useRef } from 'react'
-import styled,{ keyframes }  from 'styled-components';
+import styled  from 'styled-components';
 import axios from 'axios';
 import { useState } from 'react';
 import "./HelpMap.css";
@@ -89,9 +89,9 @@ const HelpMap = (props) => {
       });
 
       kakao.maps.event.addListener(marker, 'click', function() {//마커 클릭이벤트
-        setDetailMode(true);
         if(window.innerWidth <= 500){//모바일 버전은 다르게 표시
           setCurHelpIdx(idx);
+          setDetailMode(true);
         }else{
           overlay.setMap(map);//클릭시 오버레이 맵에 표시
         }
@@ -104,42 +104,11 @@ const HelpMap = (props) => {
   return (
     <HelpMapWrap>
       <MapWrap ref={mapRef}></MapWrap>
-      <HelpMapItemWrap detailMode = {detailMode}>
-        <HelpMapItem help={helpList[curHelpIdx]}></HelpMapItem>
-      </HelpMapItemWrap>
+      <HelpMapItem detailMode={detailMode} help={helpList[curHelpIdx]}></HelpMapItem>
     </HelpMapWrap>
   )
 }
 
-const HelpMapItemWrap = styled.div`
-  visibility: ${props => props.detailMode ? 'visible' : 'hidden'};
-  animation: ${props => props.detailMode ? slideIn : slideOut} 0.5s linear;
-  transition: visibility 0.5s linear;
-  transform-origin : 0 100% 0
-`
-const slideIn = keyframes`
-  from {
-    transform: scaleY(0);
-    opacity: 0;
-  }
-
-  to {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-`;
-
-const slideOut = keyframes`
-  from {
-    transform: scaleY(1);
-    opacity: 0;
-  }
-
-  to {
-    transform: scaleY(0);
-    opacity: 1;
-  }
-`;
 const HelpMapWrap = styled.div`
   position: relative;
   width: 100%;
