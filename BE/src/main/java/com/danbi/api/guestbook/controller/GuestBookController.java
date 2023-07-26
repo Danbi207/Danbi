@@ -43,6 +43,7 @@ public class GuestBookController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "댓글 수정 API", description = "댓글 작성자가 자신의 댓글 수정")
     @PostMapping("/{guestbookId}/{commentId}")
     public ResponseEntity<CommentModifyDto.Response> modifyComment(@PathVariable("guestbookId") Long guestBookId,
                                                           @PathVariable Long commentId,
