@@ -23,7 +23,7 @@ public class HelpInfoService {
     public HelpAssignDto assignHelper(Long helpPostId, Long memberId) {
         Member member = memberService.findByMemberId(memberId);
         Help help = helpService.assignHelper(helpPostId, member);
-        helpPostService.delete(helpPostId);
+        helpPostService.assignDelete(helpPostId);
 
         return HelpAssignDto.builder()
                 .helpId(help.getId()).build();
@@ -35,13 +35,13 @@ public class HelpInfoService {
     }
 
     // 도움 완료(Ip)
-    public void ipCompleteHelp(Long helpId) {
-        helpService.ipComplete(helpId);
+    public void ipCompleteHelp(Long helpId, Long memberId) {
+        helpService.ipComplete(helpId, memberId);
     }
 
     // 도움 완료(helper)
-    public void helperCompleteHelp(Long helpId) {
-        helpService.helperComplete(helpId);
+    public void helperCompleteHelp(Long helpId, Long memberId) {
+        helpService.helperComplete(helpId, memberId);
     }
 
 

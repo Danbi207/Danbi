@@ -54,9 +54,8 @@ public class HelpPostInfoService {
     public void deleteHelpPostInfo(Long helpPostId, Long memberId) {
 
         HelpPost helpPost = helpPostService.getHelpPost(helpPostId);
-        if (helpPost.getMember().getId().equals(helpPostId)) {
-            helpPostService.delete(helpPostId);
-        }
+        helpPostService.delete(helpPostId,memberId);
+
 
     }
 
@@ -66,7 +65,7 @@ public class HelpPostInfoService {
         Member member = memberService.findByMemberId(memberId);
 
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
-        HelpPost updatedHelpPost = helpPostService.update(helpPostId, helpPost);
+        HelpPost updatedHelpPost = helpPostService.update(helpPostId, helpPost, memberId);
         return HelpPostResponseDto.of(updatedHelpPost);
     }
 
