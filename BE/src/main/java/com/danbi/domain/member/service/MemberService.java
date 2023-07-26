@@ -3,6 +3,8 @@ package com.danbi.domain.member.service;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
+import com.danbi.domain.point.entity.Point;
+import com.danbi.domain.point.repository.PointRepository;
 import com.danbi.domain.profile.entity.Profile;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.AuthenticationException;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PointRepository pointRepository;
 
     public Member registerMember(Member member) {
         validateDuplicateMember(member);
@@ -32,6 +35,13 @@ public class MemberService {
         Profile profile = Profile.builder()
                 .member(member)
                 .build();
+
+        Point point = Point.builder()
+                .dewPoint((long)10)
+                .accumulateDewPoint((long)10)
+                .profile(profile).build();
+
+        pointRepository.save(point);
 
         member.makeGuestBook(guestBook);
         member.makeProfile(profile);

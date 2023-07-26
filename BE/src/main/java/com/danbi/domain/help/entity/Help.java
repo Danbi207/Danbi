@@ -62,15 +62,24 @@ public class Help extends BaseEntity {
 
     public void updateHelperFlag(boolean helperCompleteFlag) {
         this.helperCompleteFlag = helperCompleteFlag;
+        this.helper.getProfile().getPoint().plusPoint((long)2);
+
         if (ipCompleteFlag && helperCompleteFlag) {
             this.completeFlag = true;
+            this.helper.getProfile().getPoint().plusPoint((long)2);
+            this.ip.getProfile().getPoint().plusPoint((long)2);
+
         }
     }
 
     public void updateIpFlag(boolean ipCompleteFlag) {
         this.ipCompleteFlag = ipCompleteFlag;
+        this.ip.getProfile().getPoint().plusPoint((long)2);
+
         if (ipCompleteFlag && helperCompleteFlag) {
             this.completeFlag = true;
+            this.helper.getProfile().getPoint().plusPoint((long)2);
+            this.ip.getProfile().getPoint().plusPoint((long)2);
         }
     }
 

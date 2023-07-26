@@ -2,6 +2,7 @@ package com.danbi.domain.profile.entity;
 
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.domain.point.entity.Point;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +22,9 @@ public class Profile extends BaseEntity {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
+    private Point point;
 
     @Builder
     public Profile(Long id, Member member) {
