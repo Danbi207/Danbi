@@ -9,7 +9,5 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    Optional<Comment> findCommentByGuestBook(GuestBook guestBook);
-
     List<Comment> findCommentsByGuestBook(GuestBook guestBook);
 }
