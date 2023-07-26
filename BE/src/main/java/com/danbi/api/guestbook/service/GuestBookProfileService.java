@@ -33,7 +33,7 @@ public class GuestBookProfileService {
         GuestBook guestBook = member.getGuestBook();
         log.info("guestBookId={}", guestBook.getId());
 
-        List<Comment> comments = commentService.getCommentsByGuestBook(guestBook);
+        List<Comment> comments = commentService.findByGuestBook(guestBook);
         List<GuestBookResponseDto.GuestBookDto.CommentDto> commentDtos = comments.stream()
                 .map(comment -> GuestBookResponseDto.GuestBookDto.CommentDto.builder()
                         .commentId(comment.getId())
