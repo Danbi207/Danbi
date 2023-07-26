@@ -9,6 +9,8 @@ import com.danbi.domain.friend.entity.Friend;
 import com.danbi.domain.friend.service.FriendService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
+import com.danbi.domain.point.entity.Point;
+import com.danbi.domain.point.service.PointService;
 import com.danbi.domain.profile.service.ProfileService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
@@ -30,6 +32,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
     private final FriendService friendService;
     private final MemberService memberService;
     private final ProfileService profileService;
+    private final PointService pointService;
 
     @Override
     public void requestFriend(Long from, Long to) {
@@ -122,24 +125,28 @@ public class FriendInfoServiceImpl implements FriendInfoService {
     @Override
     public ResponseFriendListDto searchMyFriend(Long memberId) {
         Member member = memberService.findByMemberId(memberId);
-        List<Friend> friendList = friendService.getFriendByFromAndType(member, Type.PERMIT);
+        List<Friend> toFriendList = friendService.getFriendByFromAndType(member, Type.PERMIT);
 
         List<ResponseFriendDto> result = new ArrayList<>();
-        for (Friend friend : friendList) {
+        for (Friend friend : toFriendList) {
+            Point point = pointService.getPoint(friend.getTo().getProfile());
+
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
-                    .dewPoint(-1L)
+                    .dewPoint(point.getDewPoint())
                     .build();
             result.add(responseFriendDto);
         }
 
-        friendList = friendService.getFriendByToAndType(member, Type.PERMIT);
-        for (Friend friend : friendList) {
+        List<Friend> fromFriendList = friendService.getFriendByToAndType(member, Type.PERMIT);
+        for (Friend friend : fromFriendList) {
+            Point point = pointService.getPoint(friend.getFrom().getProfile());
+
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
-                    .dewPoint(-1L)
+                    .dewPoint(point.getDewPoint())
                     .build();
             result.add(responseFriendDto);
         }
