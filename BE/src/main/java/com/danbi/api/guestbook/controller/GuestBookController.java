@@ -1,6 +1,7 @@
 package com.danbi.api.guestbook.controller;
 
 import com.danbi.api.guestbook.dto.CommentDto;
+import com.danbi.api.guestbook.dto.CommentModifyDto;
 import com.danbi.api.guestbook.dto.GuestBookResponseDto;
 import com.danbi.api.guestbook.service.GuestBookCommentService;
 import com.danbi.api.guestbook.service.GuestBookProfileService;
@@ -11,6 +12,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Tag(name = "GuestBook", description = "방명록")
 @RestController
@@ -37,6 +40,15 @@ public class GuestBookController {
                                                              @MemberInfo MemberInfoDto memberInfoDto) {
 
         CommentDto.Response response = guestBookCommentService.saveComment(guestBookId, reqeust, memberInfoDto.getMemberId());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{guestbookId}/{commentId}")
+    public ResponseEntity<CommentModifyDto.Response> modifyComment(@PathVariable("guestbookId") Long guestBookId,
+                                                          @PathVariable Long commentId,
+                                                          @Valid @RequestBody CommentModifyDto.Request request,
+                                                          @MemberInfo MemberInfoDto memberInfoDto) {
+        CommentModifyDto.Response response = guestBookCommentService.modifyComment(memberInfoDto.getMemberId(), commentId, request);
         return ResponseEntity.ok(response);
     }
 }
