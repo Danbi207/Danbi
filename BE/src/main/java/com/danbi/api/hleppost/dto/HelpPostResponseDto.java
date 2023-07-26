@@ -35,6 +35,7 @@ public class HelpPostResponseDto {
     private int totalTime;
 
 
+    @Getter
     @Builder
     @AllArgsConstructor
     public static class Position {
