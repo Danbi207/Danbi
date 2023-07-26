@@ -48,20 +48,32 @@ const Uploader = () => {
   return (
     <div>
       {/* 이미지 슬라이더 */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
+      <UploadWrap>  
         <button onClick={prevImage}>P</button>
-        <img
-          src={imagePreviews[currentImageIndex]}
-          alt={`Preview ${currentImageIndex}`}
-          style={{ width: '300px', height: '300px', margin: '5px' }}
-        />
+        <ImgDiv>
+          <img
+            src={imagePreviews[currentImageIndex]} alt=''width='300px' height='300px'
+          />
+        </ImgDiv>
         <button onClick={nextImage}>N</button>
-      </div>
+      </UploadWrap>
 
       <input type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
       
     </div>
   );
 };
+
+const UploadWrap = styled.div `
+  display: "flex"; 
+  justify-content: 'center'; 
+  align-items: 'center';
+  margin-top: '10px'
+`
+
+const ImgDiv = styled.div`
+  border: 1px solid ${props=>props.theme.colors.titleColor};
+
+`
 
 export default Uploader;
