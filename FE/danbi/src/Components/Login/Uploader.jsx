@@ -48,15 +48,19 @@ const Uploader = () => {
   return (
     <div>
       {/* 이미지 슬라이더 */}
-      <UploadWrap>  
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
+      {/* <UploadWrap>   */}
         <button onClick={prevImage}>P</button>
         <ImgDiv>
-          <img
-            src={imagePreviews[currentImageIndex]} alt=''width='300px' height='300px'
-          />
+        <img
+          src={imagePreviews[currentImageIndex]}
+          alt=''
+          style={{ width: '300px', height: '300px', margin: '5px'}}
+        />
         </ImgDiv>
         <button onClick={nextImage}>N</button>
-      </UploadWrap>
+      </div>
+      {/* </UploadWrap> */}
 
       <input type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
       
@@ -65,7 +69,7 @@ const Uploader = () => {
 };
 
 const UploadWrap = styled.div `
-  display: "flex"; 
+  display: 'flex'; 
   justify-content: 'center'; 
   align-items: 'center';
   margin-top: '10px'
