@@ -38,4 +38,12 @@ public class Comment extends BaseEntity {
         this.member = member;
         this.guestBook = guestBook;
     }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+    public boolean checkCommenter(Member member) {
+        return this.member == member;
+    }
 }
