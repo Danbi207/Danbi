@@ -7,15 +7,15 @@ const UserType = (props) => {
         <TypesSelect>
             <Question>성별을 선택하세요</Question>
             <Boxes>
-                <SelectBTN default='male' select={props.sex} onClick={()=>{props.setSex('male')}}>남</SelectBTN>
-                <SelectBTN default='female' select={props.sex} onClick={()=>{props.setSex('female')}}>여</SelectBTN>
+                <SelectBTN $default='male' $select={props.sex} onClick={()=>{props.setSex('male')}}>남</SelectBTN>
+                <SelectBTN $default='female' $select={props.sex} onClick={()=>{props.setSex('female')}}>여</SelectBTN>
             </Boxes>
         </TypesSelect>
         <TypesSelect>
             <Question>서비스 유형을 선택하세요</Question>
             <Boxes>
-              <SelectBTN default='helper' select={props.usertype} onClick={()=>{props.setUserType('helper')}}>도움 주기</SelectBTN>
-              <SelectBTN default='ip' select={props.usertype} onClick={()=>{props.setUserType('ip')}}>도움 받기</SelectBTN>
+              <SelectBTN $default='helper' $select={props.usertype} onClick={()=>{props.setUserType('helper')}}>도움 주기</SelectBTN>
+              <SelectBTN $default='ip' $select={props.usertype} onClick={()=>{props.setUserType('ip')}}>도움 받기</SelectBTN>
             </Boxes>
         </TypesSelect>
         <NextBTN onClick={()=>{props.setMode(false);}}>다음</NextBTN>
@@ -60,8 +60,8 @@ const SelectBTN = styled.button`
     height: 9.4rem;
     border-radius: 0.75rem;
     font-size: 2.3rem;
-    background-color: ${props=> props.default === props.select ? '#8383FF' : '#E3E3E3'};
-    color : ${props=> props.default === props.select ? '#fff' : '#000'};
+    background-color: ${props=> props.$default === props.$select ? '#8383FF' : '#E3E3E3'};
+    color : ${props=> props.$default === props.$select ? '#fff' : '#000'};
     display: flex;
     justify-content : center;
     align-items : center;

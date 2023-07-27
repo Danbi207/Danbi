@@ -1,23 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import Header from '../Common/Header/Header';
 import Footer from '../Common/Footer/Footer';
+import Preset from './Preset';
 
 import InputCalender from './Calender/InputCalender';
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import StartTime from './Calender/StartTime';
 
+import './CSS/Preset.css'
+
 const HelpRequest = () => {
+  let [reservetype, setReserve] = useState('');
+
   return (
     <RequestWrap>
       <Header></Header>
       <Wrap>
         <Boxes>
-          <SelectBTN>즉시</SelectBTN>
-          <SelectBTN>예약</SelectBTN>
+          <SelectBTN $default='now' $reservetype={reservetype} onClick={()=>{setReserve('now')}}>즉시</SelectBTN>
+          <SelectBTN $default='reserve' $reservetype={reservetype} onClick={()=>{setReserve('reserve')}}>예약</SelectBTN>
         </Boxes>
         <InputCalender></InputCalender>
         <StartTime></StartTime>
+        <Preset></Preset>
 
       </Wrap>
       <Footer></Footer>
@@ -45,8 +50,8 @@ const SelectBTN = styled.button`
     height: 9.4rem;
     border-radius: 0.75rem;
     font-size: 2.3rem;
-    background-color: ${props=> props.default === props.select ? '#8383FF' : '#E3E3E3'};
-    color : ${props=> props.default === props.select ? '#fff' : '#000'};
+    background-color: ${props=> props.$default === props.$reservetype ? '#8383FF' : '#E3E3E3'};
+    color : ${props=> props.$default === props.$reservetype ? '#fff' : '#000'};
     display: flex;
     justify-content : center;
     align-items : center;
@@ -58,6 +63,8 @@ const SelectBTN = styled.button`
         transition: 0.5s;
     }
 ` 
+
+
 
 
 

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components'
 
 import Header from "../Common/Header/Header";
@@ -7,14 +9,19 @@ import Footer from "../Common/Footer/Footer";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css'; 
 
+
 const IPHome = () => {
+  
+  const navigate = useNavigate();
 
   return (
     
     <IpHomeWrap>
       <Header/>
-      <Calendar></Calendar>
-      <RequestBTN>도움 요청하기</RequestBTN>
+      <Wrap>
+        <Calendar/>
+      </Wrap>
+      <RequestBTN onClick={()=>{navigate('/helprequest')}}>도움 요청하기</RequestBTN>
       <Footer/>
     </IpHomeWrap>
   );
@@ -27,6 +34,14 @@ const IpHomeWrap = styled.div`
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+`
+
+const Wrap = styled.div `
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const RequestBTN = styled.button`
