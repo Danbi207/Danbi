@@ -14,7 +14,7 @@ const preset_list = [
     title: '김민규는 쓰레기입니다.',
     content: '끼잉 낑.',
     sequence: 1,
-  },
+  }
 ];
 
 const Preset = () => {
