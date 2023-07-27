@@ -1,4 +1,4 @@
-package com.danbi.api.fcm.client;
+package com.danbi.domain.fcm.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;

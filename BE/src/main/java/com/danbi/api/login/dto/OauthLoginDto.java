@@ -1,5 +1,6 @@
 package com.danbi.api.login.dto;
 
+import com.danbi.domain.member.constant.Role;
 import com.danbi.global.jwt.dto.JwtDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -32,13 +33,16 @@ public class OauthLoginDto {
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private Date refreshTokenExpireTime;
 
-        public static Response of(JwtDto jwtTokenDto) {
+        private Role role;
+
+        public static Response of(JwtDto jwtTokenDto, Role role) {
             return Response.builder()
                     .grantType(jwtTokenDto.getGrantType())
                     .accessToken(jwtTokenDto.getAccessToken())
                     .accessTokenExpireTime(jwtTokenDto.getAccessTokenExpireTime())
                     .refreshToken(jwtTokenDto.getRefreshToken())
                     .refreshTokenExpireTime(jwtTokenDto.getRefreshTokenExpireTime())
+                    .role(role)
                     .build();
         }
 

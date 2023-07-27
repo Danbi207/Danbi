@@ -1,4 +1,4 @@
-package com.danbi.api.fcm.repository;
+package com.danbi.domain.fcm.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
