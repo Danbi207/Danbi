@@ -44,4 +44,20 @@ public class Preset extends BaseEntity {
         this.sequence = sequence;
         this.activeFlag = activeFlag;
     }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateContent(String Content) {
+        this.content = content;
+    }
+
+    public void updateSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
+
+    public boolean checkProfile(Profile profile) {
+        return this.profile == profile;
+    }
 }
