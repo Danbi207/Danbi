@@ -85,45 +85,46 @@ public class FriendInfoServiceImpl implements FriendInfoService {
         friendService.deleteFriend(friendId);
     }
 
+
     @Override
     public ResponseFriendListDto searchMyWaitingRequests(Long memberId) {
+        Member member = memberService.findByMemberId(memberId);
+        List<Friend> friendList = friendService.getFriendByFromAndType(member, Type.WAIT);
+
+        List<ResponseFriendDto> result = new ArrayList<>();
+        for (Friend friend : friendList) {
+            Point point = pointService.getPoint(friend.getTo().getProfile());
+
+            ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .profileUrl(friend.getTo().getProfileUrl())
+                    .name(friend.getTo().getName())
+                    .dewPoint(point.getAccumulateDewPoint())
+                    .build();
+            result.add(responseFriendDto);
+        }
+
+        return ResponseFriendListDto.builder().result(result).build();
+    }
+
+    @Override
+    public ResponseFriendListDto searchOtherWaitingRequests(Long memberId) {
         Member member = memberService.findByMemberId(memberId);
         List<Friend> friendList = friendService.getFriendByToAndType(member, Type.WAIT);
 
         List<ResponseFriendDto> result = new ArrayList<>();
         for (Friend friend : friendList) {
-//            Point point = pointService.getPoint(friend.getFrom().getProfile());
+            Point point = pointService.getPoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                             .profileUrl(friend.getFrom().getProfileUrl())
                             .name(friend.getFrom().getName())
-                            .dewPoint(-1L)
+                            .dewPoint(point.getAccumulateDewPoint())
                             .build();
             result.add(responseFriendDto);
         }
 
         return ResponseFriendListDto.builder().result(result).build();
 
-    }
-
-    @Override
-    public ResponseFriendListDto searchOtherWaitingRequests(Long memberId) {
-        Member member = memberService.findByMemberId(memberId);
-        List<Friend> friendList = friendService.getFriendByFromAndType(member, Type.WAIT);
-
-        List<ResponseFriendDto> result = new ArrayList<>();
-        for (Friend friend : friendList) {
-//            Point point = pointService.getPoint(friend.getTo().getProfile());
-
-            ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
-                    .profileUrl(friend.getTo().getProfileUrl())
-                    .name(friend.getTo().getName())
-                    .dewPoint(-1L)
-                    .build();
-            result.add(responseFriendDto);
-        }
-
-        return ResponseFriendListDto.builder().result(result).build();
     }
 
     @Override
@@ -138,19 +139,19 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
-                    .dewPoint(-1L)
+                    .dewPoint(point.getAccumulateDewPoint())
                     .build();
             result.add(responseFriendDto);
         }
 
         List<Friend> fromFriendList = friendService.getFriendByToAndType(member, Type.PERMIT);
         for (Friend friend : fromFriendList) {
-//            Point point = pointService.getPoint(friend.getFrom().getProfile());
+            Point point = pointService.getPoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
-                    .dewPoint(-1L)
+                    .dewPoint(point.getAccumulateDewPoint())
                     .build();
             result.add(responseFriendDto);
         }
