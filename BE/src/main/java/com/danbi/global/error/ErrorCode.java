@@ -53,7 +53,11 @@ public enum ErrorCode {
     HELP_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"H-003","해당 도움의 ip와 요청자가 동일합니다."),
 
     // Point
-    POINT_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"P-001","프로필의 주인과 사용자가 동일하지 않습니다.")
+    POINT_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"P-001","프로필의 주인과 사용자가 동일하지 않습니다."),
+
+    // Alarm
+    ALARM_NOT_EXISTS(HttpStatus.BAD_REQUEST,"AL-001","해당 알림은 존재하지 않습니다."),
+    FORBIDDEN_ALARM(HttpStatus.BAD_REQUEST,"AL-002","해당 계정의 알림이 아닙니다."),
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

@@ -5,6 +5,7 @@ import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.member.entity.Member;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,5 +41,27 @@ public class Alarm extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private Type type;
+
+    @Builder
+    public Alarm(Member member, String title, Boolean read_flag, State state, String content, Type type) {
+        this.member = member;
+        this.title = title;
+        this.read_flag = read_flag;
+        this.state = state;
+        this.content = content;
+        this.type = type;
+    }
+
+    public void update(Alarm alarm) {
+        this.member = alarm.getMember();
+        this.title = alarm.getTitle();
+        this.read_flag = alarm.getRead_flag();
+        this.state = alarm.getState();
+        this.content = alarm.getContent();
+        this.type = alarm.getType();
+    }
+
+    public void delete(){
+        this.state = State.DESTROY;}
 
 }
