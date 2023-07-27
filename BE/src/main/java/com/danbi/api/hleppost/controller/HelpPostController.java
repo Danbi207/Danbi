@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Tag(name = "HelpPost", description = "도움 요청 게시글")
 @RestController
 @RequestMapping("/api/v1/help")
@@ -26,22 +28,26 @@ public class HelpPostController {
 
     @Operation(summary = "도움 요청 게시글 등록 API", description = "도움 요청 게시글 등록 API")
     @PostMapping("/create")  // 도움 요청 게시글, 도움 게시글 생성
-    public ResponseEntity<HelpPostResponseDto> createHelpPost(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody HelpPostRequestDto helpPostRequestDto) {
+    public ResponseEntity<HelpPostResponseDto> createHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
+                                                              @Valid @RequestBody HelpPostRequestDto helpPostRequestDto) {
         HelpPostResponseDto helpPostInfo = helpPostInfoService.getHelpPostInfo(memberInfoDto.getMemberId(), helpPostRequestDto);
         return ResponseEntity.ok(helpPostInfo);
     }
 
     @Operation(summary = "도움 요청 게시글 삭제 API", description = "도움 요청 게시글 삭제 API")
-    @DeleteMapping("/{helppost_id}")  // TODO : 작성자와 삭제 요청자 동일한지 검증 필요
-    public ResponseEntity<String> deleteHelpPost(@PathVariable Long helppost_id, @MemberInfo MemberInfoDto memberInfoDto) {
-        helpPostInfoService.deleteHelpPostInfo(helppost_id,memberInfoDto.getMemberId());
+    @DeleteMapping("/{helppost_id}")
+    public ResponseEntity<String> deleteHelpPost(@PathVariable("helppost_id") Long helpPostId,
+                                                 @MemberInfo MemberInfoDto memberInfoDto) {
+        helpPostInfoService.deleteHelpPostInfo(helpPostId,memberInfoDto.getMemberId());
         return ResponseEntity.ok("도움요청 게시글 삭제에 성공했습니다");
     }
 
     @Operation(summary = "도움 요청 게시글 수정 API", description = "도움 요청 게시글 수정 API")
-    @PutMapping("/{helppost_id}")  // TODO : 작성자와 수정 요청자 동일한지 검증 필요
-    public ResponseEntity<HelpPostResponseDto> updateHelpPost(@PathVariable Long helppost_id, @MemberInfo MemberInfoDto memberInfoDto,@RequestBody HelpPostRequestDto helpPostRequestDto) {
-        HelpPostResponseDto helpPostInfo = helpPostInfoService.updateHelpPostInfo(helppost_id, memberInfoDto.getMemberId(), helpPostRequestDto);
+    @PutMapping("/{helppost_id}")
+    public ResponseEntity<HelpPostResponseDto> updateHelpPost(@PathVariable("helppost_id") Long helpPostId,
+                                                              @MemberInfo MemberInfoDto memberInfoDto,
+                                                              @Valid @RequestBody HelpPostRequestDto helpPostRequestDto) {
+        HelpPostResponseDto helpPostInfo = helpPostInfoService.updateHelpPostInfo(helpPostId, memberInfoDto.getMemberId(), helpPostRequestDto);
         return ResponseEntity.ok(helpPostInfo);
     }
 
@@ -61,8 +67,8 @@ public class HelpPostController {
 
     @Operation(summary = "도움요청 게시글 상세 조회 API", description = "도움요청 게시글 상세 조회 API")
     @GetMapping("/{helppost_id}")
-    public ResponseEntity<DetailHelpPostDto> searchAllHelpPost(@PathVariable Long helppost_id) {
-        DetailHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailHelpPost(helppost_id);
+    public ResponseEntity<DetailHelpPostDto> searchAllHelpPost(@PathVariable("helppost_id") Long helpPostId) {
+        DetailHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailHelpPost(helpPostId);
         return ResponseEntity.ok(detailHelpPostDto);
     }
 

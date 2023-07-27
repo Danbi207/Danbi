@@ -21,8 +21,6 @@ public class ItemService {
 
     @PersistenceContext
     private final EntityManager em;
-
-    private final PointService pointService;
     private final ItemRepository itemRepository;
 
     public ItemVo getRandomColor() {

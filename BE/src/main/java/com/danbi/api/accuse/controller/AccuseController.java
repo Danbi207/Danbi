@@ -33,7 +33,7 @@ public class AccuseController {
     @PostMapping("/cancel/{accuse_id}") // TODO : 후에 신고자와 취소자 동일한지 검증 필요
     public ResponseEntity<String> cancelAccuse(@PathVariable Long accuse_id ,@MemberInfo MemberInfoDto memberInfoDto) {
         accuseInfoService.cancelAccuse(accuse_id);
-        return ResponseEntity.ok("신고 성공 하였습니다.");
+        return ResponseEntity.ok("신고 취소 되었습니다.");
     }
 
     @Operation(summary = "내가 신고한 목록 조회 API", description = "내가 신고한 목록 조회 API")
@@ -51,10 +51,17 @@ public class AccuseController {
     }
 
     @Operation(summary = "신고 상세 조회 API", description = "신고 상세 조회 API")
-    @GetMapping("/{accuse_id}}")
+    @GetMapping("/{accuse_id}")
     public ResponseEntity<AccuseDetailResponseDto> detailAccuse(@PathVariable Long accuse_id) {
         AccuseDetailResponseDto accuseDetailResponseDto = accuseInfoService.detailAccuse(accuse_id);
         return ResponseEntity.ok(accuseDetailResponseDto);
+    }
+
+    @Operation(summary = "신고 승인 API", description = "신고 승인 API")
+    @GetMapping("/approval/{accuse_id}")
+    public ResponseEntity<String> approveAccuse(@PathVariable Long accuse_id) {
+        accuseInfoService.approveAccuse(accuse_id);
+        return ResponseEntity.ok("승인 되었습니다.");
     }
 
 }

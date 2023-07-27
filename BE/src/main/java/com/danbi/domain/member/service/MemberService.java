@@ -1,8 +1,14 @@
 package com.danbi.domain.member.service;
 
+import com.danbi.domain.Item.constant.Color;
+import com.danbi.domain.Item.constant.Rank;
+import com.danbi.domain.Item.entity.Item;
+import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
+import com.danbi.domain.point.entity.Point;
+import com.danbi.domain.point.repository.PointRepository;
 import com.danbi.domain.profile.entity.Profile;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.AuthenticationException;
@@ -16,12 +22,15 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PointRepository pointRepository;
+    private final ItemRepository itemRepository;
 
+    @Transactional
     public Member registerMember(Member member) {
         validateDuplicateMember(member);
 
@@ -32,6 +41,18 @@ public class MemberService {
         Profile profile = Profile.builder()
                 .member(member)
                 .build();
+
+        Point point = Point.builder()
+                .dewPoint((long)100)
+                .accumulateDewPoint((long)100)
+                .profile(profile).build();
+        pointRepository.save(point);
+
+        Item item = Item.builder()
+                .color(Color.BLACK)
+                .rank(Rank.SILVER)
+                .profile(profile).build();
+        itemRepository.save(item);
 
         member.makeGuestBook(guestBook);
         member.makeProfile(profile);
@@ -46,12 +67,10 @@ public class MemberService {
         }
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 
-    @Transactional(readOnly = true)
     public Member findByRefreshToken(String refreshToken) {
         Member member = memberRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new AuthenticationException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));

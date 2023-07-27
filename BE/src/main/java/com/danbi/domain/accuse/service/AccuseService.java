@@ -53,7 +53,7 @@ public class AccuseService {
     }
 
     public List<Accuse> myAccuseStack(Member member) {
-        List<Accuse> memberList = accuseRepository.findByTargetMember(member);
+        List<Accuse> memberList = accuseRepository.findApprovalAccusesByMember(member);
         return memberList;
     }
 

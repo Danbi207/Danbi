@@ -1,6 +1,7 @@
 package com.danbi.api.guestbook.controller;
 
 import com.danbi.api.guestbook.dto.CommentDto;
+import com.danbi.api.guestbook.dto.CommentModifyDto;
 import com.danbi.api.guestbook.dto.GuestBookResponseDto;
 import com.danbi.api.guestbook.service.GuestBookCommentService;
 import com.danbi.api.guestbook.service.GuestBookProfileService;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Tag(name = "GuestBook", description = "방명록")
 @RestController
 @RequestMapping("/api/v1/profile/guestbook")
@@ -21,6 +24,7 @@ public class GuestBookController {
     private final GuestBookProfileService guestBookProfileService;
     private final GuestBookCommentService guestBookCommentService;
 
+    // TODO: 페이징 처리 필요
     @Operation(summary = "해당 프로필의 방명록 조회 API", description = "프로필의 Id 값으로 해당 방명록 조회")
     @GetMapping("/{profileId}")
     public ResponseEntity<GuestBookResponseDto> getGuestBook(@PathVariable Long profileId) {
@@ -37,5 +41,23 @@ public class GuestBookController {
 
         CommentDto.Response response = guestBookCommentService.saveComment(guestBookId, reqeust, memberInfoDto.getMemberId());
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "댓글 수정 API", description = "댓글 작성자가 자신의 댓글 수정")
+    @PostMapping("/{guestbookId}/{commentId}")
+    public ResponseEntity<CommentModifyDto.Response> modifyComment(@PathVariable("guestbookId") Long guestBookId,
+                                                          @PathVariable Long commentId,
+                                                          @Valid @RequestBody CommentModifyDto.Request request,
+                                                          @MemberInfo MemberInfoDto memberInfoDto) {
+        CommentModifyDto.Response response = guestBookCommentService.modifyComment(memberInfoDto.getMemberId(), commentId, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{guestbookId}/{commentId}")
+    public ResponseEntity<String> modifyComment(@PathVariable("guestbookId") Long guestBookId,
+                                                @PathVariable Long commentId,
+                                                @MemberInfo MemberInfoDto memberInfoDto) {
+        guestBookCommentService.deleteComment(memberInfoDto.getMemberId(), guestBookId, commentId);
+        return ResponseEntity.ok("댓글 삭제 성공했습니다.");
     }
 }

@@ -26,31 +26,33 @@ public class HelpController {
     private final HelpInfoService helpInfoService;
 
     @Operation(summary = "도움 헬퍼 배정 API", description = "도움 헬퍼 배정 API")
-    @PostMapping("/{helppost_id}/start")
-    public ResponseEntity<HelpAssignDto> assignHelper(@PathVariable Long helppost_id, @MemberInfo MemberInfoDto memberInfoDto) {
-        HelpAssignDto helperAssign = helpInfoService.assignHelper(helppost_id, memberInfoDto.getMemberId());
+    @PostMapping("/{helppost_id}/start") // TODO : Ip와 요청자가 동일한지 검증 필요?
+    public ResponseEntity<HelpAssignDto> assignHelper(@PathVariable("helppost_id") Long helpPostId,
+                                                      @MemberInfo MemberInfoDto memberInfoDto) {
+        HelpAssignDto helperAssign = helpInfoService.assignHelper(helpPostId, memberInfoDto.getMemberId());
         return ResponseEntity.ok(helperAssign);
     }
 
-
     @Operation(summary = "도움 취소 API", description = "도움 취소 API")
     @PostMapping("/{help_id}/cancel")
-    public ResponseEntity<String> cancelHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
-        helpInfoService.cancelHelp(help_id);
+    public ResponseEntity<String> cancelHelp(@PathVariable("help_id") Long helpId) {
+        helpInfoService.cancelHelp(helpId);
         return ResponseEntity.ok("도움 취소 완료하였습니다.");
     }
 
     @Operation(summary = "IP 도움 완료 API", description = "IP 도움 완료 API")
     @PostMapping("/success/ip/{help_id}")
-    public ResponseEntity<String> ipCompleteHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
-        helpInfoService.ipCompleteHelp(help_id);
+    public ResponseEntity<String> ipCompleteHelp(@PathVariable("help_id") Long helpId,
+                                                 @MemberInfo MemberInfoDto memberInfoDto) {
+        helpInfoService.ipCompleteHelp(helpId, memberInfoDto.getMemberId());
         return ResponseEntity.ok("도움 완료 승인하였습니다.");
     }
 
     @Operation(summary = "Helper 도움 완료 API", description = "Helper 도움 완료 API")
     @PostMapping("/success/helper/{help_id}")
-    public ResponseEntity<String> helperCompleteHelp(@PathVariable Long help_id) { // TODO : 후에 help의 helper와 id가 동일한지 검증
-        helpInfoService.helperCompleteHelp(help_id);
+    public ResponseEntity<String> helperCompleteHelp(@PathVariable("help_id") Long helpId,
+                                                     @MemberInfo MemberInfoDto memberInfoDto) {
+        helpInfoService.helperCompleteHelp(helpId, memberInfoDto.getMemberId());
         return ResponseEntity.ok("도움 완료 승인하였습니다.");
     }
 

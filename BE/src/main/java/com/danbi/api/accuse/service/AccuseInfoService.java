@@ -95,4 +95,8 @@ public class AccuseInfoService {
                 .state(accuse.getState()).build();
     }
 
+    public void approveAccuse(Long accuseId) {
+        accuseService.approveAccuse(accuseId);
+    }
+
 }

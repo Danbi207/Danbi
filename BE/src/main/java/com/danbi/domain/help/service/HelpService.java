@@ -6,6 +6,8 @@ import com.danbi.domain.help.repository.HelpRepository;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.MisMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,9 @@ public class HelpService {
     public Help assignHelper(Long id, Member member) {
         HelpPost helpPost = helpPostRepository.findById(id).get();
         Help help = helpRepository.findByHelpPost(helpPost).get();
+
+        validateHelMatchMember(helpPost,member);
+
         help.updateHelper(member);
         em.flush();
         return help;
@@ -41,14 +46,38 @@ public class HelpService {
         help.delete(State.DELETE);
     }
 
-    public void ipComplete(Long helpId) {
+    public void ipComplete(Long helpId, Long memberId) {
         Help help = helpRepository.findById(helpId).get();
+
+        validateHelMatchIp(help,memberId);
+
         help.updateIpFlag(true);
     }
 
-    public void helperComplete(Long helpId) {
+    public void helperComplete(Long helpId, Long memberId) {
         Help help = helpRepository.findById(helpId).get();
+
+        validateHelMatchHelper(help,memberId);
+
         help.updateHelperFlag(true);
+    }
+
+
+    private void validateHelMatchMember(HelpPost helpPost, Member memeber) {
+        if(helpPost.getMember().getId() == memeber.getId()) {
+            throw new MisMatchException(ErrorCode.HELP_MISMATCH_HELPER);
+        }
+    }
+    private void validateHelMatchIp(Help help, Long memeberId) {
+        if(help.getIp().getId() != memeberId) {
+            throw new MisMatchException(ErrorCode.HELP_MISMATCH_IP);
+        }
+    }
+
+    private void validateHelMatchHelper(Help help, Long memeberId) {
+        if(help.getHelper().getId() != memeberId) {
+            throw new MisMatchException(ErrorCode.HELP_MISMATCH_HELPER);
+        }
     }
 
 }
