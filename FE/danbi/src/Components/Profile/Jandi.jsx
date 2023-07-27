@@ -6,7 +6,7 @@ const DummyData = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [1, 1, 1, 1, 1, 1, 1, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
@@ -25,8 +25,8 @@ const dividedData = splitIntoPairs(DummyData);
 console.log(dividedData);
 
 const GrassTile = ({ data }) => {
-  const tileColor = data ? '#39D353' : (props) => props.theme.colors.jandibgColor;
-  return <Tile color={tileColor}/>;
+  const tileColor = data ? '#39D353' : 'white';
+  return <Tile color={tileColor} />;
 };
 
 const GrassRow = ({ line }) => {
@@ -106,7 +106,7 @@ const Chart = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
-  width: ${(props) => (props.isActive ? 'auto' : '0')};
+  width: ${(props) => (props.isActive ? 'auto' : '0')}; /* Chart 보이기/숨기기 */
   opacity: ${(props) => (props.isActive ? '1' : '0')};
   transition: all 0.5s;
 `;

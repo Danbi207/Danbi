@@ -23,7 +23,6 @@ const UserInfoWrap = styled.div`
   height: 6.25rem;
   display: flex;
   padding: 0 1rem 0 2.5rem;
-  margin-top: 1rem;
 `;
 
 const ProfileImage = styled.img`

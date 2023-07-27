@@ -22,7 +22,7 @@ const PickModal = ({setPickModalOpen}) => {
         <PickModalWrap>
             {ShowAnimation ? (
                 <AnimationWrap>
-                    <Lottie animationData={PickAnimation} style={{ width: '100%', height: '90%'}} />
+                    <Lottie animationData={PickAnimation} style={{ width: '100%', height: '100%'}} />
                 </AnimationWrap>
             ) : (
                 <Wrap>

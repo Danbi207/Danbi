@@ -26,8 +26,8 @@ const Btn = styled.button`
   height: 2rem;
   margin: 0 1rem;
   border-radius: 5px;
-  color: ${props =>  props.theme.colors.buttontextColor};
-  background-color: ${props => props.theme.colors.buttonbgColor};
+  color: black;
+  background-color: white;
   font-size: 17px;
 `;
 
