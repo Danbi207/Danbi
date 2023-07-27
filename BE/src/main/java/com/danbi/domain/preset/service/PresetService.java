@@ -1,6 +1,7 @@
 package com.danbi.domain.preset.service;
 
 import com.danbi.domain.preset.dto.PresetDto;
+import com.danbi.domain.preset.dto.PresetSequenceDto;
 import com.danbi.domain.preset.entity.Preset;
 import com.danbi.domain.preset.repository.PresetRepository;
 import com.danbi.global.error.ErrorCode;
@@ -10,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,6 +45,18 @@ public class PresetService {
         }
 
         return op.get();
+    }
+
+    @Transactional
+    public List<Preset> updateSequence(List<PresetSequenceDto> presetSequenceDtos) {
+        return presetSequenceDtos.stream()
+                .map(presetSequenceDto -> {
+                    Preset preset = presetSequenceDto.getPreset();
+                    Integer nSequence = presetSequenceDto.getSequence();
+                    preset.updateSequence(nSequence);
+                    return preset;
+                })
+                .collect(Collectors.toList());
     }
 
 }
