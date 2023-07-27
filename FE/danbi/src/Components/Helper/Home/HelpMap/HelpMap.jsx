@@ -10,7 +10,7 @@ const HelpMap = (props) => {
   const [markerList,setMarkerList] = useState([]);
   const [overlayList,setOverlayList] = useState([]);
   const [curHelpIdx,setCurHelpIdx] = useState(0);
-  const [detailMode, setDetailMode] = useState(false);
+  const [detailmode, setDetailMode] = useState(false);
   const getOverlay = useCallback((help)=>{
     return `
     <div class='UserWrap'>
@@ -97,7 +97,7 @@ const HelpMap = (props) => {
   return (
     <HelpMapWrap>
       <MapWrap ref={mapRef}></MapWrap>
-      <HelpMapItem setDetailMode={setDetailMode} detailMode={detailMode} help={props.helpList[curHelpIdx]}></HelpMapItem>
+      <HelpMapItem setDetailMode={setDetailMode} detailmode={detailmode} help={props.helpList[curHelpIdx]}></HelpMapItem>
     </HelpMapWrap>
   )
 }
