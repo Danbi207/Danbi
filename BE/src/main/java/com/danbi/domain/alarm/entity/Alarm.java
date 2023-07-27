@@ -1,5 +1,6 @@
 package com.danbi.domain.alarm.entity;
 
+import com.danbi.domain.alarm.constant.Owner;
 import com.danbi.domain.alarm.constant.State;
 import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.common.BaseEntity;
@@ -37,6 +38,10 @@ public class Alarm extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private State state;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    public Owner owner;
 
     @Lob
     @Column(nullable = false)
