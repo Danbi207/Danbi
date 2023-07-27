@@ -1,6 +1,7 @@
 package com.danbi.api.preset.controller;
 
 import com.danbi.api.preset.dto.PresetCreateDto;
+import com.danbi.api.preset.dto.PresetSequenceUpdateDto;
 import com.danbi.api.preset.dto.PresetUpdateDto;
 import com.danbi.api.preset.service.PresetManageService;
 import com.danbi.global.resolver.MemberInfo;
@@ -29,12 +30,20 @@ public class PresetController {
 
     @Operation(summary = "프리셋 1개 내용 수정 API", description = "프리셋 수정")
     @PostMapping("/update/{presetId}")
-    public ResponseEntity<PresetUpdateDto.Response> createPreset(@PathVariable Long presetId,
+    public ResponseEntity<PresetUpdateDto.Response> updatePreset(@PathVariable Long presetId,
                                                                  @RequestBody PresetUpdateDto.Request requestDto,
                                                                  @MemberInfo MemberInfoDto memberInfoDto) {
         PresetUpdateDto.Response response = presetManageService.modifyPresetBody(presetId,
                                                                                 requestDto,
                                                                                 memberInfoDto.getMemberId());
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "프리셋 순서 수정 API", description = "프리셋 순서 수정")
+    @PostMapping("/sequence")
+    public ResponseEntity<PresetSequenceUpdateDto.Response> updatePresetSequence(@RequestBody PresetSequenceUpdateDto.Request requestDto,
+                                                                                 @MemberInfo MemberInfoDto memberInfoDto) {
+        PresetSequenceUpdateDto.Response response = presetManageService.updateSequence(requestDto, memberInfoDto.getMemberId());
         return ResponseEntity.ok(response);
     }
 

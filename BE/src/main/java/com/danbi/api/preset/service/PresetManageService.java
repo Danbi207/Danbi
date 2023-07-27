@@ -1,10 +1,12 @@
 package com.danbi.api.preset.service;
 
 import com.danbi.api.preset.dto.PresetCreateDto;
+import com.danbi.api.preset.dto.PresetSequenceUpdateDto;
 import com.danbi.api.preset.dto.PresetUpdateDto;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.domain.preset.dto.PresetDto;
+import com.danbi.domain.preset.dto.PresetSequenceDto;
 import com.danbi.domain.preset.entity.Preset;
 import com.danbi.domain.preset.service.PresetService;
 import com.danbi.domain.profile.entity.Profile;
@@ -14,6 +16,10 @@ import com.danbi.global.error.exception.mismatch.PresetMisMatchMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -69,6 +75,34 @@ public class PresetManageService {
                 .title(updatedPreset.getTitle())
                 .content(updatedPreset.getContent())
                 .sequence(updatedPreset.getSequence())
+                .build();
+    }
+
+    @Transactional
+    public PresetSequenceUpdateDto.Response updateSequence(PresetSequenceUpdateDto.Request request, Long memberId) {
+        Profile profile = memberService.findByMemberId(memberId).getProfile();
+
+        List<PresetSequenceDto> presetSequenceDtos = request.getPresets()
+                .stream()
+                .map(presetDto -> {
+                    Preset preset = presetService.findById(presetDto.getId());
+                    return new PresetSequenceDto(preset, presetDto.getSequence());
+                })
+                .collect(Collectors.toList());
+
+        List<Preset> presets = presetService.updateSequence(presetSequenceDtos);
+
+        List<PresetSequenceUpdateDto.Response.PresetDto> presetDtos = presets.stream()
+                .map(preset -> PresetSequenceUpdateDto.Response.PresetDto.builder()
+                        .id(preset.getId())
+                        .title(preset.getTitle())
+                        .content(preset.getContent())
+                        .sequence(preset.getSequence())
+                        .build())
+                .collect(Collectors.toList());
+
+        return PresetSequenceUpdateDto.Response.builder()
+                .presets(presetDtos)
                 .build();
     }
 
