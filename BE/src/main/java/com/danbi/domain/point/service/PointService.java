@@ -5,6 +5,7 @@ import com.danbi.domain.point.repository.PointRepository;
 import com.danbi.domain.profile.entity.Profile;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.MisMatchException;
+import com.danbi.global.error.exception.NegativePointException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +39,10 @@ public class PointService {
 
     public Long pickItem(Profile profile) {
         Point point = pointRepository.findByProfile(profile).get();
-        point.pick((long)3);
+
+        validatePointToItem(point);
+
+        point.pick(3L);
         em.flush();
         return point.getDewPoint();
     }
@@ -47,6 +51,12 @@ public class PointService {
     private void validateProfile(Profile profile, Long memberId) {
         if (profile.getMember().getId() != memberId) {
             throw new MisMatchException(ErrorCode.POINT_MISMATCH_MEMBER);
+        }
+    }
+
+    private void validatePointToItem(Point point) {
+        if (point.getDewPoint() - 3L < 0) {
+            throw new NegativePointException(ErrorCode.ITEM_NEGATIVE_POINT);
         }
     }
 }
