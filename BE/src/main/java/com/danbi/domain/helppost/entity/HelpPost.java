@@ -67,7 +67,7 @@ public class HelpPost extends BaseEntity {
     public void update(HelpPost helpPost) {
         this.content = helpPost.getContent();
         this.latitude = helpPost.getLatitude();
-        this.longitude = helpPost.getLatitude();
+        this.longitude = helpPost.getLongitude();
         this.startTime = helpPost.getStartTime();
         this.endTime = helpPost.getEndTime();
         this.totalTime = helpPost.getTotalTime();

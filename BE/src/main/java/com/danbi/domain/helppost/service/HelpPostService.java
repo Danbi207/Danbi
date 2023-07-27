@@ -4,6 +4,8 @@ import com.danbi.domain.helppost.constant.State;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.MisMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,19 +28,32 @@ public class HelpPostService {
         return helpPostRepository.save(helpPost);
     }
 
-    public HelpPost update(Long id, HelpPost helpPost) {
+    public HelpPost update(Long id, HelpPost helpPost, Long memberId) {
         HelpPost updatedHelpPost = helpPostRepository.findById(id).get();
+
+        validateHelpPostMatchMember(updatedHelpPost, memberId);
+
         updatedHelpPost.update(helpPost);
         em.flush();
         return updatedHelpPost;
     }
 
-    public void delete(Long id) {
+    public void delete(Long id, Long memberId) {
         HelpPost deletedHelpPost = helpPostRepository.findById(id).get();
-        if (deletedHelpPost.getState() == State.ACTIVATE) {
-            deletedHelpPost.delete(State.DELETE);
-        } else {
-            deletedHelpPost.delete(State.ACTIVATE);
+
+        validateHelpPostMatchMember(deletedHelpPost, memberId);
+
+        deletedHelpPost.delete(State.DELETE);
+    }
+
+    public void assignDelete(Long id) {
+        HelpPost deletedHelpPost = helpPostRepository.findById(id).get();
+        deletedHelpPost.delete(State.DELETE);
+    }
+
+    private void validateHelpPostMatchMember(HelpPost helpPost, Long memberId) {
+        if(helpPost.getMember().getId() != memberId) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_MEMBER);
         }
     }
 

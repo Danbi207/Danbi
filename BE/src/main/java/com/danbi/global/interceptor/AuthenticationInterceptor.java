@@ -4,6 +4,7 @@ import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.AuthenticationException;
 import com.danbi.global.jwt.constant.TokenType;
 import com.danbi.global.jwt.service.TokenManager;
+import com.danbi.global.redis.RedisUtil;
 import com.danbi.global.util.AuthorizationHeaderUtils;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
     private final TokenManager tokenManager;
+    private final RedisUtil redisUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -35,6 +37,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         String tokenType = tokenClaims.getSubject();
         if(!TokenType.isAccessToken(tokenType)) {
             throw new AuthenticationException(ErrorCode.NOT_ACCESS_TOKEN_TYPE);
+        }
+
+        // 4. redis에서 black-list에 들어있는지 확인
+        boolean isBlackList = redisUtil.hasKeyBlackList(token);
+        if(isBlackList) {
+            throw new AuthenticationException(ErrorCode.ACCESS_TOKEN_EXPIRED);
         }
 
         return true;

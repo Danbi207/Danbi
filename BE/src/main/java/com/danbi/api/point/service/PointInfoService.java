@@ -20,7 +20,7 @@ public class PointInfoService {
 
     // 누적 듀 포인트 조회(프로필 조회)
     public AccumulatePointResponseDto getAccumulatePoint(Long profileId) {
-        Profile profile = profileService.getProfile(profileId);
+        Profile profile = profileService.getProfileById(profileId);
         Point point = pointService.getPoint(profile);
         return AccumulatePointResponseDto.builder()
                 .accumulateDewPoint(point.getAccumulateDewPoint()).build();
@@ -28,7 +28,7 @@ public class PointInfoService {
 
     // 현재 듀 포인트 조회(사용자)
     public PointResponseDto getPoint(Long profileId) {
-        Profile profile = profileService.getProfile(profileId);
+        Profile profile = profileService.getProfileById(profileId);
         Point point = pointService.getPoint(profile);
         return PointResponseDto.builder()
                 .dewPoint(point.getDewPoint()).build();

@@ -2,14 +2,11 @@ package com.danbi.domain.friend.constant;
 
 public enum State {
 
-
-    PERMIT("승인"),
-    WAITE("대기"),
-    REFUSE("거절")
+    ACTIVATE("활성화"),
+    DESTROY("삭제")
     ;
 
     private String description;
-
     State(String description){
         this.description = description;
     }
@@ -17,5 +14,6 @@ public enum State {
     public static State from(String state) {
         return State.valueOf(state.toUpperCase());
     }
+
 
 }

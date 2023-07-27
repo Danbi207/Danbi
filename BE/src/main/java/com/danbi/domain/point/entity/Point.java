@@ -3,6 +3,7 @@ package com.danbi.domain.point.entity;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.profile.entity.Profile;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +18,7 @@ public class Point extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
@@ -31,4 +32,16 @@ public class Point extends BaseEntity {
         this.dewPoint -= price;
     }
 
+    public void plusPoint(Long dew) {
+        this.dewPoint += dew;
+        this.accumulateDewPoint += dew;
+    }
+
+
+    @Builder
+    public Point(Profile profile, Long dewPoint, Long accumulateDewPoint) {
+        this.profile = profile;
+        this.dewPoint = dewPoint;
+        this.accumulateDewPoint = accumulateDewPoint;
+    }
 }

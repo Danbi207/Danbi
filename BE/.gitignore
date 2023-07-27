@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+##firebaseKEy
+firebase_service_key.json

@@ -5,6 +5,7 @@ import com.danbi.domain.Item.constant.Rank;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.profile.entity.Profile;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,4 +37,10 @@ public class Item extends BaseEntity {
         this.rank = rank;
     }
 
+    @Builder
+    public Item(Profile profile, Color color, Rank rank) {
+        this.profile = profile;
+        this.color = color;
+        this.rank = rank;
+    }
 }
