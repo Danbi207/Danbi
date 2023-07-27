@@ -1,9 +1,9 @@
-package com.danbi.api.fcm.service;
+package com.danbi.domain.fcm.service;
 
-import com.danbi.api.fcm.client.FcmClient;
-import com.danbi.api.fcm.dto.FcmMessage;
-import com.danbi.api.fcm.dto.NotificationRequest;
-import com.danbi.api.fcm.repository.FcmTokenRepository;
+import com.danbi.domain.fcm.client.FcmClient;
+import com.danbi.domain.fcm.dto.FcmMessage;
+import com.danbi.domain.fcm.dto.NotificationRequest;
+import com.danbi.domain.fcm.repository.FcmTokenRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;

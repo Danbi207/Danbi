@@ -1,4 +1,4 @@
-package com.danbi.api.fcm.dto;
+package com.danbi.domain.fcm.dto;
 
 import lombok.AccessLevel;
 import lombok.Builder;

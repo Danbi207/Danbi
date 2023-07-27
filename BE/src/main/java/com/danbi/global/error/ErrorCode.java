@@ -37,6 +37,13 @@ public enum ErrorCode {
     NOT_EXIST_FCM_TOKEN(HttpStatus.BAD_REQUEST, "F-001", "해당 회원의 FCM토큰이 없습니다."),
 
 
+    //친구관계
+    FRIEND_NOT_EXISTS(HttpStatus.BAD_REQUEST, "FRI-001","해당 친구관계는 존재하지 않습니다."),
+    ALREADY_REGISTERED_FRIEND(HttpStatus.BAD_REQUEST, "FRI-002", "이미 존재하는 친구관계 입니다."),
+    NOT_MY_FRIEND_REQUEST(HttpStatus.BAD_REQUEST, "FRI-003", "현재 회원의 친구요청이 아닙니다."),
+    NOT_MY_FRIEND(HttpStatus.BAD_REQUEST, "FRI-004", "현재 회원의 친구관계가 아닙니다."),
+
+
     // HelpPost
     HELPPOST_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"HP-001", "해당 도움 요청 게시글의 작성자와 유저가 동일하지 않습니다"),
 
@@ -44,6 +51,7 @@ public enum ErrorCode {
     HELP_MISMATCH_IP(HttpStatus.BAD_REQUEST,"H-001","해당 도움의 IP와 유저가 동일하지 않습니다."),
     HELP_MISMATCH_HELPER(HttpStatus.BAD_REQUEST,"H-002","해당 도움의 Helper와 유저가 동일하지 않습니다."),
     HELP_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"H-003","해당 도움의 ip와 요청자가 동일합니다."),
+
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

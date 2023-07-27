@@ -1,4 +1,4 @@
-package com.danbi.api.fcm.dto;
+package com.danbi.domain.fcm.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
