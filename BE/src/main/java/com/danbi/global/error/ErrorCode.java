@@ -33,6 +33,10 @@ public enum ErrorCode {
     COMMENT_NOT_EXISTS(HttpStatus.BAD_REQUEST, "C-001", "해당 댓글은 존재하지 않습니다."),
     COMMENT_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST, "C-002", "해당 댓글은 작성자만 수정할 수 있습니다."),
 
+    // 프리셋
+    PRESET_NOT_EXISTS(HttpStatus.BAD_REQUEST, "P-001", "해당 프리셋은 존재하지 않습니다."),
+    PRESET_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST, "P-002", "해당 프리셋은 작성자만 접근 할 수 있습니다."),
+
     //FCM
     NOT_EXIST_FCM_TOKEN(HttpStatus.BAD_REQUEST, "F-001", "해당 회원의 FCM토큰이 없습니다."),
 
