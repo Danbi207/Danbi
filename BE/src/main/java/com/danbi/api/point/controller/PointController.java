@@ -33,7 +33,7 @@ public class PointController {
     }
 
     @Operation(summary = "현재 포인트 조회 API", description = "현재 포인트 조회 API")
-    @PostMapping("/now/{profile_id}")
+    @PostMapping("/now/{profile_id}") // 프로필 주인과 사용자가 동일한지 검증
     public ResponseEntity<PointResponseDto> getPoint(@MemberInfo MemberInfoDto memberInfoDto,
                                                      @PathVariable Long profile_id) {
         PointResponseDto point = pointInfoService.getPoint(profile_id, memberInfoDto.getMemberId());

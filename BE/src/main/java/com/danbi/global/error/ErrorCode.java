@@ -58,6 +58,9 @@ public enum ErrorCode {
     // Accuse
     ACCUSE_MISMATCH_TARGET(HttpStatus.BAD_REQUEST,"AC-001","본인을 신고할 수는 없습니다."),
     ACCUSE_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"AC-002","신고자와 취소 요청자가 동일하지 않습니다."),
+
+    // Item
+    ITEM_NEGATIVE_POINT(HttpStatus.BAD_REQUEST,"IT-001","보유중인 포인트가 뽑기에 필요한 포인트 이하입니다."),
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

@@ -24,12 +24,12 @@ public class ItemInfoService {
     private final MemberService memberService;
 
     // 아이템 뽑기
-    public ItemResponseDto pickItem(Long memberId) { // 토큰으로 멤버 얻었다고 가정
+    public ItemResponseDto pickItem(Long memberId) {
 
         Member member = memberService.findByMemberId(memberId);
-        Profile profileByMember = profileService.getProfileByMember(member);
-        Item item = itemService.pickItem(profileByMember);
-        Long dewPoint = pointService.pickItem(profileByMember);
+        Profile profile = profileService.getProfileByMember(member);
+        Item item = itemService.pickItem(profile);
+        Long dewPoint = pointService.pickItem(profile);
 
         return ItemResponseDto.builder()
                 .item(ItemDto.builder()
