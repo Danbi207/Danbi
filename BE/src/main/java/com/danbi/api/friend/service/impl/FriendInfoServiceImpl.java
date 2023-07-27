@@ -92,6 +92,8 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
         List<ResponseFriendDto> result = new ArrayList<>();
         for (Friend friend : friendList) {
+//            Point point = pointService.getPoint(friend.getFrom().getProfile());
+
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                             .profileUrl(friend.getFrom().getProfileUrl())
                             .name(friend.getFrom().getName())
@@ -111,6 +113,8 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
         List<ResponseFriendDto> result = new ArrayList<>();
         for (Friend friend : friendList) {
+//            Point point = pointService.getPoint(friend.getTo().getProfile());
+
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
@@ -134,19 +138,19 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
-                    .dewPoint(point.getDewPoint())
+                    .dewPoint(-1L)
                     .build();
             result.add(responseFriendDto);
         }
 
         List<Friend> fromFriendList = friendService.getFriendByToAndType(member, Type.PERMIT);
         for (Friend friend : fromFriendList) {
-            Point point = pointService.getPoint(friend.getFrom().getProfile());
+//            Point point = pointService.getPoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
-                    .dewPoint(point.getDewPoint())
+                    .dewPoint(-1L)
                     .build();
             result.add(responseFriendDto);
         }
