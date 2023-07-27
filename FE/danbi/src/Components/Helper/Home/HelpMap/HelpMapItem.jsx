@@ -6,8 +6,8 @@ const HelpMapItem = (props) => {
       {
         props.help?
           <>
-            <BackgroundWrap detailMode={props.detailMode} onClick={()=>{props.setDetailMode(false)}}></BackgroundWrap>
-            <HelpMapItemWrap detailMode={props.detailMode} >
+            <BackgroundWrap $detailmode={props.detailmode.toString()} onClick={()=>{props.setDetailMode(false)}}></BackgroundWrap>
+            <HelpMapItemWrap $detailmode={props.detailmode.toString()} >
               <RowWrap>
                 <UserWrap>
                   <UserProfile src={props.help.ip.profile_url}></UserProfile>
@@ -21,7 +21,7 @@ const HelpMapItem = (props) => {
                   </TimeWrap>
                 </UserWrap>
               </RowWrap>
-              <HelpContent readonly value={props.help.content}></HelpContent>
+              <HelpContent>{props.help.content}</HelpContent>
               <DetailBtn>상세보기</DetailBtn>
             </HelpMapItemWrap>
           </>
@@ -37,7 +37,7 @@ const BackgroundWrap = styled.div`
   height: 100%;
   width: 100%;
   z-index: 3;
-  display: ${props=>props.detailMode ? "block" : "none"};
+  display: ${props=>props.$detailmode==="true" ? "block" : "none"};
 `
 
 const UserWrap=styled.div`
@@ -75,14 +75,14 @@ const DetailBtn = styled.button`
   color: #fff;
   border-radius: 1rem;
 `
-const HelpContent = styled.textarea`
+const HelpContent = styled.div`
   width: 100%;
   height: 7rem;
   margin-top: 1rem;
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: #fff;
-  resize: none;
+  border: 1px solid #000;
 `
 
 const RowWrap = styled.div`
@@ -125,8 +125,8 @@ const HelpMapItemWrap = styled.div`
   border-radius: 1rem 1rem 0 0 ;
   padding: 1rem;
 
-  visibility: ${props => props.detailMode ? 'visible' : 'hidden'};
-  animation: ${props => props.detailMode ? slideIn : slideOut} 0.5s linear;
+  visibility: ${props => props.$detailmode==="true" ? 'visible' : 'hidden'};
+  animation: ${props => props.$detailmode==="true" ? slideIn : slideOut} 0.5s linear;
   transition: visibility 0.5s linear;
 `
 export default HelpMapItem
