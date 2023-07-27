@@ -7,10 +7,6 @@ import Footer from "../Common/Footer/Footer";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css'; 
 
-
-// CSS Modules, react-datepicker-cssmodules.css
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
 const IPHome = () => {
 
   return (
