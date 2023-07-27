@@ -59,4 +59,9 @@ public class PresetService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public void delete(Preset preset) {
+        presetRepository.delete(preset);
+    }
+
 }
