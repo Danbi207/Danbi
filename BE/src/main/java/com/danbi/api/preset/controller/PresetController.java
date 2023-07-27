@@ -47,4 +47,11 @@ public class PresetController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/{presetId}")
+    public ResponseEntity<String> deletePreset(@PathVariable Long presetId,
+                                               @MemberInfo MemberInfoDto memberInfoDto) {
+        presetManageService.deletePreset(presetId, memberInfoDto.getMemberId());
+        return ResponseEntity.ok("삭제 완료");
+    }
+
 }

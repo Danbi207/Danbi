@@ -82,8 +82,6 @@ public class PresetManageService {
     public PresetSequenceUpdateDto.Response updateSequence(PresetSequenceUpdateDto.Request request, Long memberId) {
         Profile profile = memberService.findByMemberId(memberId).getProfile();
 
-
-
         List<PresetSequenceDto> presetSequenceDtos = request.getPresets()
                 .stream()
                 .map(presetDto -> {
@@ -107,6 +105,16 @@ public class PresetManageService {
         return PresetSequenceUpdateDto.Response.builder()
                 .presets(presetDtos)
                 .build();
+    }
+
+    @Transactional
+    public void deletePreset(Long presetId, Long memberId) {
+        Profile profile = memberService.findByMemberId(memberId).getProfile();
+        Preset preset = presetService.findById(presetId);
+
+        preset.checkProfile(profile);
+
+        presetService.delete(preset);
     }
 
 }
