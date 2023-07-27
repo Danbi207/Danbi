@@ -24,7 +24,7 @@ public class ItemController {
     private final ItemInfoService itemInfoService;
 
     @Operation(summary = "아이템 뽑기 API", description = "아이템 뽑기 API")
-    @PostMapping("")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
+    @PostMapping("")  // 요청자의 보유 포인트가 뽑기에 필요한 포인트만큼 있는지 검증
     public ResponseEntity<ItemResponseDto> getAccumulatePoint(@MemberInfo MemberInfoDto memberInfoDto) {
         ItemResponseDto itemResponseDto = itemInfoService.pickItem(memberInfoDto.getMemberId());
         return ResponseEntity.ok(itemResponseDto);
