@@ -80,7 +80,7 @@ const UserName = styled.div`
 const ChatSection = styled.div`
   width: 14rem;
   display: flex;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid ${props => props.theme.colors.titleColor};
   align-items: center;
   justify-content: center;
   padding-left: 0.5rem;

@@ -3,19 +3,23 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    accessToken : "",
-    userInfo : null,
+    tokenInfo : {
+      accessToken:null,
+      accessTokenExpireTime:null,
+      grantType:null,
+    },
+    role : null,
   },
   reducers: {
-    setAccessToken : (state,action)=>{
-      state.accessToken = action.payload;
+    setTokenInfo : (state,action)=>{
+      state.tokenInfo = action.payload;
     },
-    setUserInfo : (state,action) =>{
-      state.userInfo = action.payload;
-    },
+    setRole : (state,action) => {
+      state.role = action.payload;
+    }
   },
 });
 
-export const { setAccessToken,setUserInfo } = userSlice.actions;
+export const { setTokenInfo,setRole } = userSlice.actions;
 
 export default userSlice.reducer;

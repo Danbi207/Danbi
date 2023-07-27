@@ -9,6 +9,7 @@ import { getCookie} from './cookie';
 import {setTheme } from "./store/Slice/settingSlice.js";
 import styled from 'styled-components';
 function App() {
+  //FIXME : 자동로그인, accesstoken만료시 재발급
   const dispatch = useDispatch();
   useEffect(()=>{
     //DO : 쿠키에 저장된 theme을 불러와 redux에 저장
