@@ -38,7 +38,6 @@ public class Friend extends BaseEntity {
 
     @Builder
     public Friend(Long id, Member from, Member to, Type type, State state) {
-        this.id = id;
         this.from = from;
         this.to = to;
         this.type = type;

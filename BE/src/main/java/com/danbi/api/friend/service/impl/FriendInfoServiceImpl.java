@@ -93,7 +93,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
         List<ResponseFriendDto> result = new ArrayList<>();
         for (Friend friend : friendList) {
-            Point point = pointService.getPoint(friend.getTo().getProfile());
+            Point point = pointService.getAccumulatePoint(friend.getTo().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getTo().getProfileUrl())
@@ -113,7 +113,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
         List<ResponseFriendDto> result = new ArrayList<>();
         for (Friend friend : friendList) {
-            Point point = pointService.getPoint(friend.getFrom().getProfile());
+            Point point = pointService.getAccumulatePoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                             .profileUrl(friend.getFrom().getProfileUrl())
@@ -134,7 +134,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
         List<ResponseFriendDto> result = new ArrayList<>();
         for (Friend friend : toFriendList) {
-            Point point = pointService.getPoint(friend.getTo().getProfile());
+            Point point = pointService.getAccumulatePoint(friend.getTo().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getTo().getProfileUrl())
@@ -146,7 +146,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
         List<Friend> fromFriendList = friendService.getFriendByToAndType(member, Type.PERMIT);
         for (Friend friend : fromFriendList) {
-            Point point = pointService.getPoint(friend.getFrom().getProfile());
+            Point point = pointService.getAccumulatePoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
                     .profileUrl(friend.getFrom().getProfileUrl())

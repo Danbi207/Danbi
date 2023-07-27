@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +25,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FriendServiceImpl implements FriendService {
 
-    private final FriendRepository friendRepository;
+    @PersistenceContext
     private final EntityManager em;
+    private final FriendRepository friendRepository;
 
 
     @Override
