@@ -5,7 +5,7 @@ import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
 import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
 import IPHome from "../Components/IP/IPHome.jsx";
 import UserSubmit from "../Components/Login/UserSubmit.jsx";
-
+import HelpRequest from "../Components/IP/HelpRequest.jsx";
 
 const routes = [
   {
@@ -35,6 +35,10 @@ const routes = [
   {
     path: "/userSubmit",
     component : UserSubmit,
+  },
+  {
+    path: "/helprequest",
+    component : HelpRequest,
   },
   
 ];
