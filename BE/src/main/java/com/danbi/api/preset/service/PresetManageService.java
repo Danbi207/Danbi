@@ -82,10 +82,13 @@ public class PresetManageService {
     public PresetSequenceUpdateDto.Response updateSequence(PresetSequenceUpdateDto.Request request, Long memberId) {
         Profile profile = memberService.findByMemberId(memberId).getProfile();
 
+
+
         List<PresetSequenceDto> presetSequenceDtos = request.getPresets()
                 .stream()
                 .map(presetDto -> {
                     Preset preset = presetService.findById(presetDto.getId());
+                    preset.checkProfile(profile);
                     return new PresetSequenceDto(preset, presetDto.getSequence());
                 })
                 .collect(Collectors.toList());
