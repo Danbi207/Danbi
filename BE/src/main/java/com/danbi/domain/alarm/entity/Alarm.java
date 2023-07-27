@@ -71,12 +71,16 @@ public class Alarm extends BaseEntity {
         this.state = State.DESTROY;
     }
 
-    public void deleteSender(){
-        this.state=State.SENDER_DESTROY;
+    public void deleteSender() {
+        if (this.state == State.RECEIVER_DESTROY)
+            delete();
+        else this.state = State.SENDER_DESTROY;
     }
-    
-    public void deleteReceiver(){
-        this.state = State.RECEIVER_DESTROY;
+
+    public void deleteReceiver() {
+        if (this.state == State.SENDER_DESTROY)
+            delete();
+        else this.state = State.RECEIVER_DESTROY;
     }
 
 }

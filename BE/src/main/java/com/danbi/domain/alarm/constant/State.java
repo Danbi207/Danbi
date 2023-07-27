@@ -4,7 +4,7 @@ public enum State {
 
     ACTIVATE("활성화"),
     DESTROY("삭제"),
-    SENDER_DESTROY("발신지삭제"),
+    SENDER_DESTROY("발신자삭제"),
     RECEIVER_DESTROY("수신자삭제"),
 
     ;

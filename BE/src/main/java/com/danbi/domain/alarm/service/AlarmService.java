@@ -9,14 +9,23 @@ public interface AlarmService {
 
     Alarm savaAlarm(Alarm alarm);
 
-    Alarm updateAlarm(Long alarmId, Alarm alarm);
+    Alarm updateAlarm(Long memberId, Long alarmId, Alarm alarm);
 
-    void deleteAlarm(Long memberId ,Long alarmId);
+    void deleteAlarm(Long memberId, Long alarmId);
+
+    void deleteAlarmByFrom(Long memberId, Long alarmId);
+
+    void deleteAlarmByTo(Long memberId, Long alarmId);
 
     Alarm getAlarmById(Long memberId, Long alarmId);
 
-    List<Alarm> getAlarmByType(Long memberId , Type type);
+    List<Alarm> getAlarmByFrom(Long memberId);
+
+    List<Alarm> getAlarmByTo(Long memberId);
 
     Alarm getAlarmById(Long alarmId);
 
+    Long countNotReadAlarm(Long memberId);
+
+    List<Alarm> getNotReadAlarm(Long memberId);
 }
