@@ -20,7 +20,7 @@ const HelperHome = () => {
     <HelperHomeWrap>
       <div>
         <Header></Header>
-        <ModeToggleWrap mode = {mode}>
+        <ModeToggleWrap mode = {mode.toString()}>
         &nbsp;리스트&nbsp;
         <ModeSwitch>
           <input type="checkbox" onChange={()=>{
@@ -69,7 +69,7 @@ const ModeToggleWrap = styled.div`
   display: flex;
   position: absolute;
   right: 0;
-  color: ${props=>props.mode? "#fff": props.theme.colors.titleColor};
+  color: ${props=>props.mode==="true"? "#fff": props.theme.colors.titleColor};
   background-color: ${props=>props.mode? "rgba(0,0,0,0.4)" : null};
   width: 12rem;
   height: 3rem;
