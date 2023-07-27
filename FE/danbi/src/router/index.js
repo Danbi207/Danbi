@@ -5,6 +5,7 @@ import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
 import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
 import IPHome from "../Components/IP/IPHome.jsx";
 import UserSubmit from "../Components/Login/UserSubmit.jsx";
+import Detail from "../Components/Detail/Detail.jsx";
 
 
 const routes = [
@@ -36,6 +37,10 @@ const routes = [
     path: "/userSubmit",
     component : UserSubmit,
   },
+  {
+    path: "/detail/:helpPostId",
+    component : Detail,
+  }
   
 ];
 export default routes;
