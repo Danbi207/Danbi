@@ -1,6 +1,7 @@
 package com.danbi.api.preset.controller;
 
 import com.danbi.api.preset.dto.PresetCreateDto;
+import com.danbi.api.preset.dto.PresetUpdateDto;
 import com.danbi.api.preset.service.PresetManageService;
 import com.danbi.global.resolver.MemberInfo;
 import com.danbi.global.resolver.MemberInfoDto;
@@ -8,10 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Preset", description = "프리셋")
 @RestController
@@ -26,6 +24,17 @@ public class PresetController {
     public ResponseEntity<PresetCreateDto.Response> createPreset(@RequestBody PresetCreateDto.Request requestDto,
                                                                  @MemberInfo MemberInfoDto memberInfoDto) {
         PresetCreateDto.Response response = presetManageService.createPreset(requestDto, memberInfoDto.getMemberId());
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "프리셋 1개 내용 수정 API", description = "프리셋 수정")
+    @PostMapping("/update/{presetId}")
+    public ResponseEntity<PresetUpdateDto.Response> createPreset(@PathVariable Long presetId,
+                                                                 @RequestBody PresetUpdateDto.Request requestDto,
+                                                                 @MemberInfo MemberInfoDto memberInfoDto) {
+        PresetUpdateDto.Response response = presetManageService.modifyPresetBody(presetId,
+                                                                                requestDto,
+                                                                                memberInfoDto.getMemberId());
         return ResponseEntity.ok(response);
     }
 
