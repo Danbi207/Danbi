@@ -44,6 +44,9 @@ public enum ErrorCode {
     HELP_MISMATCH_IP(HttpStatus.BAD_REQUEST,"H-001","해당 도움의 IP와 유저가 동일하지 않습니다."),
     HELP_MISMATCH_HELPER(HttpStatus.BAD_REQUEST,"H-002","해당 도움의 Helper와 유저가 동일하지 않습니다."),
     HELP_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"H-003","해당 도움의 ip와 요청자가 동일합니다."),
+
+    // Point
+    POINT_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"P-001","프로필의 주인과 사용자가 동일하지 않습니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
