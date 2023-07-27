@@ -25,8 +25,8 @@ const dividedData = splitIntoPairs(DummyData);
 console.log(dividedData);
 
 const GrassTile = ({ data }) => {
-  const tileColor = data ? '#39D353' : 'white';
-  return <Tile color={tileColor} />;
+  const tileColor = data ? '#39D353' : props => props.theme.colors.jandibgColor;
+  return <Tile $color={tileColor} />;
 };
 
 const GrassRow = ({ line }) => {
@@ -61,7 +61,7 @@ const Jandi = ({ setPickModalOpen, point }) => {
       <Carousel>
         <SliderWrapper>
           {dividedData.map((chart, index) => (
-            <Chart key={index} isActive={currentIndex === index}>
+            <Chart key={index} $isActive={currentIndex === index}>
               {chart.map((line, index) => (
                 <GrassRow line={line} key={index} />
               ))}
@@ -106,8 +106,8 @@ const Chart = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
-  width: ${(props) => (props.isActive ? 'auto' : '0')}; /* Chart 보이기/숨기기 */
-  opacity: ${(props) => (props.isActive ? '1' : '0')};
+  width: ${(props) => (props.$isActive ? 'auto' : '0')}; /* Chart 보이기/숨기기 */
+  opacity: ${(props) => (props.$isActive ? '1' : '0')};
   transition: all 0.5s;
 `;
 
@@ -132,7 +132,7 @@ const Tile = styled.div`
   width: ${(props) => getTileWidth()}px;
   height: 41px;
   margin: 1px;
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => props.$color};
   border-radius: 3px;
 `;
 
