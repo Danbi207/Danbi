@@ -4,7 +4,7 @@ import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.profile.entity.Profile;
 import com.danbi.domain.profile.repository.ProfileRepository;
 import com.danbi.global.error.ErrorCode;
-import com.danbi.global.error.exception.ProfileNotFoundException;
+import com.danbi.global.error.exception.notfound.ProfileNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
