@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const DummyData = [
   [1, 1, 1, 1, 1, 1, 1, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 1, 1, 1, 1, 1, 1, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
@@ -95,7 +95,6 @@ const ChartWrap = styled.div`
 
 const Carousel = styled.div`
   display: flex;
-  transition: transform 0.5s; /* 슬라이드 애니메이션 속도 조정 */
 `;
 
 const SliderWrapper = styled.div`
@@ -109,7 +108,7 @@ const Chart = styled.div`
   height: auto;
   width: ${(props) => (props.isActive ? 'auto' : '0')}; /* Chart 보이기/숨기기 */
   opacity: ${(props) => (props.isActive ? '1' : '0')};
-  transition: opacity 0.5s;
+  transition: all 0.5s;
 `;
 
 const ChartHeader = styled.div`
@@ -122,9 +121,9 @@ const Row = styled.div`
 `;
 
 const getTileWidth = () => {
-  const totalMargins = 16; // Assuming 8px margin on each side of the tile
-  const totalBorders = 0; // Assuming no border on the tile
-  const totalPadding = 32; // Assuming no padding on the tile
+  const totalMargins = 16;
+  const totalBorders = 0;
+  const totalPadding = 32; 
   const availableWidth = window.innerWidth - totalMargins - totalBorders - totalPadding;
   return Math.floor(availableWidth / 8);
 };
