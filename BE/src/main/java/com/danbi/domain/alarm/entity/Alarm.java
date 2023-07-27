@@ -1,6 +1,5 @@
 package com.danbi.domain.alarm.entity;
 
-import com.danbi.domain.alarm.constant.Owner;
 import com.danbi.domain.alarm.constant.State;
 import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.common.BaseEntity;
@@ -39,10 +38,6 @@ public class Alarm extends BaseEntity {
     @Column(nullable = false, length = 20)
     private State state;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    public Owner owner;
-
     @Lob
     @Column(nullable = false)
     private String content;
@@ -74,6 +69,14 @@ public class Alarm extends BaseEntity {
 
     public void delete() {
         this.state = State.DESTROY;
+    }
+
+    public void deleteSender(){
+        this.state=State.SENDER_DESTROY;
+    }
+    
+    public void deleteReceiver(){
+        this.state = State.RECEIVER_DESTROY;
     }
 
 }
