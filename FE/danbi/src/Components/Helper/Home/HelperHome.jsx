@@ -69,8 +69,8 @@ const ModeToggleWrap = styled.div`
   display: flex;
   position: absolute;
   right: 0;
-  color: ${props=>props.mode==="true"? "#fff": props.theme.colors.titleColor};
-  background-color: ${props=>props.mode? "rgba(0,0,0,0.4)" : null};
+  color: ${props=>props.$mode==="true"? "#fff": props.theme.colors.titleColor};
+  background-color: ${props=>props.$mode? "rgba(0,0,0,0.4)" : null};
   width: 12rem;
   height: 3rem;
   padding-top: 0.5rem;

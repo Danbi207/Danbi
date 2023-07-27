@@ -18,9 +18,9 @@ const Header = () => {
           <AlramBtn onClick={toggleAlram}></AlramBtn>
           <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
         </IconWrap>
-        <AlramWrap out={alramFlag}></AlramWrap>
+        <AlramWrap $out={alramFlag}></AlramWrap>
       </HeaderWrap>
-      <NavBarWrap out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
+      <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
     </>
   )
 }
@@ -34,8 +34,8 @@ const NavBarWrap = styled.div`
     width: 100%;
   }
   z-index: 4;
-  visibility: ${props => props.out ? 'visible' : 'hidden'};
-  animation: ${props => props.out ? fadeIn : fadeOut} 0.5s linear;
+  visibility: ${props => props.$out ? 'visible' : 'hidden'};
+  animation: ${props => props.$out ? fadeIn : fadeOut} 0.5s linear;
   transition: visibility 0.5s linear;
   transform-origin : 100% 0 0
 
@@ -111,8 +111,8 @@ const AlramWrap = styled.div`
   background-color: red;
 
   z-index: 1;
-  visibility: ${props => props.out ? 'visible' : 'hidden'};
-  animation: ${props => props.out ? slideIn : slideOut} 0.5s linear;
+  visibility: ${props => props.$out ? 'visible' : 'hidden'};
+  animation: ${props => props.$out ? slideIn : slideOut} 0.5s linear;
   transition: visibility 0.5s linear;
   transform-origin : 100% 0 0
 `
