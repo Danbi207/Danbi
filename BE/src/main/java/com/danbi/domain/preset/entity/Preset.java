@@ -3,6 +3,7 @@ package com.danbi.domain.preset.entity;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.profile.entity.Profile;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,8 +30,18 @@ public class Preset extends BaseEntity {
     private String content;
 
     @Column(nullable = false)
-    private int sequence;
+    private Integer sequence;
 
     @Column(nullable = false)
     private Boolean activeFlag;
+
+    @Builder
+    public Preset(Long id, Profile profile, String title, String content, Integer sequence, Boolean activeFlag) {
+        this.id = id;
+        this.profile = profile;
+        this.title = title;
+        this.content = content;
+        this.sequence = sequence;
+        this.activeFlag = activeFlag;
+    }
 }
