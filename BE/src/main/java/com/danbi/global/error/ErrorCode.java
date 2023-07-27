@@ -53,7 +53,11 @@ public enum ErrorCode {
     HELP_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"H-003","해당 도움의 ip와 요청자가 동일합니다."),
 
     // Point
-    POINT_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"P-001","프로필의 주인과 사용자가 동일하지 않습니다.")
+    POINT_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"P-001","프로필의 주인과 사용자가 동일하지 않습니다."),
+
+    // Accuse
+    ACCUSE_MISMATCH_TARGET(HttpStatus.BAD_REQUEST,"AC-001","본인을 신고할 수는 없습니다."),
+    ACCUSE_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"AC-002","신고자와 취소 요청자가 동일하지 않습니다."),
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

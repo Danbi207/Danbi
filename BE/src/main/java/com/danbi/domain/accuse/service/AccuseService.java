@@ -7,6 +7,8 @@ import com.danbi.domain.accuse.repository.AccuseRepository;
 import com.danbi.domain.accuse.repository.AccuseTableRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.MisMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,14 +34,20 @@ public class AccuseService {
     }
 
     public Accuse createAccuse(Accuse accuse, Long fromId) {
+        validateMember(accuse,fromId);
+
         Accuse savedAccuse = accuseRepository.save(accuse);
         Member member = memberService.findByMemberId(fromId);
         createAccuseTable(accuse,member);
         return savedAccuse;
     }
 
-    public void cancelAccuse(Long accuseId) {
+    public void cancelAccuse(Long accuseId, Long memberId) {
         Accuse accuse = accuseRepository.findById(accuseId).get();
+        AccuseTable accuseTable = accuseTableRepository.findByAccuse(accuse).get();
+
+        validateCancel(accuseTable,memberId);
+
         accuse.updateAccuse(State.REFUSE);
     }
 
@@ -65,4 +73,16 @@ public class AccuseService {
         }
         return accuses;
     }
+
+    private void validateMember(Accuse accuse, Long memberId) {
+        if (accuse.getTargetMember().getId() == memberId) {
+            throw new MisMatchException(ErrorCode.ACCUSE_MISMATCH_TARGET);
+        }
+    }
+    private void validateCancel(AccuseTable accuseTable, Long memberId) {
+        if (accuseTable.getFromMember().getId() != memberId) {
+            throw new MisMatchException(ErrorCode.ACCUSE_MISMATCH_MEMBER);
+        }
+    }
+
 }
