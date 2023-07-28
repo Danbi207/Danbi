@@ -18,13 +18,13 @@ public interface AlarmRepository extends JpaRepository<Alarm, Long> {
 
     List<Alarm> findByToAndStateNotAndStateNot(Member to, State state1, State state2);
 
-    @Query(nativeQuery = true, value = "select * from (" +
-            "select * from Alarm a1 where union " +
-            ""  +
-            ")")
-    List<Alarm> findALLByFromOrTo(Member from, Member to, State state1, State state2);
+//    @Query(nativeQuery = true, value = "select * from (" +
+//            "select * from Alarm a1 where union " +
+//            ""  +
+//            ")")
+//    List<Alarm> findALLByFromOrTo(Member from, Member to, State state1, State state2);
 
-    Long countByReadFlagAndFromAndStateNotAndStateNot(boolean readFlag, Member member, State state1, State state2);
+    Long countByReadFlagAndToAndStateNotAndStateNot(boolean readFlag, Member member, State state1, State state2);
 
-    List<Alarm> findByReadFlagAndStateNotAndStateNot(boolean readFlag, Member member, State state1, State state2);
+    List<Alarm> findByReadFlagAndToAndStateNotAndStateNot(boolean readFlag, Member member, State state1, State state2);
 }
