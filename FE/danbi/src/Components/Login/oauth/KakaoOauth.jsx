@@ -14,10 +14,9 @@ const KaKaoOauth = () => {
     const redirectUrl = `http://${window.location.hostname}${process.env.REACT_APP_KAKAO_OAUTH_REDIRECT_URI}`
     axios({
       method : "post",
-      url : "http://192.168.100.83:8080/api/v1/oauth/kakao/callback",//process.env.REACT_APP_KAKAO_OUATH__URI,
+      url : process.env.REACT_APP_KAKAO_OUATH__URI,
       data : {code,redirectUrl}
     }).then(({data})=>{
-      console.log(data);
       if(data.role === "ROLE_IP_WAIT"){//DO : 서류대기중이면 로그인화면으로 Redirect
         alert("가입승인 대기중입니다!");
         navigate("/", { replace: true });
