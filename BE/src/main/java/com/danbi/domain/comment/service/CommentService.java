@@ -4,7 +4,7 @@ import com.danbi.domain.comment.entity.Comment;
 import com.danbi.domain.comment.repository.CommentRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.global.error.ErrorCode;
-import com.danbi.global.error.exception.CommentNotFoundException;
+import com.danbi.global.error.exception.notfound.CommentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
