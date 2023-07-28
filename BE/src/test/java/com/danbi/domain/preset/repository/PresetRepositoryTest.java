@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class PresetRepositoryTest {
 
     @Autowired
@@ -79,9 +81,9 @@ class PresetRepositoryTest {
         assertThat(presets).hasSize(3)
                 .extracting("id", "title", "content", "sequence")
                 .containsExactlyInAnyOrder(
-                        tuple(1L, "title1", "content1", 0),
-                        tuple(2L, "title2", "content2", 1),
-                        tuple(3L, "title3", "content3", 2)
+                        tuple(savedPreset1.getId(), "title1", "content1", 0),
+                        tuple(savedPreset2.getId(), "title2", "content2", 1),
+                        tuple(savedPreset3.getId(), "title3", "content3", 2)
                 );
     }
 }

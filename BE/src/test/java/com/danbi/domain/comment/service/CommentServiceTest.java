@@ -6,27 +6,27 @@ import com.danbi.domain.comment.repository.CommentRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.guestbook.repository.GuestBookRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class CommentServiceTest {
-
-
 
     @Autowired
     private CommentService commentService;
     @Autowired
     private CommentRepository commentRepository;
-
     @Autowired
     private GuestBookRepository guestBookRepository;
 
@@ -36,40 +36,50 @@ class CommentServiceTest {
     void findByGuestBook() {
         // given
         GuestBook guestBook = GuestBook.builder()
-                .id(1L)
                 .build();
+        GuestBook savedGuestBook = guestBookRepository.save(guestBook);
 
-        Comment comment = Comment.builder()
-                .id(1L)
-                .guestBook(guestBook)
+        Comment comment1 = Comment.builder()
+                .guestBook(savedGuestBook)
                 .content("댓글1")
                 .build();
 
-        guestBookRepository.save(guestBook);
-        commentRepository.save(comment);
+        Comment comment2 = Comment.builder()
+                .guestBook(savedGuestBook)
+                .content("댓글2")
+                .build();
+
+        Comment comment3 = Comment.builder()
+                .guestBook(savedGuestBook)
+                .content("댓글3")
+                .build();
+
+//        commentRepository.saveAll(List.of(comment1, comment2, comment3));
+        Comment savedComment1 = commentRepository.save(comment1);
+        Comment savedComment2 = commentRepository.save(comment2);
+        Comment savedComment3 = commentRepository.save(comment3);
 
         // when
-        List<Comment> comments = commentService.findByGuestBook(guestBook);
+        List<Comment> comments = commentService.findByGuestBook(savedGuestBook);
 
         // then
-        assertThat(comments).hasSize(1);
+        assertThat(comments).hasSize(3)
+                .extracting("id", "content")
+                .containsExactlyInAnyOrder(
+                        tuple(savedComment1.getId(), "댓글1"),
+                        tuple(savedComment2.getId(), "댓글2"),
+                        tuple(savedComment3.getId(), "댓글3")
+                );
     }
 
     @DisplayName("댓글 id로 댓글 조회")
     @Test
     void findById() {
         // given
-        GuestBook guestBook = GuestBook.builder()
-                .id(1L)
-                .build();
-
         Comment comment = Comment.builder()
-                .id(1L)
-                .guestBook(guestBook)
                 .content("댓글1")
                 .build();
 
-        guestBookRepository.save(guestBook);
         Comment savedComment = commentRepository.save(comment);
 
         // when
@@ -77,6 +87,7 @@ class CommentServiceTest {
 
         // then
         assertThat(result.getId()).isEqualTo(savedComment.getId());
+        assertThat(result.getContent()).isEqualTo(savedComment.getContent());
     }
 
     @Test
