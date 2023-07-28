@@ -2,14 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import Header from '../Common/Header/Header';
 import Footer from '../Common/Footer/Footer';
-import Preset from './Preset';
-import Checkbox from './Checkbox';
+import Preset from './HelpRequest/Preset.jsx';
+import Checkbox from './HelpRequest/Checkbox';
 
 import InputCalender from './Calender/InputCalender';
 import StartTime from './Calender/StartTime';
-
-import './CSS/Preset.css'
-
 
 const HelpRequest = () => {
   let [reservetype, setReserve] = useState('');
@@ -26,7 +23,6 @@ const HelpRequest = () => {
         <StartTime></StartTime>
         <Preset></Preset>
         <Checkbox></Checkbox>
-
       </Wrap>
       <Footer></Footer>
     </RequestWrap>
@@ -66,9 +62,5 @@ const SelectBTN = styled.button`
         transition: 0.5s;
     }
 ` 
-
-
-
-
 
 export default HelpRequest;
