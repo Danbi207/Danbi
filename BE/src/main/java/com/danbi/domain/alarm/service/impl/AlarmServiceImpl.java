@@ -102,14 +102,14 @@ public class AlarmServiceImpl implements AlarmService {
     @Override
     public Long countNotReadAlarm(Long memberId) {
         Member findMember = memberService.findByMemberId(memberId);
-        alarmRepository.countByReadFlagAndFromAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
+        alarmRepository.countByReadFlagAndToAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
         return null;
     }
 
     @Override
     public List<Alarm> getNotReadAlarm(Long memberId) {
         Member findMember = memberService.findByMemberId(memberId);
-        return alarmRepository.findByReadFlagAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
+        return alarmRepository.findByReadFlagAndToAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
     }
 
 }
