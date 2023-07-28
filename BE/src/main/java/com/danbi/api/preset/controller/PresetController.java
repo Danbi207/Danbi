@@ -1,9 +1,6 @@
 package com.danbi.api.preset.controller;
 
-import com.danbi.api.preset.dto.PresetCreateDto;
-import com.danbi.api.preset.dto.PresetQueryResponseDto;
-import com.danbi.api.preset.dto.PresetSequenceUpdateDto;
-import com.danbi.api.preset.dto.PresetUpdateDto;
+import com.danbi.api.preset.dto.*;
 import com.danbi.api.preset.service.PresetManageService;
 import com.danbi.global.resolver.MemberInfo;
 import com.danbi.global.resolver.MemberInfoDto;
@@ -34,6 +31,14 @@ public class PresetController {
     public ResponseEntity<PresetQueryResponseDto> getPreset(@PathVariable Long presetId,
                                                               @MemberInfo MemberInfoDto memberInfoDto) {
         PresetQueryResponseDto response = presetManageService.getPreset(presetId, memberInfoDto.getMemberId());
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "프리셋 목록 조회 API", description = "프리셋 목록 조회")
+    @GetMapping
+    public ResponseEntity<PresetListQueryResponseDto> getPresetList(@MemberInfo MemberInfoDto memberInfoDto) {
+
+        PresetListQueryResponseDto response = presetManageService.getPresetList(memberInfoDto.getMemberId());
         return ResponseEntity.ok(response);
     }
 
