@@ -30,6 +30,12 @@ public class AlarmServiceImpl implements AlarmService {
     private final AlarmRepository alarmRepository;
     private final MemberService memberService;
 
+    @Override
+    public List<Alarm> getAlarmList(Long memberId) {
+        Member findMember = memberService.findByMemberId(memberId);
+        return null;
+    }
+
     @Transactional
     @Override
     public Alarm savaAlarm(Alarm alarm) {

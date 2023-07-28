@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface AlarmService {
 
+    List<Alarm> getAlarmList(Long memberId);
+
     Alarm savaAlarm(Alarm alarm);
 
     Alarm updateAlarm(Long memberId, Long alarmId, Alarm alarm);

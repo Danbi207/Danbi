@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
@@ -24,9 +25,11 @@ public class RequestAlarmDto {
     private Long toId;
 
     @JsonProperty("title")
+    @Length(max = 100, message = "제목은 최대 100글자 이내입니다.")
     private String title;
 
     @JsonProperty("content")
+    @Length(max = 1000, message = "내용은 최대 1000글자 이내입니다.")
     private String content;
 
     @JsonProperty("type")
