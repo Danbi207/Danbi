@@ -65,4 +65,10 @@ public class FriendController {
         ResponseFriendListDto responseFriendListDto = friendInfoService.searchMyFriend(memberInfoDto.getMemberId());
         return ResponseEntity.ok(responseFriendListDto);
     }
+
+    @Operation(summary = "내 친구인지 확인API", description = "내 친구인지 확인")
+    @GetMapping("/{member_id}")
+    public ResponseEntity<Boolean> isMyFriend(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("member_id") Long memberId) {
+        return ResponseEntity.ok(friendInfoService.isFriend(memberInfoDto.getMemberId(), memberId));
+    }
 }
