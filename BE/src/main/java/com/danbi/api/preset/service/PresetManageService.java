@@ -1,6 +1,7 @@
 package com.danbi.api.preset.service;
 
 import com.danbi.api.preset.dto.PresetCreateDto;
+import com.danbi.api.preset.dto.PresetQueryResponseDto;
 import com.danbi.api.preset.dto.PresetSequenceUpdateDto;
 import com.danbi.api.preset.dto.PresetUpdateDto;
 import com.danbi.domain.member.entity.Member;
@@ -50,6 +51,20 @@ public class PresetManageService {
                 .title(savedPreset.getTitle())
                 .content(savedPreset.getContent())
                 .sequence(savedPreset.getSequence())
+                .build();
+    }
+
+    public PresetQueryResponseDto getPreset(Long presetId, Long memberId) {
+        Profile profile = memberService.findByMemberId(memberId).getProfile();
+        Preset preset = presetService.findById(presetId);
+
+        preset.checkProfile(profile);
+
+        return PresetQueryResponseDto.builder()
+                .id(preset.getId())
+                .title(preset.getTitle())
+                .content(preset.getContent())
+                .sequence(preset.getSequence())
                 .build();
     }
 
