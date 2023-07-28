@@ -1,9 +1,11 @@
 package com.danbi.domain.preset.service;
 
+import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.preset.dto.PresetDto;
 import com.danbi.domain.preset.dto.PresetSequenceDto;
 import com.danbi.domain.preset.entity.Preset;
 import com.danbi.domain.preset.repository.PresetRepository;
+import com.danbi.domain.profile.entity.Profile;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.notfound.PresetNotFoundException;
 import lombok.Getter;
@@ -45,6 +47,10 @@ public class PresetService {
         }
 
         return op.get();
+    }
+
+    public List<Preset> findPresetsByProfile(Profile profile) {
+        return presetRepository.findAllByProfile(profile);
     }
 
     @Transactional
