@@ -14,7 +14,7 @@ public interface FriendInfoService {
     void acceptFriend(Long from, Long to);
 
     //친구 삭제
-    void deleteFriend(Long memberId,Long friendId);
+    void deleteFriend(Long memberId, Long friendId);
 
     // 내가 보낸 친구요청 목록 조회
     ResponseFriendListDto searchMyWaitingRequests(Long memberId);
@@ -24,4 +24,7 @@ public interface FriendInfoService {
 
     // 내 친구 목록 조회
     ResponseFriendListDto searchMyFriend(Long memberId);
+
+    public boolean isFriend(Long from, Long to);
+
 }
