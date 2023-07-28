@@ -6,7 +6,7 @@ import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
 import IPHome from "../Components/IP/IPHome.jsx";
 import UserSubmit from "../Components/Login/UserSubmit.jsx";
 import HelpRequest from "../Components/IP/HelpRequest.jsx";
-
+import Detail from "../Components/Detail/Detail.jsx";
 const routes = [
   {
     path: "/",
@@ -40,6 +40,9 @@ const routes = [
     path: "/helprequest",
     component : HelpRequest,
   },
-  
+  {
+    path:"/detail/:helpPostId",
+    component : Detail,
+  }
 ];
 export default routes;
