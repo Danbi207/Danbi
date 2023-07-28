@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import Header from '../Common/Header/Header';
 import Footer from '../Common/Footer/Footer';
 import Preset from './Preset';
+import Checkbox from './Checkbox';
 
 import InputCalender from './Calender/InputCalender';
 import StartTime from './Calender/StartTime';
 
 import './CSS/Preset.css'
+
 
 const HelpRequest = () => {
   let [reservetype, setReserve] = useState('');
@@ -23,6 +25,7 @@ const HelpRequest = () => {
         <InputCalender></InputCalender>
         <StartTime></StartTime>
         <Preset></Preset>
+        <Checkbox></Checkbox>
 
       </Wrap>
       <Footer></Footer>

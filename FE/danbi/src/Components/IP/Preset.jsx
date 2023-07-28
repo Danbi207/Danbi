@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Preset = () => {
-  const contentRef = useRef();
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState('상세내용입니다.');
+  const [openIndex, setOpenIndex] = useState(0);
+
   let preset_list = [
     {
       preset_id: 1,
@@ -17,29 +18,48 @@ const Preset = () => {
       content: '끼잉 낑.',
       sequence: 1,
     },
+    {
+      preset_id: 3,
+      title: '직접 입력',
+      content: '데이터를 입력하세요',
+      sequence: 2,
+    }
   ];
 
-    return (
-      <>
+  const handlePresetSelect = (idx) => {
+    setOpenIndex(idx);
+    setContent(preset_list[idx].content);
+  };
+
+  return (
+    <>
       <PresetName>상세정보란</PresetName>
       <Wrap>
-        
-        <select>
-            {preset_list.map((a, idx) => <option key={idx} value={idx}>{a.title}</option>)}
-            <option >직접입력</option>
-
-        </select>
-
+        <PresetSelect onChange={(e) => handlePresetSelect(e.target.value)} value={openIndex}>
+          {preset_list.map((preset, idx) => (
+            <PresetOption key={idx} value={idx}>
+              {preset.title}
+            </PresetOption>
+          ))}
+        </PresetSelect>
+        <Spacer />
+        <PresetTextarea value={content} onChange={(e) => setContent(e.target.value)} />
       </Wrap>
-      </>
-  )
-}
+    </>
+  );
+};
 
 const Wrap = styled.div `
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 2rem; */
+
     display: flex;
     justify-content: center;
     align-items: center;
     line-height: 2rem;
+    flex-direction: column;
 `
 const PresetName = styled.div `
     height: 1rem;
@@ -48,5 +68,23 @@ const PresetName = styled.div `
     margin-left: 1rem;
     margin-top: 1rem;
 `
+
+const PresetSelect = styled.select`
+  width: 50%;
+`
+
+const PresetOption = styled.option`
+
+`
+
+const PresetTextarea = styled.textarea`
+  width: 50%;
+`
+
+const Spacer = styled.div`
+   margin-bottom: 1rem;
+`
+
+
 
 export default Preset;
