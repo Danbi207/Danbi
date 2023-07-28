@@ -12,7 +12,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true # 콘솔창에 sql 출력
     properties:
       hibernate:
@@ -52,7 +52,7 @@ kakao:
 
 token:
   secret: ENC(CFBlQEwvaa+vMjUqHL0rfC+Tzdhy9RGJ2ClJEDlB+FffWbHDBUaz1RXykDnXEzcl) # JWT secret key
-  access-token-expiration-time: 900000  # 15분 1000(ms) x 60(s) x 15(m)
+  access-token-expiration-time: 90000000  # 15분 1000(ms) x 60(s) x 15(m)
   refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
 
 #springdoc swagger

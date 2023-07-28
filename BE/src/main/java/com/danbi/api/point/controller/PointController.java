@@ -6,6 +6,8 @@ import com.danbi.api.point.dto.AccumulatePointResponseDto;
 import com.danbi.api.point.dto.PointResponseDto;
 import com.danbi.api.point.service.PointInfoService;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.global.resolver.MemberInfo;
+import com.danbi.global.resolver.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,19 +25,18 @@ public class PointController {
 
     private final PointInfoService pointInfoService;
 
-    @Tag(name = "Point")
     @Operation(summary = "누적 포인트 조회 API", description = "누적 포인트 조회 API")
-    @PostMapping("/{profile_id}")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
+    @PostMapping("/{profile_id}")
     public ResponseEntity<AccumulatePointResponseDto> getAccumulatePoint(@PathVariable Long profile_id) {
         AccumulatePointResponseDto accumulatePoint = pointInfoService.getAccumulatePoint(profile_id);
         return ResponseEntity.ok(accumulatePoint);
     }
 
-    @Tag(name = "Point")
     @Operation(summary = "현재 포인트 조회 API", description = "현재 포인트 조회 API")
-    @PostMapping("")  // TODO : 후에 토큰을 통한 유저정보 얻기 수정
-    public ResponseEntity<PointResponseDto> getPoint(@PathVariable Long profile_id) {
-        PointResponseDto point = pointInfoService.getPoint(profile_id);
+    @PostMapping("/now/{profile_id}") // 프로필 주인과 사용자가 동일한지 검증
+    public ResponseEntity<PointResponseDto> getPoint(@MemberInfo MemberInfoDto memberInfoDto,
+                                                     @PathVariable Long profile_id) {
+        PointResponseDto point = pointInfoService.getPoint(profile_id, memberInfoDto.getMemberId());
         return ResponseEntity.ok(point);
     }
 }

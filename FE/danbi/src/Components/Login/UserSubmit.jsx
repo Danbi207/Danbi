@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import styled from 'styled-components'
 
 import UserType from './UserType';
 import UserFile from './UserFile';
+import { useSelector } from 'react-redux';
 
 const UserSubmit = () => {
   let [sex, setSex] = useState('');
@@ -11,6 +12,12 @@ const UserSubmit = () => {
   let [fileList, setFileList] = useState([]);
   let [mode, setMode] = useState(true);
   
+  //DO : 토큰 테스트용 코드
+  const tokeninfo = useSelector((state)=>state.user.tokenInfo);
+  useEffect(()=>{
+    console.log(tokeninfo);
+  },[])
+
   const submit = () => {
 
   }

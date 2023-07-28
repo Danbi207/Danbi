@@ -19,20 +19,21 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class OauthLoginService {
 
     private final MemberService memberService;
     private final TokenManager tokenManager;
 
+    @Transactional
     public OauthLoginDto.Response oauthLogin(String accessToken, OauthType oauthType) {
         SocialLoginApiService socialLoginApiService = SocialLoginApiServiceFactory.getSocialLoginApiService(oauthType);
         OAuthAttributes userInfo = socialLoginApiService.getUserInfo(accessToken);
         log.info("userInfo : {}",  userInfo);
 
         JwtDto jwtTokenDto;
-        Optional<Member> optionalMember = memberService.findMemberByEmail(userInfo.getEmail());
+        Optional<Member> optionalMember = memberService.findByEmail(userInfo.getEmail());
         Member oauthMember;
         if(optionalMember.isEmpty()) { // 신규 회원 가입
             oauthMember = userInfo.toMemberEntity(oauthType, Role.ROLE_UNDEFINED);
@@ -45,7 +46,7 @@ public class OauthLoginService {
         jwtTokenDto = tokenManager.createJwtTokenDto(oauthMember.getId(), oauthMember.getRole());
         oauthMember.updateRefreshToken(jwtTokenDto);
 
-        return OauthLoginDto.Response.of(jwtTokenDto);
+        return OauthLoginDto.Response.of(jwtTokenDto, oauthMember.getRole());
     }
 
 }

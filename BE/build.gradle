@@ -51,6 +51,12 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	// spring test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//FCM
+	implementation 'com.google.firebase:firebase-admin:7.1.1'
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// embedded redis(test)
+//	testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
 }
 
 dependencyManagement {

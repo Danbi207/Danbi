@@ -5,6 +5,7 @@ import com.danbi.api.item.dto.ItemResponseDto;
 import com.danbi.domain.Item.entity.Item;
 import com.danbi.domain.Item.service.ItemService;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.domain.member.service.MemberService;
 import com.danbi.domain.point.service.PointService;
 import com.danbi.domain.profile.entity.Profile;
 import com.danbi.domain.profile.service.ProfileService;
@@ -20,12 +21,15 @@ public class ItemInfoService {
     private final ItemService itemService;
     private final PointService pointService;
     private final ProfileService profileService;
+    private final MemberService memberService;
 
     // 아이템 뽑기
-    public ItemResponseDto pickItem(Member member) { // 토큰으로 멤버 얻었다고 가정
-        Profile profileByMember = profileService.getProfileByMember(member);
-        Item item = itemService.pickItem(profileByMember);
-        Long dewPoint = pointService.pickItem(profileByMember);
+    public ItemResponseDto pickItem(Long memberId) {
+
+        Member member = memberService.findByMemberId(memberId);
+        Profile profile = profileService.getProfileByMember(member);
+        Item item = itemService.pickItem(profile);
+        Long dewPoint = pointService.pickItem(profile);
 
         return ItemResponseDto.builder()
                 .item(ItemDto.builder()

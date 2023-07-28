@@ -5,6 +5,7 @@ import com.danbi.domain.accuse.constant.State;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.member.entity.Member;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,5 +42,17 @@ public class Accuse extends BaseEntity {
     @Column(nullable = false, length = 30)
     private State state;
 
+    public void updateAccuse(State state) {
+        this.state = state;
+    }
 
+    @Builder
+    public Accuse(Member targetMember, String title, String content, String evidenceUrl, AccuseType accuseType, State state) {
+        this.targetMember = targetMember;
+        this.title = title;
+        this.content = content;
+        this.evidenceUrl = evidenceUrl;
+        this.accuseType = accuseType;
+        this.state = state;
+    }
 }

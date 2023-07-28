@@ -20,7 +20,7 @@ public class TokenService {
     private final TokenManager tokenManager;
 
     public AccessTokenResponseDto createAccessTokenByRefreshToken(String refreshToken) {
-        Member member = memberService.findMemberByRefreshToken(refreshToken);
+        Member member = memberService.findByRefreshToken(refreshToken);
 
         Date accessTokenExpireTime = tokenManager.createAccessTokenExpireTime();
         String accessToken = tokenManager.createAccessToken(member.getId(), member.getRole(), accessTokenExpireTime);

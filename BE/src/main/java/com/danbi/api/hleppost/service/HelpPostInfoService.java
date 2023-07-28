@@ -33,7 +33,7 @@ public class HelpPostInfoService {
     // 도움 요청 게시글, 도움 생성
     public HelpPostResponseDto getHelpPostInfo(Long memberId, HelpPostRequestDto helpPostRequestDto) {
 
-        Member member = memberService.findMemberByMemberId(memberId);
+        Member member = memberService.findByMemberId(memberId);
 
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
         HelpPost newHelpPost = helpPostService.create(helpPost);
@@ -54,25 +54,24 @@ public class HelpPostInfoService {
     public void deleteHelpPostInfo(Long helpPostId, Long memberId) {
 
         HelpPost helpPost = helpPostService.getHelpPost(helpPostId);
-        if (helpPost.getMember().getId().equals(helpPostId)) {
-            helpPostService.delete(helpPostId);
-        }
+        helpPostService.delete(helpPostId,memberId);
+
 
     }
 
     // 도움 요청 수정
     public HelpPostResponseDto updateHelpPostInfo(Long helpPostId, Long memberId,HelpPostRequestDto helpPostRequestDto) {
 
-        Member member = memberService.findMemberByMemberId(memberId);
+        Member member = memberService.findByMemberId(memberId);
 
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member);
-        HelpPost updatedHelpPost = helpPostService.update(helpPostId, helpPost);
+        HelpPost updatedHelpPost = helpPostService.update(helpPostId, helpPost, memberId);
         return HelpPostResponseDto.of(updatedHelpPost);
     }
 
     public MyHelpPostDto searchMyHelpPost(Long memberId) {
 
-        Member member = memberService.findMemberByMemberId(memberId);
+        Member member = memberService.findByMemberId(memberId);
 
         List<HelpPost> helpPosts = helpPostService.searchMyHelp(member);
         List<HelpPostListDto> helpList = new ArrayList<>();
