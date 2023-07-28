@@ -42,15 +42,15 @@ const StartTime = () => {
                 locale={ ko }
                 showTimeSelect
                 showTimeSelectOnly
-                timeIntervals={30}
-                minTime={setHours(setMinutes(new Date(), 30), 9)}
-                maxTime={setHours(setMinutes(new Date(), 0), 17)}
+                timeIntervals={15}
+                minTime={setHours(setMinutes(new Date(), 0), 6)}
+                maxTime={setHours(setMinutes(new Date(), 0), 22)}
                 timeCaption="Time"
                 dateFormat="aa h:mm 시작"
                 placeholderText="시작 시간"
                 className="mt-4"
                 filterTime={filterPassedTime}
-            /></TimeWrap>
+            /></TimeWrap>   
 
             {isSelected ? // 시작 시간을 선택해야 종료 시간 선택 가능
                 <TimeWrap><SDatePicker
@@ -59,16 +59,12 @@ const StartTime = () => {
                 locale={ ko }
                 showTimeSelect
                 showTimeSelectOnly
-                timeIntervals={30}
+                timeIntervals={15}
                 minTime={startTime}
                 maxTime={setHours(setMinutes(new Date(), getMinutes(startTime)), getHours(startTime)+2)} // 시작 시간부터 2시간
                 excludeTimes={[
                     // 시작 시간 제외
                     startTime,
-                    // 5:00 선택 기준 최대 7:00까지 예외처리
-                    setHours(setMinutes(new Date(), 0), 18),
-                    setHours(setMinutes(new Date(), 30), 18),
-                    setHours(setMinutes(new Date(), 0), 19)
                 ]}
                 timeCaption="Time"
                 dateFormat="aa h:mm 종료"

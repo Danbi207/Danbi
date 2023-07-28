@@ -7,9 +7,10 @@ const Footer = () => {
   const navigate = useNavigate();
 
   /* Todo : 1. setting에서 해당하는 모드에 따라 white, black 이미지를 가져올 수 있게(theme.js 참고) 
-  2. Flag를 통해 해당되는 페이지에 이동시 Filled 이미지가 나올 수 있게 */
+  2. Mode를 통해 해당되는 페이지에 이동시 Filled 이미지가 나올 수 있게 */
   const [mode,setMode] = useState("home");
   const location = useLocation();
+  
   useEffect(()=>{
     console.log(location.pathname)
     if(location.pathname==="/" || location.pathname==="/helper"){setMode("home");}
