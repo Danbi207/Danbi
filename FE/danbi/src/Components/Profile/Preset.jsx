@@ -27,38 +27,14 @@ const Preset = () => {
     draggables.forEach(el => {
       el.addEventListener('touchstart', () => {
         el.classList.add('touching');
-      });
+      })
       el.addEventListener('touchend', () => {
         el.classList.remove('touching');
       })
-    })
+    });
     containers.forEach(container => {
-      container.addEventListener('touchmove', e => {
-        e.preventDefault();
-        const afterElement = getDragAfterElement(container, e.clientY);
-        const draggable = document.querySelector('.touching');
-
-    // 아래와 같이 수정해야 원하는 동작이 이루어집니다.
-    if (afterElement === null) {
-      container.appendChild(draggable);
-    } else {
-      container.insertBefore(draggable, afterElement);
-    }
-      })
+      
     })
-    const getDragAfterElement = (container, y) => {
-      const draggableElements = [...container.querySelectorAll('.draggable:not(.touching)')]
-  
-      return draggableElements.reduce((closet, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-        if (offset < 0 && offset > closet.offset) {
-          return {offset: offset, element: child}
-        } else {
-          return closet
-        }
-      }, {offset: Number.NEGATIVE_INFINITY}).element
-    };
   } else {
     console.log(draggables);
     draggables.forEach(el => {
