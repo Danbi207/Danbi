@@ -52,8 +52,8 @@ public class AccuseInfoService {
                 .state(accuse.getState()).build();
     }
 
-    public void cancelAccuse(Long accuseId) {
-        accuseService.cancelAccuse(accuseId);
+    public void cancelAccuse(Long accuseId, Long memberId) {
+        accuseService.cancelAccuse(accuseId, memberId);
     }
 
     public MyAccuseListDto myAccuseList(Long memberId) {

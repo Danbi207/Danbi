@@ -21,15 +21,15 @@ public class PointInfoService {
     // 누적 듀 포인트 조회(프로필 조회)
     public AccumulatePointResponseDto getAccumulatePoint(Long profileId) {
         Profile profile = profileService.getProfileById(profileId);
-        Point point = pointService.getPoint(profile);
+        Point point = pointService.getAccumulatePoint(profile);
         return AccumulatePointResponseDto.builder()
                 .accumulateDewPoint(point.getAccumulateDewPoint()).build();
     }
 
     // 현재 듀 포인트 조회(사용자)
-    public PointResponseDto getPoint(Long profileId) {
+    public PointResponseDto getPoint(Long profileId, Long memberId) {
         Profile profile = profileService.getProfileById(profileId);
-        Point point = pointService.getPoint(profile);
+        Point point = pointService.getPoint(profile, memberId);
         return PointResponseDto.builder()
                 .dewPoint(point.getDewPoint()).build();
     }

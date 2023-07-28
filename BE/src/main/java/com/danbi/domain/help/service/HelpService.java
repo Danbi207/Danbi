@@ -34,7 +34,7 @@ public class HelpService {
         HelpPost helpPost = helpPostRepository.findById(id).get();
         Help help = helpRepository.findByHelpPost(helpPost).get();
 
-        validateHelMatchMember(helpPost,member);
+        validateHelpMatchMember(helpPost,member);
 
         help.updateHelper(member);
         em.flush();
@@ -49,7 +49,7 @@ public class HelpService {
     public void ipComplete(Long helpId, Long memberId) {
         Help help = helpRepository.findById(helpId).get();
 
-        validateHelMatchIp(help,memberId);
+        validateHelpMatchIp(help,memberId);
 
         help.updateIpFlag(true);
     }
@@ -57,24 +57,24 @@ public class HelpService {
     public void helperComplete(Long helpId, Long memberId) {
         Help help = helpRepository.findById(helpId).get();
 
-        validateHelMatchHelper(help,memberId);
+        validateHelpMatchHelper(help,memberId);
 
         help.updateHelperFlag(true);
     }
 
 
-    private void validateHelMatchMember(HelpPost helpPost, Member memeber) {
+    private void validateHelpMatchMember(HelpPost helpPost, Member memeber) {
         if(helpPost.getMember().getId() == memeber.getId()) {
-            throw new MisMatchException(ErrorCode.HELP_MISMATCH_HELPER);
+            throw new MisMatchException(ErrorCode.HELP_MISMATCH_MEMBER);
         }
     }
-    private void validateHelMatchIp(Help help, Long memeberId) {
+    private void validateHelpMatchIp(Help help, Long memeberId) {
         if(help.getIp().getId() != memeberId) {
             throw new MisMatchException(ErrorCode.HELP_MISMATCH_IP);
         }
     }
 
-    private void validateHelMatchHelper(Help help, Long memeberId) {
+    private void validateHelpMatchHelper(Help help, Long memeberId) {
         if(help.getHelper().getId() != memeberId) {
             throw new MisMatchException(ErrorCode.HELP_MISMATCH_HELPER);
         }

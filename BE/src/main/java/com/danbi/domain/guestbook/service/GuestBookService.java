@@ -4,7 +4,7 @@ import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.guestbook.repository.GuestBookRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.global.error.ErrorCode;
-import com.danbi.global.error.exception.GuestBookNotFoundException;
+import com.danbi.global.error.exception.notfound.GuestBookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

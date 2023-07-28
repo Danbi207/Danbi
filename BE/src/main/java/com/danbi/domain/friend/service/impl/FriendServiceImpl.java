@@ -8,13 +8,14 @@ import com.danbi.domain.friend.service.FriendService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
-import com.danbi.global.error.exception.FriendNotFoundException;
+import com.danbi.global.error.exception.notfound.FriendNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +25,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FriendServiceImpl implements FriendService {
 
-    private final FriendRepository friendRepository;
+    @PersistenceContext
     private final EntityManager em;
+    private final FriendRepository friendRepository;
 
 
     @Override

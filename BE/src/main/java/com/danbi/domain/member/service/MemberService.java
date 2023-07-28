@@ -43,8 +43,8 @@ public class MemberService {
                 .build();
 
         Point point = Point.builder()
-                .dewPoint((long)100)
-                .accumulateDewPoint((long)100)
+                .dewPoint(100L)
+                .accumulateDewPoint(100L)
                 .profile(profile).build();
         pointRepository.save(point);
 

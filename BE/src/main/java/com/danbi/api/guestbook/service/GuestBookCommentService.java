@@ -2,7 +2,6 @@ package com.danbi.api.guestbook.service;
 
 import com.danbi.api.guestbook.dto.CommentDto;
 import com.danbi.api.guestbook.dto.CommentModifyDto;
-import com.danbi.api.guestbook.dto.GuestBookResponseDto;
 import com.danbi.domain.comment.entity.Comment;
 import com.danbi.domain.comment.service.CommentService;
 import com.danbi.domain.guestbook.entity.GuestBook;
@@ -10,8 +9,8 @@ import com.danbi.domain.guestbook.service.GuestBookService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
-import com.danbi.global.error.exception.CommentMisMatchMemberException;
-import com.danbi.global.error.exception.GuestBookMisMatchMemberException;
+import com.danbi.global.error.exception.mismatch.CommentMisMatchMemberException;
+import com.danbi.global.error.exception.mismatch.GuestBookMisMatchMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
