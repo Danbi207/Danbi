@@ -47,6 +47,7 @@ public class PresetController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "프리셋 삭제 API", description = "프리셋 삭제")
     @DeleteMapping("/{presetId}")
     public ResponseEntity<String> deletePreset(@PathVariable Long presetId,
                                                @MemberInfo MemberInfoDto memberInfoDto) {
