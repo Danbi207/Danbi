@@ -38,10 +38,9 @@ const Wrap = styled.div`
 `
 
 const Boxes = styled.div`
-    height : 12rem;
     display: flex;
     justify-content: space-evenly;
-    margin-top: 2rem;
+    margin: 2rem 0rem;
 `
 
 const SelectBTN = styled.button`

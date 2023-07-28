@@ -1,58 +1,27 @@
-// import React, { useCallback, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Checkbox = () => {
-  const checkList = ['동성이였으면 좋겠어요', '비대면으로 해결할 수 있어요', '대면으로 해결할 수 있어요'];
+  const [checkList] = useState(['동성이였으면 좋겠어요', '비대면으로 해결할 수 있어요', '대면으로 해결할 수 있어요']);
+  const [ischecked, setIschecked] = useState([false, false, false]);
 
-//   const CheckBoxes = () => {
-//     const [checkedList, setCheckedList] = useState([]);
-//     const [isChecked, setIsChecked] = useState(false);
-  
-//     const checkedItemHandler = (value, isChecked) => {
-//       if (isChecked) {
-//         setCheckedList((prev) => [...prev, value]);
-  
-//         return;
-//       }
-  
-//       if (!isChecked && checkedList.includes(value)) {
-//         setCheckedList(checkedList.filter((item) => item !== value));
-  
-//         return;
-//       }
-  
-//       return;
-//     };
-  
-//     const checkHandler = (e, value) => {
-//       setIsChecked(!isChecked);
-//       checkedItemHandler(value, e.target.checked);
-  
-//       console.log(value, e.target.checked);
-//     };
-  
-//     const onSubmit = useCallback(
-//       (e) => {
-//         e.preventDefault();
-  
-//         console.log('checkedList:', checkedList);
-//       },
-//       [checkedList]
-//     );
-//     }
+  useEffect(()=>{
+    console.log(ischecked)
+  }, [ischecked])
 
   return (
     <>    
     <PresetName>선택사항</PresetName>
     <Wrap>
-        <CheckBoxForm>
-            <input type='checkbox'></input>
-            <label>{checkList[0]}</label><br/>
-            <input type='checkbox'></input>
-            <label>{checkList[1]}</label><br/>
-            <input type='checkbox'></input>
-            <label>{checkList[1]}</label>
-        </CheckBoxForm>
+        <InputWrap>
+            {checkList.map((item, idx) => (
+              <div key={idx}>
+                <Input type='checkbox' id={item} onChange={()=>{setIschecked(!ischecked)}}/>
+                <Label htmlFor={item} onChange={()=>{setIschecked(!ischecked)}}>{checkList[idx]}</Label>
+              </div>
+              )) 
+            }
+        </InputWrap>
     </Wrap>
     </>
   )
@@ -62,16 +31,22 @@ const Wrap = styled.div `
     line-height: 2rem;
 `
 const PresetName = styled.div `
-    height: 1rem;
-    font-size: 1rem;
-    text-align: left;
-    margin-left: 1rem;
-    margin-top: 1rem;
+    height: 3rem;
+    padding: 1rem;
 `
 
-const CheckBoxForm = styled.form`
-    margin-left: 1rem;
-    margin-top: 0.5rem ;
+const InputWrap = styled.form`
+    margin-left: 1rem;  
 ` 
+
+const Input = styled.input`
+  accent-color: #6161FF;
+`
+
+const Label = styled.label`
+  padding-left: 1rem;
+  display: inline-block;
+` 
+
 
 export default Checkbox;

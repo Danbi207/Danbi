@@ -1,49 +1,49 @@
-import React, { useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Preset = () => {
-  const [content, setContent] = useState('상세내용입니다.');
-  const [openIndex, setOpenIndex] = useState(0);
+  const [content, setContent] = useState('');
+  const [openIndex, setOpenIndex] = useState("0");
 
   let preset_list = [
     {
       preset_id: 1,
       title: '1asdf',
       content: '123saf',
-      sequence: 0,
+      sequence: 1,
     },
     {
       preset_id: 2,
       title: '김민규는 쓰레기입니다.',
       content: '끼잉 낑.',
-      sequence: 1,
-    },
-    {
-      preset_id: 3,
-      title: '직접 입력',
-      content: '데이터를 입력하세요',
       sequence: 2,
-    }
+    },
+    
   ];
 
-  const handlePresetSelect = (idx) => {
+  useEffect(()=>console.log(content),[content]);
+
+  const handlePresetSelect = (e) => {
+    let idx = e.target.value; // select에서 value값은 string으로 저장된다.  
     setOpenIndex(idx);
-    setContent(preset_list[idx].content);
+    if (idx === "0"){setContent("")}
+    else {setContent(preset_list[idx-1].content);} //preset idx는 1부터 시작 -> idx--해야함
   };
 
   return (
     <>
       <PresetName>상세정보란</PresetName>
       <Wrap>
-        <PresetSelect onChange={(e) => handlePresetSelect(e.target.value)} value={openIndex}>
+        <PresetSelect onChange={handlePresetSelect}>
+          <PresetOption value={"0"}>직접입력</PresetOption>
           {preset_list.map((preset, idx) => (
-            <PresetOption key={idx} value={idx}>
+            <PresetOption key={idx+1} value={(idx+1)+""}>
               {preset.title}
             </PresetOption>
           ))}
         </PresetSelect>
         <Spacer />
-        <PresetTextarea value={content} onChange={(e) => setContent(e.target.value)} />
+        <PresetTextarea readOnly={openIndex!=="0"} value={content} placeholder='저는 휠체어를 타고 있어요 저는 ~~~~' onChange={(e) => setContent(e.target.value)} />
       </Wrap>
     </>
   );
@@ -62,15 +62,12 @@ const Wrap = styled.div `
     flex-direction: column;
 `
 const PresetName = styled.div `
-    height: 1rem;
-    font-size: 1rem;
-    text-align: left;
-    margin-left: 1rem;
-    margin-top: 1rem;
+    height: 3rem;
+    padding: 1rem;
 `
 
 const PresetSelect = styled.select`
-  width: 50%;
+  width: 70%;
 `
 
 const PresetOption = styled.option`
@@ -78,7 +75,9 @@ const PresetOption = styled.option`
 `
 
 const PresetTextarea = styled.textarea`
-  width: 50%;
+  width: 70%;
+  height: 5rem;
+  resize: none;
 `
 
 const Spacer = styled.div`
