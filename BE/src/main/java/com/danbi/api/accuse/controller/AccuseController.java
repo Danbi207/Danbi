@@ -23,16 +23,16 @@ public class AccuseController {
     private final AccuseInfoService accuseInfoService;
 
     @Operation(summary = "회원 신고 API", description = "회원 신고 API")
-    @PostMapping("")
+    @PostMapping("") // 신고자와 요청자가 동일하면 예외처리
     public ResponseEntity<AccuseResponseDto> accuse(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody AccuseRequestDto accuseRequestDto) {
         AccuseResponseDto accuse = accuseInfoService.accuse(accuseRequestDto, memberInfoDto.getMemberId());
         return ResponseEntity.ok(accuse);
     }
 
     @Operation(summary = "회원 신고 취소 API", description = "회원 신고 취소 API")
-    @PostMapping("/cancel/{accuse_id}") // TODO : 후에 신고자와 취소자 동일한지 검증 필요
+    @PostMapping("/cancel/{accuse_id}") // 신고자와 요청자 검증
     public ResponseEntity<String> cancelAccuse(@PathVariable Long accuse_id ,@MemberInfo MemberInfoDto memberInfoDto) {
-        accuseInfoService.cancelAccuse(accuse_id);
+        accuseInfoService.cancelAccuse(accuse_id, memberInfoDto.getMemberId());
         return ResponseEntity.ok("신고 취소 되었습니다.");
     }
 

@@ -101,8 +101,8 @@ const CloseBtn = styled.div`
 const NavBarWrap = styled.div`
   color: ${props=>props.theme.colors.titleColor};
   background-color: ${props=>props.theme.colors.bgColor};
-  border-left: 1px solid ${props=>props.theme.colors.titleColor};
   padding: 1rem;
+  height: 100%;
 `
 
 

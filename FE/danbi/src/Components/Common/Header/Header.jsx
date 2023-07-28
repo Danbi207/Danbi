@@ -12,15 +12,15 @@ const Header = () => {
   }
   return (
     <>
-    <HeaderWrap>
-      <Logo onClick={mvHome}></Logo>
-      <IconWrap>
-        <AlramBtn onClick={toggleAlram}></AlramBtn>
-        <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
-      </IconWrap>
-      <AlramWrap out={alramFlag}></AlramWrap>
-    </HeaderWrap>
-    <NavBarWrap out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
+      <HeaderWrap>
+        <Logo onClick={mvHome}></Logo>
+        <IconWrap>
+          <AlramBtn onClick={toggleAlram}></AlramBtn>
+          <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
+        </IconWrap>
+        <AlramWrap $out={alramFlag}></AlramWrap>
+      </HeaderWrap>
+      <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
     </>
   )
 }
@@ -33,9 +33,9 @@ const NavBarWrap = styled.div`
   @media screen and (max-width: 500px) {
     width: 100%;
   }
-  z-index: 1;
-  visibility: ${props => props.out ? 'visible' : 'hidden'};
-  animation: ${props => props.out ? fadeIn : fadeOut} 0.5s linear;
+  z-index: 4;
+  visibility: ${props => props.$out ? 'visible' : 'hidden'};
+  animation: ${props => props.$out ? fadeIn : fadeOut} 0.5s linear;
   transition: visibility 0.5s linear;
   transform-origin : 100% 0 0
 
@@ -100,6 +100,7 @@ const AlramBtn = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  width: 4rem;
 `
 const AlramWrap = styled.div`
   position: absolute;
@@ -110,8 +111,8 @@ const AlramWrap = styled.div`
   background-color: red;
 
   z-index: 1;
-  visibility: ${props => props.out ? 'visible' : 'hidden'};
-  animation: ${props => props.out ? slideIn : slideOut} 0.5s linear;
+  visibility: ${props => props.$out ? 'visible' : 'hidden'};
+  animation: ${props => props.$out ? slideIn : slideOut} 0.5s linear;
   transition: visibility 0.5s linear;
   transform-origin : 100% 0 0
 `
@@ -121,6 +122,7 @@ const NavBarBtn = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  width: 4rem;
 `
 
 const Logo = styled.div`

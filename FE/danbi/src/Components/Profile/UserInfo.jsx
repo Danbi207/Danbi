@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from './example-profile.jpg';
+import AccuseButton from './AccuseButton.jsx';
 
 const UserInfo = () => {
   return (
@@ -8,7 +9,10 @@ const UserInfo = () => {
       <ProfileImage src={example} alt="img" />
       <UserDetail>
         <UserName>김민규</UserName>
-        <PlusButton>친구추가</PlusButton>
+        <Btns>
+          <PlusButton>친구추가</PlusButton>
+          <AccuseButton />
+        </Btns>
       </UserDetail>
     </UserInfoWrap>
   );
@@ -18,7 +22,7 @@ const UserInfoWrap = styled.div`
   width: 100%;
   height: 6.25rem;
   display: flex;
-  padding: 0 2.5rem;
+  padding: 0 1rem 0 2.5rem;
 `;
 
 const ProfileImage = styled.img`
@@ -33,7 +37,7 @@ const UserDetail = styled.div`
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  padding-left: 2rem;
+  padding-left: 1rem;
 `;
 
 const UserName = styled.div`
@@ -50,6 +54,13 @@ const PlusButton = styled.button`
   border-radius: 10px;
   width: 8rem;
   height: 2rem;
+  margin-right: 1rem;
 `;
+
+const Btns = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 
 export default UserInfo;

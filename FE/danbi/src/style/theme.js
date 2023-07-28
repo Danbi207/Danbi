@@ -2,6 +2,10 @@ export const dark ={
   colors:{
     titleColor : '#FFFFFF',
     bgColor: '#19191B',
+    boxColor: '#E3E3E3',
+    jandibgColor: '#FFFFFF',
+    buttonbgColor: '#FFFFFF',
+    buttontextColor: '#19191B',
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-black.svg`,
@@ -20,6 +24,8 @@ export const dark ={
     sun : `${process.env.PUBLIC_URL}/assets/Sun-black.svg`,
     moon : `${process.env.PUBLIC_URL}/assets/Moon-black.svg`,
     system : `${process.env.PUBLIC_URL}/assets/System-black.svg`,
+
+    dew : `${process.env.PUBLIC_URL}/assets/Dew.svg`,
   }
 } 
 
@@ -27,6 +33,10 @@ export const light ={
   colors:{
     titleColor : '#19191B',
     bgColor: '#FFFFFF', 
+    boxColor: '#E3E3E3',
+    jandibgColor: '#19191B',
+    buttonbgColor: '#19191B',
+    buttontextColor: '#FFFFFF',
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,
@@ -45,5 +55,7 @@ export const light ={
     sun : `${process.env.PUBLIC_URL}/assets/Sun-white.svg`,
     moon : `${process.env.PUBLIC_URL}/assets/Moon-white.svg`,
     system : `${process.env.PUBLIC_URL}/assets/System-white.svg`,
+
+    dew : `${process.env.PUBLIC_URL}/assets/Dew.svg`,
   }
 }
