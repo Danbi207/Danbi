@@ -60,15 +60,16 @@ public class HelpPostController {
 
     @Operation(summary = "현재 등록된 모든 도움 요청 게시글 리스트 API", description = "현재 등록된 모든 도움 요청 게시글 리스트 API")
     @GetMapping("") // 현재 등록된 모든 도움 요청 게시글 조회(helper)
-    public ResponseEntity<HelperResponseDto> searchAllHelpPost() {
-        HelperResponseDto helperResponseDto = helpPostInfoService.searchHelperHelpPost();
+    public ResponseEntity<HelperResponseDto> searchAllHelpPost(@MemberInfo MemberInfoDto memberInfoDto) {
+        HelperResponseDto helperResponseDto = helpPostInfoService.searchHelperHelpPost(memberInfoDto.getMemberId());
         return ResponseEntity.ok(helperResponseDto);
     }
 
     @Operation(summary = "도움요청 게시글 상세 조회 API", description = "도움요청 게시글 상세 조회 API")
     @GetMapping("/{helppost_id}")
-    public ResponseEntity<DetailHelpPostDto> searchAllHelpPost(@PathVariable("helppost_id") Long helpPostId) {
-        DetailHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailHelpPost(helpPostId);
+    public ResponseEntity<DetailHelpPostDto> searchAllHelpPost(@PathVariable("helppost_id") Long helpPostId,
+                                                               @MemberInfo MemberInfoDto memberInfoDto) {
+        DetailHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailHelpPost(helpPostId, memberInfoDto.getMemberId());
         return ResponseEntity.ok(detailHelpPostDto);
     }
 

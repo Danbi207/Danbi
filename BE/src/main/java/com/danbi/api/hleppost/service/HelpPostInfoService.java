@@ -1,5 +1,6 @@
 package com.danbi.api.hleppost.service;
 
+import com.danbi.api.friend.service.FriendInfoService;
 import com.danbi.api.hleppost.dto.detailsearch.DetailHelpPostDto;
 import com.danbi.api.hleppost.dto.helpersearch.HelperHelpPostListDto;
 import com.danbi.api.hleppost.dto.helpersearch.HelperResponseDto;
@@ -29,6 +30,7 @@ public class HelpPostInfoService {
     private final HelpPostService helpPostService;
     private final HelpService helpService;
     private final MemberService memberService;
+    private final FriendInfoService friendInfoService;
 
     // 도움 요청 게시글, 도움 생성
     public HelpPostResponseDto getHelpPostInfo(Long memberId, HelpPostRequestDto helpPostRequestDto) {
@@ -88,10 +90,13 @@ public class HelpPostInfoService {
                 .helpList(helpList).build();
     }
 
-    public HelperResponseDto searchHelperHelpPost() {
+    public HelperResponseDto searchHelperHelpPost(Long memberId) {
         List<HelpPost> helpPosts = helpPostService.searchAllList();
         List<HelperHelpPostListDto> helpList = new ArrayList<>();
         for (HelpPost helpPost : helpPosts) {
+
+            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getMember().getId());
+
             HelperHelpPostListDto post = HelperHelpPostListDto.builder()
                     .helpPostId(helpPost.getId())
                     .ipId(helpPost.getMember().getId())
@@ -105,15 +110,18 @@ public class HelpPostInfoService {
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
                     .totalTime(helpPost.getTotalTime())
-                    .friendFlag(false).build(); // TODO : 친구관계 후에 수정
+                    .friendFlag(isFriend).build();
             helpList.add(post);
         }
         return HelperResponseDto.builder()
                 .helpList(helpList).build();
     }
 
-    public DetailHelpPostDto searchDetailHelpPost(Long helpPostId) {
+    public DetailHelpPostDto searchDetailHelpPost(Long helpPostId, Long memberId) {
         HelpPost helpPost = helpPostService.detailHelpPost(helpPostId);
+
+        boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getMember().getId());
+
         DetailHelpPostDto detail = DetailHelpPostDto.builder()
                 .helpPostId(helpPostId)
                 .ipId(helpPost.getMember().getId())
@@ -126,7 +134,7 @@ public class HelpPostInfoService {
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
                 .totalTime(helpPost.getTotalTime())
-                .friendFlag(false).build(); // TODO : 친구관계 후에 수정
+                .friendFlag(isFriend).build();
         return detail;
     }
 }
