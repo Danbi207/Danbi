@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
-import $ from 'jquery';
 
 const preset_list = [
   {
@@ -18,93 +17,81 @@ const preset_list = [
   },
 ];
 
+const isTouchScreen = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
 const Preset = () => {
-  /* 드래그 앤 드랍 구현 파트 */
-  /* 공통 전역 변수  */
-  let dragId = ""
-  let tagId = ""
-  let beforeX;
-  let beforeY;
-  let afterX;
-  let afterY;
-
-  /* 브라우저 단 처리 */
-  /* 드랍할 위치에 태그에 다른 이벤트 발생 방지 */
-  function allowDrop(evt) {
-    evt.preventDefault();
-  };
-
-  /* 드래그 시 이벤트 함수 */
-  function drag(evt) {
-    /* 선택한 div id값 확인 */
-    dragId = evt.target.id;
-
-    /* 선택된 div 투명도 조절 */
-    document.getElementById(dragId).style.opacity = '0.5';
-  };
-
-  /* 드랍 완료 시 이벤트 함수 */
-  function drop(evt) {
-    evt.preventDefault();
-
-    tagId = evt.target.id;
-
-    select_change(dragId, tagId);
-  };
-
-  /* 모바일 단 처리 */
-  /* 모바일은 상시 대기로 터치를 확인 */
-  window.onload = function() {
-    const container_1 = document.getElementById('0');
-    const container_2 = document.getElementById('1');
-
-    container_1.addEventListener("touchmove", handleMove, false);
-    container_1.addEventListener("touchEnd", handleEnd, false);
-
-    container_2.addEventListener("touchmove", handleMove, false);
-    container_2.addEventListener("touchEnd", handleEnd, false);
-
-    /* 터치 이동 이벤트 발생 */
-    function handleMove(evt) {
-      dragId = evt.targetTouches[0].target.id;
-
-      document.getElementById(dragId).style.opacity = '0.5';
-
-      beforeX = $(this).scrollLeft();
-      beforeY = $(this).scrollTop();
-    }
-
-    function handleEnd(evt) {
-      const divX = evt.changedTouches[0].clientX;
-      const divY = evt.changedTouches[0].clientY;
-
-      dropClick(divX, divY);
-    }
-  }
-  function dropClick(x, y) {
-    const evt = document.createEvent("MouseEvents");
-    evt.initMouseEvent("click", true, true, window, 0,0,0,0,0, false, false, false, 0, null);
-    const cb = document.elementFromPoint(x, y);
-    cb.dispatchEvent(evt);
-  }
-  $(document).ready(function() {
-    $('body').click(function(e){
-      tagId = e.target.getAttribute('id');
-
-      if(dragId.length > 0 && tagId.length > 0) {
-        select_change(dragId, tagId);
-      } else {
-        alert(tagId);
-      }
+  const $ = (select) => document.querySelectorAll(select);
+  const draggables = $('.draggable');
+  const containers = $('.container');
+  if(isTouchScreen) {
+    draggables.forEach(el => {
+      el.addEventListener('touchstart', () => {
+        el.classList.add('touching');
+      });
+      el.addEventListener('touchend', () => {
+        el.classList.remove('touching');
+      })
     })
-  })
-  function select_change(drag, drop) {
-    if(drag.length > 0 && drop.length > 0) {
-      if(drag === 'content_container' || drop === 'content_container'){
-        return;
-      }
-      document.getElementById(drag).style.opacity = '1';
+    containers.forEach(container => {
+      container.addEventListener('touchmove', e => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(container, e.clientY);
+        const draggable = document.querySelector('.touching');
+
+    // 아래와 같이 수정해야 원하는 동작이 이루어집니다.
+    if (afterElement === null) {
+      container.appendChild(draggable);
+    } else {
+      container.insertBefore(draggable, afterElement);
     }
+      })
+    })
+    const getDragAfterElement = (container, y) => {
+      const draggableElements = [...container.querySelectorAll('.draggable:not(.touching)')]
+  
+      return draggableElements.reduce((closet, child) => {
+        const box = child.getBoundingClientRect()
+        const offset = y - box.top - box.height / 2
+        if (offset < 0 && offset > closet.offset) {
+          return {offset: offset, element: child}
+        } else {
+          return closet
+        }
+      }, {offset: Number.NEGATIVE_INFINITY}).element
+    };
+  } else {
+    console.log(draggables);
+    draggables.forEach(el => {
+      el.addEventListener('dragstart', () => {
+        el.classList.add('dragging');
+      });                                                      
+      el.addEventListener('dragend', () => {
+        el.classList.remove('dragging')
+      });
+    })
+    containers.forEach(container => {
+      container.addEventListener('dragover', e => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(container, e.clientY);
+        const draggable = document.querySelector('.dragging')
+  
+        container.insertBefore(draggable, afterElement)
+      });
+    });
+  
+    const getDragAfterElement = (container, y) => {
+      const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+  
+      return draggableElements.reduce((closet, child) => {
+        const box = child.getBoundingClientRect()
+        const offset = y - box.top - box.height / 2
+        if (offset < 0 && offset > closet.offset) {
+          return {offset: offset, element: child}
+        } else {
+          return closet
+        }
+      }, {offset: Number.NEGATIVE_INFINITY}).element
+    };
   }
 
   const [OpenIndex, setOpenIndex] = useState(-1);
@@ -112,16 +99,16 @@ const Preset = () => {
     setOpenIndex(index);
   };
   return (
-    <PresetWrap>
+    <PresetWrap className='container'>
       {preset_list.map((value, index) => (
-        <Wrap>
+        <Wrap className='draggable' draggable='true'>
           <ElementBtn
             onClick={() => {
               showDetail(index);
             }}
             key={index}
           >
-            <PreSetElement>
+            <PreSetElement className='el'>
               {value.content ? value.content : `프리셋 ${index + 1}`}
             </PreSetElement>
           </ElementBtn>
