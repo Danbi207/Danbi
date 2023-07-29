@@ -94,7 +94,7 @@ const HelpMap = (props) => {
 
       overlayList.push(overlay);
     });
-  },[props.helpList,kakao,map,markerList,overlayList,getOverlay]);
+  },[props.helpList,kakao,map,markerList,overlayList,getOverlay,navigate]);
 
   return (
     <HelpMapWrap>
