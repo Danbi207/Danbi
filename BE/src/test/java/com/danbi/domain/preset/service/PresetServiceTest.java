@@ -182,11 +182,22 @@ class PresetServiceTest {
                 );
     }
 
+    @DisplayName("프리셋 1개 삭제")
     @Test
     void delete() {
+        // given
+        Preset targetPreset = preset1;
+        List<Preset> prePresets = presetRepository.findAll();
+        // when
+        presetService.delete(targetPreset);
+        // then
+        List<Preset> postPresets = presetRepository.findAll();
+        assertThat(postPresets).hasSize(prePresets.size() - 1)
+                .extracting("id", "title", "content", "sequence")
+                .containsExactlyInAnyOrder(
+                        tuple(preset2.getId(), preset2.getTitle(), preset2.getContent(), preset2.getSequence()),
+                        tuple(preset3.getId(), preset3.getTitle(), preset3.getContent(), preset3.getSequence())
+                );
     }
 
-    @Test
-    void getPresetRepository() {
-    }
 }
