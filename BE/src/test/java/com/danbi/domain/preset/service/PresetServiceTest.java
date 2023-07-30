@@ -1,6 +1,7 @@
 package com.danbi.domain.preset.service;
 
 import com.danbi.domain.preset.dto.PresetDto;
+import com.danbi.domain.preset.dto.PresetSequenceDto;
 import com.danbi.domain.preset.entity.Preset;
 import com.danbi.domain.preset.repository.PresetRepository;
 import com.danbi.domain.profile.entity.Profile;
@@ -151,8 +152,34 @@ class PresetServiceTest {
                 );
     }
 
+    @DisplayName("프리셋 순서 변경")
     @Test
     void updateSequence() {
+        // given
+        PresetSequenceDto dto1 = PresetSequenceDto.builder()
+                .preset(preset1)
+                .sequence(1)
+                .build();
+        PresetSequenceDto dto2 = PresetSequenceDto.builder()
+                .preset(preset2)
+                .sequence(2)
+                .build();
+        PresetSequenceDto dto3 = PresetSequenceDto.builder()
+                .preset(preset3)
+                .sequence(0)
+                .build();
+
+        List<PresetSequenceDto> dtos = List.of(dto1, dto2, dto3);
+        // when
+        List<Preset> updatedPresets = presetService.updateSequence(dtos);
+        // then
+        assertThat(updatedPresets).hasSize(3)
+                .extracting("id", "title", "content", "sequence")
+                .containsExactlyInAnyOrder(
+                        tuple(preset1.getId(), preset1.getTitle(), preset1.getContent(), dto1.getSequence()),
+                        tuple(preset2.getId(), preset2.getTitle(), preset2.getContent(), dto2.getSequence()),
+                        tuple(preset3.getId(), preset3.getTitle(), preset3.getContent(), dto3.getSequence())
+                );
     }
 
     @Test
