@@ -7,7 +7,7 @@ import {setTabMode} from '../../../store/Slice/ipSlice'
 const Tab = () => {
   const dispatch = useDispatch();
   const tabmode = useSelector((state)=>state.ip.tabmode); 
-  
+
   return (
     <TapWarp>
         <TapItem $default='meet' $tabmode={tabmode} onClick={()=>{dispatch(setTabMode('meet'))}}>대면여부</TapItem>
