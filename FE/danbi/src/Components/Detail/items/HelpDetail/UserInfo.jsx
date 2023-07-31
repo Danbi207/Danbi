@@ -7,7 +7,6 @@ import more from '../More-black.svg';
 
 const UserInfo = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef(null);
 
   return (
     <UserInfoWrap>

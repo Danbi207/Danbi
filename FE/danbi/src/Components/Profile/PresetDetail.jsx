@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { getSpeech } from './TTS';
 
 const PresetDetail = ({ content, showDetail }) => {
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } =
-    useSpeechRecognition();
+  const [value, setValue] = useState(content);
+
+  const {
+    transcript,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+    isMicrophoneAvailable,
+  } = useSpeechRecognition();
   const [Recording, setRecording] = useState(false);
-
-  // 브라우저STT 확인용
-  if (!browserSupportsSpeechRecognition) {
-    alert('브라우저가 STT를 지원하지 않음');
-  }
-
-  if (!isMicrophoneAvailable){
-    alert('마이크 권한이 없습니다.')
-  }
 
   // 녹음 시작 (리셋하면서 시작)
   const StartRecord = () => {
     setRecording(true);
     resetTranscript();
-    SpeechRecognition.startListening();
+    SpeechRecognition.startListening({ continuous: true });
   };
   // 녹음 종료
   const StopRecord = () => {
     setRecording(false);
     SpeechRecognition.stopListening();
+    setValue(transcript);
   };
 
   const CloseDetail = () => {
@@ -37,23 +36,23 @@ const PresetDetail = ({ content, showDetail }) => {
     alert('저장되었습니다.');
   };
 
-  // 계속 녹음 중이라면 중지안하고 계속 녹음
-  if (listening) {
-    SpeechRecognition.startListening({ continuous: true });
-  }
+  const handleBtn = () => {
+    getSpeech(value);
+  };
 
   return (
     <PresetDetailWrap>
       <DetailTextArea
-        value={Recording ? transcript : content}
+        value={Recording ? transcript : value}
         onChange={(e) => setRecording(e.target.value)}
       />
       <Btns>
-        {browserSupportsSpeechRecognition ? (
+        {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
           <RecordBtn onClick={() => (Recording ? StopRecord() : StartRecord())}>
             {Recording ? '중지' : '녹음'}
           </RecordBtn>
         ) : null}
+        <TTSBtn onClick={handleBtn}>재생</TTSBtn>
         <CancleBtn onClick={CloseDetail}>취소</CancleBtn>
         <SaveBtn onClick={SaveDetail}>수정</SaveBtn>
       </Btns>
@@ -107,6 +106,16 @@ const RecordBtn = styled.button`
   width: 3.5rem;
   height: 1rem;
   background-color: red;
+  border-radius: 10px;
+  font-size: 12px;
+  text-align: center;
+  color: black;
+`;
+
+const TTSBtn = styled.button`
+  width: 3.5rem;
+  height: 1rem;
+  background-color: blue;
   border-radius: 10px;
   font-size: 12px;
   text-align: center;
