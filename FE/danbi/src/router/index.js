@@ -7,6 +7,8 @@ import IPHome from "../Components/IP/IPHome.jsx";
 import UserSubmit from "../Components/Login/UserSubmit.jsx";
 import HelpRequest from "../Components/IP/HelpRequest.jsx";
 import Detail from "../Components/Detail/Detail.jsx";
+import Friend from '../Components/Friends/Friend.jsx';
+
 const routes = [
   {
     path: "/",
@@ -43,6 +45,10 @@ const routes = [
   {
     path:"/detail/:helpPostId",
     component : Detail,
+  },
+  {
+    path: '/friend',
+    component : Friend
   }
 ];
 export default routes;
