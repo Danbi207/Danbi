@@ -7,6 +7,7 @@ import IPHome from "../Components/IP/IPHome.jsx";
 import UserSubmit from "../Components/Login/UserSubmit.jsx";
 import HelpRequest from "../Components/IP/HelpRequest.jsx";
 import Detail from "../Components/Detail/Detail.jsx";
+import MatchedHelp from "../Components/MatchedHelp/MatchedHelp.jsx";
 const routes = [
   {
     path: "/",
@@ -43,6 +44,10 @@ const routes = [
   {
     path:"/detail/:helpPostId",
     component : Detail,
+  },
+  {
+    path:"/matchedhelp/:helpPostId",
+    component:MatchedHelp
   }
 ];
 export default routes;
