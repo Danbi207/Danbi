@@ -3,35 +3,39 @@ import styled from 'styled-components';
 
 import Header from '../Common/Header/Header';
 import Footer from '../Common/Footer/Footer';
-import Preset from './HelpRequest/Preset.jsx';
-import Checkbox from './HelpRequest/Checkbox';
-import StartTime from './Calender/StartTime';
+
+
+// import StartTime from './Calender/StartTime';
+import FaceType from './FaceType';
+import TimeTpye from './TimeTpye';
+import Tab from './Tab/Tab';
+
 
 const HelpRequest = () => {
+  let [tabmode, setTabMode] = useState('meet');
+
   let [reservetype, setReserve] = useState('');
+  let [meetType, setMeetType] = useState('');
 
   useEffect(()=>{
     console.log(reservetype);
   },[reservetype])
 
-
   return (
     <RequestWrap>
       <Header></Header>
       <Wrap>
-        <Boxes>
-          <SelectBTN $default='now' $reservetype={reservetype} onClick={()=>{setReserve('now')}}>즉시</SelectBTN>
-          <SelectBTN $default='reserve' $reservetype={reservetype} onClick={()=>{setReserve('reserve')}}>예약</SelectBTN>
-        </Boxes>
-        <StartTime reservetype={reservetype}></StartTime>
-        <Preset></Preset>
-        <Checkbox></Checkbox>
-      </Wrap>
-      <RequestBTN>도움 요청하기</RequestBTN>
+        <Tab tabmode={tabmode} setTabMode={setTabMode}></Tab>
+        { tabmode === 'meet' ? 
+          <FaceType meetType={meetType} setMeetType={setMeetType} setTabMode={setTabMode}/> :
+          <TimeTpye reservetype={reservetype} setReserve={setReserve}/>}        
+      </Wrap> 
+      
+      
       <Footer></Footer>
     </RequestWrap>
   )
-}
+}  
 
 const RequestWrap = styled.div`
   width: 100%;
@@ -41,46 +45,8 @@ const RequestWrap = styled.div`
 const Wrap = styled.div`
 `
 
-const Boxes = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    margin: 2rem 0rem;
-`
 
-const SelectBTN = styled.button`
-    width: 9.4rem;
-    height: 9.4rem;
-    border-radius: 0.75rem;
-    font-size: 2.3rem;
-    background-color: ${props=> props.$default === props.$reservetype ? '#8383FF' : '#E3E3E3'};
-    color : ${props=> props.$default === props.$reservetype ? '#fff' : '#000'};
-    display: flex;
-    justify-content : center;
-    align-items : center;
-    transition: 0.5s;
-    &:hover {
-        background-color: #8383FF;
-        color: white;
-        transform: scale(1.1);
-        transition: 0.5s;
-    }
-` 
+ 
 
-const RequestBTN = styled.button`
-  position: absolute;
-  left : calc(( 100% - 30rem )/2);
-  bottom: 5rem;
-  width: 30rem;
-  height: 3rem;
-  border-radius: 2rem;
-  background-color: #6161FF;
-  color: #fff;
-  font-size : 2rem;
-  @media screen and (max-width: 500px) {
-    width: 20rem;
-    height: 5rem;
-    left : calc(( 100% - 20rem )/2);
-  }
-`
 
 export default HelpRequest;

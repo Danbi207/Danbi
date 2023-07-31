@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Checkbox = () => {
-  const [checkList] = useState(['동성이였으면 좋겠어요', '비대면으로 해결할 수 있어요', '대면으로 해결할 수 있어요']);
-  const [ischecked, setIschecked] = useState([false, false, false]);
+  const [checkList] = useState(['동성이였으면 좋겠어요']);
+  const [ischecked, setIschecked] = useState(false);
 
   useEffect(()=>{
     console.log(ischecked)
