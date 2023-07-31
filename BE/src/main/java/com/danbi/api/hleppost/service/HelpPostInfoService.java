@@ -8,6 +8,8 @@ import com.danbi.api.hleppost.dto.detailsearch.DetailHelpPostDto;
 import com.danbi.api.hleppost.dto.detailsearch.IpDto;
 import com.danbi.api.hleppost.dto.helpersearch.HelperHelpPostListDto;
 import com.danbi.api.hleppost.dto.helpersearch.HelperResponseDto;
+import com.danbi.api.hleppost.dto.helpersearch.face.HelperFaceHelpPostDto;
+import com.danbi.api.hleppost.dto.helpersearch.query.HelperQueryHelpPostDto;
 import com.danbi.api.hleppost.dto.mysearch.HelpPostListDto;
 import com.danbi.api.hleppost.dto.HelpPostRequestDto;
 import com.danbi.api.hleppost.dto.HelpPostResponseDto;
@@ -17,6 +19,8 @@ import com.danbi.domain.accuse.service.AccuseService;
 import com.danbi.domain.help.constant.State;
 import com.danbi.domain.help.entity.Help;
 import com.danbi.domain.help.service.HelpService;
+import com.danbi.domain.helppost.dto.HelpPostFaceDto;
+import com.danbi.domain.helppost.dto.HelpPostQueryDto;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.entity.Positions;
 import com.danbi.domain.helppost.service.HelpPostService;
@@ -222,4 +226,55 @@ public class HelpPostInfoService {
                         .meetAddr(positions.getMeetAddr()).build()).build();
         return detail;
     }
+
+
+    public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
+        List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
+        List<HelperQueryHelpPostDto> helpList = new ArrayList<>();
+        for (HelpPostQueryDto helpPost : helpPosts) {
+
+            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getIpId());
+
+            HelperQueryHelpPostDto post = HelperQueryHelpPostDto.builder()
+                    .helpPostId(helpPost.getHelpPostId())
+                    .ipId(helpPost.getIpId())
+                    .name(helpPost.getName())
+                    .profileUrl(helpPost.getProfileUrl())
+                    .caution(helpPost.getCaution())
+                    .startTime(helpPost.getStartTime())
+                    .endTime(helpPost.getEndTime())
+                    .faceFlag(helpPost.isFaceFlag())
+                    .accumulateDewPoint(helpPost.getAccumulateDewPoint())
+                    .friendFlag(isFriend).build();
+            helpList.add(post);
+        }
+        return helpList;
+    }
+
+    public List<HelperFaceHelpPostDto> searchFaceHelpPost(Long memberId, String longitude, String latitude) {
+        List<HelpPostFaceDto> helpPosts = helpPostService.searchAllByFace(longitude, latitude);
+        List<HelperFaceHelpPostDto> helpList = new ArrayList<>();
+        for (HelpPostFaceDto helpPost : helpPosts) {
+
+            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getIpId());
+
+            HelperFaceHelpPostDto post = HelperFaceHelpPostDto.builder()
+                    .helpPostId(helpPost.getHelpPostId())
+                    .ipId(helpPost.getIpId())
+                    .position(HelperFaceHelpPostDto.Position.builder()
+                            .latitude(helpPost.getLatitude())
+                            .longitude(helpPost.getLongitude()).build())
+                    .name(helpPost.getName())
+                    .profileUrl(helpPost.getProfileUrl())
+                    .caution(helpPost.getCaution())
+                    .startTime(helpPost.getStartTime())
+                    .endTime(helpPost.getEndTime())
+                    .accumulateDewPoint(helpPost.getAccumulateDewPoint())
+                    .friendFlag(isFriend).build();
+            helpList.add(post);
+        }
+        return helpList;
+    }
+
+
 }

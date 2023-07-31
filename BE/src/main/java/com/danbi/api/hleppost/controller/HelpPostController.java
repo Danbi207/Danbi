@@ -5,6 +5,8 @@ import com.danbi.api.hleppost.dto.HelpPostResponseDto;
 import com.danbi.api.hleppost.dto.detailmatched.DetailMatchedHelpPostDto;
 import com.danbi.api.hleppost.dto.detailsearch.DetailHelpPostDto;
 import com.danbi.api.hleppost.dto.helpersearch.HelperResponseDto;
+import com.danbi.api.hleppost.dto.helpersearch.face.HelperFaceHelpPostDto;
+import com.danbi.api.hleppost.dto.helpersearch.query.HelperQueryHelpPostDto;
 import com.danbi.api.hleppost.dto.mysearch.MyHelpPostDto;
 import com.danbi.api.hleppost.service.HelpPostInfoService;
 import com.danbi.domain.member.entity.Member;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name = "HelpPost", description = "도움 요청 게시글")
 @RestController
@@ -80,6 +83,24 @@ public class HelpPostController {
                                                                @MemberInfo MemberInfoDto memberInfoDto) {
         DetailMatchedHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailMatchedHelpPost(helpPostId, memberInfoDto.getMemberId());
         return ResponseEntity.ok(detailHelpPostDto);
+    }
+
+    @Operation(summary = "현재 등록된 모든 도움 요청 게시글 쿼리 리스트 API", description = "현재 등록된 모든 도움 요청 게시글 쿼리 리스트 API")
+    @GetMapping("/{longitude}/{latitude}") // 현재 등록된 모든 도움 요청 게시글 조회(querydsl)
+    public ResponseEntity<List<HelperQueryHelpPostDto>> searchAllByQueryHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
+                                                                      @PathVariable String longitude,
+                                                                      @PathVariable String latitude) {
+        List<HelperQueryHelpPostDto> allHelpPosts = helpPostInfoService.searchQueryHelpPost(memberInfoDto.getMemberId(), longitude, latitude);
+        return ResponseEntity.ok(allHelpPosts);
+    }
+
+    @Operation(summary = "현재 등록된 모든 대면 도움 요청 게시글 쿼리 리스트 API", description = "현재 등록된 모든 대면 도움 요청 게시글 쿼리 리스트 API")
+    @GetMapping("/meet/{longitude}/{latitude}") // 현재 등록된 모든 도움 대면 요청 게시글 조회(querydsl)
+    public ResponseEntity<List<HelperFaceHelpPostDto>> searchAllByFaceHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
+                                                                               @PathVariable String longitude,
+                                                                               @PathVariable String latitude) {
+        List<HelperFaceHelpPostDto> allHelpPosts = helpPostInfoService.searchFaceHelpPost(memberInfoDto.getMemberId(), longitude, latitude);
+        return ResponseEntity.ok(allHelpPosts);
     }
 
 }

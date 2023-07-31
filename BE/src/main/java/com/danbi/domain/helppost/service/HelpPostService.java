@@ -1,6 +1,8 @@
 package com.danbi.domain.helppost.service;
 
 import com.danbi.domain.helppost.constant.State;
+import com.danbi.domain.helppost.dto.HelpPostFaceDto;
+import com.danbi.domain.helppost.dto.HelpPostQueryDto;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
 import com.danbi.domain.helppost.repository.PositionRepository;
@@ -78,6 +80,14 @@ public class HelpPostService {
     public HelpPost detailHelpPost(Long id) {
         HelpPost helpPost = helpPostRepository.findById(id).get();
         return helpPost;
+    }
+
+    public List<HelpPostQueryDto> searchAllByQuery(String longitude, String latitude) {
+        return helpPostRepository.search(longitude, latitude);
+    }
+
+    public List<HelpPostFaceDto> searchAllByFace(String longitude, String latitude) {
+        return helpPostRepository.searchFace(longitude,latitude);
     }
 
 }
