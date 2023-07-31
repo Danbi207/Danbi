@@ -17,7 +17,7 @@ const UserSubmit = () => {
   useEffect(()=>{
     console.log(tokeninfo);
   },[])
-
+ 
   const submit = () => {
 
   }
@@ -37,4 +37,4 @@ const SubmitWrap = styled.div`
   height: 100%;
 ` 
 
-export default UserSubmit;
+export default UserSubmit; 

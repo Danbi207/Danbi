@@ -56,7 +56,7 @@ const UserFile = (props) => {
         <ImgNextBtn onClick={nextImage}>-{">"}</ImgNextBtn>
       </UploadWrap>
       <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
-      <NextButton>다음</NextButton>
+      <NextButton>제출</NextButton>
     </SubmitWrap>
   );
 }
