@@ -8,6 +8,8 @@ import UserSubmit from "../Components/Login/UserSubmit.jsx";
 import HelpRequest from "../Components/IP/HelpRequest.jsx";
 import Detail from "../Components/Detail/Detail.jsx";
 import Friend from '../Components/Friends/Friend.jsx';
+import Map from "../Components/IP/Map/Map.jsx";
+
 
 const routes = [
   {
@@ -41,6 +43,10 @@ const routes = [
   {
     path: "/helprequest",
     component : HelpRequest,
+  },
+  {
+    path: "/ipmap",
+    component : Map,
   },
   {
     path:"help/:role/detail/:helpPostId",
