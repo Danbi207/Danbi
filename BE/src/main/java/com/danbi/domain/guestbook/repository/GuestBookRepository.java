@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface GuestBookRepository extends JpaRepository<GuestBook, Long> {
 
-    Optional<GuestBook> getGuestBookByMember(Member member);
+    Optional<GuestBook> findGuestBookByMember(Member member);
 }

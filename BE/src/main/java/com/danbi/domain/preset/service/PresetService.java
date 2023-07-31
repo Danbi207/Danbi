@@ -34,7 +34,7 @@ public class PresetService {
     @Transactional
     public Preset update(PresetDto presetDto, Preset preset) {
         preset.updateTitle(presetDto.getTitle());
-        preset.updateContent(preset.getContent());
+        preset.updateContent(presetDto.getContent());
         preset.updateSequence(presetDto.getSequence());
 
         return preset;
