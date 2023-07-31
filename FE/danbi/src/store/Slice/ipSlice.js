@@ -28,7 +28,6 @@ export const ipSlice = createSlice({
     setIsChecked : (state, action) => {
       state.ischecked = action.payload;
     }
-
   },
 });
 

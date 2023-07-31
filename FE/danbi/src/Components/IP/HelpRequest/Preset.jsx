@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Preset = () => {
-  const [content, setContent] = useState('');
+  // const [content, setContent] = useState('');
   const [openIndex, setOpenIndex] = useState("0");
 
   let preset_list = [
@@ -21,13 +21,13 @@ const Preset = () => {
     
   ];
 
-  useEffect(()=>console.log(content),[content]);
+  useEffect(()=>console.log(openIndex),[openIndex]);
 
   const handlePresetSelect = (e) => {
     let idx = e.target.value; // select에서 value값은 string으로 저장된다.  
     setOpenIndex(idx);
-    if (idx === "0"){setContent("")}
-    else {setContent(preset_list[idx-1].content);} //preset idx는 1부터 시작 -> idx--해야함
+    // if (idx === "0"){setContent("")}
+    // else {setContent(preset_list[idx-1].content);} //preset idx는 1부터 시작 -> idx--해야함
   };
 
   return (
