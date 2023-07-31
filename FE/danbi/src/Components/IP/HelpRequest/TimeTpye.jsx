@@ -1,23 +1,30 @@
 import React from 'react'
 import styled from 'styled-components';
 
-import StartTime from './Calender/StartTime';
-import Checkbox from './HelpRequest/Checkbox';
+import StartTime from '../Calender/StartTime';
+import Checkbox from './Checkbox';
+import { useDispatch, useSelector } from 'react-redux';
 
-const TimeTpye = ({reservetype, setReserve}) => {
+import { setReserveType } from '../../../store/Slice/ipSlice'
+
+const TimeTpye = () => {
+  const dispatch = useDispatch();
+  const reservetype = useSelector(state => state.ip.reservetype)
+  // 도움 요청하기 버튼을 통해서 ip 데이터를 쏠 수 있게
+  const ip = useSelector(state => state.ip)
+
   return (
     <Wrap>
-
         <Boxes>
-          <SelectBTN $default='now' $reservetype={reservetype} onClick={()=>{setReserve('now')}}>즉시</SelectBTN>
-          <SelectBTN $default='reserve' $reservetype={reservetype} onClick={()=>{setReserve('reserve')}}>예약</SelectBTN>
+          <SelectBTN $default='now' $reservetype={reservetype} onClick={()=>{dispatch(setReserveType('now'))}}>즉시</SelectBTN>
+          <SelectBTN $default='reserve' $reservetype={reservetype} onClick={()=>{dispatch(setReserveType('reserve'))}}>예약</SelectBTN>
         </Boxes>
         <StartTime ></StartTime>
         <Checkbox></Checkbox>
         <RequestBTN>도움 요청하기</RequestBTN>
     </Wrap>
   )
-}
+} 
 
 const Wrap = styled.div`
 `

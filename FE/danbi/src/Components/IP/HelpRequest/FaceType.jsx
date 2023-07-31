@@ -1,21 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import HelpDetail from './HelpRequest/HelpDetail';
-import Preset from './HelpRequest/Preset.jsx';
+import HelpDetail from './HelpDetail';
+import Preset from './Preset.jsx';
+import Positioin from './Positioin';
+import { useDispatch, useSelector } from 'react-redux';
 
-const FaceType = ({meetType, setMeetType, setTab}) => {
+import { setTabMode, setMeetType } from "../../../store/Slice/ipSlice"
+
+function FaceType() {
+  const dispatch = useDispatch();
+  const meetType = useSelector(state => state.ip.meetType);
+
+  useEffect(()=>{
+    console.log(meetType)
+  }, [meetType])
+
+  
   return (
     <Wrap>
-        <Boxes>
-          <SelectBTN $default='face' $meetType={meetType} onClick={()=>{setMeetType('face')}}>대면</SelectBTN>
-          <SelectBTN $default='noface' $meetType={meetType} onClick={()=>{setMeetType('noface')}}>비대면</SelectBTN>
-        </Boxes>    
-        <HelpDetail></HelpDetail>
-        <Preset></Preset>
-        <NextBTN onClick={()=>{setTab('time')}}>다음</NextBTN>
+      <Boxes>
+        <SelectBTN $default='face' $meetType={meetType} onClick={() => { dispatch(setMeetType('face')); } }>대면</SelectBTN>
+        <SelectBTN $default='noface' $meetType={meetType} onClick={() => { dispatch(setMeetType('noface')); } }>비대면</SelectBTN>
+      </Boxes>
+      <Positioin></Positioin>
+      <HelpDetail></HelpDetail>
+      <Preset></Preset>
+      <NextBTN onClick={() => { dispatch(setTabMode('time')); } }>다음</NextBTN>
     </Wrap>
-  )
+  );
 }
 
 const Wrap = styled.div`
@@ -61,6 +74,5 @@ const NextBTN  = styled.button`
     left : calc(( 100% - 20rem )/2);
   }
 `
-
 
 export default FaceType;

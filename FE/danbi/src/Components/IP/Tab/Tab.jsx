@@ -1,11 +1,17 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-const Tab = ({tabmode, setTabMode}) => {
+import {setTabMode} from '../../../store/Slice/ipSlice'
+
+const Tab = () => {
+  const dispatch = useDispatch();
+  const tabmode = useSelector((state)=>state.ip.tabmode); 
+  
   return (
     <TapWarp>
-        <TapItem $default='meet' $tabmode={tabmode} onClick={()=>{setTabMode('meet')}}>대면여부</TapItem>
-        <TapItem $default='time' $tabmode={tabmode} onClick={()=>{setTabMode('time')}}>시간예약</TapItem>
+        <TapItem $default='meet' $tabmode={tabmode} onClick={()=>{dispatch(setTabMode('meet'))}}>대면여부</TapItem>
+        <TapItem $default='time' $tabmode={tabmode} onClick={()=>{dispatch(setTabMode('time'))}}>시간예약</TapItem>
     </TapWarp>
   )
 }

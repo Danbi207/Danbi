@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components';
 
 import Header from '../Common/Header/Header';
 import Footer from '../Common/Footer/Footer';
-
-
-// import StartTime from './Calender/StartTime';
-import FaceType from './FaceType';
-import TimeTpye from './TimeTpye';
+import FaceType from './HelpRequest/FaceType';
+import TimeTpye from './HelpRequest/TimeTpye';
 import Tab from './Tab/Tab';
+import { useSelector } from 'react-redux';
 
 
 const HelpRequest = () => {
-  let [tabmode, setTabMode] = useState('meet');
-
-  let [reservetype, setReserve] = useState('');
-  let [meetType, setMeetType] = useState('');
+  const ip = useSelector((state)=>state.ip)
 
   useEffect(()=>{
-    console.log(reservetype);
-  },[reservetype])
+    console.log(ip.reservetype);
+  },[ip.reservetype])
 
   return (
     <RequestWrap>
       <Header></Header>
       <Wrap>
-        <Tab tabmode={tabmode} setTabMode={setTabMode}></Tab>
-        { tabmode === 'meet' ? 
-          <FaceType meetType={meetType} setMeetType={setMeetType} setTabMode={setTabMode}/> :
-          <TimeTpye reservetype={reservetype} setReserve={setReserve}/>}        
+        <Tab></Tab>
+        { ip.tabmode === 'meet' ? <FaceType /> : <TimeTpye />}        
       </Wrap> 
-      
-      
       <Footer></Footer>
     </RequestWrap>
   )

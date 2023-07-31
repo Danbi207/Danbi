@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
+import {setIsChecked} from '../../../store/Slice/ipSlice'
+
 const Checkbox = () => {
-  const [checkList] = useState(['동성이였으면 좋겠어요']);
-  const [ischecked, setIschecked] = useState(false);
+  const dispatch = useDispatch();
+  const ischecked = useSelector(state => state.ip.ischecked);
 
   useEffect(()=>{
     console.log(ischecked)
@@ -14,13 +17,8 @@ const Checkbox = () => {
     <PresetName>선택사항</PresetName>
     <Wrap>
         <InputWrap>
-            {checkList.map((item, idx) => (
-              <div key={idx}>
-                <Input type='checkbox' id={item} onChange={()=>{setIschecked(!ischecked)}}/>
-                <Label htmlFor={item} onChange={()=>{setIschecked(!ischecked)}}>{checkList[idx]}</Label>
-              </div>
-              )) 
-            }
+            <Input type='checkbox' id='check' onChange={()=>{dispatch(setIsChecked(!ischecked))}}/>
+            <Label htmlFor='check' onChange={()=>{dispatch(setIsChecked(!ischecked))}}>동성이였으면 좋겠어요</Label>
         </InputWrap>
     </Wrap>
     </>
