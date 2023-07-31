@@ -31,7 +31,6 @@ public class HelperHelpPostListDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
 
-    private int totalTime;
 
     private boolean friendFlag;
 
