@@ -16,20 +16,20 @@ const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
   return (
-    <ProfileWrap>
-      <Header />
-      <Wrap>
-        <UserInfo />
-        <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
-        <JandiWrap>
-          <Jandi point={point} setPickModalOpen={setPickModalOpen} />
-        </JandiWrap>
-        {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
-        <GuestBook />
-        {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
-      </Wrap>
-      <Footer />
-    </ProfileWrap>
+      <ProfileWrap>
+        <Header />
+        <Wrap>
+          <UserInfo />
+          <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
+          <JandiWrap>
+            <Jandi point={point} setPickModalOpen={setPickModalOpen} />
+          </JandiWrap>
+          {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
+          <GuestBook />
+          {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
+        </Wrap>
+        <Footer />
+      </ProfileWrap>
   );
 };
 
@@ -39,6 +39,7 @@ const ProfileWrap = styled.div`
   color: ${(props) => props.theme.colors.titleColor};
   display: flex;
   flex-direction: column;
+  height: auto;
 `;
 
 const Wrap = styled.div`
@@ -48,6 +49,7 @@ const Wrap = styled.div`
     -ms-user-select: all;
     user-select: all; */
 `;
+
 
 const JandiWrap = styled.div``;
 

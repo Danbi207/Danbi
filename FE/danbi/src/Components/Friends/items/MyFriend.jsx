@@ -23,6 +23,8 @@ const MyFriendWrap = styled.div`
     justify-content: space-between;
     padding: 0 1.5rem;
     margin: 1rem 0;
+    width: 100%;
+    height: auto;
 `
 
 const InfoWrap = styled.div`

@@ -43,7 +43,7 @@ const routes = [
     component : HelpRequest,
   },
   {
-    path:"/detail/:helpPostId",
+    path:"help/:role/detail/:helpPostId",
     component : Detail,
   },
   {
