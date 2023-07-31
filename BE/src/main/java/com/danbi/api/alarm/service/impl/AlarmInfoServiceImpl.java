@@ -1,16 +1,23 @@
 package com.danbi.api.alarm.service.impl;
 
 import com.danbi.api.alarm.dto.request.RequestAlarmDto;
+import com.danbi.api.alarm.dto.response.ResponseAlarmDto;
+import com.danbi.api.alarm.dto.response.ResponseAlarmListDto;
 import com.danbi.api.alarm.service.AlarmInfoService;
+import com.danbi.domain.alarm.constant.State;
 import com.danbi.domain.alarm.entity.Alarm;
 import com.danbi.domain.alarm.service.AlarmService;
+import com.danbi.domain.member.service.MemberService;
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -19,47 +26,134 @@ import java.util.stream.Stream;
 public class AlarmInfoServiceImpl implements AlarmInfoService {
 
     private final AlarmService alarmService;
+    private final MemberService memberService;
 
     //알림 목록조회
     @Override
-    public List<Alarm> getAlarmList(Long memberId) {
+    public ResponseAlarmListDto getAlarmList(Long memberId) {
+        List<Alarm> list = alarmService.getMyAlarms(memberId);
+        List<ResponseAlarmDto> alarmList = new ArrayList<>();
 
-        return null;
+        for (Alarm result : list) {
+
+            alarmList.add(ResponseAlarmDto.builder()
+                    .alarmId(result.getId())
+                    .fromName(memberService.findByMemberId(result.getFrom().getId()).getName())
+                    .toName(memberService.findByMemberId(result.getTo().getId()).getName())
+                    .title(result.getTitle())
+                    .content(result.getContent())
+                    .type(result.getType())
+                    .createTime(result.getCreateTime())
+                    .readFlag(result.getReadFlag())
+                    .build());
+        }
+
+        return ResponseAlarmListDto.builder().alarmList(alarmList).build();
     }
 
     // 읽지 않은 알람 조회
     @Override
-    public List<Alarm> getNotReadAlarm(Long memberId) {
-        return null;
+    public ResponseAlarmListDto getNotReadAlarm(Long memberId) {
+        List<Alarm> list = alarmService.getNotReadAlarm(memberId);
+        List<ResponseAlarmDto> alarmList = new ArrayList<>();
+
+        for (Alarm result : list) {
+
+            alarmList.add(ResponseAlarmDto.builder()
+                    .alarmId(result.getId())
+                    .fromName(memberService.findByMemberId(result.getFrom().getId()).getName())
+                    .toName(memberService.findByMemberId(result.getTo().getId()).getName())
+                    .title(result.getTitle())
+                    .content(result.getContent())
+                    .type(result.getType())
+                    .createTime(result.getCreateTime())
+                    .readFlag(result.getReadFlag())
+                    .build());
+        }
+        return ResponseAlarmListDto.builder().alarmList(alarmList).build();
     }
 
     // 읽지 않는 알람 갯수 조회
     @Override
     public Long countNotReadAlarm(Long memberId) {
-        return null;
+        return alarmService.countNotReadAlarm(memberId);
     }
 
     //알림 상세조회
     @Override
-    public Alarm getAlarmDetail(Long memberId, Long alarmId) {
-        return null;
+    public ResponseAlarmDto getAlarmDetail(Long memberId, Long alarmId) {
+        Alarm result = alarmService.getAlarmById(memberId, alarmId);
+
+        return ResponseAlarmDto.builder()
+                .alarmId(result.getId())
+                .fromName(memberService.findByMemberId(result.getFrom().getId()).getName())
+                .toName(memberService.findByMemberId(result.getTo().getId()).getName())
+                .title(result.getTitle())
+                .content(result.getContent())
+                .type(result.getType())
+                .createTime(result.getCreateTime())
+                .readFlag(result.getReadFlag())
+                .build();
     }
 
     //알림 읽음처리
+    @Transactional
     @Override
     public void readAlarm(Long memberId, Long alarmId) {
-
+        Alarm beforeAlarm = alarmService.getAlarmById(memberId, alarmId);
+        Alarm updatedAlarm = Alarm.builder()
+                .from(beforeAlarm.getFrom())
+                .to(beforeAlarm.getTo())
+                .title(beforeAlarm.getTitle())
+                .readFlag(true)
+                .state(beforeAlarm.getState())
+                .content(beforeAlarm.getContent())
+                .type(beforeAlarm.getType())
+                .build();
+        if (updatedAlarm.getTo().getId() != memberId) {
+            throw new BusinessException(ErrorCode.FORBIDDEN_ALARM);
+        }
+        alarmService.updateAlarm(memberId, alarmId, updatedAlarm);
     }
 
     //알림 삭제처리
+    @Transactional
     @Override
     public void deleteAlarm(Long memberId, Long alarmId) {
-
+        Alarm findAlarm = alarmService.getAlarmById(memberId, alarmId);
+        if (findAlarm.getTo().getId() == memberId) {
+            alarmService.deleteAlarmByTo(memberId, alarmId);
+        } else {
+            alarmService.deleteAlarmByFrom(memberId, alarmId);
+        }
     }
 
+
     //알림 생성
+    @Transactional
     @Override
-    public Alarm registerAlarm(Long memberId, RequestAlarmDto requestAlarmDto) {
-        return null;
+    public ResponseAlarmDto registerAlarm(Long memberId, RequestAlarmDto requestAlarmDto) {
+        Alarm alarm = Alarm.builder()
+                .from(memberService.findByMemberId(requestAlarmDto.getFromId()))
+                .to(memberService.findByMemberId(requestAlarmDto.getToId()))
+                .title(requestAlarmDto.getTitle())
+                .readFlag(false)
+                .state(State.ACTIVATE)
+                .content(requestAlarmDto.getContent())
+                .type(requestAlarmDto.getType())
+                .build();
+
+        Alarm saveAlarm = alarmService.savaAlarm(alarm);
+
+        return ResponseAlarmDto.builder()
+                .alarmId(saveAlarm.getId())
+                .fromName(memberService.findByMemberId(saveAlarm.getFrom().getId()).getName())
+                .toName(memberService.findByMemberId(saveAlarm.getTo().getId()).getName())
+                .title(saveAlarm.getTitle())
+                .content(saveAlarm.getContent())
+                .type(saveAlarm.getType())
+                .createTime(saveAlarm.getCreateTime())
+                .readFlag(saveAlarm.getReadFlag())
+                .build();
     }
 }
