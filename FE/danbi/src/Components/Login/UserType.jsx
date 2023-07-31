@@ -5,17 +5,17 @@ const UserType = (props) => {
   return (
     <SelectWrap>
         <TypesSelect>
-            <Question>성별을 선택하세요</Question>
-            <Boxes>
-                <SelectBTN $default='male' $select={props.sex} onClick={()=>{props.setSex('male')}}>남</SelectBTN>
-                <SelectBTN $default='female' $select={props.sex} onClick={()=>{props.setSex('female')}}>여</SelectBTN>
-            </Boxes>
-        </TypesSelect>
-        <TypesSelect>
             <Question>서비스 유형을 선택하세요</Question>
             <Boxes>
               <SelectBTN $default='helper' $select={props.usertype} onClick={()=>{props.setUserType('helper')}}>도움 주기</SelectBTN>
               <SelectBTN $default='ip' $select={props.usertype} onClick={()=>{props.setUserType('ip')}}>도움 받기</SelectBTN>
+            </Boxes>
+        </TypesSelect>
+        <TypesSelect>
+            <Question>성별을 선택하세요</Question>
+            <Boxes>
+                <SelectBTN $default='male' $select={props.sex} onClick={()=>{props.setSex('male')}}>남</SelectBTN>
+                <SelectBTN $default='female' $select={props.sex} onClick={()=>{props.setSex('female')}}>여</SelectBTN>
             </Boxes>
         </TypesSelect>
         <NextBTN onClick={()=>{props.setMode(false);}}>다음</NextBTN>

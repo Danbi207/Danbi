@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
+
 import Header from '../Common/Header/Header';
 import Footer from '../Common/Footer/Footer';
 import Preset from './HelpRequest/Preset.jsx';
 import Checkbox from './HelpRequest/Checkbox';
-
-import InputCalender from './Calender/InputCalender';
 import StartTime from './Calender/StartTime';
 
 const HelpRequest = () => {
   let [reservetype, setReserve] = useState('');
+
+  useEffect(()=>{
+    console.log(reservetype);
+  },[reservetype])
+
 
   return (
     <RequestWrap>
@@ -19,11 +23,11 @@ const HelpRequest = () => {
           <SelectBTN $default='now' $reservetype={reservetype} onClick={()=>{setReserve('now')}}>즉시</SelectBTN>
           <SelectBTN $default='reserve' $reservetype={reservetype} onClick={()=>{setReserve('reserve')}}>예약</SelectBTN>
         </Boxes>
-        <InputCalender></InputCalender>
-        <StartTime></StartTime>
+        <StartTime reservetype={reservetype}></StartTime>
         <Preset></Preset>
         <Checkbox></Checkbox>
       </Wrap>
+      <RequestBTN>도움 요청하기</RequestBTN>
       <Footer></Footer>
     </RequestWrap>
   )
@@ -61,5 +65,22 @@ const SelectBTN = styled.button`
         transition: 0.5s;
     }
 ` 
+
+const RequestBTN = styled.button`
+  position: absolute;
+  left : calc(( 100% - 30rem )/2);
+  bottom: 5rem;
+  width: 30rem;
+  height: 3rem;
+  border-radius: 2rem;
+  background-color: #6161FF;
+  color: #fff;
+  font-size : 2rem;
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    height: 5rem;
+    left : calc(( 100% - 20rem )/2);
+  }
+`
 
 export default HelpRequest;
