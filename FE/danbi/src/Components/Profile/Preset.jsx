@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
 
@@ -20,54 +20,52 @@ const preset_list = [
 const isTouchScreen = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 const Preset = () => {
-  const $ = (select) => document.querySelectorAll(select);
-  const draggables = $('.draggable');
-  const containers = $('.container');
-  if(isTouchScreen) {
-    draggables.forEach(el => {
-      el.addEventListener('touchstart', () => {
-        el.classList.add('touching');
-      })
-      el.addEventListener('touchend', () => {
-        el.classList.remove('touching');
-      })
-    });
-    containers.forEach(container => {
-      
-    })
-  } else {
-    console.log(draggables);
-    draggables.forEach(el => {
-      el.addEventListener('dragstart', () => {
-        el.classList.add('dragging');
-      });                                                      
-      el.addEventListener('dragend', () => {
-        el.classList.remove('dragging')
-      });
-    })
-    containers.forEach(container => {
-      container.addEventListener('dragover', e => {
-        e.preventDefault();
-        const afterElement = getDragAfterElement(container, e.clientY);
-        const draggable = document.querySelector('.dragging')
-  
-        container.insertBefore(draggable, afterElement)
-      });
-    });
-  
-    const getDragAfterElement = (container, y) => {
-      const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
-  
-      return draggableElements.reduce((closet, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-        if (offset < 0 && offset > closet.offset) {
-          return {offset: offset, element: child}
-        } else {
-          return closet
-        }
-      }, {offset: Number.NEGATIVE_INFINITY}).element
-    };
+  const [mouseDownClientX, setMouseDownClientX] = useState(0);
+  const [mouseDownClientY, setMouseDownClientY] = useState(0);
+  const [mouseUpClientX, setMouseUpClientX] = useState(0);
+  const [mouseUpClientY, setMouseUpClientY] = useState(0);
+
+  const onMouseDown = (e) => {
+    setMouseDownClientX(e.clientX);
+    setMouseDownClientY(e.clientY);
+  }
+  const onMouseUp = (e) => {
+    setMouseUpClientX(e.clientX);
+    setMouseUpClientY(e.clientY);
+  } 
+  useEffect(() => {
+    const dragSpaceX = Math.abs(mouseDownClientX - mouseUpClientX);
+    const dragSpaceY = Math.abs(mouseDownClientY - mouseUpClientY);
+    const vector = dragSpaceX / dragSpaceY;
+
+    if (mouseDownClientX !== 0 && dragSpaceX > 100 && vector > 2){
+      if (mouseUpClientY < mouseDownClientY) {
+        console.log('dragging')
+        
+      } else if (mouseUpClientY > mouseDownClientY) {
+        console.log('dragging')
+      }
+    }
+  }, [mouseUpClientX]);
+
+  const [touchedX, setTouchedX] = useState(0);
+  const [touchedY, setTouchedY] = useState(0);
+
+  const onTouchStart = (e) => {
+    setTouchedX(e.changedTouches[0].pageX);
+    setTouchedY(e.changedTouches[0].pageY);
+  }
+
+  const onTouchEnd = (e) => {
+    const distanceX = touchedX - e.changedTouches[0].pageX;
+    const distanceY = touchedY - e.changedTouches[0].pageY;
+    const vector = Math.abs(distanceX / distanceY);
+
+    if (distanceY > 30 && vector > 2) {
+      console.log('touching')
+    } else if (distanceY < -30 && vector > 2) {
+      console.log('touching')
+    }
   }
 
   const [OpenIndex, setOpenIndex] = useState(-1);
@@ -77,7 +75,12 @@ const Preset = () => {
   return (
     <PresetWrap className='container'>
       {preset_list.map((value, index) => (
-        <Wrap className='draggable' draggable='true'>
+        <Wrap 
+          onMouseDown={onMouseDown} 
+          onMouseUp={onMouseUp}
+          onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart}
+        >
           <ElementBtn
             onClick={() => {
               showDetail(index);
@@ -90,7 +93,6 @@ const Preset = () => {
           </ElementBtn>
           {OpenIndex === index && (
             <PresetDetail
-              key={index}
               content={preset_list[index].content}
               showDetail={showDetail}
             />
