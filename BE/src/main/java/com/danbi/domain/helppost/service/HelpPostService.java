@@ -3,6 +3,7 @@ package com.danbi.domain.helppost.service;
 import com.danbi.domain.helppost.constant.State;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
+import com.danbi.domain.helppost.repository.PositionRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.MisMatchException;
@@ -48,7 +49,7 @@ public class HelpPostService {
 
     public void assignDelete(Long id) {
         HelpPost deletedHelpPost = helpPostRepository.findById(id).get();
-        deletedHelpPost.delete(State.DELETE);
+        deletedHelpPost.delete(State.MATCHED);
     }
 
     private void validateHelpPostMatchMember(HelpPost helpPost, Long memberId) {

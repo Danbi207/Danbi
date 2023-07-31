@@ -1,7 +1,9 @@
 package com.danbi.api.hleppost.dto;
 
+import com.danbi.domain.helppost.constant.Category;
 import com.danbi.domain.helppost.constant.State;
 import com.danbi.domain.helppost.entity.HelpPost;
+import com.danbi.domain.helppost.entity.Positions;
 import com.danbi.domain.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.Empty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -43,28 +44,68 @@ public class HelpPostRequestDto {
     @JsonProperty("total_time")
     private int totalTime;
 
+    private Category category;
+
+    private String caution;
+
 
     @Getter
     @NoArgsConstructor
     public static class Position {
+
         private String latitude;
+
         private String longitude;
+
+        private String addr;
+
+        @JsonProperty("dest_latitude")
+        private String destLatitude;
+
+        @JsonProperty("dest_longitude")
+        private String destLongitude;
+
+        @JsonProperty("dest_addr")
+        private String destAddr;
+
+        @JsonProperty("meet_latitude")
+        private String meetLatitude;
+
+        @JsonProperty("meet_longitude")
+        private String meetLongitude;
+
+        @JsonProperty("meet_addr")
+        private String meetAddr;
+
     }
 
-    public static HelpPost from(HelpPostRequestDto helpPostRequestDto, Member member) {
-
+    public static HelpPost from(HelpPostRequestDto helpPostRequestDto, Member member, Positions positions) {
         return HelpPost.builder()
                 .member(member)
                 .content(helpPostRequestDto.getContent())
-                .latitude(helpPostRequestDto.getPosition().getLatitude())
-                .longitude(helpPostRequestDto.getPosition().getLongitude())
                 .startTime(helpPostRequestDto.getStartTime())
                 .endTime(helpPostRequestDto.getEndTime())
-                .totalTime(helpPostRequestDto.getTotalTime())
                 .reservationFlag(helpPostRequestDto.isReservationFlag())
                 .faceFlag(helpPostRequestDto.isFaceFlag())
                 .state(State.ACTIVATE)
+                .positions(positions)
+                .category(helpPostRequestDto.getCategory())
+                .caution(helpPostRequestDto.getCaution())
                 .build();
+    }
+
+    public static Positions fromPositions(HelpPostRequestDto helpPostRequestDto) {
+
+        return Positions.builder()
+                .latitude(helpPostRequestDto.getPosition().getLatitude())
+                .longitude(helpPostRequestDto.getPosition().getLongitude())
+                .destLatitude(helpPostRequestDto.getPosition().getDestLatitude())
+                .destLongitude(helpPostRequestDto.getPosition().getDestLongitude())
+                .meetLatitude(helpPostRequestDto.getPosition().getMeetLatitude())
+                .meetLongitude(helpPostRequestDto.getPosition().getMeetLongitude())
+                .addr(helpPostRequestDto.getPosition().getAddr())
+                .destAddr(helpPostRequestDto.getPosition().getDestAddr())
+                .meetAddr(helpPostRequestDto.getPosition().getMeetAddr()).build();
     }
 
 }

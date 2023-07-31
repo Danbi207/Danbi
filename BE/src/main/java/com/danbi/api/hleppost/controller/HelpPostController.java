@@ -2,6 +2,7 @@ package com.danbi.api.hleppost.controller;
 
 import com.danbi.api.hleppost.dto.HelpPostRequestDto;
 import com.danbi.api.hleppost.dto.HelpPostResponseDto;
+import com.danbi.api.hleppost.dto.detailmatched.DetailMatchedHelpPostDto;
 import com.danbi.api.hleppost.dto.detailsearch.DetailHelpPostDto;
 import com.danbi.api.hleppost.dto.helpersearch.HelperResponseDto;
 import com.danbi.api.hleppost.dto.mysearch.MyHelpPostDto;
@@ -67,9 +68,17 @@ public class HelpPostController {
 
     @Operation(summary = "도움요청 게시글 상세 조회 API", description = "도움요청 게시글 상세 조회 API")
     @GetMapping("/{helppost_id}")
-    public ResponseEntity<DetailHelpPostDto> searchAllHelpPost(@PathVariable("helppost_id") Long helpPostId,
+    public ResponseEntity<DetailHelpPostDto> searchDetailHelpPost(@PathVariable("helppost_id") Long helpPostId,
                                                                @MemberInfo MemberInfoDto memberInfoDto) {
         DetailHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailHelpPost(helpPostId, memberInfoDto.getMemberId());
+        return ResponseEntity.ok(detailHelpPostDto);
+    }
+
+    @Operation(summary = "도움요청 완료된 게시글 상세 조회 API", description = "도움요청 완료된 게시글 상세 조회 API")
+    @GetMapping("/matched/{helppost_id}")
+    public ResponseEntity<DetailMatchedHelpPostDto> searchDetailMatchedHelpPost(@PathVariable("helppost_id") Long helpPostId,
+                                                               @MemberInfo MemberInfoDto memberInfoDto) {
+        DetailMatchedHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailMatchedHelpPost(helpPostId, memberInfoDto.getMemberId());
         return ResponseEntity.ok(detailHelpPostDto);
     }
 

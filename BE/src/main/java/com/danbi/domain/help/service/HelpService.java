@@ -62,6 +62,10 @@ public class HelpService {
         help.updateHelperFlag(true);
     }
 
+    public Help search(HelpPost helpPost) {
+        return helpRepository.findByHelpPost(helpPost).get();
+    }
+
 
     private void validateHelpMatchMember(HelpPost helpPost, Member memeber) {
         if(helpPost.getMember().getId() == memeber.getId()) {

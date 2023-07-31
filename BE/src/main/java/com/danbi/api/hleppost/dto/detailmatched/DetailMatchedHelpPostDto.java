@@ -1,4 +1,4 @@
-package com.danbi.api.hleppost.dto.detailsearch;
+package com.danbi.api.hleppost.dto.detailmatched;
 
 import com.danbi.domain.helppost.constant.Category;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -6,15 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
-public class DetailHelpPostDto {
+public class DetailMatchedHelpPostDto {
 
     private Long helpPostId;
-    private IpDto ip;
+    private IpMatchedDto ip;
+    private HelperMatchedDto helper;
     private Position position;
     private boolean faceFlag;
     private boolean reservationFlag;
