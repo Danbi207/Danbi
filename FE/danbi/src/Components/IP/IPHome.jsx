@@ -20,7 +20,7 @@ const IPHome = () => {
       <Wrap>
         <Calendar/>
       </Wrap>
-      <RequestBTN onClick={()=>{navigate('/helprequest')}}>도움 요청하기</RequestBTN>
+      <RequestBTN onClick={()=>{navigate('/iprequest')}}>도움 요청하기</RequestBTN>
       <Footer/>
     </IpHomeWrap>
   );
