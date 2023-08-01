@@ -11,18 +11,24 @@ const DetailMap = ({position}) => {
             center: new kakao.maps.LatLng(33.450701, 126.570667),
             level: 3,
         }
-        const position = [
+        setMap(new kakao.maps.Map(mapRef.current, mapOption));
+        const positions = [
             {
-                dest_latitude: '111.3444',
-                dest_longitude: '222.119485',
+                title: '목적지',
+                latlng: new kakao.maps.LatLang(position.des)
             },
             {
                 meet_latitude: '333.3444',
                 meet_longitude: '444.119485',
             }
         ];
-    }, [])
-
+        for(let i = 0; i < positions.length; i++){
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: positions
+            })
+        }
+    }, []);
 
     return(
         <DetailMapWrap>
