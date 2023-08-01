@@ -1,4 +1,4 @@
-export const splitIntoPairs = (data) => {
+export const dividing = (data) => {
     const totalData = [];
     let dividedData = [];
     let i = 0;
@@ -10,13 +10,10 @@ export const splitIntoPairs = (data) => {
                 dividedData.push(0);
             }
         } else {
-            console.log(data[i])
             dividedData.push(data[i]);
-            console.log(dividedData);
         }
 
         if(dividedData.length === 8) {
-            console.log(dividedData.length);
             totalData.push(dividedData);
             dividedData = [];
         }
@@ -24,8 +21,6 @@ export const splitIntoPairs = (data) => {
         if(totalData.length % 2 === 0 && data[i] === undefined){
             return totalData;
         }
-
         i++;
     }
-
 }

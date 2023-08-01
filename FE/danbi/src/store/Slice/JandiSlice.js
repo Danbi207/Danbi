@@ -8,14 +8,10 @@ export const JandiSlice = createSlice({
     },
     reducers: {
         setCreatedTime: (state, action) => {
-            if(state.created_time === null) {
-                state.created_time = action.payload;
-            } else {
-                state.created_time = null;
-            }
+            state.created_time = action.payload;
         },
-        setShowOverLay: (state) => {
-            state.showOverLay = false;
+        setShowOverLay: (state, action) => {
+            state.showOverLay = action.payload;
         }
     }
 });
