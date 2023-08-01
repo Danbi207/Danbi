@@ -34,7 +34,7 @@ public class ItemInfoService {
         return ItemResponseDto.builder()
                 .item(ItemDto.builder()
                         .color(item.getColor().getRgb())
-                        .rank(item.getRank().getTier()).build())
+                        .rank(item.getRanking().getTier()).build())
                 .dewPoint(dewPoint).build();
     }
 }

@@ -30,17 +30,17 @@ public class Item extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private Rank rank;
+    private Rank ranking;
 
-    public void update(Color color, Rank rank) {
+    public void update(Color color, Rank ranking) {
         this.color = color;
-        this.rank = rank;
+        this.ranking = ranking;
     }
 
     @Builder
     public Item(Profile profile, Color color, Rank rank) {
         this.profile = profile;
         this.color = color;
-        this.rank = rank;
+        this.ranking = rank;
     }
 }

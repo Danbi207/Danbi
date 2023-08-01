@@ -24,6 +24,7 @@ public class Accuse extends BaseEntity {
     @JoinColumn(name = "target_member_id")
     private Member targetMember;
 
+
     @Column(nullable = false, length = 20)
     private String title;
 
