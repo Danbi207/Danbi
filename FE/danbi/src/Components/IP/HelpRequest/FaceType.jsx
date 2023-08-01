@@ -23,9 +23,9 @@ function FaceType() {
         <SelectBTN $default='face' $meetType={meetType} onClick={() => { dispatch(setMeetType('face')); } }>대면</SelectBTN>
         <SelectBTN $default='noface' $meetType={meetType} onClick={() => { dispatch(setMeetType('noface')); } }>비대면</SelectBTN>
       </Boxes>
-      <Positioin></Positioin>
-      <HelpDetail></HelpDetail>
-      <Preset></Preset>
+      { meetType === 'face' ? <Positioin/> : null}  
+      <HelpDetail/>
+      <Preset/>
       <NextBTN onClick={() => { dispatch(setTabMode('time')); } }>다음</NextBTN>
     </Wrap>
   );

@@ -18,7 +18,7 @@ export const ipSlice = createSlice({
     tabmode : 'meet',
     reservetype : '',
     meetType : '',
-    category : ['이동', '기타'],
+    category : '',
     content : '',
     openIndex : 0,
     ischecked : false,
@@ -42,6 +42,9 @@ export const ipSlice = createSlice({
     setOpenIndex : (state, action) => {
       state.openIndex = action.payload;
     },
+    setCategory : (state, action) => {
+      state.category = action.payload
+    },
     setMeetLongitude : (state, action) => {
       state.position.meet_longitude = action.payload;
     },
@@ -63,7 +66,7 @@ export const ipSlice = createSlice({
   },
 });
 
-export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex,
+export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex, setCategory,
                setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr,
               } = ipSlice.actions;
 

@@ -1,28 +1,30 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
+import { setCategory } from '../../../store/Slice/ipSlice'
 
 const Positioin = () => {
-  const meetType = useSelector(state => state.ip.meetType);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const category = useSelector(state => state.ip.category);
-  const navigate = useNavigate()
-
   const position = useSelector(state => state.ip.position);
 
+  const handleCategory = (e) => {
+    console.log(e.target.value);
+    dispatch(setCategory(e.target.value));
+  };
+  
   return (
     <Wrap>
-      <CategorySelect>
-        <CategoryOption value="none">카테고리를 선택하세요</CategoryOption>
-        {category.map((item, idx) => (
-          <CategoryOption key={idx} value={item}>
-            {item}
-          </CategoryOption>
-        ))}
+      <CategorySelect defaultValue='NONE' onChange={handleCategory}>
+        <CategoryOption value='NONE' disabled>카테고리를 선택하세요</CategoryOption>
+          <CategoryOption value='MOBILE'>이동</CategoryOption>
+          <CategoryOption value='ETC'>기타</CategoryOption>
       </CategorySelect>
       <Destination type='text' readOnly placeholder='만나는 곳을 입력하세요' 
         value={position.meet_addr} onClick={()=>{navigate('/ipmap/0')}}/>
-      {meetType === 'face' && (
+      {category === 'MOBILE' && (
         <Destination type='text' readOnly placeholder='목적지를 입력하세요' 
         value={position.dest_addr} onClick={()=>{navigate('/ipmap/1')}}/>
       )}
