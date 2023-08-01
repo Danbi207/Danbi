@@ -8,11 +8,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setReserveType } from '../../../store/Slice/ipSlice'
 
 const TimeTpye = () => {
+  const ip = useSelector(state => state.ip)
+
+  const ipData = {
+		"help_id" : 1,
+		 "position" : {
+				"cur_longitude" : "128.3444",
+				"cur_latitude" : "36.119485",
+				"cur_addr" : "",
+				"dest_longitude" : "128.3444",
+				"dest_latitude" : "128.3444",
+				"dest_addr" : "", 
+				"meet_longitude" : "128.3444",
+				"meet_latitude" : "128.3444",
+				"meet_addr" : "",
+			},
+			"category" : "etc",
+			"face_flag": ip.meetType === 'meet',
+			"reservation_flag": ip.meetType === 'reserve', // 예약
+			"content": ip.content,
+			"start_time" : "2023-01-01 12:00",
+			"end_time" : "2023-01-01 13:00",
+			"total_time" : 60
+  }
+
   const dispatch = useDispatch();
   const reservetype = useSelector(state => state.ip.reservetype)
   // 도움 요청하기 버튼을 통해서 ip 데이터를 쏠 수 있게
-  const ip = useSelector(state => state.ip)
-
+  
   return (
     <Wrap>
         <Boxes>

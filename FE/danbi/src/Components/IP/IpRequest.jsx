@@ -8,7 +8,7 @@ import FaceType from './HelpRequest/FaceType';
 import TimeTpye from './HelpRequest/TimeTpye';
 import Tab from './Tab/Tab';
 
-const HelpRequest = () => {
+const IpRequest = () => {
   const ip = useSelector((state)=>state.ip)
 
   useEffect(()=>{
@@ -39,4 +39,4 @@ const Wrap = styled.div`
  
 
 
-export default HelpRequest;
+export default IpRequest;

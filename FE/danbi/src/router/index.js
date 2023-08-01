@@ -5,10 +5,10 @@ import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
 import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
 import IPHome from "../Components/IP/IPHome.jsx";
 import UserSubmit from "../Components/Login/UserSubmit.jsx";
-import HelpRequest from "../Components/IP/HelpRequest.jsx";
+import IpRequest from "../Components/IP/IpRequest.jsx";
 import Detail from "../Components/Detail/Detail.jsx";
 import Friend from '../Components/Friends/Friend.jsx';
-import Map from "../Components/IP/Map/Map.jsx";
+import IpMap from "../Components/IP/Map/IpMap.jsx";
 
 
 const routes = [
@@ -41,12 +41,12 @@ const routes = [
     component : UserSubmit,
   },
   {
-    path: "/helprequest",
-    component : HelpRequest,
+    path: "/iprequest",
+    component : IpRequest,
   },
   {
-    path: "/ipmap",
-    component : Map,
+    path: "/ipmap/:mapid",
+    component : IpMap,
   },
   {
     path:"help/:role/detail/:helpPostId",
