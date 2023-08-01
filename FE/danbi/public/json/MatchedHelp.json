@@ -15,6 +15,17 @@
       "accumulate_dew_point":100,
       "accuse_point":3
     },
+    "position": {
+      "latitude": "36.119485",
+      "longitude": "128.3444",
+      "addr": "태웅시",
+      "dest_latitude": "36.120485",
+      "dest_longitude": "128.3444",
+      "dest_addr": "태웅동",
+      "meet_latitude": "36.128485",
+      "meet_longitude": "128.3444",
+      "meet_addr": "태웅리"
+    },
     "face_flag": true,
     "reservation_flag": true,
     "content": "저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다저는 병원에 가고 싶습니다",

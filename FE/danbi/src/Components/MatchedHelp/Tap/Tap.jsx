@@ -3,9 +3,18 @@ import styled from 'styled-components';
 const Tap = (props) => {
   return (
     <TapWrap>
-      <TapItem $defaultMode="Infomation"  $mode={props.mode} onClick={()=>{props.setMode("Infomation")}}>도움 정보</TapItem>
-      <TapItem $defaultMode="Chat" $mode={props.mode} onClick={()=>{props.setMode("Chat")}}>소통</TapItem>
-      <TapItem $defaultMode="RealtimeMap" $mode={props.mode} onClick={()=>{props.setMode("RealtimeMap")}}>실시간 위치</TapItem>
+      <TapItem $defaultMode="Infomation"  $mode={props.mode} onClick={()=>{
+        props.stopCurPosition();
+        props.setMode("Infomation");
+      }}>도움 정보</TapItem>
+      <TapItem $defaultMode="Chat" $mode={props.mode} onClick={()=>{
+        props.stopCurPosition();
+        props.setMode("Chat");
+      }}>소통</TapItem>
+      <TapItem $defaultMode="RealtimeMap" $mode={props.mode} onClick={()=>{
+        props.startCurPosition();
+        props.setMode("RealtimeMap");
+      }}>실시간 위치</TapItem>
     </TapWrap>
   )
 }

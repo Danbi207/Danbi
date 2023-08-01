@@ -15,6 +15,24 @@ const MatchedHelp = () => {
   const [mode,setMode] = useState("Infomation");
   const [help, setHelp] = useState();
   const { helpPostId } = useParams();
+  const [curposition,setCurPosition] = useState(null);
+  const [watchID,setWatchID] = useState(null);
+  const stopCurPosition = ()=>{
+    if(watchID !== null){
+      navigator.geolocation.clearWatch(watchID);
+      setWatchID(null);
+    }
+  };
+  const startCurPosition = ()=>{
+    if(navigator.geolocation){
+      // timeout at 15000 milliseconds (15 seconds)
+      const options = {timeout:15000};
+      const geoLoc = navigator.geolocation;
+      setWatchID(geoLoc.watchPosition((position)=>setCurPosition(position),(err)=>console.log(err), options));
+   } else {
+    setCurPosition(null);
+   }
+  };
   useEffect(()=>{
     axios({
       method:"get",
@@ -26,12 +44,12 @@ const MatchedHelp = () => {
   return (
     <MatchedHelpWrap>
       <Header></Header>
-      <Tap mode={mode} setMode={setMode}></Tap>
+      <Tap startCurPosition={startCurPosition} stopCurPosition={stopCurPosition} mode={mode} setMode={setMode}></Tap>
       <MainWrap>
         {
           mode === "Infomation" ? <Infomation help={help}/>:
           mode === "Chat" ? <Chat/> :
-          mode === "RealtimeMap" ? <RealtimeMap/>
+          mode === "RealtimeMap" ? <RealtimeMap position={help.position}  curposition = {curposition}/>
           : null
         }
       </MainWrap>
