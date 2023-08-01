@@ -19,6 +19,13 @@ const Comments = [
       'created_time' : '2023-07-25',
       'updated_time' : '2023-07-25',
   },
+  {
+    'name' : '김민규',
+    'profile_url' : './example-profile.jpg',
+    'content' : '저는 쓸개입니다.',
+    'created_time' : '2023-07-26',
+    'updated_time' : '2023-07-26',
+  },
 ]
 
 
@@ -39,17 +46,16 @@ const GuestBook = () => {
           </ChatForm>
         </ChatSection>
       </ChatWrap>
-      {Comments.map((comment, index) => (
-        <GuestBookComment key={index} comment={comment} />
-      ))}
+        {Comments.map((comment, index) => (
+          <GuestBookComment key={index} comment={comment} />
+        ))}
     </GuestBookWrap>
   );
 };
 
 const GuestBookWrap = styled.div`
   margin-top: 0.5rem;
-  height: auto;
-  overflow-y: hidden;
+  height: calc(100% - 3.2rem);
 `;
 
 const ChatWrap = styled.div`
@@ -84,9 +90,6 @@ const ChatSection = styled.div`
   align-items: center;
   justify-content: center;
   padding-left: 0.5rem;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 const ChatForm = styled.form`
   width: 100%;

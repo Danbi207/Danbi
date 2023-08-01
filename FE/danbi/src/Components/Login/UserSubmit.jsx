@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import styled from 'styled-components'
+import { useSelector } from 'react-redux';
+
 
 import UserType from './UserType';
 import UserFile from './UserFile';
-import { useSelector } from 'react-redux';
+
 
 const UserSubmit = () => {
   let [sex, setSex] = useState('');
@@ -17,9 +19,8 @@ const UserSubmit = () => {
   useEffect(()=>{
     console.log(tokeninfo);
   },[])
-
+ 
   const submit = () => {
-
   }
 
   return (
@@ -37,4 +38,4 @@ const SubmitWrap = styled.div`
   height: 100%;
 ` 
 
-export default UserSubmit;
+export default UserSubmit; 

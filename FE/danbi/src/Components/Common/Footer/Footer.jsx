@@ -20,7 +20,7 @@ const Footer = () => {
 
   return (
     <FooterWrap>      
-      <FriendsImg $mode={mode} onClick={()=>{setMode("friends"); navigate("/friends")}}></FriendsImg>
+      <FriendsImg $mode={mode} onClick={()=>{setMode("friend"); navigate("/friend")}}></FriendsImg>
       <Homeimg $mode={mode} onClick={()=>{setMode("home"); navigate("/helper") }}></Homeimg>
       <ProfileImg $mode={mode} onClick={()=>{setMode("profile"); navigate("/profile") }}></ProfileImg>
     </FooterWrap> 

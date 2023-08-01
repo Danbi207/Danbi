@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import {splitIntoPairs} from './utils/Dividing.js';
+import JandiOverLay from './JandiOverLay.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCreatedTime, setShowOverLay } from '../../store/Slice/JandiSlice.js';
 
-const DummyData = [
-  [1, 1, 1, 1, 1, 1, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [1, 1, 1, 1, 1, 1, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-];
+// 잔디 한 칸
+const GrassTile = ({ data }) => {
+  const tilecolor = (typeof data === 'object') ? '#39D353' : props => props.theme.colors.jandibgColor
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const showOverLay = useSelector(state => state.showOverLay);
 
-function splitIntoPairs(data) {
-  const dividedData = [];
-
-  for (let i = 0; i < data.length; i += 2) {
-    const pair = data.slice(i, i + 2);
-    dividedData.push(pair);
+  const handleClick = () => {
+    dispatch(setCreatedTime(data.created_time));
+    dispatch(setShowOverLay(!showOverLay));
+    setShow(!show);
   }
 
-  return dividedData;
-}
-
-const dividedData = splitIntoPairs(DummyData);
-console.log(dividedData);
-
-const GrassTile = ({ data }) => {
-  const tileColor = data ? '#39D353' : props => props.theme.colors.jandibgColor;
-  return <Tile $color={tileColor} />;
+  return <Tile $data={data} $tilecolor={tilecolor} $show={show} onClick={handleClick} />
 };
 
+// 잔디 한 줄
 const GrassRow = ({ line }) => {
+  console.log(line);
   return (
     <Row>
       {line.map((value, index) => (
@@ -39,8 +33,15 @@ const GrassRow = ({ line }) => {
   );
 };
 
-const Jandi = ({ setPickModalOpen, point }) => {
+// 전체 잔디
+const Jandi = ({ setPickModalOpen, point, help_log }) => {
+  const dividedData = splitIntoPairs(help_log);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const data = useSelector(state => state.Jandi.created_time);
+  const position = useSelector(state => state.Jandi.position);
+  const showOverLay = useSelector(state => state.Jandi.showOverLay);
+
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
@@ -60,13 +61,11 @@ const Jandi = ({ setPickModalOpen, point }) => {
       <ChartHeader>나의 도움을 기록해주세요</ChartHeader>
       <Carousel>
         <SliderWrapper>
-          {dividedData.map((chart, index) => (
-            <Chart key={index} $isActive={currentIndex === index}>
-              {chart.map((line, index) => (
+            <Chart>
+              {dividedData.map((line, index) => (
                 <GrassRow line={line} key={index} />
               ))}
             </Chart>
-          ))}
         </SliderWrapper>
       </Carousel>
       <Btns>
@@ -79,6 +78,7 @@ const Jandi = ({ setPickModalOpen, point }) => {
           <PickBtn onClick={PickShowModal}>뽑기</PickBtn>
         </Wrap>
       </Btns>
+      {showOverLay && <JandiOverLay data={data} />}
     </ChartWrap>
   );
 };
@@ -106,9 +106,10 @@ const Chart = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
-  width: ${(props) => (props.$isActive ? 'auto' : '0')}; /* Chart 보이기/숨기기 */
+   /* Chart 보이기/숨기기 */
+  /* width: ${(props) => (props.$isActive ? 'auto' : '0')};
   opacity: ${(props) => (props.$isActive ? '1' : '0')};
-  transition: all 0.5s;
+  transition: all 0.5s; */
 `;
 
 const ChartHeader = styled.div`
@@ -118,6 +119,7 @@ const ChartHeader = styled.div`
 const Row = styled.div`
   display: flex;
   margin-bottom: 3px;
+  width: 100%;
 `;
 
 const getTileWidth = () => {
@@ -125,14 +127,15 @@ const getTileWidth = () => {
   const totalBorders = 0;
   const totalPadding = 32; 
   const availableWidth = window.innerWidth - totalMargins - totalBorders - totalPadding;
+  console.log(Math.floor(availableWidth / 8));
   return Math.floor(availableWidth / 8);
 };
 
 const Tile = styled.div`
-  width: ${(props) => getTileWidth()}px;
+  width: ${() => getTileWidth()}px;
   height: 41px;
   margin: 1px;
-  background-color: ${(props) => props.$color};
+  background-color: ${(props) => (props.$show && typeof props.$data === 'object') ? '#00550e' : props.$tilecolor};
   border-radius: 3px;
 `;
 
