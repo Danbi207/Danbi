@@ -19,7 +19,9 @@ import com.danbi.domain.accuse.service.AccuseService;
 import com.danbi.domain.help.constant.State;
 import com.danbi.domain.help.entity.Help;
 import com.danbi.domain.help.service.HelpService;
+import com.danbi.domain.helppost.dto.HelpPostDetailQeuryDto;
 import com.danbi.domain.helppost.dto.HelpPostFaceDto;
+import com.danbi.domain.helppost.dto.HelpPostMatchedDto;
 import com.danbi.domain.helppost.dto.HelpPostQueryDto;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.entity.Positions;
@@ -118,7 +120,7 @@ public class HelpPostInfoService {
                 .helpList(helpList).build();
     }
 
-    public HelperResponseDto searchHelperHelpPost(Long memberId) {
+    public HelperResponseDto searchHelperHelpPost(Long memberId) { // qeurydsl 사용 전
         List<HelpPost> helpPosts = helpPostService.searchAllList();
         List<HelperHelpPostListDto> helpList = new ArrayList<>();
         for (HelpPost helpPost : helpPosts) {
@@ -140,7 +142,7 @@ public class HelpPostInfoService {
                 .helpList(helpList).build();
     }
 
-    public DetailHelpPostDto searchDetailHelpPost(Long helpPostId, Long memberId) {
+    public DetailHelpPostDto searchDetailHelpPost(Long helpPostId, Long memberId) { // qeurydsl 사용 전
         HelpPost helpPost = helpPostService.detailHelpPost(helpPostId);
 
         boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getMember().getId());
@@ -178,7 +180,7 @@ public class HelpPostInfoService {
         return detail;
     }
 
-    public DetailMatchedHelpPostDto searchDetailMatchedHelpPost(Long helpPostId, Long memberId) {
+    public DetailMatchedHelpPostDto searchDetailMatchedHelpPost(Long helpPostId, Long memberId) { // qeurydsl 사용 전
         HelpPost helpPost = helpPostService.detailHelpPost(helpPostId);
 
         boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getMember().getId());
@@ -211,7 +213,6 @@ public class HelpPostInfoService {
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
-                .friendFlag(isFriend)
                 .caution(helpPost.getCaution())
                 .category(helpPost.getCategory())
                 .position(DetailMatchedHelpPostDto.Position.builder()
@@ -227,6 +228,7 @@ public class HelpPostInfoService {
         return detail;
     }
 
+    // querydsl 사용 후
 
     public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
         List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
@@ -276,5 +278,72 @@ public class HelpPostInfoService {
         return helpList;
     }
 
+
+    public DetailHelpPostDto searchDetailQueryHelpPost(Long helpPostId, Long memberId) {
+        HelpPostDetailQeuryDto helpPost = helpPostService.searchDetail(helpPostId);
+        boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getIpId());
+
+        return DetailHelpPostDto.builder()
+                .helpPostId(helpPostId)
+                .ip(IpDto.builder()
+                        .ipId(helpPost.getIpId())
+                        .name(helpPost.getName())
+                        .accumulateDewPoint(helpPost.getAccumulateDewPoint())
+                        .accusePoint(helpPost.getAccusePoint()).build())
+                .faceFlag(helpPost.isFaceFlag())
+                .reservationFlag(helpPost.isReservationFlag())
+                .content(helpPost.getContent())
+                .startTime(helpPost.getStartTime())
+                .endTime(helpPost.getEndTime())
+                .friendFlag(isFriend)
+                .caution(helpPost.getCaution())
+                .category(helpPost.getCategory())
+                .position(DetailHelpPostDto.Position.builder()
+                        .latitude(helpPost.getLatitude())
+                        .longitude(helpPost.getLongitude())
+                        .destLongitude(helpPost.getDestLongitude())
+                        .destLatitude(helpPost.getDestLatitude())
+                        .meetLongitude(helpPost.getMeetLongitude())
+                        .meetLatitude(helpPost.getMeetLatitude())
+                        .addr(helpPost.getAddr())
+                        .destAddr(helpPost.getDestAddr())
+                        .meetAddr(helpPost.getMeetAddr()).build()).build();
+    }
+
+    public DetailMatchedHelpPostDto searchMatchedHelpPost(Long helpPostId) {
+        HelpPostMatchedDto helpPost = helpPostService.searchMatchedDetail(helpPostId);
+
+        return DetailMatchedHelpPostDto.builder()
+                .helpPostId(helpPostId)
+                .ip(IpMatchedDto.builder()
+                        .ipId(helpPost.getIpId())
+                        .name(helpPost.getIpName())
+                        .accumulateDewPoint(helpPost.getIpAccumulateDewPoint())
+                        .accusePoint(helpPost.getIpAccusePoint()).build())
+                .helper(HelperMatchedDto.builder()
+                        .helperId(helpPost.getHelperId())
+                        .name(helpPost.getHelperName())
+                        .accumulateDewPoint(helpPost.getHelperAccumulateDewPoint())
+                        .accusePoint(helpPost.getHelperAccusePoint()).build())
+                .faceFlag(helpPost.isFaceFlag())
+                .reservationFlag(helpPost.isReservationFlag())
+                .content(helpPost.getContent())
+                .startTime(helpPost.getStartTime())
+                .endTime(helpPost.getEndTime())
+                .caution(helpPost.getCaution())
+                .category(helpPost.getCategory())
+                .position(DetailMatchedHelpPostDto.Position.builder()
+                        .latitude(helpPost.getLatitude())
+                        .longitude(helpPost.getLongitude())
+                        .destLongitude(helpPost.getDestLongitude())
+                        .destLatitude(helpPost.getDestLatitude())
+                        .meetLongitude(helpPost.getMeetLongitude())
+                        .meetLatitude(helpPost.getMeetLatitude())
+                        .addr(helpPost.getAddr())
+                        .destAddr(helpPost.getDestAddr())
+                        .meetAddr(helpPost.getMeetAddr()).build()).build();
+
+
+    }
 
 }

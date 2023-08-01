@@ -62,27 +62,35 @@ public class HelpPostController {
         return ResponseEntity.ok(myHelpPostDto);
     }
 
-    @Operation(summary = "현재 등록된 모든 도움 요청 게시글 리스트 API", description = "현재 등록된 모든 도움 요청 게시글 리스트 API")
-    @GetMapping("") // 현재 등록된 모든 도움 요청 게시글 조회(helper)
-    public ResponseEntity<HelperResponseDto> searchAllHelpPost(@MemberInfo MemberInfoDto memberInfoDto) {
-        HelperResponseDto helperResponseDto = helpPostInfoService.searchHelperHelpPost(memberInfoDto.getMemberId());
-        return ResponseEntity.ok(helperResponseDto);
-    }
+//    @Operation(summary = "현재 등록된 모든 도움 요청 게시글 리스트 API", description = "현재 등록된 모든 도움 요청 게시글 리스트 API")
+//    @GetMapping("") // 현재 등록된 모든 도움 요청 게시글 조회(helper)
+//    public ResponseEntity<HelperResponseDto> searchAllHelpPost(@MemberInfo MemberInfoDto memberInfoDto) {
+//        HelperResponseDto helperResponseDto = helpPostInfoService.searchHelperHelpPost(memberInfoDto.getMemberId());
+//        return ResponseEntity.ok(helperResponseDto);
+//    }
 
     @Operation(summary = "도움요청 게시글 상세 조회 API", description = "도움요청 게시글 상세 조회 API")
     @GetMapping("/{helppost_id}")
     public ResponseEntity<DetailHelpPostDto> searchDetailHelpPost(@PathVariable("helppost_id") Long helpPostId,
                                                                @MemberInfo MemberInfoDto memberInfoDto) {
-        DetailHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailHelpPost(helpPostId, memberInfoDto.getMemberId());
+        DetailHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailQueryHelpPost(helpPostId, memberInfoDto.getMemberId());
         return ResponseEntity.ok(detailHelpPostDto);
     }
 
-    @Operation(summary = "도움요청 완료된 게시글 상세 조회 API", description = "도움요청 완료된 게시글 상세 조회 API")
-    @GetMapping("/matched/{helppost_id}")
-    public ResponseEntity<DetailMatchedHelpPostDto> searchDetailMatchedHelpPost(@PathVariable("helppost_id") Long helpPostId,
-                                                               @MemberInfo MemberInfoDto memberInfoDto) {
-        DetailMatchedHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailMatchedHelpPost(helpPostId, memberInfoDto.getMemberId());
-        return ResponseEntity.ok(detailHelpPostDto);
+//    @Operation(summary = "도움요청 완료된 게시글 상세 조회 API", description = "도움요청 완료된 게시글 상세 조회 API")
+//    @GetMapping("/matched/{helppost_id}")
+//    public ResponseEntity<DetailMatchedHelpPostDto> searchDetailMatchedHelpPost(@PathVariable("helppost_id") Long helpPostId,
+//                                                               @MemberInfo MemberInfoDto memberInfoDto) {
+//        DetailMatchedHelpPostDto detailHelpPostDto = helpPostInfoService.searchDetailMatchedHelpPost(helpPostId, memberInfoDto.getMemberId());
+//        return ResponseEntity.ok(detailHelpPostDto);
+//    }
+
+    @Operation(summary = "매칭된 도움, 도움 요청 게시글 쿼리 API", description = "매칭된 도움, 도움 요청 게시글 쿼리 API")
+    @GetMapping("/matched/{helppost_id}") // 현재 등록된 모든 도움 대면 요청 게시글 조회(querydsl)
+    public ResponseEntity<DetailMatchedHelpPostDto> searchMatchedHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
+                                                                             @PathVariable("helppost_id") Long helppostId) {
+        DetailMatchedHelpPostDto matchedHelpPost = helpPostInfoService.searchMatchedHelpPost(helppostId);
+        return ResponseEntity.ok(matchedHelpPost);
     }
 
     @Operation(summary = "현재 등록된 모든 도움 요청 게시글 쿼리 리스트 API", description = "현재 등록된 모든 도움 요청 게시글 쿼리 리스트 API")
@@ -102,5 +110,6 @@ public class HelpPostController {
         List<HelperFaceHelpPostDto> allHelpPosts = helpPostInfoService.searchFaceHelpPost(memberInfoDto.getMemberId(), longitude, latitude);
         return ResponseEntity.ok(allHelpPosts);
     }
+
 
 }
