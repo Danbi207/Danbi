@@ -1,15 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
 import friendbadge from '../friendbadge.svg';
 import redcard from '../red-flag.svg';
 import yellowcard from '../yellow-flag.svg';
 import more from '../More-black.svg';
+import back from '../Back.svg';
 
 const UserInfo = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <UserInfoWrap>
+      <BackButton onClick={() => {
+        navigate('/helper')
+      }}>
+        <BackImg src={back} />
+      </BackButton>
+      <Wrap>
       <ProfileImg src={data.ip.profile_url} />
       <Body>
         <BottomWrap>
@@ -29,15 +39,29 @@ const UserInfo = ({ data }) => {
         <MoreImg src={more} />
         {isOpen && <DropDownMenu>신고</DropDownMenu>}
       </More>
+      </Wrap>
     </UserInfoWrap>
   );
 };
 
 const UserInfoWrap = styled.div`
-  display: flex;
-  height: 4rem;
   width: 100%;
 `;
+
+const Wrap = styled.div`
+    display: flex;
+  height: 4rem;
+  width: 100%;
+`
+
+const BackButton = styled.button`
+  display: block;
+`
+
+const BackImg = styled.img`
+  
+`
+
 const ProfileImg = styled.img`
   width: 4rem;
   height: 4rem;
