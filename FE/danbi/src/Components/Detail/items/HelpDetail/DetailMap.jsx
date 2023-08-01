@@ -1,43 +1,55 @@
-import React, {useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const DetailMap = ({position}) => {
-    const {kakao} = window;
-    const mapRef = useRef();
-    const [map,setMap] = useState(null);
+const DetailMap = ({ position }) => {
+  console.log(position);
+  const { kakao } = window;
+  const mapRef = useRef();
+  const [map, setMap] = useState(null);
 
-    useEffect(()=>{
-        const mapOption = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667),
-            level: 3,
-        }
-        setMap(new kakao.maps.Map(mapRef.current, mapOption));
-        const positions = [
-            {
-                title: '목적지',
-                latlng: new kakao.maps.LatLang(position.des)
-            },
-            {
-                meet_latitude: '333.3444',
-                meet_longitude: '444.119485',
-            }
-        ];
-        for(let i = 0; i < positions.length; i++){
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: positions
-            })
-        }
-    }, []);
+  // 카카오 맵 생성
+  useEffect(() => {
+    const mapOption = {
+      center: new kakao.maps.LatLng(position.latitude, position.longitude),
+      level: 5,
+    };
+    setMap(new kakao.maps.Map(mapRef.current, mapOption));
+  }, [mapRef, kakao]);
 
-    return(
-        <DetailMapWrap>
+  // 맵 위에 목적지 및 만나는 곳 마커 찍기
+  useEffect(() => {
+    const positions = [
+      {
+        latitude: position.dest_latitude,
+        longitude: position.dest_longitude,
+      },
+      {
+        latitude: position.meet_latitude,
+        longitude: position.meet_longitude,
+      },
+    ];
+    for (let i = 0; i < positions.length; i++) {
+      const markerPosition = new kakao.maps.LatLng(
+        positions[i].latitude,
+        positions[i].longitude
+      );
+      const marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+      marker.setMap(map);
+    }
+  }, [map]);
 
-        </DetailMapWrap>
-    );
-}
+  return (
+    <>
+      <MapWrap ref={mapRef}></MapWrap>;
+    </>
+  );
+};
 
-const DetailMapWrap = styled.div`
-`
+const MapWrap = styled.div`
+  width: 100%;
+  height: 8rem;
+`;
 
 export default DetailMap;
