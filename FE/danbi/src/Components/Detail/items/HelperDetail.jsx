@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import UserInfo from './HelpDetail/UserInfo.jsx';
 import HelpDetailInfo from './HelpDetail/HelpDetailInfo.jsx';
-import AcceptButton from './AcceptButton.jsx';
+import AcceptButton from './HelpDetail/AcceptButton.jsx';
 
 const data = {
   data: {

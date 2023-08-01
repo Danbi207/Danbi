@@ -26,6 +26,9 @@ const HelpDetailInfo = ({data}) => {
                         {data.caution}
                     </CautionBody>
                 </CautionInfo>
+                <MapInfo>
+                    <MapHeader>위치 정보</MapHeader>
+                </MapInfo>
             </DetailWrap>
     );
 }
@@ -73,7 +76,7 @@ const HelpBody = styled.div`
     border-radius: 10px;
     background-color: white;
     color: black;
-    height: 4rem;
+    min-height: 4rem;
     padding: 0.5rem 0 0.5rem 0.5rem;
 
 `
@@ -88,9 +91,16 @@ const CautionBody = styled.div`
     border-radius: 10px;
     background-color: white;
     color: black;
-    height: 4rem;
+    min-height: 4rem;
     padding: 0.5rem 0 0.5rem 0.5rem;
 
+`
+
+const MapInfo = styled.div`
+    margin: 1rem 1rem 1.5rem 1rem;
+`
+
+const MapHeader = styled.span`
 `
 
 export default HelpDetailInfo
