@@ -31,12 +31,15 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     public List<HelpPostQueryDto> search(String longitude, String latitude) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostQueryDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
-                        helpPost.startTime, helpPost.endTime, helpPost.faceFlag, point.accumulateDewPoint))
+                        positions.longitude, positions.latitude,
+                        helpPost.startTime, helpPost.endTime, helpPost.faceFlag,
+                        point.accumulateDewPoint
+                ))
                 .from(helpPost)
-                .innerJoin(helpPost.positions, positions).fetchJoin()
-                .leftJoin(helpPost.member, member).fetchJoin()
-                .leftJoin(member.profile, profile).fetchJoin()
-                .leftJoin(profile.point, point).fetchJoin()
+                .innerJoin(helpPost.positions, positions)
+                .leftJoin(helpPost.member, member)
+                .leftJoin(member.profile, profile)
+                .leftJoin(profile.point, point)
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude))
@@ -50,10 +53,10 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.longitude, positions.latitude, helpPost.startTime, helpPost.endTime, point.accumulateDewPoint))
                 .from(helpPost)
-                .innerJoin(helpPost.positions, positions).fetchJoin()
-                .leftJoin(helpPost.member, member).fetchJoin()
-                .leftJoin(member.profile, profile).fetchJoin()
-                .leftJoin(profile.point, point).fetchJoin()
+                .innerJoin(helpPost.positions, positions)
+                .leftJoin(helpPost.member, member)
+                .leftJoin(member.profile, profile)
+                .leftJoin(profile.point, point)
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
@@ -61,7 +64,6 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 )
                 .fetch();
     }
-
 
     private String subtractFromString(String str) {
         double number = Double.parseDouble(str);
