@@ -1,9 +1,12 @@
-import React, {  useEffect, useState } from 'react';
+import React, {  useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
+import { setOpenIndex } from '../../../store/Slice/ipSlice'
+
 const Preset = () => {
-  // const [content, setContent] = useState('');
-  const [openIndex, setOpenIndex] = useState("0");
+  const dispatch = useDispatch();
+  const openIndex = useSelector(state => state.ip.openIndex)
 
   let preset_list = [
     {
@@ -25,9 +28,7 @@ const Preset = () => {
 
   const handlePresetSelect = (e) => {
     let idx = e.target.value; // select에서 value값은 string으로 저장된다.  
-    setOpenIndex(idx);
-    // if (idx === "0"){setContent("")}
-    // else {setContent(preset_list[idx-1].content);} //preset idx는 1부터 시작 -> idx--해야함
+    dispatch(setOpenIndex(idx));
   };
 
   return (
@@ -35,9 +36,9 @@ const Preset = () => {
       <PresetName>주의사항</PresetName>
       <Wrap>
         <PresetSelect onChange={handlePresetSelect}>
-          <PresetOption value={"0"}>선택해주세요</PresetOption>
+          <PresetOption value={0}>선택해주세요</PresetOption>
           {preset_list.map((item, idx) => (
-            <PresetOption key={idx+1} value={(idx+1)+""}>
+            <PresetOption key={idx+1} value={(idx+1)}>
               {item.title}
             </PresetOption>
           ))}

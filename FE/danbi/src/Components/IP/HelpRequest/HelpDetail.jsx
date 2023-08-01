@@ -2,24 +2,24 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 
-import {setDetailContent} from '../../../store/Slice/ipSlice'
+import {setContent} from '../../../store/Slice/ipSlice'
 
 
 const HelpDetail = () => {
   const dispatch = useDispatch();
-  const detailContent = useSelector(state => state.ip.detailContent)
+  const content = useSelector(state => state.ip.content)
 
 
   useEffect(() => 
-    console.log(detailContent),[detailContent]);
+    console.log(content),[content]);
 
 
   return (
     <>
         <PresetName>도움 상세 정보</PresetName>
         <Wrap>
-            <PresetTextarea value={detailContent} placeholder='이동 하는데 도움을 받고 싶어요!' 
-              onChange={(e) => dispatch(setDetailContent(e.target.value))} />
+            <PresetTextarea value={content} placeholder='이동 하는데 도움을 받고 싶어요!' 
+              onChange={(e) => dispatch(setContent(e.target.value))} />
         </Wrap>
     </>
   )

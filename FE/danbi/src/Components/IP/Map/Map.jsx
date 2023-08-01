@@ -15,14 +15,22 @@ const Map = () => {
     };
 
     const createdMap = new kakao.maps.Map(mapRef.current, mapOption);
+    
+
     kakao.maps.event.addListener(createdMap, 'click', function(mouseEvent) {
       var latlng = mouseEvent.latLng;
       var clickedMessage = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
       clickedMessage += '경도는 ' + latlng.getLng() + ' 입니다';
+
+      console.log(latlng.getLat())
+      console.log(String(latlng.getLat()))
+      console.log(latlng.getLng())
       setMessage(clickedMessage);
     });
     setMap(createdMap);
-  }, [kakao]);
+
+    
+    }, [kakao]);
 
   return (
     <>

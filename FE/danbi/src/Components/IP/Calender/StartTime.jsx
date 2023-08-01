@@ -75,13 +75,13 @@ const StartTime = () => {
     reset();
   }, [reservetype])
 
-  // useEffect(()=>{
-  //     console.log(startTime);
-  // },[startTime])
+  useEffect(()=>{
+      console.log(startTime);
+  },[startTime])
 
-  // useEffect(()=>{
-  //     console.log(endTime);
-  // },[endTime])
+  useEffect(()=>{
+      console.log(endTime);
+  },[endTime])
 
     return (
       <>

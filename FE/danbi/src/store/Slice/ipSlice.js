@@ -7,10 +7,9 @@ export const ipSlice = createSlice({
     reservetype : '',
     meetType : '',
     category : ['이동', '기타'],
-    detailContent : '',
-    openIndex : '0',
+    content : '',
+    openIndex : 0,
     ischecked : false,
-
   },
   reducers: {
     setTabMode : (state,action)=>{
@@ -19,18 +18,21 @@ export const ipSlice = createSlice({
     setMeetType : (state, action) => {
         state.meetType = action.payload;
     },
-    setDetailContent : (state, action) => {
-        state.detailContent = action.payload;
+    setContent : (state, action) => {
+        state.content = action.payload;
     },
     setReserveType : (state, action) => {
       state.reservetype = action.payload;
     },
     setIsChecked : (state, action) => {
       state.ischecked = action.payload;
+    },
+    setOpenIndex : (state, action) => {
+      state.openIndex = action.payload
     }
   },
 });
 
-export const { setTabMode, setMeetType, setDetailContent, setReserveType, setIsChecked } = ipSlice.actions;
+export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex } = ipSlice.actions;
 
 export default ipSlice.reducer;
