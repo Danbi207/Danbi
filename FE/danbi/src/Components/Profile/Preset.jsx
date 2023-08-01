@@ -17,7 +17,6 @@ const preset_list = [
   },
 ];
 
-const isTouchScreen = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 const Preset = () => {
   const [mouseDownClientX, setMouseDownClientX] = useState(0);
