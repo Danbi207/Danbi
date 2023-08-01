@@ -1,4 +1,4 @@
-FROM amazoncorretto:11
+FROM openjdk:11-jdk
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
-CMD ["java", "-jar","/app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "-Duser.timezone=Asia/Seoul","app.jar"]
