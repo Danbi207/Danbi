@@ -110,7 +110,7 @@ const AlramWrap = styled.div`
   right: 0;
   background-color: red;
 
-  z-index: 1;
+  z-index: 3;
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
   animation: ${props => props.$out ? slideIn : slideOut} 0.5s linear;
   transition: visibility 0.5s linear;
