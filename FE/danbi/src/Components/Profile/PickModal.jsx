@@ -73,7 +73,7 @@ const Wrap = styled.div`
     align-items: center;
     border-radius: 5px;
     animation: ${fadeIn} 0.25s linear;
-    `
+`
 
 const ContentWrap = styled.div`
     width: 100%;
