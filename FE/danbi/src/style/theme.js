@@ -26,6 +26,8 @@ export const dark ={
     system : `${process.env.PUBLIC_URL}/assets/System-black.svg`,
 
     dew : `${process.env.PUBLIC_URL}/assets/Dew.svg`,
+
+    send : `${process.env.PUBLIC_URL}/assets/Send-black.svg`,
   }
 } 
 
@@ -57,5 +59,6 @@ export const light ={
     system : `${process.env.PUBLIC_URL}/assets/System-white.svg`,
 
     dew : `${process.env.PUBLIC_URL}/assets/Dew.svg`,
+    send : `${process.env.PUBLIC_URL}/assets/Send-white.svg`,
   }
 }

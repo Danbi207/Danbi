@@ -19,7 +19,7 @@ const TapItem = styled.button`
   width: 100%;
   font-size: 1.25rem;
   white-space: nowrap;
-  border-bottom: 3px solid ${props=>props.$mode === props.$defaultMode ? "#000" : "transparent"};
+  border-bottom: 3px solid ${props=>props.$mode === props.$defaultMode ? props.theme.colors.titleColors : "transparent"};
   cursor: pointer;
 `
 export default Tap
