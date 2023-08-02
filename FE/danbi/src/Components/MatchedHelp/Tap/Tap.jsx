@@ -8,6 +8,7 @@ const Tap = (props) => {
         props.setMode("Infomation");
       }}>도움 정보</TapItem>
       <TapItem $defaultMode="Chat" $mode={props.mode} onClick={()=>{
+        props.checkRoomId();
         props.stopCurPosition();
         props.setMode("Chat");
       }}>소통</TapItem>

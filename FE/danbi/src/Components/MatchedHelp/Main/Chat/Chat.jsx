@@ -1,419 +1,188 @@
-import React from 'react'
-import { useMemo } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import io from "socket.io-client";
 import styled from 'styled-components';
-const Chat = () => {
-  const myName = "김철수"
-  const GetChatItems = useMemo(()=>{
-    const chatList = [
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 입장하셨습니다"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 퇴장하셨습니다."
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 입장하셨습니다"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 퇴장하셨습니다."
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 입장하셨습니다"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 퇴장하셨습니다."
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 입장하셨습니다"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 퇴장하셨습니다."
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 입장하셨습니다"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 퇴장하셨습니다."
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:00",
-        "content" : "신짱구 님이 입장하셨습니다"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "신짱구",
-        "time" : "12:00",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "김철수",
-        "time" : "12:01",
-        "content" : "안녕하세요"
-      },
-      {
-        "sender" : "$server",
-        "time" : "12:10",
-        "content" : "신짱구 님이 퇴장하셨습니다"
-      },
-    ];
-    const res = [];
-    for(let i = 0; i < chatList.length; i++){
-      switch(chatList[i].sender){
-        case "$server":
-          res.push(<ServerChat key={i}>{chatList[i].content}</ServerChat>);
-          break;
-        case myName:
-          res.push(
-          <RightChatWrap key={i}>
-            <span>{chatList[i].time}</span><span>{chatList[i].content}</span>
-          </RightChatWrap>);
-          break;
-        default:
-          res.push(
-          <LeftChatWrap key={i}>
-            <span>{chatList[i].content}</span><span>{chatList[i].time}</span>
-          </LeftChatWrap>);
-          break;
-      }
+import "./Chat.css";
+const pc_config = {
+  iceServers: [{ urls: [
+    "stun:stun.l.google.com:19302",
+    "stun:stun1.l.google.com:19302",
+    "stun:stun2.l.google.com:19302",
+    "stun:stun3.l.google.com:19302",
+    "stun:stun4.l.google.com:19302",
+  ]}],
+};
+const SOCKET_SERVER_URL = "http://localhost:5000";
+const Chat = (props) => {
+  const chatRef = useRef();
+  const socketRef = useRef();
+  const pcRef = useRef();
+  const localVideoRef = useRef(null);
+  const remoteVideoRef = useRef(null);
+  const [chatValue,setChatValue] = useState("");
+  const [onVideo, setOnVideo] = useState(true);
+  const [onAudio,setOnAudio] = useState(true);
+  const getDay = ()=>{
+    const today = new Date();
+    return `${today.getHours()}:${today.getMinutes()}`;
+  }
+
+  const sendMessage = ()=>{
+    const message = {
+      name:props.myProfile.name,
+      content:chatValue,
+      date: getDay(),
+    };
+    socketRef.current.emit("message", message);
+    const messageEl = document.createElement("div");
+    messageEl.className="RightChatWrap";
+    messageEl.innerHTML = `<span>${message.date}</span><span>${message.name} : ${message.content}</span>`;
+    chatRef.current.appendChild(messageEl);
+    setChatValue("");
+    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  }
+  const setVideoTracks = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: onVideo,
+        audio: onAudio,
+      });
+      if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+      if (!(pcRef.current && socketRef.current)) return;
+      stream.getTracks().forEach((track) => {
+        if (!pcRef.current) return;
+        pcRef.current.addTrack(track, stream);
+      });
+      pcRef.current.onicecandidate = (e) => {
+        if (e.candidate) {
+        if (!socketRef.current) return;
+        socketRef.current.emit("candidate", e.candidate);
+        }
+      };
+      pcRef.current.oniceconnectionstatechange = (e) => {
+        // console.log(e);
+      };
+      pcRef.current.ontrack = (ev) => {
+        // console.log("add remotetrack success");
+        if (remoteVideoRef.current) {
+        remoteVideoRef.current.srcObject = ev.streams[0];
+        }
+      };
+      socketRef.current.emit("join_room", {
+        room: props.roomId,
+      });
+    } catch (e) {
+      console.error(e);
     }
-    return res;
-  },[]);
+  },[props.roomId,onVideo,onAudio]);
+
+  const createOffer = async () => {
+    if (!(pcRef.current && socketRef.current)) return;
+    try {
+    const sdp = await pcRef.current.createOffer({
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true,
+    });
+    await pcRef.current.setLocalDescription(new RTCSessionDescription(sdp));
+      socketRef.current.emit("offer", sdp);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const createAnswer = async (sdp) => {
+    if (!(pcRef.current && socketRef.current)) return;
+    try {
+      await pcRef.current.setRemoteDescription(new RTCSessionDescription(sdp));
+      const mySdp = await pcRef.current.createAnswer({
+        offerToReceiveVideo: true,
+        offerToReceiveAudio: true,
+      });
+      await pcRef.current.setLocalDescription(new RTCSessionDescription(mySdp));
+      socketRef.current.emit("answer", mySdp);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    if(props.mode!=="Chat"){return;}
+    socketRef.current = io.connect(SOCKET_SERVER_URL);
+    pcRef.current = new RTCPeerConnection(pc_config);
+
+    socketRef.current.on("all_users", (allUsers) => {
+      if (allUsers.length > 0) {
+          createOffer();
+      }
+    });
+
+    socketRef.current.on("getOffer", (sdp) => {
+      createAnswer(sdp);
+    });
+
+    socketRef.current.on("getAnswer", (sdp) => {
+    if (!pcRef.current) return;
+      pcRef.current.setRemoteDescription(new RTCSessionDescription(sdp));
+    });
+
+    socketRef.current.on(
+    "getCandidate",
+    async (candidate) => {
+      if (!pcRef.current) return;
+      await pcRef.current.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+    );
+
+    socketRef.current.on("message", (data) => {
+      const messageEl = document.createElement("div");
+      messageEl.className="LeftChatWrap";
+      messageEl.innerHTML = `<span>${data.name} : ${data.content}</span><span>${data.date}</span>`;
+      chatRef.current.appendChild(messageEl);
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    });
+
+    setVideoTracks();
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+      if (pcRef.current) {
+        pcRef.current.close();
+      }
+    };
+  }, [setVideoTracks,props.roomId,props.mode,chatRef]);
+
   return (
     <Wrap>
       <VideoWrap>
         <VideoSubWrap>
           <VideoTitle>도와주는 사람</VideoTitle>
-          <Video></Video>
+          <Video ref={remoteVideoRef} autoPlay></Video>
           <ControlBtnWrap></ControlBtnWrap>
         </VideoSubWrap>
         <VideoSubWrap>
           <VideoTitle>나</VideoTitle>
-          <Video></Video>
+          <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
-            <ControlBtn><img src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />화면끄기</ControlBtn>
-            <ControlBtn><img src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />음소거</ControlBtn>
+            <ControlBtn onClick={()=>setOnVideo(!onVideo)} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
+              {
+                onVideo ? "화면 끄기" : "화면 켜기"
+              }
+            </ControlBtn>
+            <ControlBtn onClick={()=>setOnAudio(!onAudio)}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
+              {
+                onAudio ? "소리 끄기" : "소리 켜기"
+              }
+            </ControlBtn>
           </ControlBtnWrap>
         </VideoSubWrap>
       </VideoWrap>
       <ChatWrap>
-        <ChatItems>
-          {
-            GetChatItems
-          }
+        <ChatItems ref={chatRef}>
         </ChatItems>
         <div>
-          <ChatInput></ChatInput>
-          <ChatBtn></ChatBtn>
+          <ChatInput value={chatValue} onKeyDown={(e)=>{if(e.key==="Enter"){sendMessage();}}} onChange={(e)=>setChatValue(e.target.value)}></ChatInput>
+          <ChatBtn onClick={sendMessage}></ChatBtn>
         </div>
       </ChatWrap>
     </Wrap>
@@ -433,35 +202,6 @@ const ChatInput = styled.input`
   color : ${props=>props.theme.colors.titleColor};
 `
 
-const ServerChat = styled.div`
-  width: 80%;
-  margin-left: 10%;
-  border-radius: 1rem;
-  text-align: center;
-  padding: 0 1rem;
-  background-color: #575757;
-  color: #fff;
-`
-const LeftChatWrap = styled.div`
-  display : flex;
-  &>:first-child{
-    padding: 0.5rem 1rem;
-    border-radius: 1rem;
-    background-color: #FFEA7E;
-    color: #000;
-  }
-`
-
-const RightChatWrap = styled.div`
-  display : flex;
-  justify-content: flex-end;
-  &>:last-child{
-    padding: 0.5rem 1rem;
-    border-radius: 1rem;
-    background-color: #D9D9D9;
-    color: #000;
-  }
-`
 const ControlBtn = styled.button`
   padding: 0 0.5rem;
   height: 1.5rem;
