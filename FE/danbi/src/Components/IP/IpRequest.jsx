@@ -28,11 +28,15 @@ const IpRequest = () => {
 }  
 
 const RequestWrap = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `
 
 const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
 `
 
 
