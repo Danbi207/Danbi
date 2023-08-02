@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import io from "socket.io-client";
 import styled from 'styled-components';
 import "./Chat.css";
+import axios from 'axios';
 const pc_config = {
   iceServers: [{ urls: [
     "stun:stun.l.google.com:19302",
@@ -23,11 +24,12 @@ const Chat = (props) => {
   const [onAudio,setOnAudio] = useState(true);
   const getDay = ()=>{
     const today = new Date();
-    return `${today.getHours()}:${today.getMinutes()}`;
+    return `${today.getFullYear()}-${today.getMonth()}-${today.getDay()} ${today.getHours()}:${today.getMinutes()}`;
   }
 
   const sendMessage = ()=>{
     const message = {
+      helpId:props.roomId,
       name:props.myProfile.name,
       content:chatValue,
       date: getDay(),
@@ -103,6 +105,23 @@ const Chat = (props) => {
       console.error(e);
     }
   };
+
+  useEffect(()=>{
+    //DO : 지난 채팅내역을 불러옴
+    //FIXME : 채팅내역에서 nickname을 비교해 내가 친 채팅인지 상대방이 친 채팅인지 구분하여 넣기
+    axios({
+      method:"get",
+      url:`http://localhost:5000/room/chat/${props.roomId}`,
+    }).then(({data})=>{
+      for(let i = 0; i < data.length; i++){
+        const messageEl = document.createElement("div");
+        messageEl.className="RightChatWrap";
+        messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
+        chatRef.current.appendChild(messageEl);
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }
+    }).catch(err=>console.log(err));
+  },[props.roomId]);
 
   useEffect(() => {
     if(props.mode!=="Chat"){return;}
