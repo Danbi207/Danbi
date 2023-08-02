@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
-import PickAnimation from './data.json';
+import PickAnimation from '../data.json';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setTier,
@@ -9,7 +9,7 @@ import {
   setUnchedkedRgb,
   setName,
   setDewPoint,
-} from '../../store/Slice/JandiSlice';
+} from '../../../store/Slice/JandiSlice';
 
 const PickModal = ({ setPickModalOpen }) => {
   const [ShowAnimation, setShowAnimation] = useState(true);

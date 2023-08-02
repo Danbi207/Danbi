@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import back from './Back.svg';
-import Save from './Button.svg';
+import back from '../Back.svg';
+import Save from '../Button.svg';
 import PresetTextArea from './PresetTextArea';
 import Preset from './Preset.jsx';
 

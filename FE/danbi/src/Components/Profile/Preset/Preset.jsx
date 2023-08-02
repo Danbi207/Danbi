@@ -17,7 +17,6 @@ const preset_list = [
   },
 ];
 
-
 const Preset = () => {
   const [mouseDownClientX, setMouseDownClientX] = useState(0);
   const [mouseDownClientY, setMouseDownClientY] = useState(0);
@@ -27,25 +26,24 @@ const Preset = () => {
   const onMouseDown = (e) => {
     setMouseDownClientX(e.clientX);
     setMouseDownClientY(e.clientY);
-  }
+  };
   const onMouseUp = (e) => {
     setMouseUpClientX(e.clientX);
     setMouseUpClientY(e.clientY);
-  } 
+  };
   useEffect(() => {
     const dragSpaceX = Math.abs(mouseDownClientX - mouseUpClientX);
     const dragSpaceY = Math.abs(mouseDownClientY - mouseUpClientY);
     const vector = dragSpaceX / dragSpaceY;
 
-    if (mouseDownClientX !== 0 && dragSpaceX > 100 && vector > 2){
+    if (mouseDownClientX !== 0 && dragSpaceX > 100 && vector > 2) {
       if (mouseUpClientY < mouseDownClientY) {
-        console.log('dragging')
-        
+        console.log('dragging');
       } else if (mouseUpClientY > mouseDownClientY) {
-        console.log('dragging')
+        console.log('dragging');
       }
     }
-  }, [mouseUpClientX]);
+  }, [mouseUpClientX, mouseDownClientY, mouseUpClientX, mouseUpClientY]);
 
   const [touchedX, setTouchedX] = useState(0);
   const [touchedY, setTouchedY] = useState(0);
@@ -53,7 +51,7 @@ const Preset = () => {
   const onTouchStart = (e) => {
     setTouchedX(e.changedTouches[0].pageX);
     setTouchedY(e.changedTouches[0].pageY);
-  }
+  };
 
   const onTouchEnd = (e) => {
     const distanceX = touchedX - e.changedTouches[0].pageX;
@@ -61,21 +59,21 @@ const Preset = () => {
     const vector = Math.abs(distanceX / distanceY);
 
     if (distanceY > 30 && vector > 2) {
-      console.log('touching')
+      console.log('touching');
     } else if (distanceY < -30 && vector > 2) {
-      console.log('touching')
+      console.log('touching');
     }
-  }
+  };
 
   const [OpenIndex, setOpenIndex] = useState(-1);
   const showDetail = (index) => {
     setOpenIndex(index);
   };
   return (
-    <PresetWrap className='container'>
+    <PresetWrap className="container">
       {preset_list.map((value, index) => (
-        <Wrap 
-          onMouseDown={onMouseDown} 
+        <Wrap
+          onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
           onTouchEnd={onTouchEnd}
           onTouchStart={onTouchStart}
@@ -86,15 +84,12 @@ const Preset = () => {
             }}
             key={index}
           >
-            <PreSetElement className='el'>
+            <PreSetElement className="el">
               {value.content ? value.content : `프리셋 ${index + 1}`}
             </PreSetElement>
           </ElementBtn>
           {OpenIndex === index && (
-            <PresetDetail
-              content={preset_list[index].content}
-              showDetail={showDetail}
-            />
+            <PresetDetail content={preset_list[index].content} showDetail={showDetail} />
           )}
         </Wrap>
       ))}

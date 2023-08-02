@@ -1,35 +1,39 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTier, setCheckedRgb, setUnchedkedRgb,setName, setDewPoint } from '../../store/Slice/JandiSlice';
+import {
+  setTier,
+  setCheckedRgb,
+  setUnchedkedRgb,
+  setName,
+  setDewPoint,
+} from '../../../store/Slice/JandiSlice';
 
-const Jandi = ({help_log, setPickModalOpen, point}) => {  
+const Jandi = ({ help_log, setPickModalOpen, point }) => {
   const colCnt = 8;
   const rowCnt = 2;
-  
+
   const nowScreenWidth = window.innerWidth;
 
   const overLay = {
     x: 0,
     y: 0,
     show: false,
-    content: "",
+    content: '',
     idx: -1,
   };
 
-  const [site, setSite] = useState(0);
-
-  const [page,setPage]=useState(0);
-  const [selectIdx,setSelectIdx] = useState(-1);
+  const [page, setPage] = useState(0);
+  const [selectIdx, setSelectIdx] = useState(-1);
   const [ShowOverLay, setShowOverLay] = useState(overLay);
-  
+
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
 
-  const onGross = (e,idx)=>{
-    if(selectIdx !== idx){
+  const onGross = (e, idx) => {
+    if (selectIdx !== idx) {
       setSelectIdx(idx);
-      console.log(typeof selectIdx)
+      console.log(typeof selectIdx);
     } else {
       setSelectIdx(-1);
     }
@@ -39,37 +43,51 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
       show: idx !== ShowOverLay.idx,
       idx,
       content: help_log[idx].created_time,
-    })
-    console.log(ShowOverLay.show);
-  }
-  const GrossItems = useMemo(()=>{
+    });
+  };
+  const GrossItems = useMemo(() => {
     const res = [];
-    for(let i = page*colCnt*rowCnt; i < (page+1)*colCnt*rowCnt  && i < help_log.length; i++){
+    for (
+      let i = page * colCnt * rowCnt;
+      i < (page + 1) * colCnt * rowCnt && i < help_log.length;
+      i++
+    ) {
       res.push(
-      <GrossItem $defaultIdx={i} $selectIdx={selectIdx} $show={ShowOverLay} key={i} $checkColor={cur_CheckedColor} $uncheckColor={cur_UncheckedColor} onClick={(e)=>onGross(e,i)}></GrossItem>);
+        <GrossItem
+          $defaultIdx={i}
+          $selectIdx={selectIdx}
+          $show={ShowOverLay}
+          key={i}
+          $checkColor={cur_CheckedColor}
+          $uncheckColor={cur_UncheckedColor}
+          onClick={(e) => onGross(e, i)}
+        ></GrossItem>
+      );
     }
 
-    for(let i = 0; i < (page+1)*colCnt*rowCnt-page*colCnt*rowCnt; i++){ 
-      res.push(<EmptyItem key={(page+1)*colCnt*rowCnt+i+1}></EmptyItem>)
+    for (let i = 0; i < (page + 1) * colCnt * rowCnt - page * colCnt * rowCnt; i++) {
+      res.push(<EmptyItem key={(page + 1) * colCnt * rowCnt + i + 1}></EmptyItem>);
     }
     return res;
-  },[page,help_log,selectIdx, cur_CheckedColor, cur_UncheckedColor]);
+  }, [page, help_log, selectIdx, cur_CheckedColor, cur_UncheckedColor]);
 
-  const prevGross = ()=>{
-    if(page!==0)setPage(page-1);
+  const prevGross = () => {
+    if (page !== 0) setPage(page - 1);
     setSelectIdx(-1);
     setShowOverLay({
       idx: -1,
-    })
-  }
+    });
+  };
 
-  const nextGross = ()=>{
-    if(Math.floor(help_log.length/(colCnt*rowCnt))!==page){setPage(page+1);}
+  const nextGross = () => {
+    if (Math.floor(help_log.length / (colCnt * rowCnt)) !== page) {
+      setPage(page + 1);
+    }
     setSelectIdx(-1);
     setShowOverLay({
       idx: -1,
-    })
-  }
+    });
+  };
 
   const dispatch = useDispatch();
 
@@ -80,44 +98,48 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
     dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
     dispatch(setCheckedRgb(pickdata.item.checkedRgb));
     dispatch(setDewPoint(pickdata.dew_point));
-  }
+  };
 
   const pickdata = {
-    item : {
-      name : "핑크소세지",
-      uncheckedRgb : "#FFACAC",
-      checkedRgb : "#FFEEBB",
-      tier : "legandary"
+    item: {
+      name: '핑크소세지',
+      uncheckedRgb: '#FFACAC',
+      checkedRgb: '#FFEEBB',
+      tier: 'legandary',
     },
-    dew_point : 123456,
-  }
+    dew_point: 123456,
+  };
 
   return (
     <ChartWrap>
       <ChartHeader>나의 도움을 기록해주세요</ChartHeader>
-      <GrossWrap $col = {colCnt} $row = {rowCnt}> 
-        {
-          GrossItems
-        }
+      <GrossWrap $col={colCnt} $row={rowCnt}>
+        {GrossItems}
       </GrossWrap>
       <Btns>
         <DirectionBtns>
-            <GrossBtn onClick={prevGross}>이전</GrossBtn>
-            <GrossBtn onClick={nextGross}>다음</GrossBtn>
+          <GrossBtn onClick={prevGross}>이전</GrossBtn>
+          <GrossBtn onClick={nextGross}>다음</GrossBtn>
         </DirectionBtns>
         <Wrap>
-            <Dew>{point}Dew</Dew>
-            <PickBtn onClick={() => {handlePickModal(pickdata)}}>뽑기</PickBtn>
+          <Dew>{point}Dew</Dew>
+          <PickBtn
+            onClick={() => {
+              handlePickModal(pickdata);
+            }}
+          >
+            뽑기
+          </PickBtn>
         </Wrap>
       </Btns>
-      {ShowOverLay.show && 
+      {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
           {ShowOverLay.content}
         </OverRayWrap>
-      }
+      )}
     </ChartWrap>
-  )
-}
+  );
+};
 
 const ChartWrap = styled.div`
   width: 100%;
@@ -132,34 +154,36 @@ const ChartHeader = styled.div`
   padding-bottom: 1rem;
 `;
 
-
 const GrossBtn = styled.button`
   width: 2rem;
   height: 2rem;
-`
+`;
 const GrossWrap = styled.div`
   display: grid;
   width: 100%;
   height: 5rem;
-  grid-template-columns: repeat(${props=>props.$col},1fr);
-  grid-template-rows: repeat(${props=>props.$row},1fr);
-`
+  grid-template-columns: repeat(${(props) => props.$col}, 1fr);
+  grid-template-rows: repeat(${(props) => props.$row}, 1fr);
+`;
 
 const GrossItem = styled.div`
-   background-color: ${props=> (props.$selectIdx===props.$defaultIdx && props.$show.show) ? props.$checkColor : props.$uncheckColor};
-   border: 1px solid #000;
-   border-radius: 8px;
-   margin-right: 1px;
-   margin-top: 1px;
-`
+  background-color: ${(props) =>
+    props.$selectIdx === props.$defaultIdx && props.$show.show
+      ? props.$checkColor
+      : props.$uncheckColor};
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin-right: 1px;
+  margin-top: 1px;
+`;
 
 const EmptyItem = styled.div`
-   background-color: ${props => props.theme.colors.titleColor};
-   border: 1px solid #000;
-   border-radius: 8px;
-   margin-right: 1px;
-   margin-top: 1px;
-`
+  background-color: ${(props) => props.theme.colors.titleColor};
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin-right: 1px;
+  margin-top: 1px;
+`;
 
 const Btns = styled.div`
   display: flex;
@@ -184,24 +208,22 @@ const Dew = styled.div`
 `;
 
 const Wrap = styled.div`
-    display: flex;
-`
+  display: flex;
+`;
 const DirectionBtns = styled.div`
-    display: flex;
-`
+  display: flex;
+`;
 
 const OverRayWrap = styled.div`
   background-color: rgba(128, 128, 128, 0.5);
   position: fixed;
   width: auto;
   height: auto;
-  top: ${props => props.$position.y}px;
-  left: ${
-    props =>
+  top: ${(props) => props.$position.y}px;
+  left: ${(props) =>
     props.$position.x > props.$nowScreenWidth / 2
       ? `${props.$position.x - 100}px`
-      : `${props.$position.x}px`
-  };
-`
-   
-export default Jandi
+      : `${props.$position.x}px`};
+`;
+
+export default Jandi;

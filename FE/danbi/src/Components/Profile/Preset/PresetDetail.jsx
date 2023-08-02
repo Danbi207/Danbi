@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { getSpeech } from './utils/TTS';
+import { getSpeech } from '../utils/TTS';
 
 const PresetDetail = ({ content, showDetail }) => {
   const [value, setValue] = useState(content);
