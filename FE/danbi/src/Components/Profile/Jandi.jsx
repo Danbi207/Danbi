@@ -1,8 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTier, setCheckedRgb, setUnchedkedRgb,setName, setDewPoint } from '../../store/Slice/JandiSlice';
 
-const Jandi = ({help_log, setPickModalOpen, point, pickButton}) => {  
+const Jandi = ({help_log, setPickModalOpen, point}) => {  
   const colCnt = 8;
   const rowCnt = 2;
   
@@ -68,6 +69,27 @@ const Jandi = ({help_log, setPickModalOpen, point, pickButton}) => {
     })
   }
 
+  const dispatch = useDispatch();
+
+  const handlePickModal = (pickdata) => {
+    setPickModalOpen(true);
+    dispatch(setName(pickdata.item.name));
+    dispatch(setTier(pickdata.item.tier));
+    dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+    dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+    dispatch(setDewPoint(pickdata.dew_point));
+  }
+
+  const pickdata = {
+    item : {
+      name : "핑크소세지",
+      uncheckedRgb : "#FFACAC",
+      checkedRgb : "#FFEEBB",
+      tier : "legandary"
+    },
+    dew_point : 123456,
+  }
+
   return (
     <ChartWrap>
       <ChartHeader>나의 도움을 기록해주세요</ChartHeader>
@@ -83,7 +105,7 @@ const Jandi = ({help_log, setPickModalOpen, point, pickButton}) => {
         </DirectionBtns>
         <Wrap>
             <Dew>{point}Dew</Dew>
-            <PickBtn onClick={pickButton}>뽑기</PickBtn>
+            <PickBtn onClick={() => {handlePickModal(pickdata)}}>뽑기</PickBtn>
         </Wrap>
       </Btns>
       {ShowOverLay.show && 

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
 import PickAnimation from './data.json';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTier, setCheckedRgb, setUnchedkedRgb,setName, setDewPoint } from '../../store/Slice/JandiSlice';
 
 
-const PickModal = ({setPickModalOpen, pickButton}) => {
+const PickModal = ({setPickModalOpen }) => {
     const [ShowAnimation, setShowAnimation] = useState(true);    
 
     useEffect(() => {
@@ -19,6 +20,29 @@ const PickModal = ({setPickModalOpen, pickButton}) => {
     const CloseModal = () => {
         setPickModalOpen(false);
     }
+
+    const dispatch = useDispatch();
+
+    const handlePickModal = (pickdata) => {
+        
+        setPickModalOpen(false);
+        dispatch(setName(pickdata.item.name));
+        dispatch(setTier(pickdata.item.tier));
+        dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+        dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+        dispatch(setDewPoint(pickdata.dew_point));
+        setPickModalOpen(true);
+      }
+
+      const pickdata = {
+        item : {
+          name : "핑크소세지",
+          uncheckedRgb : "#FFACAC",
+          checkedRgb : "#FFEEBB",
+          tier : "legandary"
+        },
+        dew_point : 123456,
+      }
 
     const cur_dew = useSelector((state) => state.Jandi.dew_point);
     const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
@@ -50,7 +74,7 @@ const PickModal = ({setPickModalOpen, pickButton}) => {
                         <Text>그래프 색상이 <ColorName>{cur_Name}</ColorName>(으)로 바뀌었어요!</Text>
                     </ContentWrap>
                     <Footer>
-                        <AcceptBtn onClick={pickButton}>한 번 더 사용하기</AcceptBtn>
+                        <AcceptBtn onClick={() => {handlePickModal(pickdata)}}>한 번 더 사용하기</AcceptBtn>
                         <Point>
                             {cur_dew}Dew
                         </Point>
