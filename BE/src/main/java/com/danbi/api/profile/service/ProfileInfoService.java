@@ -53,7 +53,9 @@ public class ProfileInfoService {
                 .dewPoint(profileInfo.getDewPoint())
                 .item(ProfileItemResponseDto.builder()
                         .ranking(profileInfo.getRanking().getTier())
-                        .color(profileInfo.getColor().getRgb()).build())
+                        .name(profileInfo.getColor().getName())
+                        .checkedRgb(profileInfo.getColor().getCheckedRgb())
+                        .uncheckedRgb(profileInfo.getColor().getUncheckedRgb()).build())
                 .helpLog(helpDtos)
                 .comments(comments).build();
     }

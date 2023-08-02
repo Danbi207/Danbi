@@ -9,6 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ItemDto {
 
-    private String color;
     private String ranking;
+    private String name;
+    private String checkedRgb;
+    private String uncheckedRgb;
 }

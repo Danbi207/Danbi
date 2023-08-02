@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public enum Ranking {
 
-    SILVER("silver"),
-    GOLD("gold"),
-    PLATINUM("platinum")
+    RARE("rare"),
+    EPIC("epic"),
+    LEGENDARY("legendary")
     ;
 
     public static Ranking from(String rank) {
