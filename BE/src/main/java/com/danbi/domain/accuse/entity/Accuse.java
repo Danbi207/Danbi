@@ -20,9 +20,13 @@ public class Accuse extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "target_member_id")
     private Member targetMember;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reporter_id")
+    private Member reporter;
 
     @Column(nullable = false, length = 20)
     private String title;
@@ -47,8 +51,9 @@ public class Accuse extends BaseEntity {
     }
 
     @Builder
-    public Accuse(Member targetMember, String title, String content, String evidenceUrl, AccuseType accuseType, State state) {
+    public Accuse(Member targetMember, Member reporter,String title, String content, String evidenceUrl, AccuseType accuseType, State state) {
         this.targetMember = targetMember;
+        this.reporter = reporter;
         this.title = title;
         this.content = content;
         this.evidenceUrl = evidenceUrl;
