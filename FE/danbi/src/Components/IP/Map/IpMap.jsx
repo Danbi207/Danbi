@@ -4,7 +4,7 @@ import Footer from '../../Common/Footer/Footer';
 import Header from '../../Common/Header/Header';
 
 import "./IpMap.css";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, } from '../../../store/Slice/ipSlice'; 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,10 +17,14 @@ const IpMap = () => {
   const { kakao } = window;
   const mapRef = useRef();
   const [map, setMap] = useState(null);
+  const cur_longitude = useSelector(state => state.ip.position.cur_longitude)
+  const cur_latitude = useSelector(state => state.ip.position.cur_latitude)
 
   useEffect(() => {
+    console.log(cur_latitude, cur_longitude)
     const mapOption = { 
-      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+      // center: new kakao.maps.LatLng(37.566826, 126.9786567),
+      center: new kakao.maps.LatLng(cur_latitude, cur_longitude), 
       level: 3 // 지도의 확대 레벨
     };
 
@@ -40,10 +44,10 @@ const IpMap = () => {
       
       // eslint-disable-next-line no-unused-expressions
       mapid === '0'
-      ? (dispatch(setMeetLongitude(String(latlng.getLat()))),
-        dispatch(setMeetLatitude(String(latlng.getLng()))))
-      : (dispatch(setDestLongitude(String(latlng.getLat()))),
-        dispatch(setDestLatitude(String(latlng.getLng()))));
+      ? (dispatch(setMeetLongitude(latlng.getLat())),
+        dispatch(setMeetLatitude(latlng.getLng())))
+      : (dispatch(setDestLongitude(latlng.getLat())),
+        dispatch(setDestLatitude(latlng.getLng())));
       console.log(latlng.getLat())
       console.log(latlng.getLng())
 
@@ -73,8 +77,9 @@ const IpMap = () => {
         // 좌표로 법정동 상세 주소 정보를 요청합니다
         geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
     }
+
     setMap(createdMap);
-  }, [kakao]);
+  }, [kakao, cur_longitude, cur_latitude]);
 
   return (
     <Wrap>
