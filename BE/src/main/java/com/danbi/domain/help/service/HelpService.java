@@ -21,7 +21,7 @@ import javax.persistence.PersistenceContext;
 public class HelpService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
 
     private final HelpPostRepository helpPostRepository;
     private final HelpRepository helpRepository;

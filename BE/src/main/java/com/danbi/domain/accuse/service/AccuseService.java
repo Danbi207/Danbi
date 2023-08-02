@@ -53,6 +53,7 @@ public class AccuseService {
 
     public void approveAccuse(Long accuseId) {
         Accuse accuse = accuseRepository.findById(accuseId).get();
+        accuse.getTargetMember().plusStack();
         accuse.updateAccuse(State.APPROVAL);
     }
 

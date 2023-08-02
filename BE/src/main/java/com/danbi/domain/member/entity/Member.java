@@ -68,6 +68,8 @@ public class Member extends BaseEntity {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private Profile profile;
 
+    private int accuseStack = 0;
+
     @Builder
     public Member(OauthType oauthType, String email, String password, String name, String nickname,
                   Gender gender, String profileUrl, Role role) {
@@ -102,5 +104,9 @@ public class Member extends BaseEntity {
     public void makeProfile(Profile profile) {
         this.profile = profile;
         profile.assignMember(this);
+    }
+
+    public void plusStack() {
+        this.accuseStack += 1;
     }
 }

@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 public class PositionService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
     private final PositionRepository positionRepository;
     private final HelpPostRepository helpPostRepository;
 

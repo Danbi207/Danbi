@@ -51,7 +51,6 @@ public class HelpPost extends BaseEntity {
     private String caution;
 
     @OneToOne(mappedBy = "helpPost", cascade = CascadeType.ALL)
-    @JoinColumn(name = "positions_id")
     private Positions positions;
 
     @Builder
