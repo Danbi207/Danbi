@@ -18,7 +18,7 @@ const IPHome = () => {
     <IpHomeWrap>
       <Header/>
       <Wrap>
-        <Calendar/>
+        {/* <Calendar/> */}
       </Wrap>
       <RequestBTN onClick={()=>{navigate('/iprequest')}}>도움 요청하기</RequestBTN>
       <Footer/>
