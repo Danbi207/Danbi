@@ -18,7 +18,7 @@ export const ipSlice = createSlice({
     tabmode : 'meet',
     reservetype : '',
     meetType : '',
-    category : '',
+    category : 'NONE',
     content : '',
     openIndex : 0,
     ischecked : false,
@@ -63,11 +63,17 @@ export const ipSlice = createSlice({
     setDestAddr : (state, action) => {
       state.position.dest_addr = action.payload;
     },
+    setCurLongitude : (state, action) => {
+      state.position.cur_longitude = action.payload;
+    },
+    setCurLatitude : (state, action) => {
+      state.position.cur_latitude = action.payload;
+    },
   },
 });
 
 export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex, setCategory,
-               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr,
+               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude
               } = ipSlice.actions;
 
 export default ipSlice.reducer;
