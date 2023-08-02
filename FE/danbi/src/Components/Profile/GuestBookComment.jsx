@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import ex from './example-profile.jpg';
 
 const GuestBookComment = ({comment}) => {
-    console.log(comment)
     return(
         <CommentWrap>
             <GuestImg src={ex} alt="프로필 사진" />

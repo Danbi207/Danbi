@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
 import PickAnimation from './data.json';
+import { useSelector } from 'react-redux';
+
 
 const PickModal = ({setPickModalOpen}) => {
     const [ShowAnimation, setShowAnimation] = useState(true);    
@@ -18,6 +20,12 @@ const PickModal = ({setPickModalOpen}) => {
         setPickModalOpen(false);
     }
 
+    const cur_dew = useSelector((state) => state.Jandi.dew_point);
+    const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
+    const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
+    const cur_Name = useSelector((state) => state.Jandi.item.name);
+    const cur_Tier = useSelector((state) => state.Jandi.item.tier);
+
     return(
         <PickModalWrap>
             {ShowAnimation ? (
@@ -27,7 +35,7 @@ const PickModal = ({setPickModalOpen}) => {
             ) : (
                 <Wrap>
                     <ContentWrap>
-                        <Content>대충 뽑은 내용</Content>
+                        <Content>{cur_CheckedColor}{cur_Name}{cur_UncheckedColor}{cur_dew}{cur_Tier}</Content>
                         <Btn>
                         <AcceptBtn onClick={CloseModal}>확인</AcceptBtn>
                         </Btn>

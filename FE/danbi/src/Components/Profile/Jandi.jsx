@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components';
+import { setTier, setCheckedRgb, setUnchedkedRgb,setName, setDewPoint } from '../../store/Slice/JandiSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Jandi = ({help_log, setPickModalOpen, point}) => {  
   const colCnt = 8;
@@ -19,6 +21,12 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
   const [selectIdx,setSelectIdx] = useState(-1);
   const [ShowOverLay, setShowOverLay] = useState(overLay);
   
+  const cur_dew = useSelector((state) => state.Jandi.dew_point);
+  const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
+  const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
+  const cur_Name = useSelector((state) => state.Jandi.item.name);
+  const cur_Tier = useSelector((state) => state.Jandi.item.tier);
+
   const onGross = (e,idx)=>{
     if(selectIdx !== idx){
       setSelectIdx(idx);
@@ -39,14 +47,14 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
     const res = [];
     for(let i = page*colCnt*rowCnt; i < (page+1)*colCnt*rowCnt  && i < help_log.length; i++){
       res.push(
-      <GrossItem $defaultIdx={i} $selectIdx={selectIdx} $show={ShowOverLay} key={i} onClick={(e)=>onGross(e,i)}></GrossItem>);
+      <GrossItem $defaultIdx={i} $selectIdx={selectIdx} $show={ShowOverLay} key={i} $checkColor={cur_CheckedColor} $uncheckColor={cur_UncheckedColor} onClick={(e)=>onGross(e,i)}></GrossItem>);
     }
 
     for(let i = 0; i < (page+1)*colCnt*rowCnt-page*colCnt*rowCnt; i++){ 
       res.push(<EmptyItem key={(page+1)*colCnt*rowCnt+i+1}></EmptyItem>)
     }
     return res;
-  },[page,help_log,selectIdx]);
+  },[page,help_log,selectIdx, cur_CheckedColor, cur_UncheckedColor]);
 
   const prevGross = ()=>{
     if(page!==0)setPage(page-1);
@@ -64,8 +72,25 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
     })
   }
 
-  const handlePickModal = () => {
+  const dispatch = useDispatch();
+
+  const pickdata = {
+    item : {
+			name : "핑크소세지",
+			uncheckedRgb : "#FFACAC",
+			checkedRgb : "#FFEEBB",
+			tier : "legandary"
+		},
+		dew_point : 123456,
+  }
+
+  const handlePickModal = (pickdata) => {
     setPickModalOpen(true);
+    dispatch(setName(pickdata.item.name));
+    dispatch(setTier(pickdata.item.tier));
+    dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+    dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+    dispatch(setDewPoint(pickdata.dew_point));
   }
 
   return (
@@ -83,7 +108,7 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
         </DirectionBtns>
         <Wrap>
             <Dew>{point}Dew</Dew>
-            <PickBtn onClick={handlePickModal}>뽑기</PickBtn>
+            <PickBtn onClick={() => handlePickModal(pickdata)}>뽑기</PickBtn>
         </Wrap>
       </Btns>
       {ShowOverLay.show && 
@@ -122,8 +147,7 @@ const GrossWrap = styled.div`
 `
 
 const GrossItem = styled.div`
-   background-color: #39D353;
-   background-color: ${props=> (props.$selectIdx===props.$defaultIdx && props.$show.show) ? "#006D32" : "#39D353"};
+   background-color: ${props=> (props.$selectIdx===props.$defaultIdx && props.$show.show) ? props.$checkColor : props.$uncheckColor};
    border: 1px solid #000;
    border-radius: 8px;
    margin-right: 1px;
