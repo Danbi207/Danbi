@@ -26,7 +26,7 @@ import java.util.Optional;
 public class FriendServiceImpl implements FriendService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
     private final FriendRepository friendRepository;
 
 

@@ -1,7 +1,7 @@
 package com.danbi.domain.member.service;
 
 import com.danbi.domain.Item.constant.Color;
-import com.danbi.domain.Item.constant.Rank;
+import com.danbi.domain.Item.constant.Ranking;
 import com.danbi.domain.Item.entity.Item;
 import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
@@ -50,7 +50,7 @@ public class MemberService {
 
         Item item = Item.builder()
                 .color(Color.BLACK)
-                .rank(Rank.SILVER)
+                .ranking(Ranking.SILVER)
                 .profile(profile).build();
         itemRepository.save(item);
 

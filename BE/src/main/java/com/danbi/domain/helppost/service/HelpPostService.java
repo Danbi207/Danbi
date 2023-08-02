@@ -25,7 +25,7 @@ import java.util.List;
 public class HelpPostService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
 
     private final HelpPostRepository helpPostRepository;
 

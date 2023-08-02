@@ -26,7 +26,7 @@ import java.util.List;
 public class AlarmServiceImpl implements AlarmService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
     private final AlarmRepository alarmRepository;
     private final MemberService memberService;
 

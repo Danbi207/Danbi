@@ -1,11 +1,8 @@
 package com.danbi.api.point.controller;
 
-import com.danbi.api.hleppost.dto.HelpPostRequestDto;
-import com.danbi.api.hleppost.dto.HelpPostResponseDto;
 import com.danbi.api.point.dto.AccumulatePointResponseDto;
 import com.danbi.api.point.dto.PointResponseDto;
 import com.danbi.api.point.service.PointInfoService;
-import com.danbi.domain.member.entity.Member;
 import com.danbi.global.resolver.MemberInfo;
 import com.danbi.global.resolver.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
