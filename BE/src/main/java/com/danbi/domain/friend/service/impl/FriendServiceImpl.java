@@ -26,7 +26,7 @@ import java.util.Optional;
 public class FriendServiceImpl implements FriendService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
     private final FriendRepository friendRepository;
 
 
@@ -95,5 +95,16 @@ public class FriendServiceImpl implements FriendService {
         }
     }
 
+    private boolean checkFromFriend(Friend friend) {
+        return friendRepository.existsByFromAndToAndTypeAndState(friend.getFrom(), friend.getTo(), Type.PERMIT, State.ACTIVATE);
+    }
+
+    private boolean checkToFriend(Friend friend) {
+        return friendRepository.existsByFromAndToAndTypeAndState(friend.getTo(), friend.getFrom(), Type.PERMIT, State.ACTIVATE);
+    }
+
+    public boolean isFriend(Friend friend) {
+        return checkFromFriend(friend) || checkToFriend(friend);
+    }
 
 }

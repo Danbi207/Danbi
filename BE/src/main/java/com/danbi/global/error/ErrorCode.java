@@ -59,6 +59,11 @@ public enum ErrorCode {
     // Point
     POINT_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"P-001","프로필의 주인과 사용자가 동일하지 않습니다."),
 
+
+    // Alarm
+    ALARM_NOT_EXISTS(HttpStatus.BAD_REQUEST,"AL-001","해당 알림은 존재하지 않습니다."),
+    FORBIDDEN_ALARM(HttpStatus.BAD_REQUEST,"AL-002","해당 계정의 알림이 아닙니다."),
+
     // Accuse
     ACCUSE_MISMATCH_TARGET(HttpStatus.BAD_REQUEST,"AC-001","본인을 신고할 수는 없습니다."),
     ACCUSE_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"AC-002","신고자와 취소 요청자가 동일하지 않습니다."),

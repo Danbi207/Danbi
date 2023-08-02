@@ -49,7 +49,7 @@ public class Preset extends BaseEntity {
         this.title = title;
     }
 
-    public void updateContent(String Content) {
+    public void updateContent(String content) {
         this.content = content;
     }
 

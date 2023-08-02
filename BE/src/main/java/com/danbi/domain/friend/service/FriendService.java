@@ -29,4 +29,5 @@ public interface FriendService {
     List<Friend> getFriendByFromOrToAndType(Member from, Member to);
 
     void validateDuplicateFriend(Friend friend);
+    public boolean isFriend(Friend friend);
 }

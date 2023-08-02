@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 public class PointService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
 
     private final PointRepository pointRepository;
 

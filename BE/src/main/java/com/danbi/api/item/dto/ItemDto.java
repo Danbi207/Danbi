@@ -10,5 +10,5 @@ import lombok.Getter;
 public class ItemDto {
 
     private String color;
-    private String rank;
+    private String ranking;
 }

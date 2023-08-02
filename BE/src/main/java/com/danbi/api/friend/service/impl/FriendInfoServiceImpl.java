@@ -158,4 +158,20 @@ public class FriendInfoServiceImpl implements FriendInfoService {
 
         return ResponseFriendListDto.builder().result(result).build();
     }
+
+    @Override
+    public boolean isFriend(Long from, Long to){
+        Member fromMember = memberService.findByMemberId(from);
+        Member toMember = memberService.findByMemberId(to);
+        Friend friend = Friend.builder()
+                .from(fromMember)
+                .to(toMember)
+                .type(Type.PERMIT)
+                .state(State.ACTIVATE)
+                .build();
+
+        return friendService.isFriend(friend);
+
+    }
+
 }

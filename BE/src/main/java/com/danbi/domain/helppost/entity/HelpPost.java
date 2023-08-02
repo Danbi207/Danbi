@@ -1,6 +1,7 @@
 package com.danbi.domain.helppost.entity;
 
 import com.danbi.domain.common.BaseEntity;
+import com.danbi.domain.helppost.constant.Category;
 import com.danbi.domain.helppost.constant.State;
 import com.danbi.domain.member.entity.Member;
 import lombok.AccessLevel;
@@ -24,15 +25,8 @@ public class HelpPost extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Lob
     @Column(nullable = false)
     private String content;
-
-    @Column(nullable = false, length = 1023)
-    private String latitude;
-
-    @Column(nullable = false, length = 1023)
-    private String longitude;
 
     @Column(nullable = false, length = 20)
     private LocalDateTime startTime;
@@ -40,7 +34,6 @@ public class HelpPost extends BaseEntity {
     @Column(length = 20)
     private LocalDateTime endTime;
 
-    private int totalTime;
 
     private boolean reservationFlag;
     private boolean faceFlag;
@@ -49,31 +42,42 @@ public class HelpPost extends BaseEntity {
     @Column(nullable = false, length = 10)
     private State state;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Category category;
+
+    @Lob
+    @Column(nullable = false)
+    private String caution;
+
+    @OneToOne(mappedBy = "helpPost", cascade = CascadeType.ALL)
+    private Positions positions;
+
     @Builder
-    public HelpPost(Member member, String content, String latitude, String longitude, LocalDateTime startTime, LocalDateTime endTime, int totalTime, boolean reservationFlag, boolean faceFlag, State state) {
+    public HelpPost(Member member, String content, LocalDateTime startTime, LocalDateTime endTime, boolean reservationFlag, boolean faceFlag, State state, Category category, String caution, Positions positions) {
         this.member = member;
         this.content = content;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.totalTime = totalTime;
         this.reservationFlag = reservationFlag;
         this.faceFlag = faceFlag;
         this.state = state;
+        this.category = category;
+        this.caution = caution;
+        this.positions = positions;
     }
 
 
     public void update(HelpPost helpPost) {
         this.content = helpPost.getContent();
-        this.latitude = helpPost.getLatitude();
-        this.longitude = helpPost.getLongitude();
         this.startTime = helpPost.getStartTime();
         this.endTime = helpPost.getEndTime();
-        this.totalTime = helpPost.getTotalTime();
         this.reservationFlag = helpPost.isReservationFlag();
         this.faceFlag = helpPost.isFaceFlag();
         this.state = helpPost.getState();
+        this.category = helpPost.getCategory();
+        this.caution = helpPost.getCaution();
+        this.positions = helpPost.getPositions();
     }
 
     public void delete(State state) {
