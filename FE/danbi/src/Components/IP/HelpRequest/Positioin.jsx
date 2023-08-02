@@ -8,6 +8,8 @@ const Positioin = () => {
   const category = useSelector(state => state.ip.category);
   const navigate = useNavigate()
 
+  const position = useSelector(state => state.ip.position);
+
   return (
     <Wrap>
       <CategorySelect>
@@ -18,9 +20,11 @@ const Positioin = () => {
           </CategoryOption>
         ))}
       </CategorySelect>
-      <Destination type='text' readOnly placeholder='만나는 곳을 입력하세요' onClick={()=>{navigate('/ipmap')}}/>
+      <Destination type='text' readOnly placeholder='만나는 곳을 입력하세요' 
+        value={position.meet_addr} onClick={()=>{navigate('/ipmap/0')}}/>
       {meetType === 'face' && (
-        <Destination type='text' readOnly placeholder='목적지를 입력하세요' />
+        <Destination type='text' readOnly placeholder='목적지를 입력하세요' 
+        value={position.dest_addr} onClick={()=>{navigate('/ipmap/1')}}/>
       )}
     </Wrap>
   );

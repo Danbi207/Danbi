@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import UserInfo from './HelpDetail/UserInfo.jsx';
 import HelpDetailInfo from './HelpDetail/HelpDetailInfo.jsx';
-import AcceptButton from './AcceptButton.jsx';
+import AcceptButton from './HelpDetail/AcceptButton.jsx';
 
 const data = {
   data: {
@@ -15,14 +15,14 @@ const data = {
       accusePoint: 0,
     },
     position: {
-      latitude: '128.3444',
-      longitude: '36.119485',
+      latitude: 37.566826,
+      longitude: 126.9786567,
       addr: '태웅시',
-      dest_latitude: '111.3444',
-      dest_longitude: '222.119485',
+      dest_latitude: 37.566826,
+      dest_longitude: 126.9786567,
       dest_addr: '태웅동',
-      meet_latitude: '333.3444',
-      meet_longitude: '444.119485',
+      meet_latitude: 37.616826,
+      meet_longitude: 126.9786567,
       meet_addr: '태웅리',
     },
     faceFlag: true,

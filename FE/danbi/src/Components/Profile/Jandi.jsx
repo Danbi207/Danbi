@@ -1,89 +1,99 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components';
-import {splitIntoPairs} from './utils/Dividing.js';
-import JandiOverLay from './JandiOverLay.jsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCreatedTime, setShowOverLay } from '../../store/Slice/JandiSlice.js';
 
-// 잔디 한 칸
-const GrassTile = ({ data }) => {
-  const tilecolor = (typeof data === 'object') ? '#39D353' : props => props.theme.colors.jandibgColor
-  const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
-  const showOverLay = useSelector(state => state.showOverLay);
+const Jandi = ({help_log, setPickModalOpen, point}) => {  
+  const colCnt = 8;
+  const rowCnt = 2;
+  
+  const nowScreenWidth = window.innerWidth;
 
-  const handleClick = () => {
-    dispatch(setCreatedTime(data.created_time));
-    dispatch(setShowOverLay(!showOverLay));
-    setShow(!show);
+  const overLay = {
+    x: 0,
+    y: 0,
+    show: false,
+    content: "",
+    idx: -1,
+  };
+
+  const [page,setPage]=useState(0);
+  const [selectIdx,setSelectIdx] = useState(-1);
+  const [ShowOverLay, setShowOverLay] = useState(overLay);
+  
+  const onGross = (e,idx)=>{
+    if(selectIdx !== idx){
+      setSelectIdx(idx);
+      console.log(typeof selectIdx)
+    } else {
+      setSelectIdx(-1);
+    }
+    setShowOverLay({
+      x: e.clientX,
+      y: e.clientY,
+      show: idx !== ShowOverLay.idx,
+      idx,
+      content: help_log[idx].created_time,
+    })
+    console.log(ShowOverLay.show);
+  }
+  const GrossItems = useMemo(()=>{
+    const res = [];
+    for(let i = page*colCnt*rowCnt; i < (page+1)*colCnt*rowCnt  && i < help_log.length; i++){
+      res.push(
+      <GrossItem $defaultIdx={i} $selectIdx={selectIdx} $show={ShowOverLay} key={i} onClick={(e)=>onGross(e,i)}></GrossItem>);
+    }
+
+    for(let i = 0; i < (page+1)*colCnt*rowCnt-page*colCnt*rowCnt; i++){ 
+      res.push(<EmptyItem key={(page+1)*colCnt*rowCnt+i+1}></EmptyItem>)
+    }
+    return res;
+  },[page,help_log,selectIdx]);
+
+  const prevGross = ()=>{
+    if(page!==0)setPage(page-1);
+    setSelectIdx(-1);
+    setShowOverLay({
+      idx: -1,
+    })
   }
 
-  return <Tile $data={data} $tilecolor={tilecolor} $show={show} onClick={handleClick} />
-};
+  const nextGross = ()=>{
+    if(Math.floor(help_log.length/(colCnt*rowCnt))!==page){setPage(page+1);}
+    setSelectIdx(-1);
+    setShowOverLay({
+      idx: -1,
+    })
+  }
 
-// 잔디 한 줄
-const GrassRow = ({ line }) => {
-  console.log(line);
-  return (
-    <Row>
-      {line.map((value, index) => (
-        <GrassTile key={index} data={value} />
-      ))}
-    </Row>
-  );
-};
-
-// 전체 잔디
-const Jandi = ({ setPickModalOpen, point, help_log }) => {
-  const dividedData = splitIntoPairs(help_log);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const data = useSelector(state => state.Jandi.created_time);
-  const position = useSelector(state => state.Jandi.position);
-  const showOverLay = useSelector(state => state.Jandi.showOverLay);
-
-
-  const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
-  };
-
-  const handleNextClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex < dividedData.length - 1 ? prevIndex + 1 : prevIndex
-    );
-  };
-  const PickShowModal = () => {
+  const handlePickModal = () => {
     setPickModalOpen(true);
-  };
+  }
 
   return (
     <ChartWrap>
       <ChartHeader>나의 도움을 기록해주세요</ChartHeader>
-      <Carousel>
-        <SliderWrapper>
-            <Chart>
-              {dividedData.map((line, index) => (
-                <GrassRow line={line} key={index} />
-              ))}
-            </Chart>
-        </SliderWrapper>
-      </Carousel>
+      <GrossWrap $col = {colCnt} $row = {rowCnt}> 
+        {
+          GrossItems
+        }
+      </GrossWrap>
       <Btns>
-        <ArrowButtons>
-          <ArrowButton onClick={handlePrevClick}>Prev</ArrowButton>
-          <ArrowButton onClick={handleNextClick}>Next</ArrowButton>
-        </ArrowButtons>
+        <DirectionBtns>
+            <GrossBtn onClick={prevGross}>이전</GrossBtn>
+            <GrossBtn onClick={nextGross}>다음</GrossBtn>
+        </DirectionBtns>
         <Wrap>
-          <Dew>{point}Dew</Dew>
-          <PickBtn onClick={PickShowModal}>뽑기</PickBtn>
+            <Dew>{point}Dew</Dew>
+            <PickBtn onClick={handlePickModal}>뽑기</PickBtn>
         </Wrap>
       </Btns>
-      {showOverLay && <JandiOverLay data={data} />}
+      {ShowOverLay.show && 
+        <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
+          {ShowOverLay.content}
+        </OverRayWrap>
+      }
     </ChartWrap>
-  );
-};
-
-export default Jandi;
+  )
+}
 
 const ChartWrap = styled.div`
   width: 100%;
@@ -91,64 +101,47 @@ const ChartWrap = styled.div`
   flex-direction: column;
   height: auto;
   padding: 1rem 1rem 0 1rem;
-`;
-
-const Carousel = styled.div`
-  display: flex;
-`;
-
-const SliderWrapper = styled.div`
-  display: flex;
-`;
-
-const Chart = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: auto;
-   /* Chart 보이기/숨기기 */
-  /* width: ${(props) => (props.$isActive ? 'auto' : '0')};
-  opacity: ${(props) => (props.$isActive ? '1' : '0')};
-  transition: all 0.5s; */
+  position: relative;
 `;
 
 const ChartHeader = styled.div`
   padding-bottom: 1rem;
 `;
 
-const Row = styled.div`
-  display: flex;
-  margin-bottom: 3px;
+
+const GrossBtn = styled.button`
+  width: 2rem;
+  height: 2rem;
+`
+const GrossWrap = styled.div`
+  display: grid;
   width: 100%;
-`;
+  height: 5rem;
+  grid-template-columns: repeat(${props=>props.$col},1fr);
+  grid-template-rows: repeat(${props=>props.$row},1fr);
+`
 
-const getTileWidth = () => {
-  const totalMargins = 16;
-  const totalBorders = 0;
-  const totalPadding = 32; 
-  const availableWidth = window.innerWidth - totalMargins - totalBorders - totalPadding;
-  console.log(Math.floor(availableWidth / 8));
-  return Math.floor(availableWidth / 8);
-};
+const GrossItem = styled.div`
+   background-color: #39D353;
+   background-color: ${props=> (props.$selectIdx===props.$defaultIdx && props.$show.show) ? "#006D32" : "#39D353"};
+   border: 1px solid #000;
+   border-radius: 8px;
+   margin-right: 1px;
+   margin-top: 1px;
+`
 
-const Tile = styled.div`
-  width: ${() => getTileWidth()}px;
-  height: 41px;
-  margin: 1px;
-  background-color: ${(props) => (props.$show && typeof props.$data === 'object') ? '#00550e' : props.$tilecolor};
-  border-radius: 3px;
-`;
-
-const ArrowButton = styled.button`
-  font-size: 24px;
-  background: transparent;
-  border: none;
-  padding-right: 10px;
-`;
+const EmptyItem = styled.div`
+   background-color: ${props => props.theme.colors.titleColor};
+   border: 1px solid #000;
+   border-radius: 8px;
+   margin-right: 1px;
+   margin-top: 1px;
+`
 
 const Btns = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const PickBtn = styled.button`
@@ -167,12 +160,25 @@ const Dew = styled.div`
   margin-right: 1rem;
 `;
 
-const ArrowButtons = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Wrap = styled.div`
-  display: flex;
-`;
+    display: flex;
+`
+const DirectionBtns = styled.div`
+    display: flex;
+`
+
+const OverRayWrap = styled.div`
+  background-color: rgba(128, 128, 128, 0.5);
+  position: fixed;
+  width: auto;
+  height: auto;
+  top: ${props => props.$position.y}px;
+  left: ${
+    props =>
+    props.$position.x > props.$nowScreenWidth / 2
+      ? `${props.$position.x - 100}px`
+      : `${props.$position.x}px`
+  };
+`
+   
+export default Jandi
