@@ -1,14 +1,16 @@
 let express = require("express");
+const connectDB = require("./db")
 let http = require("http");
 let app = express();
 let cors = require("cors");
 let server = http.createServer(app);
 let socketio = require("socket.io");
 let io = socketio.listen(server);
+const Chat = require("./model/chat");
 
 app.use(cors());
 const PORT = process.env.PORT || 5000;
-
+connectDB();
 let users = {};
 
 let socketToRoom = {};
@@ -40,8 +42,10 @@ io.on("connection", (socket) => {
 
     io.sockets.to(socket.id).emit("all_users", usersInThisRoom);
   });
-  socket.on("message",(sdp)=>{
+  socket.on("message",async (sdp)=>{
     console.log("message: " + socket.id);
+    const chat = new Chat(sdp);
+    await chat.save();
     socket.broadcast.emit("message", sdp);
   })
   socket.on("offer", (sdp) => {
@@ -91,3 +95,12 @@ app.get('/room/check/:roomId', (req, res) => {
 app.get('/room/list', (req, res) => {
   res.json(users);
 })
+
+app.get('/room/chat/:roomId', async (req,res) =>{
+  try{
+    const chats = await Chat.find({"helpId":req.params.roomId});
+    return res.json(chats);
+  }catch(e){
+    return res.status(500).send({error:e.message});
+  }
+});
