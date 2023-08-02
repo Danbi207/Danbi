@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTier, setCheckedRgb, setUnchedkedRgb,setName, setDewPoint } from '../../store/Slice/JandiSlice';
 
 import Header from '../Common/Header/Header.jsx';
 import Footer from '../Common/Footer/Footer.jsx';
@@ -162,9 +164,47 @@ const data =
   }
 }
 
+const pickdata = {
+  item : {
+    name : "핑크소세지",
+    uncheckedRgb : "#FFACAC",
+    checkedRgb : "#FFEEBB",
+    tier : "legandary"
+  },
+  dew_point : 123456,
+}
+
+
+
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handlePickModal = (pickdata) => {
+    setPickModalOpen(true);
+    dispatch(setName(pickdata.item.name));
+    dispatch(setTier(pickdata.item.tier));
+    dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+    dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+    dispatch(setDewPoint(pickdata.dew_point));
+  }
+
+  const pickdata = {
+    item : {
+			name : "핑크소세지",
+			uncheckedRgb : "#FFACAC",
+			checkedRgb : "#FFEEBB",
+			tier : "legandary"
+		},
+		dew_point : 123456,
+  }
+
+
+  const cur_dew = useSelector((state) => state.Jandi.dew_point);
+
+
   return (
       <ProfileWrap>
         <Header />
@@ -172,9 +212,9 @@ const Profile = () => {
           <UserInfo />
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
           <JandiWrap>
-            <Jandi point={data.dew_point} help_log={data.help_log} setPickModalOpen={setPickModalOpen} />
+            <Jandi point={data.dew_point} help_log={data.help_log} setPickModalOpen={setPickModalOpen} pickButton={handlePickModal} />
           </JandiWrap>
-          {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
+          {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} pickButton={handlePickModal} />}
           <GuestBook />
           {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
         </Wrap>
@@ -202,5 +242,16 @@ const Wrap = styled.div`
 
 
 const JandiWrap = styled.div``;
+
+const PickWrap = styled.div`
+  
+`;
+
+const Dew = styled.div`
+  
+`
+
+const PickBtn = styled.button`
+`
 
 export default Profile;

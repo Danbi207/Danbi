@@ -1,9 +1,8 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components';
-import { setTier, setCheckedRgb, setUnchedkedRgb,setName, setDewPoint } from '../../store/Slice/JandiSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const Jandi = ({help_log, setPickModalOpen, point}) => {  
+const Jandi = ({help_log, setPickModalOpen, point, pickButton}) => {  
   const colCnt = 8;
   const rowCnt = 2;
   
@@ -21,11 +20,8 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
   const [selectIdx,setSelectIdx] = useState(-1);
   const [ShowOverLay, setShowOverLay] = useState(overLay);
   
-  const cur_dew = useSelector((state) => state.Jandi.dew_point);
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
-  const cur_Name = useSelector((state) => state.Jandi.item.name);
-  const cur_Tier = useSelector((state) => state.Jandi.item.tier);
 
   const onGross = (e,idx)=>{
     if(selectIdx !== idx){
@@ -72,27 +68,6 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
     })
   }
 
-  const dispatch = useDispatch();
-
-  const pickdata = {
-    item : {
-			name : "핑크소세지",
-			uncheckedRgb : "#FFACAC",
-			checkedRgb : "#FFEEBB",
-			tier : "legandary"
-		},
-		dew_point : 123456,
-  }
-
-  const handlePickModal = (pickdata) => {
-    setPickModalOpen(true);
-    dispatch(setName(pickdata.item.name));
-    dispatch(setTier(pickdata.item.tier));
-    dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
-    dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-    dispatch(setDewPoint(pickdata.dew_point));
-  }
-
   return (
     <ChartWrap>
       <ChartHeader>나의 도움을 기록해주세요</ChartHeader>
@@ -108,7 +83,7 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
         </DirectionBtns>
         <Wrap>
             <Dew>{point}Dew</Dew>
-            <PickBtn onClick={() => handlePickModal(pickdata)}>뽑기</PickBtn>
+            <PickBtn onClick={pickButton}>뽑기</PickBtn>
         </Wrap>
       </Btns>
       {ShowOverLay.show && 

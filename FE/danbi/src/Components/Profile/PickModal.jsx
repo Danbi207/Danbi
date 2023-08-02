@@ -5,7 +5,7 @@ import PickAnimation from './data.json';
 import { useSelector } from 'react-redux';
 
 
-const PickModal = ({setPickModalOpen}) => {
+const PickModal = ({setPickModalOpen, pickButton}) => {
     const [ShowAnimation, setShowAnimation] = useState(true);    
 
     useEffect(() => {
@@ -34,12 +34,27 @@ const PickModal = ({setPickModalOpen}) => {
                 </AnimationWrap>
             ) : (
                 <Wrap>
+                    <Header>
+                        <Title>사용결과</Title>
+                        <CloseBtn onClick={CloseModal}>X</CloseBtn>
+                    </Header>
                     <ContentWrap>
-                        <Content>{cur_CheckedColor}{cur_Name}{cur_UncheckedColor}{cur_dew}{cur_Tier}</Content>
-                        <Btn>
-                        <AcceptBtn onClick={CloseModal}>확인</AcceptBtn>
-                        </Btn>
+                        <Tier>
+                            {cur_Tier}
+                        </Tier>
+                        <Example>
+                            <Rec $color={props => props.theme.colors.titleColor} />
+                            <Rec $color={cur_UncheckedColor} />
+                            <Rec $color={cur_CheckedColor} />
+                        </Example>
+                        <Text>그래프 색상이 <ColorName>{cur_Name}</ColorName>(으)로 바뀌었어요!</Text>
                     </ContentWrap>
+                    <Footer>
+                        <AcceptBtn onClick={pickButton}>한 번 더 사용하기</AcceptBtn>
+                        <Point>
+                            {cur_dew}Dew
+                        </Point>
+                    </Footer>
                 </Wrap>
             )}
         </PickModalWrap>
@@ -72,51 +87,88 @@ const PickModalWrap = styled.div`
 `
 
 const Wrap = styled.div`
-    width: 90%;
-    height: 7.5rem;
+    width: 21rem;
+    height: 11.25rem;
     background-color: ${props => props.theme.colors.bgColor};
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border-radius: 5px;
     animation: ${fadeIn} 0.25s linear;
 `
 
 const ContentWrap = styled.div`
     width: 100%;
+    height: 5rem;
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: space-between;
     flex-direction: column;
-`
-
-const Content = styled.div`
-    background-color: gray;
-    width: 85%;
-    height: 4.75rem;
-    text-align: center;
-    border-radius: 5px;
-`
-
-const Btn = styled.div`
-    width: 85%;
-    display: flex;
-    justify-content: end;
+    margin: 0.5rem 0;
 `
 
 const AcceptBtn = styled.button`
-    width: 3.5rem;
-    height: 1rem;
-    border-radius: 10px;
+    width: 5.5rem;
+    height: 1.5rem;
+    border-radius: 5px;
     background-color: #6161ff;
     margin-top: 0.25rem;
+    font-size: 12px;
 `
 
 const AnimationWrap = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.colors.bgColor};
+`
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem;
+`
+
+const Title = styled.div`
+
+`
+
+const CloseBtn = styled.button`
+`
+
+const Footer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
+const Point = styled.div`
+    font-size: 7px;
+    margin-top: 0.25rem;
+`
+
+const Tier = styled.div`
+    
+`
+
+const Example = styled.div`
+    width: 6.75rem;
+    display: flex;
+    justify-content: space-between;
+`
+
+const Rec = styled.div`
+    background-color: ${props => props.$color};
+    width: 1rem;
+    height: 1rem;
+    border-radius: 3px;
+`
+
+const Text = styled.div`
+    
+`
+
+const ColorName = styled.span`
+    font-weight: bold; 
 `
 
 export default PickModal
