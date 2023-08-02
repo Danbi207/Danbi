@@ -17,6 +17,8 @@ const Jandi = ({help_log, setPickModalOpen, point}) => {
     idx: -1,
   };
 
+  const [site, setSite] = useState(0);
+
   const [page,setPage]=useState(0);
   const [selectIdx,setSelectIdx] = useState(-1);
   const [ShowOverLay, setShowOverLay] = useState(overLay);
