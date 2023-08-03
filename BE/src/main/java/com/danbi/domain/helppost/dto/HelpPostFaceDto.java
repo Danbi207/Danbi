@@ -20,5 +20,5 @@ public class HelpPostFaceDto {
     private String meetAddr;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Long accumulateDewPoint;
+    private int accuseStack;
 }

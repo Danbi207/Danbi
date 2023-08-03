@@ -37,7 +37,4 @@ public class PositionService {
         positions.updateHelpPost(helpPost);
     }
 
-    public Positions searchPositions(HelpPost helpPost) {
-        return positionRepository.findByHelpPost(helpPost).get();
-    }
 }
