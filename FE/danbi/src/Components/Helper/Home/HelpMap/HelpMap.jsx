@@ -32,6 +32,7 @@ const HelpMap = (props) => {
   },[]);
 
   useEffect(()=>{
+    console.log(kakao);
     //DO : 카카오 맵 초기설정
     const mapOption = { 
       center: new kakao.maps.LatLng(props.position.coords.latitude,props.position.coords.longitude), // 지도의 중심좌표
