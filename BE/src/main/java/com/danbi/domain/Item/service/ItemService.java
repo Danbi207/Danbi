@@ -27,15 +27,45 @@ public class ItemService {
         Color color;
         Ranking ranking;
 
-        if (randomValue < 0.1) {
+        if (randomValue < 0.05) {
+            color = Color.PINK;
+            ranking = Ranking.LEGENDARY;
+        } else if (randomValue < 0.1) {
+            color = Color.DIAMOND;
+            ranking = Ranking.EPIC;
+        } else if (randomValue < 0.15) {
+            color = Color.PLATINUM;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.2) {
+            color = Color.GOLD;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.25) {
+            color = Color.SILVER;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.3) {
+            color = Color.BRONZE;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.4) {
+            color = Color.RED;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.5) {
+            color = Color.ORANGE;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.6) {
             color = Color.YELLOW;
-            ranking = Ranking.PLATINUM;
-        } else if (randomValue < 0.4) {
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.7) {
             color = Color.GREEN;
-            ranking = Ranking.GOLD;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.8) {
+            color = Color.BLUE;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.9) {
+            color = Color.NAVY;
+            ranking = Ranking.RARE;
         } else {
-            color = Color.BLACK;
-            ranking = Ranking.SILVER;
+            color = Color.PURPLE;
+            ranking = Ranking.RARE;
         }
 
         return ItemVo.builder()

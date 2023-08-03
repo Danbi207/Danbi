@@ -14,5 +14,7 @@ import lombok.NoArgsConstructor;
 public class ProfileItemResponseDto {
 
     private String ranking;
-    private String color;
+    private String name;
+    private String checkedRgb;
+    private String uncheckedRgb;
 }
