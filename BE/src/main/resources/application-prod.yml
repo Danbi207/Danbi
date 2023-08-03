@@ -72,7 +72,7 @@ token:
 cloud:
   aws:
     s3:
-      bucket: danbi
+      bucket: danbi-help
     stack.auto: false
     region.static: ap-northeast-2
     credentials:
