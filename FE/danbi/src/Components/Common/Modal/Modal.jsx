@@ -21,6 +21,7 @@ const BackgroundWrap = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: 5;
-  background-color: rgba(0,0,0,0.3);
+  background-color:${props=>props.theme.colors.titleColor};
+  opacity: 0.4;
 `
 export default Modal
