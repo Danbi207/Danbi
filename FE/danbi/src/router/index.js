@@ -10,7 +10,6 @@ import Detail from "../Components/Detail/Detail.jsx";
 import Friend from '../Components/Friends/Friend.jsx';
 import IpMap from "../Components/IP/Map/IpMap.jsx";
 
-
 const routes = [
   {
     path: "/",

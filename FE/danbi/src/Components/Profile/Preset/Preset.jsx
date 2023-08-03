@@ -1,101 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import PresetDetail from './PresetDetail';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+import PresetItem from './PresetItem.jsx';
 
-const preset_list = [
-  {
-    preset_id: 1,
-    title: '1asdf',
-    content: '123saf',
-    sequence: 0,
-  },
-  {
-    preset_id: 2,
-    title: '김민규는 쓰레기입니다.',
-    content: '끼잉 낑.',
-    sequence: 1,
-  },
-];
-
-const Preset = () => {
-  const [mouseDownClientX, setMouseDownClientX] = useState(0);
-  const [mouseDownClientY, setMouseDownClientY] = useState(0);
-  const [mouseUpClientX, setMouseUpClientX] = useState(0);
-  const [mouseUpClientY, setMouseUpClientY] = useState(0);
-
-  const onMouseDown = (e) => {
-    setMouseDownClientX(e.clientX);
-    setMouseDownClientY(e.clientY);
-  };
-  const onMouseUp = (e) => {
-    setMouseUpClientX(e.clientX);
-    setMouseUpClientY(e.clientY);
-  };
-  useEffect(() => {
-    const dragSpaceX = Math.abs(mouseDownClientX - mouseUpClientX);
-    const dragSpaceY = Math.abs(mouseDownClientY - mouseUpClientY);
-    const vector = dragSpaceX / dragSpaceY;
-
-    if (mouseDownClientX !== 0 && dragSpaceX > 100 && vector > 2) {
-      if (mouseUpClientY < mouseDownClientY) {
-        console.log('dragging');
-      } else if (mouseUpClientY > mouseDownClientY) {
-        console.log('dragging');
-      }
-    }
-  }, [mouseUpClientX, mouseDownClientY, mouseUpClientX, mouseUpClientY]);
-
-  const [touchedX, setTouchedX] = useState(0);
-  const [touchedY, setTouchedY] = useState(0);
-
-  const onTouchStart = (e) => {
-    setTouchedX(e.changedTouches[0].pageX);
-    setTouchedY(e.changedTouches[0].pageY);
-  };
-
-  const onTouchEnd = (e) => {
-    const distanceX = touchedX - e.changedTouches[0].pageX;
-    const distanceY = touchedY - e.changedTouches[0].pageY;
-    const vector = Math.abs(distanceX / distanceY);
-
-    if (distanceY > 30 && vector > 2) {
-      console.log('touching');
-    } else if (distanceY < -30 && vector > 2) {
-      console.log('touching');
-    }
-  };
-
+const Preset = ({preset_list, setPresetList}) => {
+  console.log(preset_list);
   const [OpenIndex, setOpenIndex] = useState(-1);
   const showDetail = (index) => {
     setOpenIndex(index);
   };
+  const handleChange = (result) => {
+    if (!result.destination) return;
+    const items = [...preset_list];
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setPresetList(items);
+  };
+
   return (
-    <PresetWrap className="container">
-      {preset_list.map((value, index) => (
-        <Wrap
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
-          onTouchEnd={onTouchEnd}
-          onTouchStart={onTouchStart}
-        >
-          <ElementBtn
-            onClick={() => {
-              showDetail(index);
-            }}
-            key={index}
-          >
-            <PreSetElement className="el">
-              {value.content ? value.content : `프리셋 ${index + 1}`}
-            </PreSetElement>
-          </ElementBtn>
-          {OpenIndex === index && (
-            <PresetDetail content={preset_list[index].content} showDetail={showDetail} />
+    <DragDropContext onDragEnd={handleChange}>
+      <PresetWrap className="container">
+        <Droppable droppableId="box">
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {preset_list.map((value, index) => (
+                <Draggable draggableId={index.toString()} index={index}>
+                  {(provided, snapshot) => (
+                    <Wrap
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <PresetItem value={value} index={index} OpenIndex={OpenIndex} showDetail={showDetail} />
+                    </Wrap>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
           )}
-        </Wrap>
-      ))}
-    </PresetWrap>
+        </Droppable>
+      </PresetWrap>
+    </DragDropContext>
   );
-};
+}
 
 const PresetWrap = styled.div`
   width: 19rem;
@@ -103,21 +51,12 @@ const PresetWrap = styled.div`
 `;
 
 const Wrap = styled.div`
+width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: end;
   height: auto;
   margin-bottom: 0.5rem;
-`;
-
-const ElementBtn = styled.button`
-  border: 1px solid white;
-  border-radius: 5px;
-  margin-bottom: 0.25rem;
-`;
-
-const PreSetElement = styled.div`
-  width: 100%;
-  height: 100%;
 `;
 
 export default Preset;
