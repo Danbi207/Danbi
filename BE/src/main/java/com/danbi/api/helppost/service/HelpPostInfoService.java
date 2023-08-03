@@ -60,7 +60,7 @@ public class HelpPostInfoService {
         Positions savedPositions = positionService.create(positions);
 
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member, savedPositions);
-        HelpPost newHelpPost = helpPostService.create(helpPost);
+        HelpPost newHelpPost = helpPostService.create(helpPost, memberId);
 
         positionService.updateHelpPost(newHelpPost,savedPositions);
 

@@ -51,6 +51,7 @@ public enum ErrorCode {
     // HelpPost
     HELPPOST_MISMATCH_MEMBER(HttpStatus.BAD_REQUEST,"HP-001", "해당 도움 요청 게시글의 작성자와 유저가 동일하지 않습니다"),
     HELPPOST_MISMATCH_TIME(HttpStatus.BAD_REQUEST,"HP-002","도움 요청 게시글의 시간설정이 잘못 되었습니다."),
+    HELPPOST_MISMATCH_START_END_TIME(HttpStatus.BAD_REQUEST,"HP-003","이미 해당 시간에 도움요청이 등록되어 있습니다."),
 
     // Help
     HELP_MISMATCH_IP(HttpStatus.BAD_REQUEST,"H-001","해당 도움의 IP와 유저가 동일하지 않습니다."),
