@@ -47,8 +47,8 @@ const Tap = (props) => {
   return (
     <TapWrap>
       <TapBtn $mode={"contact"===props.mode} onClick={setContact}>대면 도움</TapBtn>
-      <TapBtn $mode={"untact"===props.mode} onClick={setUntact}>비대면 도움</TapBtn>
       <TapBtn $mode={"map"===props.mode} onClick={setMap}>지도</TapBtn>
+      <TapBtn $mode={"untact"===props.mode} onClick={setUntact}>비대면 도움</TapBtn>
     </TapWrap>
   )
 }
