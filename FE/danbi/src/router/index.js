@@ -54,6 +54,6 @@ const routes = [
   {
     path: '/friend',
     component : Friend
-  }
+  },
 ];
 export default routes;

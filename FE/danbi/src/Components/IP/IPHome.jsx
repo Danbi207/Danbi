@@ -5,10 +5,8 @@ import styled from 'styled-components'
 
 import Header from "../Common/Header/Header";
 import Footer from "../Common/Footer/Footer";
-
-import Calendar from "react-calendar";
-import 'react-calendar/dist/Calendar.css'; 
-
+import Calender from "./Calender/Calender";
+import Calender3 from "./Calender/Calender3";
 
 const IPHome = () => {
   const navigate = useNavigate();
@@ -17,9 +15,10 @@ const IPHome = () => {
     
     <IpHomeWrap>
       <Header/>
-      <Wrap>
-        <Calendar/>
-      </Wrap>
+        <Wrap>
+          <Calender/>
+          {/* <Calender3></Calender3> */}
+        </Wrap>
       <RequestBTN onClick={()=>{navigate('/iprequest')}}>도움 요청하기</RequestBTN>
       <Footer/>
     </IpHomeWrap>
@@ -37,16 +36,13 @@ const IpHomeWrap = styled.div`
 
 const Wrap = styled.div `
   width: 100%;
-  height: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 60%;;
 `
 
 const RequestBTN = styled.button`
   position: absolute;
   left : calc(( 100% - 30rem )/2);
-  bottom: 10rem;
+  bottom: 5rem;
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
@@ -57,6 +53,7 @@ const RequestBTN = styled.button`
     width: 20rem;
     height: 5rem;
     left : calc(( 100% - 20rem )/2);
+    bottom: 7rem;
   }
 `
 

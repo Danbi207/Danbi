@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 
 import SDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import './StartTime.css'
 
 import { getHours, getMinutes } from 'date-fns';
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { ko } from "date-fns/esm/locale";
-
 
 const StartTime = () => {
   const reservetype = useSelector(state => state.ip.reservetype)
@@ -97,7 +97,7 @@ const StartTime = () => {
             timeCaption="시작 시간"
             dateFormat="MM월 dd일 aa h:mm 시작"
             placeholderText="시작 시간"
-            className="mt-5"
+            className="date-picker-calendar"
             filterTime={filterPassedTime}
             filterDate={filterPassedDate}
             /></TimeWrap>   
@@ -119,7 +119,7 @@ const StartTime = () => {
             timeCaption="종료 시간"
             dateFormat="aa h:mm 종료"
             placeholderText="종료 시간"
-            className="mt-3"
+            className="date-picker-calendar"
             filterTime={filterPassedTime}
             /></TimeWrap>
             : null 

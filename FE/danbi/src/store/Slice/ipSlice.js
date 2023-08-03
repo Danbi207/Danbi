@@ -18,7 +18,7 @@ export const ipSlice = createSlice({
     tabmode : 'meet',
     reservetype : '',
     meetType : '',
-    category : ['이동', '기타'],
+    category : 'NONE',
     content : '',
     openIndex : 0,
     ischecked : false,
@@ -42,6 +42,9 @@ export const ipSlice = createSlice({
     setOpenIndex : (state, action) => {
       state.openIndex = action.payload;
     },
+    setCategory : (state, action) => {
+      state.category = action.payload
+    },
     setMeetLongitude : (state, action) => {
       state.position.meet_longitude = action.payload;
     },
@@ -60,11 +63,17 @@ export const ipSlice = createSlice({
     setDestAddr : (state, action) => {
       state.position.dest_addr = action.payload;
     },
+    setCurLongitude : (state, action) => {
+      state.position.cur_longitude = action.payload;
+    },
+    setCurLatitude : (state, action) => {
+      state.position.cur_latitude = action.payload;
+    },
   },
 });
 
-export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex,
-               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr,
+export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex, setCategory,
+               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude
               } = ipSlice.actions;
 
 export default ipSlice.reducer;

@@ -23,13 +23,13 @@ const TimeTpye = () => {
 				"meet_latitude" : "128.3444",
 				"meet_addr" : "",
 			},
-			"category" : "etc",
-			"face_flag": ip.meetType === 'meet',
+      "category" : "ETC",
+      "caution" : "qweqweqwe", // 주의 사항(content)
+			"face_flag": ip.meetType === 'meet', // 대면
 			"reservation_flag": ip.meetType === 'reserve', // 예약
-			"content": ip.content,
+			"content": ip.content, // 도움 상세정보
 			"start_time" : "2023-01-01 12:00",
 			"end_time" : "2023-01-01 13:00",
-			"total_time" : 60
   }
 
   const dispatch = useDispatch();
