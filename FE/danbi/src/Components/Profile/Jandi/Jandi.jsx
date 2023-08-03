@@ -49,28 +49,27 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
     const res = [];
     for (
       let i = page * colCnt * rowCnt;
-      i < (page + 1) * colCnt * rowCnt;
+      i < (page + 1) * colCnt * rowCnt && i < help_log.length;
       i++
     ) {
-      if (i < help_log.length) {
-        res.push(
-          <GrossItem
-            $defaultIdx={i}
-            $selectIdx={selectIdx}
-            $show={ShowOverLay}
-            key={i}
-            $checkColor={cur_CheckedColor}
-            $uncheckColor={cur_UncheckedColor}
-            onClick={(e) => onGross(e, i)}
-          ></GrossItem>
-        );
-      } else {
-        res.push(<EmptyItem key={i}></EmptyItem>);
-      }
+      res.push(
+        <GrossItem
+          $defaultIdx={i}
+          $selectIdx={selectIdx}
+          $show={ShowOverLay}
+          key={i}
+          $checkColor={cur_CheckedColor}
+          $uncheckColor={cur_UncheckedColor}
+          onClick={(e) => onGross(e, i)}
+        ></GrossItem>
+      );
+    }
+
+    for (let i = 0; i < (page + 1) * colCnt * rowCnt - page * colCnt * rowCnt; i++) {
+      res.push(<EmptyItem key={(page + 1) * colCnt * rowCnt + i + 1}></EmptyItem>);
     }
     return res;
   }, [page, help_log, selectIdx, cur_CheckedColor, cur_UncheckedColor]);
-  
 
   const prevGross = () => {
     if (page !== 0) setPage(page - 1);
@@ -101,7 +100,6 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
     dispatch(setDewPoint(pickdata.dew_point));
   };
 
-  // axios 요청 후 받는 데이터
   const pickdata = {
     item: {
       name: '핑크소세지',
