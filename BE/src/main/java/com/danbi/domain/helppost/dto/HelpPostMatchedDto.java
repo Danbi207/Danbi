@@ -1,6 +1,7 @@
 package com.danbi.domain.helppost.dto;
 
 import com.danbi.domain.helppost.constant.Category;
+import com.danbi.domain.helppost.constant.State;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 public class HelpPostMatchedDto {
 
     private Long helpPostId;
+    private State state;
 
     private Long ipId;
     private String ipName;

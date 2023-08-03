@@ -10,6 +10,7 @@ import com.danbi.domain.helppost.repository.HelpPostRepository;
 import com.danbi.domain.helppost.repository.PositionRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.EntityNotFoundException;
 import com.danbi.global.error.exception.MisMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,13 +37,13 @@ public class HelpPostService {
         return helpPostRepository.save(helpPost);
     }
 
-    public void validateHelpPostTime(HelpPost helpPost) {
+    private void validateHelpPostTime(HelpPost helpPost) {
         if (helpPost.getEndTime().isBefore(helpPost.getStartTime())) {
             throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_TIME);
         }
     }
 
-    public void validateDuplicateHelpPost(HelpPost helpPost, Long memberId) {
+    private void validateDuplicateHelpPost(HelpPost helpPost, Long memberId) {
         List<HelpPost> helpPosts = helpPostRepository.findHelpPostsByBetweenTime(helpPost.getStartTime(), helpPost.getEndTime(), memberId);
         if (helpPosts.size() > 0) {
             throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_START_END_TIME);
@@ -78,15 +79,6 @@ public class HelpPostService {
         }
     }
 
-    public HelpPost getHelpPost(Long helpPostId) {
-        return helpPostRepository.findById(helpPostId).get();
-    }
-
-    @Transactional(readOnly = true)
-    public List<HelpPost> searchMyHelp(Member member) {
-        List<HelpPost> myHelpList = helpPostRepository.findAllByMember(member);
-        return myHelpList;
-    }
 
     // querydsl 사용
     @Transactional(readOnly = true)
@@ -106,7 +98,22 @@ public class HelpPostService {
 
     @Transactional(readOnly = true)
     public HelpPostMatchedDto searchMatchedDetail(Long HelpPostId) {
-        return helpPostRepository.searchMatchedDetail(HelpPostId);
+        HelpPostMatchedDto matchedHelpPost = helpPostRepository.searchMatchedDetail(HelpPostId);
+        validateIsNullHelpPost(matchedHelpPost);
+        validateIsMatchedHelpPost(matchedHelpPost);
+        return matchedHelpPost;
+    }
+
+    private void validateIsMatchedHelpPost(HelpPostMatchedDto matchedHelpPost) {
+        if (!matchedHelpPost.getState().name().equals(State.MATCHED.name())) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_ISMATCHED);
+        }
+    }
+
+    private void validateIsNullHelpPost(HelpPostMatchedDto matchedHelpPost) {
+        if (matchedHelpPost==null) {
+            throw new EntityNotFoundException(ErrorCode.HELPPOST_NOT_EXISTS);
+        }
     }
 
     @Transactional(readOnly = true)

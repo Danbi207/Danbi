@@ -72,7 +72,6 @@ public class HelpPostInfoService {
     // 도움 요청 삭제
     public void deleteHelpPostInfo(Long helpPostId, Long memberId) {
 
-        HelpPost helpPost = helpPostService.getHelpPost(helpPostId);
         helpPostService.delete(helpPostId,memberId);
 
 

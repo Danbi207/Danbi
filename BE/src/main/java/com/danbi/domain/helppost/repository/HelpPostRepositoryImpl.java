@@ -118,7 +118,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
         QPoint helperPoint = new QPoint("helperPoint");
 
         return jpaQueryFactory.select(Projections.constructor(HelpPostMatchedDto.class,
-                        helpPost.id,
+                        helpPost.id, helpPost.state,
                         ipMember.id, ipMember.name, ipMember.profileUrl,
                         ipPoint.accumulateDewPoint, ipMember.accuseStack,
 
