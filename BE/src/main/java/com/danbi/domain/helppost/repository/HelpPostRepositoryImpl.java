@@ -40,13 +40,12 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.longitude, positions.latitude,
                         helpPost.startTime, helpPost.endTime, helpPost.faceFlag,
-                        point.accumulateDewPoint
+                        member.accuseStack
                 ))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
                 .leftJoin(member.profile, profile)
-                .leftJoin(profile.point, point)
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
@@ -60,12 +59,11 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
         return jpaQueryFactory.select(Projections.constructor(HelpPostFaceDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.meetLongitude, positions.meetLatitude, positions.meetAddr,
-                        helpPost.startTime, helpPost.endTime, point.accumulateDewPoint))
+                        helpPost.startTime, helpPost.endTime, member.accuseStack))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
                 .leftJoin(member.profile, profile)
-                .leftJoin(profile.point, point)
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),

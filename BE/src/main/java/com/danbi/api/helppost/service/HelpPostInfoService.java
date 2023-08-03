@@ -91,23 +91,6 @@ public class HelpPostInfoService {
         return HelpPostResponseDto.of(updatedHelpPost, savedPositions);
     }
 
-//    public MyHelpPostDto searchMyHelpPost(Long memberId) {
-//
-//        Member member = memberService.findByMemberId(memberId);
-//
-//        List<HelpPost> helpPosts = helpPostService.searchMyHelp(member);
-//        List<HelpPostListDto> helpList = new ArrayList<>();
-//        for (HelpPost helpPost : helpPosts) {
-//            HelpPostListDto post = HelpPostListDto.builder()
-//                    .helpPostId(helpPost.getId())
-//                    .content(helpPost.getContent())
-//                    .startTime(helpPost.getStartTime())
-//                    .endTime(helpPost.getEndTime()).build();
-//            helpList.add(post);
-//        }
-//        return MyHelpPostDto.builder()
-//                .helpList(helpList).build();
-//    }
 
     public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
         List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
@@ -125,7 +108,7 @@ public class HelpPostInfoService {
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
                     .faceFlag(helpPost.isFaceFlag())
-                    .accumulateDewPoint(helpPost.getAccumulateDewPoint())
+                    .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
         }
@@ -151,7 +134,7 @@ public class HelpPostInfoService {
                     .caution(helpPost.getCaution())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
-                    .accumulateDewPoint(helpPost.getAccumulateDewPoint())
+                    .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
         }

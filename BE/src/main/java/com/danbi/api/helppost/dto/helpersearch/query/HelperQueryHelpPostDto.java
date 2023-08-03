@@ -30,7 +30,7 @@ public class HelperQueryHelpPostDto {
 
     private boolean faceFlag;
 
-    private Long accumulateDewPoint;
+    private int accuseStack;
 
     private boolean friendFlag;
 

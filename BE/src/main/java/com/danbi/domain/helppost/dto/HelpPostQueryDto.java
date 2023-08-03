@@ -25,5 +25,5 @@ public class HelpPostQueryDto {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean faceFlag;
-    private Long accumulateDewPoint;
+    private int accuseStack;
 }
