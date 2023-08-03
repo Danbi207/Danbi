@@ -17,6 +17,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -56,7 +57,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     public List<HelpPostFaceDto> searchFace(String longitude, String latitude) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostFaceDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
-                        positions.longitude, positions.latitude, helpPost.startTime, helpPost.endTime, point.accumulateDewPoint))
+                        positions.meetLongitude, positions.meetLatitude, positions.meetAddr,
+                        helpPost.startTime, helpPost.endTime, point.accumulateDewPoint))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
@@ -143,5 +145,14 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         helpPost.state.eq(State.MATCHED)
                 )
                 .fetchOne();
+    }
+
+    @Override
+    public List<HelpPost> findHelpPostsByBetweenTime(LocalDateTime startTime, LocalDateTime endTime, Long memberId) {
+        return jpaQueryFactory.selectFrom(helpPost)
+                .where(helpPost.startTime.between(startTime,endTime)
+                        .or(helpPost.endTime.between(startTime,endTime)),
+                        helpPost.member.id.eq(memberId))
+                .fetch();
     }
 }

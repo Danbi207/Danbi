@@ -40,7 +40,8 @@ public class HelperFaceHelpPostDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Position {
-        private String latitude;
-        private String longitude;
+        private String meetLatitude;
+        private String meetLongitude;
+        private String meetAddr;
     }
 }

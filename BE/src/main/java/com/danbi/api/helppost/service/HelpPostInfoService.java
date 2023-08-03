@@ -51,10 +51,6 @@ public class HelpPostInfoService {
     private final FriendInfoService friendInfoService;
     private final PositionService positionService;
 
-    private final ProfileService profileService;
-    private final PointService pointService;
-    private final AccuseService accuseService;
-
     // 도움 요청 게시글, 도움 생성
     public HelpPostResponseDto getHelpPostInfo(Long memberId, HelpPostRequestDto helpPostRequestDto) {
 
@@ -64,7 +60,7 @@ public class HelpPostInfoService {
         Positions savedPositions = positionService.create(positions);
 
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member, savedPositions);
-        HelpPost newHelpPost = helpPostService.create(helpPost);
+        HelpPost newHelpPost = helpPostService.create(helpPost, memberId);
 
         positionService.updateHelpPost(newHelpPost,savedPositions);
 
@@ -120,116 +116,6 @@ public class HelpPostInfoService {
                 .helpList(helpList).build();
     }
 
-    public HelperResponseDto searchHelperHelpPost(Long memberId) { // qeurydsl 사용 전
-        List<HelpPost> helpPosts = helpPostService.searchAllList();
-        List<HelperHelpPostListDto> helpList = new ArrayList<>();
-        for (HelpPost helpPost : helpPosts) {
-
-            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getMember().getId());
-
-            HelperHelpPostListDto post = HelperHelpPostListDto.builder()
-                    .helpPostId(helpPost.getId())
-                    .ipId(helpPost.getMember().getId())
-                    .faceFlag(helpPost.isFaceFlag())
-                    .reservationFlag(helpPost.isReservationFlag())
-                    .content(helpPost.getContent())
-                    .startTime(helpPost.getStartTime())
-                    .endTime(helpPost.getEndTime())
-                    .friendFlag(isFriend).build();
-            helpList.add(post);
-        }
-        return HelperResponseDto.builder()
-                .helpList(helpList).build();
-    }
-
-    public DetailHelpPostDto searchDetailHelpPost(Long helpPostId, Long memberId) { // qeurydsl 사용 전
-        HelpPost helpPost = helpPostService.detailHelpPost(helpPostId);
-
-        boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getMember().getId());
-
-        Profile profileByMember = profileService.getProfileByMember(helpPost.getMember());
-        Point accumulatePoint = pointService.getAccumulatePoint(profileByMember);
-        List<Accuse> accuses = accuseService.myAccuseStack(helpPost.getMember());
-        Positions positions = positionService.searchPositions(helpPost);
-
-        DetailHelpPostDto detail = DetailHelpPostDto.builder()
-                .helpPostId(helpPostId)
-                .ip(IpDto.builder()
-                        .ipId(helpPost.getMember().getId())
-                        .name(helpPost.getMember().getName())
-                        .accumulateDewPoint(accumulatePoint.getAccumulateDewPoint())
-                        .accusePoint(accuses.size()).build())
-                .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
-                .content(helpPost.getContent())
-                .startTime(helpPost.getStartTime())
-                .endTime(helpPost.getEndTime())
-                .friendFlag(isFriend)
-                .caution(helpPost.getCaution())
-                .category(helpPost.getCategory())
-                .position(DetailHelpPostDto.Position.builder()
-                        .latitude(positions.getLatitude())
-                        .longitude(positions.getLongitude())
-                        .destLongitude(positions.getDestLongitude())
-                        .destLatitude(positions.getDestLatitude())
-                        .meetLongitude(positions.getMeetLongitude())
-                        .meetLatitude(positions.getMeetLatitude())
-                        .addr(positions.getAddr())
-                        .destAddr(positions.getDestAddr())
-                        .meetAddr(positions.getMeetAddr()).build()).build();
-        return detail;
-    }
-
-    public DetailMatchedHelpPostDto searchDetailMatchedHelpPost(Long helpPostId, Long memberId) { // qeurydsl 사용 전
-        HelpPost helpPost = helpPostService.detailHelpPost(helpPostId);
-
-        boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getMember().getId());
-
-        Profile profileByMember = profileService.getProfileByMember(helpPost.getMember());
-        Point accumulatePoint = pointService.getAccumulatePoint(profileByMember);
-        List<Accuse> accuses = accuseService.myAccuseStack(helpPost.getMember());
-        Positions positions = positionService.searchPositions(helpPost);
-
-        Help help = helpService.search(helpPost);
-        Profile profileByMemberHelper = profileService.getProfileByMember(help.getHelper());
-        Point accumulatePointHelper = pointService.getAccumulatePoint(profileByMemberHelper);
-        List<Accuse> accusesHelper = accuseService.myAccuseStack(helpPost.getMember());
-
-
-        DetailMatchedHelpPostDto detail = DetailMatchedHelpPostDto.builder()
-                .helpPostId(helpPostId)
-                .ip(IpMatchedDto.builder()
-                        .ipId(helpPost.getMember().getId())
-                        .name(helpPost.getMember().getName())
-                        .accumulateDewPoint(accumulatePoint.getAccumulateDewPoint())
-                        .accusePoint(accuses.size()).build())
-                .helper(HelperMatchedDto.builder()
-                        .helperId(help.getHelper().getId())
-                        .name(help.getHelper().getName())
-                        .accumulateDewPoint(accumulatePointHelper.getAccumulateDewPoint())
-                        .accusePoint(accusesHelper.size()).build())
-                .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
-                .content(helpPost.getContent())
-                .startTime(helpPost.getStartTime())
-                .endTime(helpPost.getEndTime())
-                .caution(helpPost.getCaution())
-                .category(helpPost.getCategory())
-                .position(DetailMatchedHelpPostDto.Position.builder()
-                        .latitude(positions.getLatitude())
-                        .longitude(positions.getLongitude())
-                        .destLongitude(positions.getDestLongitude())
-                        .destLatitude(positions.getDestLatitude())
-                        .meetLongitude(positions.getMeetLongitude())
-                        .meetLatitude(positions.getMeetLatitude())
-                        .addr(positions.getAddr())
-                        .destAddr(positions.getDestAddr())
-                        .meetAddr(positions.getMeetAddr()).build()).build();
-        return detail;
-    }
-
-    // querydsl 사용 후
-
     public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
         List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
         List<HelperQueryHelpPostDto> helpList = new ArrayList<>();
@@ -264,8 +150,9 @@ public class HelpPostInfoService {
                     .helpPostId(helpPost.getHelpPostId())
                     .ipId(helpPost.getIpId())
                     .position(HelperFaceHelpPostDto.Position.builder()
-                            .latitude(helpPost.getLatitude())
-                            .longitude(helpPost.getLongitude()).build())
+                            .meetLatitude(helpPost.getMeetLatitude())
+                            .meetLongitude(helpPost.getMeetLongitude())
+                            .meetAddr(helpPost.getMeetAddr()).build())
                     .name(helpPost.getName())
                     .profileUrl(helpPost.getProfileUrl())
                     .caution(helpPost.getCaution())

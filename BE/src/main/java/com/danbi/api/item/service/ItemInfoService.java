@@ -33,8 +33,10 @@ public class ItemInfoService {
 
         return ItemResponseDto.builder()
                 .item(ItemDto.builder()
-                        .color(item.getColor().getRgb())
-                        .ranking(item.getRanking().getTier()).build())
+                        .ranking(item.getRanking().getTier())
+                        .name(item.getColor().getName())
+                        .checkedRgb(item.getColor().getCheckedRgb())
+                        .uncheckedRgb(item.getColor().getUncheckedRgb()).build())
                 .dewPoint(dewPoint).build();
     }
 }
