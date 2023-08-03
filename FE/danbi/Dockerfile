@@ -1,6 +1,8 @@
-FROM node:alpine
+FROM node:18.17.0-alpine
 WORKDIR /usr/src/app
-COPY ./package* /usr/src/app/
-RUN npm install
 COPY ./ /usr/src/app/
+RUN npm install
+RUn npm run build
+COPY ./ /usr/src/app/
+EXPOSE 3000
 CMD ["npm","run","start"]
