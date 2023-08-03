@@ -1,0 +1,21 @@
+.LeftChatWrap{
+  display : flex;
+}
+.LeftChatWrap > :first-child{
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background-color: #FFEA7E;
+  color: #000;
+}
+
+.RightChatWrap{
+  display : flex;
+  justify-content: flex-end;
+}
+
+.RightChatWrap > :last-child{
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background-color: #D9D9D9;
+  color: #000;
+}

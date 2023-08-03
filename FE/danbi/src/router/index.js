@@ -7,6 +7,7 @@ import IPHome from "../Components/IP/IPHome.jsx";
 import UserSubmit from "../Components/Login/UserSubmit.jsx";
 import IpRequest from "../Components/IP/IpRequest.jsx";
 import Detail from "../Components/Detail/Detail.jsx";
+import MatchedHelp from "../Components/MatchedHelp/MatchedHelp.jsx";
 import Friend from '../Components/Friends/Friend.jsx';
 import IpMap from "../Components/IP/Map/IpMap.jsx";
 
@@ -50,6 +51,10 @@ const routes = [
   {
     path:"help/:role/detail/:helpPostId",
     component : Detail,
+  },
+  {
+    path:"/matchedhelp/:helpPostId",
+    component:MatchedHelp,
   },
   {
     path: '/friend',
