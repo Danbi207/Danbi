@@ -29,14 +29,22 @@ public class HelpPostService {
 
     private final HelpPostRepository helpPostRepository;
 
-    public HelpPost create(HelpPost helpPost) {
+    public HelpPost create(HelpPost helpPost, Long memberId) {
         validateHelpPostTime(helpPost);
+        validateDuplicateHelpPost(helpPost,memberId);
         return helpPostRepository.save(helpPost);
     }
 
     public void validateHelpPostTime(HelpPost helpPost) {
         if (helpPost.getEndTime().isBefore(helpPost.getStartTime())) {
             throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_TIME);
+        }
+    }
+
+    public void validateDuplicateHelpPost(HelpPost helpPost, Long memberId) {
+        List<HelpPost> helpPosts = helpPostRepository.findHelpPostsByBetweenTime(helpPost.getStartTime(), helpPost.getEndTime(), memberId);
+        if (helpPosts.size() > 0) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_START_END_TIME);
         }
     }
 

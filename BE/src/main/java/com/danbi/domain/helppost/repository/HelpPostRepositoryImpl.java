@@ -17,6 +17,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -144,5 +145,14 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         helpPost.state.eq(State.MATCHED)
                 )
                 .fetchOne();
+    }
+
+    @Override
+    public List<HelpPost> findHelpPostsByBetweenTime(LocalDateTime startTime, LocalDateTime endTime, Long memberId) {
+        return jpaQueryFactory.selectFrom(helpPost)
+                .where(helpPost.startTime.between(startTime,endTime)
+                        .or(helpPost.endTime.between(startTime,endTime)),
+                        helpPost.member.id.eq(memberId))
+                .fetch();
     }
 }
