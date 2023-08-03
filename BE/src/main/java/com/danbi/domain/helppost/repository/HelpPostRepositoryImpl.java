@@ -56,7 +56,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     public List<HelpPostFaceDto> searchFace(String longitude, String latitude) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostFaceDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
-                        positions.longitude, positions.latitude, helpPost.startTime, helpPost.endTime, point.accumulateDewPoint))
+                        positions.meetLongitude, positions.meetLatitude, positions.meetAddr,
+                        helpPost.startTime, helpPost.endTime, point.accumulateDewPoint))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)

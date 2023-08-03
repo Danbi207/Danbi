@@ -15,8 +15,9 @@ public class HelpPostFaceDto {
     private String name;
     private String profileUrl;
     private String caution;
-    private String longitude;
-    private String latitude;
+    private String meetLongitude;
+    private String meetLatitude;
+    private String meetAddr;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Long accumulateDewPoint;

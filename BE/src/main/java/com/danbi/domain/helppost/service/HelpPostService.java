@@ -30,7 +30,14 @@ public class HelpPostService {
     private final HelpPostRepository helpPostRepository;
 
     public HelpPost create(HelpPost helpPost) {
+        validateHelpPostTime(helpPost);
         return helpPostRepository.save(helpPost);
+    }
+
+    public void validateHelpPostTime(HelpPost helpPost) {
+        if (helpPost.getEndTime().isBefore(helpPost.getStartTime())) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_TIME);
+        }
     }
 
     public HelpPost update(Long id, HelpPost helpPost, Long memberId) {
