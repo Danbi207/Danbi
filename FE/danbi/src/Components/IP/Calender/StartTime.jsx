@@ -7,12 +7,10 @@ import SDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './StartTime.css'
 
-
 import { getHours, getMinutes } from 'date-fns';
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import { ko } from "date-fns/esm/locale";
-
 
 const StartTime = () => {
   const reservetype = useSelector(state => state.ip.reservetype)
