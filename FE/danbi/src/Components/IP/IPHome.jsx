@@ -12,7 +12,6 @@ const IPHome = () => {
   const navigate = useNavigate();
 
   return (
-    
     <IpHomeWrap>
       <Header/>
         <Wrap>
@@ -36,7 +35,7 @@ const IpHomeWrap = styled.div`
 
 const Wrap = styled.div `
   width: 100%;
-  height: 60%;;
+  height: 50%;;
 `
 
 const RequestBTN = styled.button`

@@ -248,7 +248,7 @@ const BodyRow = styled.div`
 
   &>.col.cell.selected {
     transform: scale(1.02);
-    box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 1.5px 1.5px rgba(104, 104, 104, 1), 0.1;
     border: none;
     background-color: #f3c5b6;
     font-weight: 600;

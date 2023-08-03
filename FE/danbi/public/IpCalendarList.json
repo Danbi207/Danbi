@@ -18,22 +18,22 @@
         {
             "helpPostId": 3,
             "content": "ㅁㄴㅇ",
-            "startTime": "2023-01-01 12:00",
-            "endTime": "2023-01-01 13:00",
+            "startTime": "2023-08-17 12:00",
+            "endTime": "2023-08-17 13:00",
             "state": "COMPLETED" 
         },
         {
             "helpPostId": 4,
             "content": "ㅁㄴㅇ",
-            "startTime": "2023-01-01 12:00",
-            "endTime": "2023-01-01 13:00",
+            "startTime": "2023-08-21 12:00",
+            "endTime": "2023-08-21 13:00",
             "state": "ACTIVATE"
         },
         {
             "helpPostId": 5,
             "content": "ㅁㄴㅇ",
-            "startTime": "2023-01-01 11:00",
-            "endTime": "2023-01-01 11:59",
+            "startTime": "2023-09-01 19:00",
+            "endTime": "2023-01-01 20:30",
             "state": "MATCHED" 
         }
     ]

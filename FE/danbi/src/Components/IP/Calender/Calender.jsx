@@ -1,43 +1,38 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-const week = ["일","월","화","수","목","금","토"];
-const Calendar = () => {
-  const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장하기
-  const [month,setMonth] = useState((new Date()).getMonth()); // 달 저장
-  const [help,setHelpData] = useState({});  // help 정보 저장
+import { Icon } from '@iconify/react';
 
-  const getWeekItems = () => {
-    const res = [];
-    for(let i = 0; i < 7; i++){//한 주 가져오기
-      res.push(<CalenderItem key={week[i]}>{week[i]}</CalenderItem>);
-    }
-    return res;
-  }
+
+const Calendar = () => {
+  const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
+  const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
+  const [help,setHelpData] = useState({});  // help 정보 저장
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const getHelpData = (year,month,day) =>{
     month+=1;
-    if(month < 10){//달력포맷팅 1 -> 01
+    if(month < 10){ //달력포맷팅 1 -> 01
       month = "0"+month;
     }
-    if(day < 10){//날짜포맷팅 1 -> 01
+    if(day < 10){ //날짜포맷팅 1 -> 01
       day = "0"+day;
     }
     
-    if(!(year in help)){//year가 help 있는지 판단
+    if(!(year in help)){ //year가 help 있는지 판단
       return [];
     }
     
-    if(!(month in help[year])){//month가 help[year]에 있는지 판단
+    if(!(month in help[year])){ //month가 help[year]에 있는지 판단
       return [];
     }
     
-    if(!(day in help[year][month])){//day가 help[year][month]에 있는지 판단
+    if(!(day in help[year][month])){ //day가 help[year][month]에 있는지 판단
       return [];
     }
-
     return help[year][month][day];
   }
+
   useEffect(()=>{
     //DO : IP 도움목록을 불러와 데이터 저장
     const res = {};
@@ -46,22 +41,22 @@ const Calendar = () => {
       url:`${process.env.PUBLIC_URL}/IpCalendarList.json`
     }).then(({data})=>{
       for(let i = 0; i < data.data.helpList.length; i++){
-        const temp = data.data.helpList[i].startTime.split(" ");//[yyyy-MM-dd,HH:mm]
-        const date = temp[0].split("-");//[year,month,day]
-
-        if(!(date[0] in res)){//year가 res안에 있는지 판단
-          res[date[0]]={};//없다면 객체생성
+        const temp = data.data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
+        const date = temp[0].split("-"); //[year,month,day]
+        
+        if(!(date[0] in res)){ //year가 res안에 있는지 판단
+          res[date[0]]={}; //없다면 객체생성
         }
 
-        if(!(date[1] in res[date[0]])){//month가 res[year]에 있는지 판단
-          res[date[0]][date[1]]={};//없다면 객체s생성
+        if(!(date[1] in res[date[0]])){ //month가 res[year]에 있는지 판단
+          res[date[0]][date[1]]={}; //없다면 객체s생성
+        }
+        
+        if(!(date[2] in res[date[0]][date[1]])){ //day가 res[year][month]에 있는지 판단
+          res[date[0]][date[1]][date[2]]=[]; //없다면 배열생성
         }
 
-        if(!(date[2] in res[date[0]][date[1]])){//day가 res[year][month]에 있는지 판단
-          res[date[0]][date[1]][date[2]]=[];//없다면 배열생성
-        }
-
-        res[date[0]][date[1]][date[2]].push(data.data.helpList[i]);//res[year][month][day]에 data를 push
+        res[date[0]][date[1]][date[2]].push(data.data.helpList[i]); //res[year][month][day]에 data를 push
       }
 
       setHelpData(res);
@@ -69,7 +64,7 @@ const Calendar = () => {
     }).catch((err)=>console.log(err));
     setHelpData(res);
   },[]);
-
+  
   const nextMonth = ()=> {
     let temp = month+1;
     if(temp === 12){
@@ -78,7 +73,7 @@ const Calendar = () => {
     }else{
       setMonth(month+1);
     }
-  }
+  };
 
   const prevMonth = ()=>{
     let temp = month-1;
@@ -88,87 +83,215 @@ const Calendar = () => {
     }else{
       setMonth(month-1);
     }
+  };
+
+  // const onDateClick = (day) => {
+  //   setSelectedDate(day);
+  // };
+  
+  // 요일을 가져오는 로직
+  const getWeekItems = () => {
+    const days = [];
+    const week = ["일","월","화","수","목","금","토"];
+    for(let i = 0; i < 7; i++){//한 주 가져오기
+      days.push(
+        <div className='col' key={week[i]}>
+          {week[i]}
+        </div>
+      );
+    }
+    return days;
   }
 
+  // 날짜를 가져오는 로직
   const getCalenderItems = ()=>{
     const res = [];
-    const startDay = new Date(year,month,1);//현재달 1일
-    const endDay = new Date(year,(month+1),0);//현재달 마지막날
+    const startDate = new Date(year,month,1); //현재달 1일
+    const endDate = new Date(year,(month+1),0); //현재달 마지막날
+    const lastEndDate = new Date(year, month, 0) // 전달의 마지막 날
+    const nextStartDate = new Date(year, (month +2), 1) // 다음 달의 1일d
 
-    let emptyIdx = 0;
-
-    for(let i = 0; i < startDay.getDay(); i++){//빈값 넣기
-      res.push(<CalenderItem key={"empty"+emptyIdx++}></CalenderItem>)
+    for (let i = startDate.getDay()-1; i >= 0; i--){ // 첫째 날 전일에 날짜 넣기
+      res.unshift(
+        <CalenderItem className='not-valid' key={'lastMonth' + lastEndDate.getDate()}>{lastEndDate.getDate()}</CalenderItem>
+      );
+      lastEndDate.setDate(lastEndDate.getDate() - 1);
     }
-    console.log(startDay.getDay());
-    for(let i = startDay.getDate(); i <= endDay.getDate(); i++){//달력값 넣기
-      res.push(<CalenderItem onClick={()=>{
-        // console.log(help)
-        console.log(getHelpData(year,month,i));
-        // axios({
-        //   method:"get",
-        //   url:`~?year=${year}&month=${month+1}&day=${i}`
-        // }).then(({data})=>{
-        //   props.setData(data);
-        // })
+
+    for(let i = startDate.getDate(); i <= endDate.getDate(); i++){ //달력값 넣기
+      let className = 'valid'
+      
+      if (selectedDate.getFullYear() === year 
+            && selectedDate.getMonth() === month
+            && selectedDate.getDate() === i) {
+          className = 'selected';
+      }
+
+      res.push(<CalenderItem
+        className={className}
+        onClick={()=>{
+        getHelpData(year ,month, i);
+        console.log(getHelpData(year ,month, i));
         }} key={"calender"+i}>{i}</CalenderItem>)
     }
-
-    for(let i = endDay.getDay(); i < 6; i++){//남은 빈값 넣기
-      res.push(<CalenderItem key={"empty"+emptyIdx++}></CalenderItem>)
-    }
     
+    for (let i = endDate.getDay(); i < 6; i++) { // 마지막 날 이후 날짜 넣기
+      res.push(
+        <CalenderItem 
+          className='not-valid' 
+          key={"nextStartDate" + nextStartDate.getDate()}>
+          {nextStartDate.getDate()}</CalenderItem>
+      );
+      nextStartDate.setDate(nextStartDate.getDate() + 1);
+    }
     return res;
   }
+
   return (
-    <>
-      <ButtonWrap>
-        <button onClick={prevMonth}>이전</button> {year}년 {month+1}월 <button onClick={nextMonth}>다음</button>
-      </ButtonWrap>
-      <WeekWrap>
+    <CalenderWrap>
+      <HeaderWrap>
+        <HeaderStart>
+          <HeaderText>
+            <HeaderText className='month'>{month+1}월</HeaderText>
+            {year}년
+          </HeaderText>
+        </HeaderStart>
+        <HeaderEnd>
+          <Icon icon="bi:arrow-left-circle-fill" onClick={prevMonth} className='Icon'></Icon>
+          <Icon icon="bi:arrow-right-circle-fill" onClick={nextMonth} className='Icon'></Icon>
+        </HeaderEnd>
+      </HeaderWrap>
+      <DaysWrap>
         {
           getWeekItems()
         }
-      </WeekWrap>
-      <CalenderWrap>
+      </DaysWrap>
+      <Body>
         {
           getCalenderItems()
         }
-      </CalenderWrap>
-    </>
+      </Body>
+    </CalenderWrap>
   )
 }
 
-const WeekWrap = styled.div`
-  margin-left: 10%;
-  width: 80%;
-  height: 2rem;
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
+const CalenderWrap = styled.div `
+  width: 90%;
+  height: 100%;
+  position: relative;
+  left: 5%;
+  top: 5%;
+  /* background-color: #e9b5b5; */
 `
 
-const ButtonWrap = styled.div`
-  font-size: 1.5rem;
-  padding: 2rem 0;
-  margin-left: 20%;
-  width: 60%;
+const HeaderWrap = styled.div `
+  width: 100%;
+  height: 8%;
   display: flex;
-  justify-content: space-around;
-  &>:button{
-    width: 10rem;
+  justify-content: space-between;
+  /* background-color: #7979ff; */
+`
+
+const HeaderStart = styled.div`
+  width : 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`
+
+const HeaderText = styled.span`
+  font-size: 1rem;
+  font-weight: 600;
+  /* padding-left: 1rem; */
+
+  &>.month{
+    margin-right: 1rem;
+    font-size: 1.6rem;
+    /* padding-left: 0; */
   }
 `
-const CalenderItem = styled.div`
-  border : 1px solid #000;
-  border-radius: 0.5rem;
-  margin: 0.1rem;
+
+const HeaderEnd = styled.div`
+  width : 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  
+  &>.Icon{
+    width: 11%;
+    height: fit-content;
+    width: fit-content;
+    margin-left: 5%;
+    /* color: gray; */
+
+    &:hover {
+      transform: scale(1.2);
+      color: darkgray;
+    }
+  }
 `
-const CalenderWrap = styled.div`
-  margin-left: 10%;
-  width: 80%;
-  height: 40%;
+
+const DaysWrap = styled.div`
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  padding: 2px;
+
+  &>.col {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
+  padding-left: 1%;
+  background-color:#ebcfc6;
+  color : #000; 
+  border-radius: 10px;
+  }
+`
+
+const Body = styled.div`
+  width: 100%;
+  height: 80%;
   display: grid;
   grid-template-columns: repeat(7,1fr);
   grid-template-rows: repeat(6,1fr);
 `
+
+const CalenderItem = styled.div`
+  border : 1px solid #000;
+  border-radius: 0.5rem;
+  margin: 0.1rem;
+  font-size: 0.8rem;
+  padding: 2px 0 0 2px;
+
+  &.not-valid{
+    color : #c4c4c4;
+  }
+
+  &.valid{
+    &:hover {
+      transform: scale(1.01);
+      box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
+      border: none;
+      background-color: #c4c4c4;
+    }
+  }
+
+  &.selected {
+    transform: scale(1.02);
+    box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
+    border: none;
+    background-color: #f3c5b6;
+    font-weight: 600;
+  }
+`
+
+
+
 export default Calendar
