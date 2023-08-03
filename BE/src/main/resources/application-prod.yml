@@ -76,8 +76,8 @@ cloud:
     stack.auto: false
     region.static: ap-northeast-2
     credentials:
-      accessKey: ENC(KzyGTfZ93uzfRpeAVP27uHfLq1Pktdy5KgwreeeG4hM=)
-      secretKey: ENC(rFtftLJvm6oN0F1d2KZ8KWMqwqwfHc55tff8Y1mKFaBiB4a7XRHPxc8nIrK1i52KKbxqoexBQqg=)
+      access-key: ENC(KzyGTfZ93uzfRpeAVP27uHfLq1Pktdy5KgwreeeG4hM=)
+      secret-key: ENC(rFtftLJvm6oN0F1d2KZ8KWMqwqwfHc55tff8Y1mKFaBiB4a7XRHPxc8nIrK1i52KKbxqoexBQqg=)
 
 #springdoc swagger
 springdoc:

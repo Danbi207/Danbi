@@ -54,3 +54,13 @@ token:
   secret: qwerqwer # JWT secret key
   access-token-expiration-time: 90000000  # 15분 1000(ms) x 60(s) x 15(m)
   refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
+
+cloud:
+  aws:
+    s3:
+      bucket: danbi-help
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      access-key: asdfdsaf
+      secret-key: asdfsdfas
