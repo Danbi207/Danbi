@@ -68,6 +68,17 @@ token:
   access-token-expiration-time: 90000000  # 15분 1000(ms) x 60(s) x 15(m)
   refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d
 
+# S3
+cloud:
+  aws:
+    s3:
+      bucket: danbi-help
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ENC(n3Ef/SE4Z6T6Q8WUfNwow6zQyqlhqA5L2dxgKowMVVs=)
+      secretKey: ENC(TzZpD01v/W3uEa5nZFw7Ces8PtCWmGqzeP22UUraopvDc1DgfIdabrFOiW7Xw8U4NtwxGR/upto=)
+
 #springdoc swagger
 springdoc:
   packages-to-scan: com.danbi.api
