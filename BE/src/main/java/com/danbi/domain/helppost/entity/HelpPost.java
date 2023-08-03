@@ -79,8 +79,7 @@ public class HelpPost extends BaseEntity {
         this.caution = helpPost.getCaution();
         this.positions = helpPost.getPositions();
     }
-
-    public void delete(State state) {
+    public void updateState(State state) {
         this.state = state;
     }
 }

@@ -6,7 +6,6 @@ import com.danbi.api.helppost.dto.detailmatched.DetailMatchedHelpPostDto;
 import com.danbi.api.helppost.dto.detailsearch.DetailHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.face.HelperFaceHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.query.HelperQueryHelpPostDto;
-import com.danbi.api.helppost.dto.mysearch.MyHelpPostDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthRequestDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.api.helppost.service.HelpPostInfoService;
