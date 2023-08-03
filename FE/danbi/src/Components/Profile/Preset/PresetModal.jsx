@@ -14,6 +14,21 @@ const PresetModal = ({ setModalOpen }) => {
     setOpenTextArea(true);
   };
 
+
+  const [presetList, setPresetList] = useState([
+    {
+      preset_id: 1,
+      title: '1asdf',
+      content: '123saf',
+      sequence: 0,
+    },
+    {
+      preset_id: 2,
+      title: '김민규는 쓰레기입니다.',
+      content: '끼잉 낑.',
+      sequence: 1,
+    }
+  ])
   return (
     <PresetModalWrap>
       <Modal>
@@ -31,7 +46,7 @@ const PresetModal = ({ setModalOpen }) => {
           {OpenTextArea && <PresetTextArea setOpenTextArea={setOpenTextArea} />}
         </ModalBody>
         <ModalFooter>
-          <Preset />
+          <Preset preset_list={presetList} setPresetList={setPresetList} />
         </ModalFooter>
       </Modal>
     </PresetModalWrap>
@@ -46,7 +61,6 @@ const PresetModalWrap = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  color: white;
   display: block;
 `;
 
@@ -58,6 +72,7 @@ const Modal = styled.div`
   top: 25%;
   margin: 0 4%;
   overflow-y: auto;
+  border-radius: 15px;
 `;
 
 const ModalHeader = styled.div`

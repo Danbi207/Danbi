@@ -35,10 +35,10 @@ const TextArea = styled.textarea`
   resize: none;
   background-color: transparent;
   color: white;
-  text-align: center;
+  text-align: start;
   outline: none;
   word-break: break-word;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 0.5rem 5px;
   width: 100%;
   height: 6rem;
   &::placeholder {
