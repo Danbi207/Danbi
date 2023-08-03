@@ -19,13 +19,6 @@ public class SwaggerConfig {
                 .addSecurityItem(new SecurityRequirement().addList("Bearer"))
                 .info(new Info().title("단비")
                 .description("달달한 비가 되어줄게요 단비 API")
-                .version("v2.6.5"));
-    }
-
-    private Info apiInfo() {
-        return new Info()
-                .title("Danbi API")
-                .description("Danbi API Document")
-                .version("1.0.0");
+                .version("1.0.0"));
     }
 }
