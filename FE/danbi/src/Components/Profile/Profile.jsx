@@ -206,6 +206,7 @@ const ProfileWrap = styled.div`
 `;
 
 const Wrap = styled.div`
+  margin-top: 1rem;
   // (Todo) 드래그 방지 풀어줘야함
   /* -webkit-user-select: all;
     -moz-user-select: all;
