@@ -10,6 +10,7 @@ import com.danbi.domain.helppost.repository.HelpPostRepository;
 import com.danbi.domain.helppost.repository.PositionRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.EntityNotFoundException;
 import com.danbi.global.error.exception.MisMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,13 +37,13 @@ public class HelpPostService {
         return helpPostRepository.save(helpPost);
     }
 
-    public void validateHelpPostTime(HelpPost helpPost) {
+    private void validateHelpPostTime(HelpPost helpPost) {
         if (helpPost.getEndTime().isBefore(helpPost.getStartTime())) {
             throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_TIME);
         }
     }
 
-    public void validateDuplicateHelpPost(HelpPost helpPost, Long memberId) {
+    private void validateDuplicateHelpPost(HelpPost helpPost, Long memberId) {
         List<HelpPost> helpPosts = helpPostRepository.findHelpPostsByBetweenTime(helpPost.getStartTime(), helpPost.getEndTime(), memberId);
         if (helpPosts.size() > 0) {
             throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_START_END_TIME);
@@ -63,40 +65,18 @@ public class HelpPostService {
 
         validateHelpPostMatchMember(deletedHelpPost, memberId);
 
-        deletedHelpPost.delete(State.DELETE);
+        deletedHelpPost.updateState(State.DELETE);
     }
 
     public void assignDelete(Long id) {
         HelpPost deletedHelpPost = helpPostRepository.findById(id).get();
-        deletedHelpPost.delete(State.MATCHED);
+        deletedHelpPost.updateState(State.MATCHED);
     }
 
     private void validateHelpPostMatchMember(HelpPost helpPost, Long memberId) {
         if(helpPost.getMember().getId() != memberId) {
             throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_MEMBER);
         }
-    }
-
-    public HelpPost getHelpPost(Long helpPostId) {
-        return helpPostRepository.findById(helpPostId).get();
-    }
-
-    @Transactional(readOnly = true)
-    public List<HelpPost> searchMyHelp(Member member) {
-        List<HelpPost> myHelpList = helpPostRepository.findAllByMember(member);
-        return myHelpList;
-    }
-
-    @Transactional(readOnly = true)
-    public List<HelpPost> searchAllList() {
-        List<HelpPost> allHelpList = helpPostRepository.findAllByState(State.ACTIVATE);
-        return allHelpList;
-    }
-
-    @Transactional(readOnly = true)
-    public HelpPost detailHelpPost(Long id) {
-        HelpPost helpPost = helpPostRepository.findById(id).get();
-        return helpPost;
     }
 
 
@@ -118,7 +98,26 @@ public class HelpPostService {
 
     @Transactional(readOnly = true)
     public HelpPostMatchedDto searchMatchedDetail(Long HelpPostId) {
-        return helpPostRepository.searchMatchedDetail(HelpPostId);
+        HelpPostMatchedDto matchedHelpPost = helpPostRepository.searchMatchedDetail(HelpPostId);
+        validateIsNullHelpPost(matchedHelpPost);
+        validateIsMatchedHelpPost(matchedHelpPost);
+        return matchedHelpPost;
     }
 
+    private void validateIsMatchedHelpPost(HelpPostMatchedDto matchedHelpPost) {
+        if (!matchedHelpPost.getState().name().equals(State.MATCHED.name())) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_ISMATCHED);
+        }
+    }
+
+    private void validateIsNullHelpPost(HelpPostMatchedDto matchedHelpPost) {
+        if (matchedHelpPost==null) {
+            throw new EntityNotFoundException(ErrorCode.HELPPOST_NOT_EXISTS);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<HelpPost> searchByMonth(LocalDate time, Long memberId) {
+        return helpPostRepository.findHelpPostByMonth(time, memberId);
+    }
 }

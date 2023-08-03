@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface HelpPostRepository extends JpaRepository<HelpPost, Long> , HelpPostRepositoryCustom {
     List<HelpPost> findAllByMember(Member member);
-    List<HelpPost> findAllByState(State state);
 }

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static com.danbi.domain.helppost.constant.State.COMPLETED;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -68,7 +70,7 @@ public class Help extends BaseEntity {
             this.completeFlag = true;
             this.helper.getProfile().getPoint().plusPoint(2L);
             this.ip.getProfile().getPoint().plusPoint(2L);
-
+            this.helpPost.updateState(COMPLETED);
         }
     }
 
@@ -80,6 +82,7 @@ public class Help extends BaseEntity {
             this.completeFlag = true;
             this.helper.getProfile().getPoint().plusPoint(2L);
             this.ip.getProfile().getPoint().plusPoint(2L);
+            this.helpPost.updateState(COMPLETED);
         }
     }
 

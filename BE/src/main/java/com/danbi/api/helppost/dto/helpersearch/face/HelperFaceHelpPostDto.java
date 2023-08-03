@@ -31,7 +31,7 @@ public class HelperFaceHelpPostDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
 
-    private Long accumulateDewPoint;
+    private int accuseStack;
 
     private boolean friendFlag;
 
