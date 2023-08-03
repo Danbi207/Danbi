@@ -24,14 +24,16 @@ const Preset = ({preset_list, setPresetList}) => {
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {preset_list.map((value, index) => (
-                <Draggable draggableId={index.toString()} index={index}>
+                <Draggable draggableId={index.toString()} index={index} key={index}>
                   {(provided, snapshot) => (
                     <Wrap
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      key={index}
+                      isDragging={snapshot.isDragging}
                     >
-                      <PresetItem value={value} index={index} OpenIndex={OpenIndex} showDetail={showDetail} />
+                      <PresetItem value={value} index={index} OpenIndex={OpenIndex} key={index} showDetail={showDetail} />
                     </Wrap>
                   )}
                 </Draggable>
@@ -57,6 +59,7 @@ width: 100%;
   justify-content: end;
   height: auto;
   margin-bottom: 0.5rem;
+  transform: ${props => props.isDragging ? 'scale(1.1)' : 'scale(1)'};
 `;
 
 export default Preset;
