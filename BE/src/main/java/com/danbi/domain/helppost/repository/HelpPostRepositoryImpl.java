@@ -17,6 +17,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .leftJoin(profile.point, point)
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
-                        positions.longitude.between(subtractFromString(longitude),plusFromString(longitude))
+                        positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
+                        helpPost.state.ne(State.DELETE)
                 )
                 .fetch();
     }
@@ -67,7 +69,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
-                        helpPost.faceFlag.eq(true)
+                        helpPost.faceFlag.eq(true),
+                        helpPost.state.ne(State.DELETE)
                 )
                 .fetch();
     }
@@ -152,7 +155,21 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
         return jpaQueryFactory.selectFrom(helpPost)
                 .where(helpPost.startTime.between(startTime,endTime)
                         .or(helpPost.endTime.between(startTime,endTime)),
-                        helpPost.member.id.eq(memberId))
+                        helpPost.member.id.eq(memberId),
+                        helpPost.state.ne(State.DELETE))
+                .fetch();
+    }
+
+    @Override
+    public List<HelpPost> findHelpPostByMonth(LocalDate time, Long memberId) {
+
+        LocalDateTime startTime = LocalDateTime.of(time.getYear(), time.getMonth(), 1, 0, 0, 0);
+        LocalDateTime endTime = startTime.plusMonths(1).minusSeconds(1);
+
+        return jpaQueryFactory.selectFrom(helpPost)
+                .where(helpPost.startTime.between(startTime,endTime),
+                        helpPost.member.id.eq(memberId),
+                        helpPost.state.ne(State.DELETE))
                 .fetch();
     }
 }

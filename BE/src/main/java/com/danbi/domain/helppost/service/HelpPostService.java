@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -63,12 +64,12 @@ public class HelpPostService {
 
         validateHelpPostMatchMember(deletedHelpPost, memberId);
 
-        deletedHelpPost.delete(State.DELETE);
+        deletedHelpPost.updateState(State.DELETE);
     }
 
     public void assignDelete(Long id) {
         HelpPost deletedHelpPost = helpPostRepository.findById(id).get();
-        deletedHelpPost.delete(State.MATCHED);
+        deletedHelpPost.updateState(State.MATCHED);
     }
 
     private void validateHelpPostMatchMember(HelpPost helpPost, Long memberId) {
@@ -86,19 +87,6 @@ public class HelpPostService {
         List<HelpPost> myHelpList = helpPostRepository.findAllByMember(member);
         return myHelpList;
     }
-
-    @Transactional(readOnly = true)
-    public List<HelpPost> searchAllList() {
-        List<HelpPost> allHelpList = helpPostRepository.findAllByState(State.ACTIVATE);
-        return allHelpList;
-    }
-
-    @Transactional(readOnly = true)
-    public HelpPost detailHelpPost(Long id) {
-        HelpPost helpPost = helpPostRepository.findById(id).get();
-        return helpPost;
-    }
-
 
     // querydsl 사용
     @Transactional(readOnly = true)
@@ -121,4 +109,8 @@ public class HelpPostService {
         return helpPostRepository.searchMatchedDetail(HelpPostId);
     }
 
+    @Transactional(readOnly = true)
+    public List<HelpPost> searchByMonth(LocalDate time, Long memberId) {
+        return helpPostRepository.findHelpPostByMonth(time, memberId);
+    }
 }

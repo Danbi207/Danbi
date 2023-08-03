@@ -7,6 +7,8 @@ import com.danbi.api.helppost.dto.detailsearch.DetailHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.face.HelperFaceHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.query.HelperQueryHelpPostDto;
 import com.danbi.api.helppost.dto.mysearch.MyHelpPostDto;
+import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthRequestDto;
+import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.api.helppost.service.HelpPostInfoService;
 import com.danbi.global.resolver.MemberInfo;
 import com.danbi.global.resolver.MemberInfoDto;
@@ -54,10 +56,12 @@ public class HelpPostController {
     }
 
     @Operation(summary = "내가 요청한 도움 요청 게시글 리스트 API", description = "내가 요청한 도움 요청 게시글 리스트 API")
-    @GetMapping("/registers") // 내가(IP) 작성한 모든 도움 요청 게시글 조회
-    public ResponseEntity<MyHelpPostDto> searchMyHelpPost(@MemberInfo MemberInfoDto memberInfoDto) {
-        MyHelpPostDto myHelpPostDto = helpPostInfoService.searchMyHelpPost(memberInfoDto.getMemberId());
-        return ResponseEntity.ok(myHelpPostDto);
+    @PostMapping("/registers") // 내가(IP) 작성한 모든 도움 요청 게시글 조회
+    public ResponseEntity<HelpPostByMonthResponseDto> searchMyHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
+                                                          @RequestBody HelpPostByMonthRequestDto helpPostByMonthRequestDto) {
+        HelpPostByMonthResponseDto helpPostByMonth = helpPostInfoService.searchByMonth(
+                helpPostByMonthRequestDto.getYearAndMonth(), memberInfoDto.getMemberId());
+        return ResponseEntity.ok(helpPostByMonth);
     }
 
     @Operation(summary = "도움요청 게시글 상세 조회 API", description = "도움요청 게시글 상세 조회 API")

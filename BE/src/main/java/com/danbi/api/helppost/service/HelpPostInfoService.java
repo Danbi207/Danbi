@@ -6,16 +6,12 @@ import com.danbi.api.helppost.dto.detailmatched.HelperMatchedDto;
 import com.danbi.api.helppost.dto.detailmatched.IpMatchedDto;
 import com.danbi.api.helppost.dto.detailsearch.DetailHelpPostDto;
 import com.danbi.api.helppost.dto.detailsearch.IpDto;
-import com.danbi.api.helppost.dto.helpersearch.HelperHelpPostListDto;
-import com.danbi.api.helppost.dto.helpersearch.HelperResponseDto;
 import com.danbi.api.helppost.dto.helpersearch.face.HelperFaceHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.query.HelperQueryHelpPostDto;
-import com.danbi.api.helppost.dto.mysearch.HelpPostListDto;
 import com.danbi.api.helppost.dto.HelpPostRequestDto;
 import com.danbi.api.helppost.dto.HelpPostResponseDto;
-import com.danbi.api.helppost.dto.mysearch.MyHelpPostDto;
-import com.danbi.domain.accuse.entity.Accuse;
-import com.danbi.domain.accuse.service.AccuseService;
+import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthDetailDto;
+import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.domain.help.constant.State;
 import com.danbi.domain.help.entity.Help;
 import com.danbi.domain.help.service.HelpService;
@@ -29,14 +25,11 @@ import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.helppost.service.PositionService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
-import com.danbi.domain.point.entity.Point;
-import com.danbi.domain.point.service.PointService;
-import com.danbi.domain.profile.entity.Profile;
-import com.danbi.domain.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,23 +91,23 @@ public class HelpPostInfoService {
         return HelpPostResponseDto.of(updatedHelpPost, savedPositions);
     }
 
-    public MyHelpPostDto searchMyHelpPost(Long memberId) {
-
-        Member member = memberService.findByMemberId(memberId);
-
-        List<HelpPost> helpPosts = helpPostService.searchMyHelp(member);
-        List<HelpPostListDto> helpList = new ArrayList<>();
-        for (HelpPost helpPost : helpPosts) {
-            HelpPostListDto post = HelpPostListDto.builder()
-                    .helpPostId(helpPost.getId())
-                    .content(helpPost.getContent())
-                    .startTime(helpPost.getStartTime())
-                    .endTime(helpPost.getEndTime()).build();
-            helpList.add(post);
-        }
-        return MyHelpPostDto.builder()
-                .helpList(helpList).build();
-    }
+//    public MyHelpPostDto searchMyHelpPost(Long memberId) {
+//
+//        Member member = memberService.findByMemberId(memberId);
+//
+//        List<HelpPost> helpPosts = helpPostService.searchMyHelp(member);
+//        List<HelpPostListDto> helpList = new ArrayList<>();
+//        for (HelpPost helpPost : helpPosts) {
+//            HelpPostListDto post = HelpPostListDto.builder()
+//                    .helpPostId(helpPost.getId())
+//                    .content(helpPost.getContent())
+//                    .startTime(helpPost.getStartTime())
+//                    .endTime(helpPost.getEndTime()).build();
+//            helpList.add(post);
+//        }
+//        return MyHelpPostDto.builder()
+//                .helpList(helpList).build();
+//    }
 
     public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
         List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
@@ -229,8 +222,23 @@ public class HelpPostInfoService {
                         .addr(helpPost.getAddr())
                         .destAddr(helpPost.getDestAddr())
                         .meetAddr(helpPost.getMeetAddr()).build()).build();
-
-
     }
 
+    public HelpPostByMonthResponseDto searchByMonth(LocalDate time, Long memberId) {
+        List<HelpPost> helpPosts = helpPostService.searchByMonth(time, memberId);
+        List<HelpPostByMonthDetailDto> helpPostsByMonth = new ArrayList<>();
+
+        for (HelpPost helpPost : helpPosts) {
+            HelpPostByMonthDetailDto helpPostDto = HelpPostByMonthDetailDto.builder()
+                    .helpPostId(helpPost.getId())
+                    .content(helpPost.getContent())
+                    .startTime(helpPost.getStartTime())
+                    .endTime(helpPost.getEndTime())
+                    .state(helpPost.getState()).build();
+            helpPostsByMonth.add(helpPostDto);
+        }
+
+        return HelpPostByMonthResponseDto.builder()
+                .helpList(helpPostsByMonth).build();
+    }
 }
