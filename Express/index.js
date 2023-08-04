@@ -5,7 +5,7 @@ let app = express();
 let cors = require("cors");
 let server = http.createServer(app);
 let socketio = require("socket.io");
-let io = socketio.listen(server);
+let io = socketio.listen(server,{path:"/room/socket.io"});
 const Chat = require("./model/chat");
 
 app.use(cors());
@@ -80,23 +80,21 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
+server.listen(`${PORT}`, () => {
   console.log(`server running on ${PORT}`);
 });
 
 app.get('/room/check/:roomId', (req, res) => {
-  if(req.params.roomId in users){
+  //DO : roomId에 있는 사람 수 반환
+  if(req.params.roomId in users){//사람이 있는 경우
     res.json(users[req.params.roomId].length);
-  }else{
+  }else{//사람이 없는 경우
     res.json(0);
   }
 })
 
-app.get('/room/list', (req, res) => {
-  res.json(users);
-})
-
 app.get('/room/chat/:roomId', async (req,res) =>{
+  //DO : 채팅내역 반환
   try{
     const chats = await Chat.find({"helpId":req.params.roomId});
     return res.json(chats);
