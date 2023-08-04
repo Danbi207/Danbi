@@ -9,7 +9,7 @@ let io = socketio.listen(server);
 const Chat = require("./model/chat");
 
 app.use(cors());
-const PORT = process.env.PORT || 5000;
+const PORT = 3478;
 connectDB();
 let users = {};
 
