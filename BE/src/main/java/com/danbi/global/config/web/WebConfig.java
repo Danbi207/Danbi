@@ -33,8 +33,6 @@ public class WebConfig implements WebMvcConfigurer {
                         , "https://i9d207.p.ssafy.io:3000"
                         ,"https://i9d207.p.ssafy.io"
                 ,"*")// cors 허용할 경로
-//                .allowedOrigins("*")
-                .allowCredentials(true)
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
@@ -42,7 +40,8 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.PATCH.name(),
                         HttpMethod.DELETE.name(),
                         HttpMethod.OPTIONS.name()
-                ).allowCredentials(true)
+                )
+                .allowCredentials(true)
                 .maxAge(3600); // preflight
     }
 
