@@ -46,10 +46,10 @@ io.on("connection", (socket) => {
     console.log("message: " + socket.id);
     // const chat = new Chat(sdp);
     // await chat.save();
-    if(!(`${socketToRoom[socket.id]}` in chatLog)){
-      chatLog[`${socketToRoom[socket.id]}`]=[];
+    if(!(socket.id in chatLog)){
+      chatLog[socket.id]=[];
     }
-    chatLog[`${socketToRoom[socket.id]}`].push(sdp);
+    chatLog[socket.id].push(sdp);
     socket.broadcast.emit("message", sdp);
   })
   socket.on("offer", (sdp) => {
@@ -70,8 +70,8 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(`[${socketToRoom[socket.id]}]: ${socket.id} exit`);
     const roomID = socketToRoom[socket.id];
-    chatLog[roomId].forEach(e=>await (new Chat(e)).save());
-    chatLog[roomId]=[];
+    chatLog[socket.id].forEach(e=>await (new Chat(e)).save());
+    chatLog[socket.id]=[];
     let room = users[roomID];
     if (room) {
       room = room.filter((user) => user.id !== socket.id);
