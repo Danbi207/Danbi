@@ -75,7 +75,7 @@ const Chat = (props) => {
     } catch (e) {
       console.error(e);
     }
-  },[props.roomId,onVideo,onAudio]);
+  },[props.roomId]);
 
   const createOffer = async () => {
     if (!(pcRef.current && socketRef.current)) return;
