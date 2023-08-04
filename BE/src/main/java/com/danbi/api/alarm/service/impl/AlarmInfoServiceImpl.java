@@ -99,21 +99,11 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
     //알림 읽음처리
     @Transactional
     @Override
-    public void readAlarm(Long memberId, Long alarmId) {
-        Alarm beforeAlarm = alarmService.getAlarmById(memberId, alarmId);
-        Alarm updatedAlarm = Alarm.builder()
-                .from(beforeAlarm.getFrom())
-                .to(beforeAlarm.getTo())
-                .title(beforeAlarm.getTitle())
-                .readFlag(true)
-                .state(beforeAlarm.getState())
-                .content(beforeAlarm.getContent())
-                .type(beforeAlarm.getType())
-                .build();
-        if (updatedAlarm.getTo().getId() != memberId) {
-            throw new BusinessException(ErrorCode.FORBIDDEN_ALARM);
+    public void readAlarm(Long memberId) {
+        List<Alarm> list = alarmService.getNotReadAlarm(memberId);
+        for (Alarm alarm : list) {
+            alarm.updateReadAlarm();
         }
-        alarmService.updateAlarm(memberId, alarmId, updatedAlarm);
     }
 
     //알림 삭제처리

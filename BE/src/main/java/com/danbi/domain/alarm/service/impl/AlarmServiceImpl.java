@@ -96,8 +96,7 @@ public class AlarmServiceImpl implements AlarmService {
     @Override
     public Long countNotReadAlarm(Long memberId) {
         Member findMember = memberService.findByMemberId(memberId);
-        alarmRepository.countByReadFlagAndToAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
-        return null;
+        return alarmRepository.countByReadFlagAndToAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
     }
 
     @Override

@@ -22,7 +22,7 @@ public interface AlarmInfoService {
     ResponseAlarmDto getAlarmDetail(Long memberId, Long alarmId);
 
     //알림 읽음처리
-    void readAlarm(Long memberId, Long alarmId);
+    void readAlarm(Long memberId);
 
     //알림 삭제처리
     void deleteAlarm(Long memberId, Long alarmId);
