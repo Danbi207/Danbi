@@ -31,7 +31,8 @@ public class WebConfig implements WebMvcConfigurer {
                         , "https://i9d207.p.ssafy.io:8080"
                         , "http://i9d207.p.ssafy.io3000"
                         , "https://i9d207.p.ssafy.io:3000"
-                        ,"https://i9d207.p.ssafy.io")// cors 허용할 경로
+                        ,"https://i9d207.p.ssafy.io"
+                ,"*")// cors 허용할 경로
 //                .allowedOrigins("*")
                 .allowCredentials(true)
                 .allowedMethods(
