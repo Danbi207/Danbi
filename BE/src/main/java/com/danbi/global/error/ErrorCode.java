@@ -74,6 +74,10 @@ public enum ErrorCode {
 
     // Item
     ITEM_NEGATIVE_POINT(HttpStatus.BAD_REQUEST,"IT-001","보유중인 포인트가 뽑기에 필요한 포인트 이하입니다."),
+
+    // File
+    EMPTY_FILE(HttpStatus.BAD_REQUEST, "F-001", "빈 파일은 제출할 수 없습니다."),
+    FILE_AMOUNTS_LIMIT(HttpStatus.BAD_REQUEST, "F-002", "제출할 수 있는 파일 수를 초과했습니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
