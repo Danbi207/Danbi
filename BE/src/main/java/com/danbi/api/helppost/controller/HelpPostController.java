@@ -72,21 +72,25 @@ public class HelpPostController {
         return ApiResponse.ok(detailHelpPostDto);
     }
 
-    @Operation(summary = "현재 등록된 모든 도움 요청 게시글 쿼리 리스트 API", description = "현재 등록된 모든 도움 요청 게시글 쿼리 리스트 API")
-    @GetMapping("/{longitude}/{latitude}") // 현재 등록된 모든 도움 요청 게시글 조회(querydsl)
+    @Operation(summary = "현재 등록된 비대면 도움 요청 게시글 쿼리 리스트 API", description = "현재 등록된 비대면 도움 요청 게시글 쿼리 리스트 API")
+    @GetMapping("/{longitude}/{latitude}/{gender}") // 현재 등록된 모든 도움 요청 게시글 조회(querydsl)
     public ApiResponse<List<HelperQueryHelpPostDto>> searchAllByQueryHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
                                                                       @PathVariable String longitude,
-                                                                      @PathVariable String latitude) {
-        List<HelperQueryHelpPostDto> allHelpPosts = helpPostInfoService.searchQueryHelpPost(memberInfoDto.getMemberId(), longitude, latitude);
+                                                                      @PathVariable String latitude,
+                                                                      @PathVariable String gender) {
+        List<HelperQueryHelpPostDto> allHelpPosts = helpPostInfoService.searchQueryHelpPost(memberInfoDto.getMemberId(),
+                longitude, latitude, gender);
         return ApiResponse.ok(allHelpPosts);
     }
 
     @Operation(summary = "현재 등록된 모든 대면 도움 요청 게시글 쿼리 리스트 API", description = "현재 등록된 모든 대면 도움 요청 게시글 쿼리 리스트 API")
-    @GetMapping("/meet/{longitude}/{latitude}") // 현재 등록된 모든 도움 대면 요청 게시글 조회(querydsl)
+    @GetMapping("/meet/{longitude}/{latitude}/{gender}") // 현재 등록된 모든 도움 대면 요청 게시글 조회(querydsl)
     public ApiResponse<List<HelperFaceHelpPostDto>> searchAllByFaceHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
                                                                                @PathVariable String longitude,
-                                                                               @PathVariable String latitude) {
-        List<HelperFaceHelpPostDto> allHelpPosts = helpPostInfoService.searchFaceHelpPost(memberInfoDto.getMemberId(), longitude, latitude);
+                                                                               @PathVariable String latitude,
+                                                                               @PathVariable String gender) {
+        List<HelperFaceHelpPostDto> allHelpPosts = helpPostInfoService.searchFaceHelpPost(memberInfoDto.getMemberId(),
+                longitude, latitude, gender);
         return ApiResponse.ok(allHelpPosts);
     }
 

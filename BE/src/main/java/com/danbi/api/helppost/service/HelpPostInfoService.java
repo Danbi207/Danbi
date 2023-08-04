@@ -91,8 +91,9 @@ public class HelpPostInfoService {
     }
 
 
-    public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
-        List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
+    public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude,
+                                                            String latitude, String gender) {
+        List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude, gender);
         List<HelperQueryHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostQueryDto helpPost : helpPosts) {
 
@@ -114,8 +115,9 @@ public class HelpPostInfoService {
         return helpList;
     }
 
-    public List<HelperFaceHelpPostDto> searchFaceHelpPost(Long memberId, String longitude, String latitude) {
-        List<HelpPostFaceDto> helpPosts = helpPostService.searchAllByFace(longitude, latitude);
+    public List<HelperFaceHelpPostDto> searchFaceHelpPost(Long memberId, String longitude,
+                                                          String latitude, String gender) {
+        List<HelpPostFaceDto> helpPosts = helpPostService.searchAllByFace(longitude, latitude, gender);
         List<HelperFaceHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostFaceDto helpPost : helpPosts) {
 
