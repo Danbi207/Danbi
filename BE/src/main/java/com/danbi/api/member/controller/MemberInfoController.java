@@ -1,5 +1,6 @@
 package com.danbi.api.member.controller;
 
+import com.danbi.api.ApiResponse;
 import com.danbi.api.helppost.dto.HelpPostRequestDto;
 import com.danbi.api.helppost.dto.HelpPostResponseDto;
 import com.danbi.api.member.dto.MemberInfoResponseDto;
@@ -36,9 +37,9 @@ public class MemberInfoController {
 
     @Operation(summary = "멤버 정보 조회 API", description = "멤버 정보 조회 API")
     @GetMapping("")
-    public ResponseEntity<MemberResponseDto> createHelpPost(@MemberInfo MemberInfoDto memberInfoDto) {
+    public ApiResponse<MemberResponseDto> createHelpPost(@MemberInfo MemberInfoDto memberInfoDto) {
         MemberResponseDto memberResponseDto = memberInfoService.searchMemberInfo(memberInfoDto.getMemberId());
-        return ResponseEntity.ok(memberResponseDto);
+        return ApiResponse.ok(memberResponseDto);
     }
 
 }

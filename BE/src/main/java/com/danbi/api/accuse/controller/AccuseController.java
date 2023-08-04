@@ -1,5 +1,6 @@
 package com.danbi.api.accuse.controller;
 
+import com.danbi.api.ApiResponse;
 import com.danbi.api.accuse.dto.accuse.AccuseRequestDto;
 import com.danbi.api.accuse.dto.accuse.AccuseResponseDto;
 import com.danbi.api.accuse.dto.detail.AccuseDetailResponseDto;
@@ -22,24 +23,24 @@ public class AccuseController {
 
     @Operation(summary = "회원 신고 API", description = "회원 신고 API")
     @PostMapping("") // 신고자와 요청자가 동일하면 예외처리
-    public ResponseEntity<AccuseResponseDto> accuse(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody AccuseRequestDto accuseRequestDto) {
+    public ApiResponse<AccuseResponseDto> accuse(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody AccuseRequestDto accuseRequestDto) {
         AccuseResponseDto accuse = accuseInfoService.accuse(accuseRequestDto, memberInfoDto.getMemberId());
-        return ResponseEntity.ok(accuse);
+        return ApiResponse.ok(accuse);
     }
 
 
     @Operation(summary = "신고 상세 조회 API", description = "신고 상세 조회 API")
     @GetMapping("/{accuse_id}")
-    public ResponseEntity<AccuseDetailResponseDto> detailAccuse(@PathVariable Long accuse_id) {
+    public ApiResponse<AccuseDetailResponseDto> detailAccuse(@PathVariable Long accuse_id) {
         AccuseDetailResponseDto accuseDetailResponseDto = accuseInfoService.detailAccuse(accuse_id);
-        return ResponseEntity.ok(accuseDetailResponseDto);
+        return ApiResponse.ok(accuseDetailResponseDto);
     }
 
     @Operation(summary = "신고 승인 API", description = "신고 승인 API")
     @GetMapping("/approval/{accuse_id}")
-    public ResponseEntity<String> approveAccuse(@PathVariable Long accuse_id) {
+    public ApiResponse<String> approveAccuse(@PathVariable Long accuse_id) {
         accuseInfoService.approveAccuse(accuse_id);
-        return ResponseEntity.ok("승인 되었습니다.");
+        return ApiResponse.ok("승인 되었습니다.");
     }
 
 }
