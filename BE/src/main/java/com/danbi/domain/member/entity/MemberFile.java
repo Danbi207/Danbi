@@ -1,6 +1,7 @@
 package com.danbi.domain.member.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberFIle {
+public class MemberFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +25,11 @@ public class MemberFIle {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     Member member;
+
+    @Builder
+    public MemberFile(String originName, String url, Member member) {
+        this.originName = originName;
+        this.url = url;
+        this.member = member;
+    }
 }
