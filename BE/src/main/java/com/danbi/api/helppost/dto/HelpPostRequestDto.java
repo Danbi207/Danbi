@@ -29,6 +29,9 @@ public class HelpPostRequestDto {
     @JsonProperty("reservation_flag")
     private boolean reservationFlag;
 
+    @JsonProperty("gender_flag")
+    private boolean genderFlag;
+
     @NotBlank(message = "요청글은 필수입니다.")
     @Length(max = 500, message = "요청글은 최대 500글자 입니다.")
     private String content;
@@ -84,6 +87,7 @@ public class HelpPostRequestDto {
                 .endTime(helpPostRequestDto.getEndTime())
                 .reservationFlag(helpPostRequestDto.isReservationFlag())
                 .faceFlag(helpPostRequestDto.isFaceFlag())
+                .genderFlag(helpPostRequestDto.isGenderFlag())
                 .state(State.ACTIVATE)
                 .positions(positions)
                 .category(helpPostRequestDto.getCategory())

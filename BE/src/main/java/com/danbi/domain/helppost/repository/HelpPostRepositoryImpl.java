@@ -10,10 +10,12 @@ import com.danbi.domain.helppost.dto.HelpPostQueryDto;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.entity.QHelpPost;
 import com.danbi.domain.helppost.entity.QPositions;
+import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.entity.QMember;
 import com.danbi.domain.point.entity.QPoint;
 import com.danbi.domain.profile.entity.QProfile;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +37,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<HelpPostQueryDto> search(String longitude, String latitude) {
+    public List<HelpPostQueryDto> search(String longitude, String latitude, String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostQueryDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.longitude, positions.latitude,
@@ -49,14 +51,16 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
+                        helpPost.faceFlag.eq(false),
                         helpPost.state.ne(State.DELETE),
-                        helpPost.state.ne(State.COMPLETED)
+                        helpPost.state.ne(State.COMPLETED),
+                        searchByGender(gender)
                 )
                 .fetch();
     }
 
     @Override
-    public List<HelpPostFaceDto> searchFace(String longitude, String latitude) {
+    public List<HelpPostFaceDto> searchFace(String longitude, String latitude, String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostFaceDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.meetLongitude, positions.meetLatitude, positions.meetAddr,
@@ -70,9 +74,17 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
                         helpPost.faceFlag.eq(true),
                         helpPost.state.ne(State.DELETE),
-                        helpPost.state.ne(State.COMPLETED)
+                        helpPost.state.ne(State.COMPLETED),
+                        searchByGender(gender)
                 )
                 .fetch();
+    }
+
+    private BooleanExpression searchByGender(String gender) {
+        if (gender.equals("male")) {
+            return helpPost.genderFlag.eq(false).or(helpPost.member.gender.eq(Gender.male));
+        }
+        return helpPost.genderFlag.eq(false).or(helpPost.member.gender.eq(Gender.female));
     }
 
     private String subtractFromString(String str) {
