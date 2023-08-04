@@ -120,7 +120,7 @@ const Chat = (props) => {
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
       }
     }).catch(err=>console.log(err));
-  },[props.roomId]);
+  },[]);
 
   useEffect(() => {
     //DO : express 서버에 소켓연결
@@ -169,7 +169,7 @@ const Chat = (props) => {
         pcRef.current.close();
       }
     };
-  }, [setVideoTracks,props.roomId,props.mode,chatRef]);
+  }, []);
 
   return (
     <Wrap>
