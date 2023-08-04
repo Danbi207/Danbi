@@ -54,7 +54,7 @@ const MatchedHelp = () => {
 
   const checkRoomId = useCallback(() => {
     axios({
-      url: "http://localhost:5000/room/check/${helpPostId}",
+      url: `/room/check/${helpPostId}`,
       method:"get"
     }).then(({data})=>{
       if(data === 2){

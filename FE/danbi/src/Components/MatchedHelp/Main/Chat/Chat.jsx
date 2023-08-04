@@ -123,9 +123,9 @@ const Chat = (props) => {
   },[props.roomId]);
 
   useEffect(() => {
-    //DO : 소켓 초기화 및 접속
+    //DO : express 서버에 소켓연결
     if(props.mode!=="Chat"){return;}
-    socketRef.current = io.connect("/room");
+    socketRef.current = io.connect("/",{path:"/room/socket.io"});
     pcRef.current = new RTCPeerConnection(pc_config);
 
     socketRef.current.on("all_users", (allUsers) => {
