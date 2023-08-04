@@ -1,11 +1,10 @@
 package com.danbi.domain.Item.service;
 
 import com.danbi.domain.Item.constant.Color;
-import com.danbi.domain.Item.constant.Rank;
+import com.danbi.domain.Item.constant.Ranking;
 import com.danbi.domain.Item.entity.Item;
 import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.Item.vo.ItemVo;
-import com.danbi.domain.point.service.PointService;
 import com.danbi.domain.profile.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,34 +19,64 @@ import javax.persistence.PersistenceContext;
 public class ItemService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
     private final ItemRepository itemRepository;
 
     public ItemVo getRandomColor() {
         double randomValue = Math.random();
         Color color;
-        Rank rank;
+        Ranking ranking;
 
-        if (randomValue < 0.1) {
+        if (randomValue < 0.05) {
+            color = Color.PINK;
+            ranking = Ranking.LEGENDARY;
+        } else if (randomValue < 0.1) {
+            color = Color.DIAMOND;
+            ranking = Ranking.EPIC;
+        } else if (randomValue < 0.15) {
+            color = Color.PLATINUM;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.2) {
+            color = Color.GOLD;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.25) {
+            color = Color.SILVER;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.3) {
+            color = Color.BRONZE;
+            ranking = Ranking.EPIC;
+        }else if (randomValue < 0.4) {
+            color = Color.RED;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.5) {
+            color = Color.ORANGE;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.6) {
             color = Color.YELLOW;
-            rank = Rank.PLATINUM;
-        } else if (randomValue < 0.4) {
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.7) {
             color = Color.GREEN;
-            rank = Rank.GOLD;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.8) {
+            color = Color.BLUE;
+            ranking = Ranking.RARE;
+        }else if (randomValue < 0.9) {
+            color = Color.NAVY;
+            ranking = Ranking.RARE;
         } else {
-            color = Color.BLACK;
-            rank = Rank.SILVER;
+            color = Color.PURPLE;
+            ranking = Ranking.RARE;
         }
 
         return ItemVo.builder()
                 .color(color)
-                .rank(rank).build();
+                .ranking(ranking).build();
     }
 
     public Item pickItem(Profile profile) {
         Item item = itemRepository.findByProfile(profile).get();
         ItemVo itemVo = getRandomColor();
-        item.update(itemVo.getColor(), itemVo.getRank());
+        item.update(itemVo.getColor(), itemVo.getRanking());
         em.flush();
         return item;
     }

@@ -25,6 +25,6 @@ public interface FriendInfoService {
     // 내 친구 목록 조회
     ResponseFriendListDto searchMyFriend(Long memberId);
 
-    public boolean isFriend(Long from, Long to);
+    boolean isFriend(Long from, Long to);
 
 }

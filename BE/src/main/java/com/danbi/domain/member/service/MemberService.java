@@ -1,10 +1,11 @@
 package com.danbi.domain.member.service;
 
 import com.danbi.domain.Item.constant.Color;
-import com.danbi.domain.Item.constant.Rank;
+import com.danbi.domain.Item.constant.Ranking;
 import com.danbi.domain.Item.entity.Item;
 import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
+import com.danbi.domain.member.dto.MemberInfoDto;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
 import com.danbi.domain.point.entity.Point;
@@ -49,8 +50,8 @@ public class MemberService {
         pointRepository.save(point);
 
         Item item = Item.builder()
-                .color(Color.BLACK)
-                .rank(Rank.SILVER)
+                .color(Color.RED)
+                .ranking(Ranking.RARE)
                 .profile(profile).build();
         itemRepository.save(item);
 
@@ -84,6 +85,10 @@ public class MemberService {
     public Member findByMemberId(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+    }
+
+    public MemberInfoDto searchMember(Long memberId) {
+        return memberRepository.searchMember(memberId);
     }
 
 }

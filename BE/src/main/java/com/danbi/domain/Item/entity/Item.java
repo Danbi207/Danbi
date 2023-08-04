@@ -1,7 +1,7 @@
 package com.danbi.domain.Item.entity;
 
 import com.danbi.domain.Item.constant.Color;
-import com.danbi.domain.Item.constant.Rank;
+import com.danbi.domain.Item.constant.Ranking;
 import com.danbi.domain.common.BaseEntity;
 import com.danbi.domain.profile.entity.Profile;
 import lombok.AccessLevel;
@@ -30,17 +30,17 @@ public class Item extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private Rank ranking;
+    private Ranking ranking;
 
-    public void update(Color color, Rank ranking) {
+    public void update(Color color, Ranking ranking) {
         this.color = color;
         this.ranking = ranking;
     }
 
     @Builder
-    public Item(Profile profile, Color color, Rank rank) {
+    public Item(Profile profile, Color color, Ranking ranking) {
         this.profile = profile;
         this.color = color;
-        this.ranking = rank;
+        this.ranking = ranking;
     }
 }

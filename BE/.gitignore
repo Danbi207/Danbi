@@ -38,3 +38,6 @@ out/
 
 ##firebaseKEy
 firebase_service_key.json
+
+## env
+.env

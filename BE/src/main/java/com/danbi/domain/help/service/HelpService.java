@@ -21,7 +21,7 @@ import javax.persistence.PersistenceContext;
 public class HelpService {
 
     @PersistenceContext
-    private final EntityManager em;
+    private EntityManager em;
 
     private final HelpPostRepository helpPostRepository;
     private final HelpRepository helpRepository;
@@ -60,6 +60,10 @@ public class HelpService {
         validateHelpMatchHelper(help,memberId);
 
         help.updateHelperFlag(true);
+    }
+
+    public Help search(HelpPost helpPost) {
+        return helpRepository.findByHelpPost(helpPost).get();
     }
 
 

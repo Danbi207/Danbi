@@ -1,11 +1,9 @@
-spring:
-  # 개발 데이터베이스 연결
-  datasource:
-    url: jdbc:mysql://localhost:3306/danbi?serverTimezone=UTC&characterEncoding=UTF-8
-    username: user
-    password: qlrudauf@123
-    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8080
+  servlet:
+    context-path: /
 
+spring:
 
   redis:
     pool:
@@ -13,4 +11,81 @@ spring:
       max-idle: 8 # pool의 idle 최대 커넥션 수
       max-active: 8  # pool에 할당될 수 있는 최대 커넥션
     port: 6379
-    host: 127.0.0.1 # 레디스 서버 호스트
+    host: ${SPRING_REDIS} # 레디스 서버 호스트
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true # 콘솔창에 sql 출력
+    properties:
+      hibernate:
+        format_sql: true # sql 예쁘게 출력
+        default_batch_fetch_size: 500 # 일대다 컬렉션 조회 시 성능 최적화 : 100 ~ 1000 권장
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false # 영속성 컨텍스트의 생존 범위를 트랜잭션 범위로 한정 (default 인 true 에서는 interceptor, controller, view 까지 살아있음)
+
+
+  servlet:
+    multipart:
+      max-file-size: 10MB # 파일 업로드 요청 시 하나의 파일 크기를 10MB 제한
+      max-request-size: 100MB # 파일 업로드 요청 시 모든 파일 크기합을 100MB 제한
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    org.hibernate.type: trace # 콘솔창에 조건에 바인딩되는 값 및 조회 결과 출력
+    com.danbi: debug
+
+feign:
+  client:
+    config:
+      default: # 전역 처리
+        connectTimeout: 5000 # 3-way handshake 시간 제한
+        readTimeout: 5000
+
+jasypt:
+  password: ${PASSWORD}
+
+# OAuth - KAKAO
+kakao:
+  client:
+    id: ENC(AoNqVDwYDOo8uphRuyhw0eAk9i18yW1ppZqGWe1cBsc06V87gLBMSjHGd9JZsyXv) # REST API 키
+    secret: ENC(VO10nYMY7rGaEqT1yVX5CJSBrNeUJaQo8IjkHnduJKHK7pIsPFcLgDhGqmLE3NiY) # 보안 - Client Secret
+
+token:
+  secret: ENC(CFBlQEwvaa+vMjUqHL0rfC+Tzdhy9RGJ2ClJEDlB+FffWbHDBUaz1RXykDnXEzcl) # JWT secret key
+  access-token-expiration-time: 90000000  # 15분 1000(ms) x 60(s) x 15(m)
+  refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d
+
+# S3
+cloud:
+  aws:
+    s3:
+      bucket: danbi-help
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      access-key: ENC(KzyGTfZ93uzfRpeAVP27uHfLq1Pktdy5KgwreeeG4hM=)
+      secret-key: ENC(rFtftLJvm6oN0F1d2KZ8KWMqwqwfHc55tff8Y1mKFaBiB4a7XRHPxc8nIrK1i52KKbxqoexBQqg=)
+
+#springdoc swagger
+springdoc:
+  packages-to-scan: com.danbi.api
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha

@@ -29,7 +29,7 @@ public class GuestBookService {
     }
 
     public GuestBook findByMember(Member member) {
-        Optional<GuestBook> op = guestBookRepository.getGuestBookByMember(member);
+        Optional<GuestBook> op = guestBookRepository.findGuestBookByMember(member);
 
         if(op.isEmpty()) {
             throw new GuestBookNotFoundException(ErrorCode.GUESTBOOK_NOT_EXISTS);
