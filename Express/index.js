@@ -14,7 +14,7 @@ connectDB();
 let users = {};
 
 let socketToRoom = {};
-
+let chatLog = {};
 const maximum = 2;
 
 io.on("connection", (socket) => {
@@ -44,8 +44,12 @@ io.on("connection", (socket) => {
   });
   socket.on("message",async (sdp)=>{
     console.log("message: " + socket.id);
-    const chat = new Chat(sdp);
-    await chat.save();
+    // const chat = new Chat(sdp);
+    // await chat.save();
+    if(!(`${socketToRoom[socket.id]}` in chatLog)){
+      chatLog[`${socketToRoom[socket.id]}`]=[];
+    }
+    chatLog[`${socketToRoom[socket.id]}`].push(sdp);
     socket.broadcast.emit("message", sdp);
   })
   socket.on("offer", (sdp) => {
@@ -66,6 +70,8 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(`[${socketToRoom[socket.id]}]: ${socket.id} exit`);
     const roomID = socketToRoom[socket.id];
+    chatLog[roomId].forEach(e=>await (new Chat(e)).save());
+    chatLog[roomId]=[];
     let room = users[roomID];
     if (room) {
       room = room.filter((user) => user.id !== socket.id);
