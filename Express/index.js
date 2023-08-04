@@ -16,7 +16,6 @@ let users = {};
 let socketToRoom = {};
 let chatLog = {};
 const maximum = 2;
-
 io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     if (users[data.room]) {
@@ -39,17 +38,14 @@ io.on("connection", (socket) => {
     );
 
     console.log(usersInThisRoom);
-
     io.sockets.to(socket.id).emit("all_users", usersInThisRoom);
   });
   socket.on("message",async (sdp)=>{
     console.log("message: " + socket.id);
-    // const chat = new Chat(sdp);
-    // await chat.save();
-    if(!(socket.id in chatLog)){
-      chatLog[socket.id]=[];
+    if(!(socketToRoom[socket.id] in chatLog)){
+      chatLog[socketToRoom[socket.id]]=[];
     }
-    chatLog[socket.id].push(sdp);
+    chatLog[socketToRoom[socket.id]].push(sdp);
     socket.broadcast.emit("message", sdp);
   })
   socket.on("offer", (sdp) => {
@@ -62,16 +58,19 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("getAnswer", sdp);
   });
 
-  socket.on("candidate", (candidate) => {
+  socket.on("candidate", async (candidate) => {
     console.log("candidate: " + socket.id);
     socket.broadcast.emit("getCandidate", candidate);
   });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     console.log(`[${socketToRoom[socket.id]}]: ${socket.id} exit`);
     const roomID = socketToRoom[socket.id];
-    chatLog[socket.id].forEach(e=>await (new Chat(e)).save());
-    chatLog[socket.id]=[];
+
+    if(socketToRoom[socket.id] in chatLog && chatLog[socketToRoom[socket.id]].length >= 1){
+      await Chat.insertMany(chatLog[socketToRoom[socket.id]]);
+      chatLog[socketToRoom[socket.id]]=[];
+    }
     let room = users[roomID];
     if (room) {
       room = room.filter((user) => user.id !== socket.id);
@@ -90,10 +89,14 @@ server.listen(`${PORT}`, () => {
   console.log(`server running on ${PORT}`);
 });
 
-app.get('/room/check/:roomId', (req, res) => {
+app.get('/room/check/:roomId', async (req, res) => {
   //DO : roomId에 있는 사람 수 반환
   if(req.params.roomId in users){//사람이 있는 경우
     res.json(users[req.params.roomId].length);
+    if(req.params.roomId in chatLog && chatLog[req.params.roomId].length >= 1){
+      await Chat.insertMany(chatLog[req.params.roomId]);
+      chatLog[req.params.roomId]=[];
+    }
   }else{//사람이 없는 경우
     res.json(0);
   }
