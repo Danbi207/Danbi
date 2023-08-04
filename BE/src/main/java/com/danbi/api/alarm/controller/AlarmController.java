@@ -49,9 +49,9 @@ public class AlarmController {
     }
 
     @Operation(summary = "알림 읽음처리 API", description = "알림 읽음처리")
-    @GetMapping("/read/{alarm_id}")
-    ResponseEntity<String> readAlarm(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("alarm_id") Long alarmId) {
-        alarmInfoService.readAlarm(memberInfoDto.getMemberId(), alarmId);
+    @GetMapping("/read")
+    ResponseEntity<String> readAlarm(@MemberInfo MemberInfoDto memberInfoDto) {
+        alarmInfoService.readAlarm(memberInfoDto.getMemberId());
         return ResponseEntity.ok("알림을 읽음 처리했습니다.");
     }
 

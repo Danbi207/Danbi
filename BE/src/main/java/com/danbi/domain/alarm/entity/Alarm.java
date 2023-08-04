@@ -83,4 +83,8 @@ public class Alarm extends BaseEntity {
         else this.state = State.RECEIVER_DESTROY;
     }
 
+    public void updateReadAlarm() {
+        this.readFlag = true;
+    }
+
 }
