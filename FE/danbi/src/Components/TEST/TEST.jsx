@@ -5,8 +5,9 @@ const TEST = () => {
   const [url,setUrl] = useState("");
   return (
     <div>
-      <input onChange={(e)=>setUrl(url)}></input>
+      <input onChange={(e)=>setUrl(e.target.value)}></input>
       <Btn onClick={()=>{
+        console.log(url);
         axios({
           method:"get",
           url:url
