@@ -66,7 +66,7 @@ const Chat = (props) => {
       pcRef.current.ontrack = (ev) => {
         // console.log("add remotetrack success");
         if (remoteVideoRef.current) {
-        remoteVideoRef.current.srcObject = ev.stream.current[0];
+        remoteVideoRef.current.srcObject = ev.stream[0];
         }
       };
       socketRef.current.emit("join_room", {
