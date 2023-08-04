@@ -22,13 +22,15 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     show-sql: true # 콘솔창에 sql 출력
     properties:
       hibernate:
         format_sql: true # sql 예쁘게 출력
         default_batch_fetch_size: 500 # 일대다 컬렉션 조회 시 성능 최적화 : 100 ~ 1000 권장
+        dialect: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false # 영속성 컨텍스트의 생존 범위를 트랜잭션 범위로 한정 (default 인 true 에서는 interceptor, controller, view 까지 살아있음)
+
 
   servlet:
     multipart:
@@ -86,3 +88,4 @@ springdoc:
     disable-swagger-default-url: true
     display-request-duration: true
     operations-sorter: alpha
+
