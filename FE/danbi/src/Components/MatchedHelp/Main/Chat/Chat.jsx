@@ -16,6 +16,7 @@ const Chat = (props) => {
   const chatRef = useRef();
   const socketRef = useRef();
   const pcRef = useRef();
+  const stream = useRef();
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const [chatValue,setChatValue] = useState("");
@@ -43,15 +44,15 @@ const Chat = (props) => {
   }
   const setVideoTracks = useCallback(async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      stream.current = await navigator.mediaDevices.getUserMedia({
         video: onVideo,
         audio: onAudio,
       });
-      if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+      if (localVideoRef.current) localVideoRef.current.srcObject = stream.current;
       if (!(pcRef.current && socketRef.current)) return;
-      stream.getTracks().forEach((track) => {
+      stream.current.getTracks().forEach((track) => {
         if (!pcRef.current) return;
-        pcRef.current.addTrack(track, stream);
+        pcRef.current.addTrack(track, stream.current);
       });
       pcRef.current.onicecandidate = (e) => {
         if (e.candidate) {
@@ -65,7 +66,7 @@ const Chat = (props) => {
       pcRef.current.ontrack = (ev) => {
         // console.log("add remotetrack success");
         if (remoteVideoRef.current) {
-        remoteVideoRef.current.srcObject = ev.streams[0];
+        remoteVideoRef.current.srcObject = ev.stream.currents[0];
         }
       };
       socketRef.current.emit("join_room", {
@@ -120,7 +121,7 @@ const Chat = (props) => {
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
       }
     }).catch(err=>console.log(err));
-  },[]);
+  },[props.roomId]);
 
   useEffect(() => {
     //DO : express 서버에 소켓연결
@@ -183,12 +184,18 @@ const Chat = (props) => {
           <VideoTitle>나</VideoTitle>
           <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
-            <ControlBtn onClick={()=>setOnVideo(!onVideo)} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
+            <ControlBtn onClick={()=>{
+              stream.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
+              setOnVideo(!onVideo);
+            }} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
                 onVideo ? "화면 끄기" : "화면 켜기"
               }
             </ControlBtn>
-            <ControlBtn onClick={()=>setOnAudio(!onAudio)}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
+            <ControlBtn onClick={()=>{
+              stream.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
+              setOnAudio(!onAudio);
+            }}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
                 onAudio ? "소리 끄기" : "소리 켜기"
               }
