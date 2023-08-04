@@ -12,7 +12,6 @@ const pc_config = {
     "stun:stun4.l.google.com:19302",
   ]}],
 };
-const SOCKET_SERVER_URL = "http://localhost:5000";
 const Chat = (props) => {
   const chatRef = useRef();
   const socketRef = useRef();
@@ -111,7 +110,7 @@ const Chat = (props) => {
     //FIXME : 채팅내역에서 nickname을 비교해 내가 친 채팅인지 상대방이 친 채팅인지 구분하여 넣기
     axios({
       method:"get",
-      url:`http://localhost:5000/room/chat/${props.roomId}`,
+      url:`/room/chat/${props.roomId}`,
     }).then(({data})=>{
       for(let i = 0; i < data.length; i++){
         const messageEl = document.createElement("div");
@@ -124,8 +123,9 @@ const Chat = (props) => {
   },[props.roomId]);
 
   useEffect(() => {
+    //DO : 소켓 초기화 및 접속
     if(props.mode!=="Chat"){return;}
-    socketRef.current = io.connect(SOCKET_SERVER_URL);
+    socketRef.current = io.connect("/room");
     pcRef.current = new RTCPeerConnection(pc_config);
 
     socketRef.current.on("all_users", (allUsers) => {
