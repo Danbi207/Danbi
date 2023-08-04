@@ -1,9 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Help from './Help.svg';
 import Buttons from './Buttons.jsx';
-import { UNSAFE_NavigationContext } from 'react-router-dom';
 
 
 const Jandi = ({ help_log, setPickModalOpen, point }) => {
