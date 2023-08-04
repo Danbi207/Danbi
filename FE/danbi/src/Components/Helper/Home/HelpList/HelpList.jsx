@@ -8,8 +8,9 @@ const HelpList = (props) => {
   const [helps,setHelps] = useState([]);
 
   useEffect(()=>{
-    setFriends(props.helpList.filter(e=>e.friend_flag).map(e=><HelpListItem key={e.help_post_id} help={e} />));
-    setHelps(props.helpList.filter(e=>!e.friend_flag).map(e=><HelpListItem key={e.help_post_id} help={e} />));
+    let keyIdx = 0;
+    setFriends(props.helpList.filter(e=>e.friend_flag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setHelps(props.helpList.filter(e=>!e.friend_flag).map(e=><HelpListItem key={keyIdx++} help={e} />));
   },[props.helpList]);
 
   return (
@@ -31,14 +32,20 @@ const HR = styled.div`
   background-color: #D5CECE;
 `
 const HelpListWrap = styled.div`
-  height: calc(100% - 3rem);
-  margin-top : 3rem;
-  margin-bottom : 3rem;
+  height: 100%;
+  margin-bottom : 3.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: nowrap;
   overflow-y: auto;
+
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   & > *{
     flex : 0 0 auto;
     margin: 0.5rem 0;

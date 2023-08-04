@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import styled,{keyframes} from 'styled-components';
 const HelpMapItem = (props) => {
+  const navigate = useNavigate();
   return (
     <>
       {
@@ -22,7 +24,7 @@ const HelpMapItem = (props) => {
                 </UserWrap>
               </RowWrap>
               <HelpContent>{props.help.content}</HelpContent>
-              <DetailBtn>상세보기</DetailBtn>
+              <DetailBtn onClick={()=>{navigate(`/detail/${props.help.help_post_id}`)}}>상세보기</DetailBtn>
             </HelpMapItemWrap>
           </>
           :null

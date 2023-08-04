@@ -113,7 +113,6 @@ const SettingWrap = styled.div`
   height: 100%;
   color: ${props=>props.theme.colors.titleColor};
   background-color: ${props=>props.theme.colors.bgColor};
-  border-left: 1px solid ${props=>props.theme.colors.titleColor};
   padding: 1rem;
 `
 

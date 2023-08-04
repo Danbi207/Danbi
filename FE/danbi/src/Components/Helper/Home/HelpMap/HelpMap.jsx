@@ -3,6 +3,7 @@ import styled  from 'styled-components';
 import { useState } from 'react';
 import "./HelpMap.css";
 import HelpMapItem from "./HelpMapItem.jsx";
+import { useNavigate } from 'react-router-dom';
 const HelpMap = (props) => {
   const {kakao} = window;
   const mapRef = useRef();
@@ -11,6 +12,7 @@ const HelpMap = (props) => {
   const [overlayList,setOverlayList] = useState([]);
   const [curHelpIdx,setCurHelpIdx] = useState(0);
   const [detailmode, setDetailMode] = useState(false);
+  const navigate = useNavigate();
   const getOverlay = useCallback((help)=>{
     return `
     <div class='UserWrap'>
@@ -30,6 +32,7 @@ const HelpMap = (props) => {
   },[]);
 
   useEffect(()=>{
+    console.log(kakao);
     //DO : 카카오 맵 초기설정
     const mapOption = { 
       center: new kakao.maps.LatLng(props.position.coords.latitude,props.position.coords.longitude), // 지도의 중심좌표
@@ -71,7 +74,7 @@ const HelpMap = (props) => {
       helpDetailBtn.className="HelpDetailBtn";
       helpDetailBtn.innerText="상세보기";
       helpDetailBtn.onclick = function(){//상세보기 함수
-        console.log(help.help_post_id);
+        navigate(`/detail/${help.help_post_id}`)
       }
       content.insertAdjacentElement("beforeend",helpDetailBtn);
 
@@ -92,7 +95,7 @@ const HelpMap = (props) => {
 
       overlayList.push(overlay);
     });
-  },[props.helpList,kakao,map,markerList,overlayList,getOverlay]);
+  },[props.helpList,kakao,map,markerList,overlayList,getOverlay,navigate]);
 
   return (
     <HelpMapWrap>

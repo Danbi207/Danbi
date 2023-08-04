@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from './example-profile.jpg';
-import AccuseButton from './AccuseButton.jsx';
+import AccuseButton from './utils/AccuseButton.jsx';
 
 const UserInfo = () => {
   return (
@@ -60,7 +60,6 @@ const PlusButton = styled.button`
 const Btns = styled.div`
   display: flex;
   flex-direction: row;
-`
-
+`;
 
 export default UserInfo;
