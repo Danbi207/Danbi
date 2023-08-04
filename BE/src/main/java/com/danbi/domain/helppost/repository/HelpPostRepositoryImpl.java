@@ -49,7 +49,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .where(
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
-                        helpPost.state.ne(State.DELETE)
+                        helpPost.state.ne(State.DELETE),
+                        helpPost.state.ne(State.COMPLETED)
                 )
                 .fetch();
     }
@@ -68,7 +69,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
                         helpPost.faceFlag.eq(true),
-                        helpPost.state.ne(State.DELETE)
+                        helpPost.state.ne(State.DELETE),
+                        helpPost.state.ne(State.COMPLETED)
                 )
                 .fetch();
     }
