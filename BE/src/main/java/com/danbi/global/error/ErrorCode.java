@@ -21,6 +21,7 @@ public enum ErrorCode {
     INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입 입니다.(memberType : KAKAO)"),
     ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "M-002", "이미 가입된 회원 입니다."),
     MEMBER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
+    MEMBER_ROLE_NOT_EXIST(HttpStatus.BAD_REQUEST, "M-004", "해당 역할은 존재하지 않습니다."),
 
     // 프로필
     PROFILE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "P-001", "해당 프로필은 존재하지 않습니다."),
