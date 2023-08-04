@@ -72,7 +72,7 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
       }
     }
     return res;
-  }, [page, help_log, selectIdx, cur_CheckedColor, cur_UncheckedColor]);
+  }, [page, help_log, selectIdx, cur_CheckedColor, cur_UncheckedColor, ShowOverLay, onGross]);
   
 
   const prevGross = () => {

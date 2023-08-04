@@ -14,7 +14,7 @@ const DetailMap = ({ position }) => {
       level: 5,
     };
     setMap(new kakao.maps.Map(mapRef.current, mapOption));
-  }, [mapRef, kakao]);
+  }, [mapRef, kakao, position]);
 
   // 맵 위에 목적지 및 만나는 곳 마커 찍기
   useEffect(() => {
@@ -38,7 +38,7 @@ const DetailMap = ({ position }) => {
       });
       marker.setMap(map);
     }
-  }, [map]);
+  }, [map, position, kakao]);
 
   return (
     <>

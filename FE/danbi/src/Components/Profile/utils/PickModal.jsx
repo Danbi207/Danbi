@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
 import PickAnimation from '../data.json';
@@ -28,9 +28,9 @@ const PickModal = ({ setPickModalOpen }) => {
   const CloseModal = () => {
     setPickModalOpen(false);
   };
-
+  
   const dispatch = useDispatch();
-
+  
   const handlePickModal = (pickdata) => {
     setShowAnimation(true);
 
@@ -129,7 +129,7 @@ const PickModalWrap = styled.div`
   align-items: center;
 `;
 
-const Wrap = styled.div`
+const Wrap = styled.canvas`
   width: 21rem;
   height: 14rem;
   background-color: ${(props) => props.theme.colors.bgColor};
