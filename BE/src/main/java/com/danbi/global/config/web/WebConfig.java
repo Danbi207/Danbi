@@ -24,8 +24,16 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1/**") // 어떤 api 경로에 매핑할지
-//                .allowedOrigins("http://localhost:8082") // cors 허용할 경로
-                .allowedOrigins("*")
+                .allowedOrigins(
+                        "http://localhost:3000"
+                        , "http://localhost:8080"
+                        , "http://i9d207.p.ssafy.io:8080"
+                        , "https://i9d207.p.ssafy.io:8080"
+                        , "http://i9d207.p.ssafy.io3000"
+                        , "https://i9d207.p.ssafy.io:3000"
+                        ,"https://i9d207.p.ssafy.io")// cors 허용할 경로
+//                .allowedOrigins("*")
+                .allowCredentials(true)
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
@@ -33,7 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.PATCH.name(),
                         HttpMethod.DELETE.name(),
                         HttpMethod.OPTIONS.name()
-                )
+                ).allowCredentials(true)
                 .maxAge(3600); // preflight
     }
 
