@@ -21,10 +21,10 @@ public class PresetController {
 
     @Operation(summary = "프리셋 1개 생성 및 저장 API", description = "프리셋 저장")
     @PostMapping("/create")
-    public ResponseEntity<PresetCreateDto.Response> createPreset(@RequestBody PresetCreateDto.Request requestDto,
+    public ApiResponse<PresetCreateDto.Response> createPreset(@RequestBody PresetCreateDto.Request requestDto,
                                                                  @MemberInfo MemberInfoDto memberInfoDto) {
         PresetCreateDto.Response response = presetManageService.createPreset(requestDto, memberInfoDto.getMemberId());
-        return ResponseEntity.ok(response);
+        return ApiResponse.ok(response);
     }
 
     @Operation(summary = "프리셋 1개 상세 조회 API", description = "프리셋 1개 조회")
@@ -45,29 +45,29 @@ public class PresetController {
 
     @Operation(summary = "프리셋 1개 내용 수정 API", description = "프리셋 수정")
     @PostMapping("/update/{presetId}")
-    public ResponseEntity<PresetUpdateDto.Response> updatePreset(@PathVariable Long presetId,
+    public ApiResponse<PresetUpdateDto.Response> updatePreset(@PathVariable Long presetId,
                                                                  @RequestBody PresetUpdateDto.Request requestDto,
                                                                  @MemberInfo MemberInfoDto memberInfoDto) {
         PresetUpdateDto.Response response = presetManageService.modifyPresetBody(presetId,
                                                                                 requestDto,
                                                                                 memberInfoDto.getMemberId());
-        return ResponseEntity.ok(response);
+        return ApiResponse.ok(response);
     }
 
     @Operation(summary = "프리셋 순서 수정 API", description = "프리셋 순서 수정")
     @PostMapping("/sequence")
-    public ResponseEntity<PresetSequenceUpdateDto.Response> updatePresetSequence(@RequestBody PresetSequenceUpdateDto.Request requestDto,
+    public ApiResponse<PresetSequenceUpdateDto.Response> updatePresetSequence(@RequestBody PresetSequenceUpdateDto.Request requestDto,
                                                                                  @MemberInfo MemberInfoDto memberInfoDto) {
         PresetSequenceUpdateDto.Response response = presetManageService.updateSequence(requestDto, memberInfoDto.getMemberId());
-        return ResponseEntity.ok(response);
+        return ApiResponse.ok(response);
     }
 
     @Operation(summary = "프리셋 삭제 API", description = "프리셋 삭제")
     @DeleteMapping("/{presetId}")
-    public ResponseEntity<String> deletePreset(@PathVariable Long presetId,
+    public ApiResponse<String> deletePreset(@PathVariable Long presetId,
                                                @MemberInfo MemberInfoDto memberInfoDto) {
         presetManageService.deletePreset(presetId, memberInfoDto.getMemberId());
-        return ResponseEntity.ok("삭제 완료");
+        return ApiResponse.ok("삭제 완료");
     }
 
 }

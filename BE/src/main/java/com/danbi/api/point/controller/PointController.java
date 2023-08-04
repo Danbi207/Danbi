@@ -1,5 +1,6 @@
 package com.danbi.api.point.controller;
 
+import com.danbi.api.ApiResponse;
 import com.danbi.api.point.dto.AccumulatePointResponseDto;
 import com.danbi.api.point.dto.PointResponseDto;
 import com.danbi.api.point.service.PointInfoService;
@@ -24,16 +25,16 @@ public class PointController {
 
     @Operation(summary = "누적 포인트 조회 API", description = "누적 포인트 조회 API")
     @PostMapping("/{profile_id}")
-    public ResponseEntity<AccumulatePointResponseDto> getAccumulatePoint(@PathVariable Long profile_id) {
+    public ApiResponse<AccumulatePointResponseDto> getAccumulatePoint(@PathVariable Long profile_id) {
         AccumulatePointResponseDto accumulatePoint = pointInfoService.getAccumulatePoint(profile_id);
-        return ResponseEntity.ok(accumulatePoint);
+        return ApiResponse.ok(accumulatePoint);
     }
 
     @Operation(summary = "현재 포인트 조회 API", description = "현재 포인트 조회 API")
     @PostMapping("/now/{profile_id}") // 프로필 주인과 사용자가 동일한지 검증
-    public ResponseEntity<PointResponseDto> getPoint(@MemberInfo MemberInfoDto memberInfoDto,
+    public ApiResponse<PointResponseDto> getPoint(@MemberInfo MemberInfoDto memberInfoDto,
                                                      @PathVariable Long profile_id) {
         PointResponseDto point = pointInfoService.getPoint(profile_id, memberInfoDto.getMemberId());
-        return ResponseEntity.ok(point);
+        return ApiResponse.ok(point);
     }
 }

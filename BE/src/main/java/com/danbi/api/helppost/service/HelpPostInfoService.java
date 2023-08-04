@@ -150,6 +150,7 @@ public class HelpPostInfoService {
                 .ip(IpDto.builder()
                         .ipId(helpPost.getIpId())
                         .name(helpPost.getName())
+                        .profileUrl(helpPost.getProfileUrl())
                         .accumulateDewPoint(helpPost.getAccumulateDewPoint())
                         .accusePoint(helpPost.getAccusePoint()).build())
                 .faceFlag(helpPost.isFaceFlag())

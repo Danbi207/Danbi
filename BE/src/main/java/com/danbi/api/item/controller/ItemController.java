@@ -1,5 +1,6 @@
 package com.danbi.api.item.controller;
 
+import com.danbi.api.ApiResponse;
 import com.danbi.api.item.dto.ItemResponseDto;
 import com.danbi.api.item.service.ItemInfoService;
 import com.danbi.api.point.dto.AccumulatePointResponseDto;
@@ -25,8 +26,8 @@ public class ItemController {
 
     @Operation(summary = "아이템 뽑기 API", description = "아이템 뽑기 API")
     @PostMapping("")  // 요청자의 보유 포인트가 뽑기에 필요한 포인트만큼 있는지 검증
-    public ResponseEntity<ItemResponseDto> getAccumulatePoint(@MemberInfo MemberInfoDto memberInfoDto) {
+    public ApiResponse<ItemResponseDto> getAccumulatePoint(@MemberInfo MemberInfoDto memberInfoDto) {
         ItemResponseDto itemResponseDto = itemInfoService.pickItem(memberInfoDto.getMemberId());
-        return ResponseEntity.ok(itemResponseDto);
+        return ApiResponse.ok(itemResponseDto);
     }
 }
