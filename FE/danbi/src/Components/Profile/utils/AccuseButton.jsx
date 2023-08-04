@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import accuseimg from '../Accuse.svg';
+import accuseimg from './MdReport.svg';
 
 const AccuseButton = () => {
   return (
@@ -13,8 +13,11 @@ const AccuseButton = () => {
 const AccuseWrap = styled.button`
   width: 2.4rem;
   height: 2rem;
-  background-color: #e85151;
+  background-color: #FF0000;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const AccuseImg = styled.img`

@@ -5,9 +5,9 @@ import PresetItem from './PresetItem.jsx';
 
 const Preset = ({preset_list, setPresetList}) => {
   console.log(preset_list);
-  const [OpenIndex, setOpenIndex] = useState(-1);
-  const showDetail = (index) => {
-    setOpenIndex(index);
+  const [OpenTitle, setOpenTitle] = useState(-1);
+  const showDetail = (title) => {
+    setOpenTitle(title);
   };
   const handleChange = (result) => {
     if (!result.destination) return;
@@ -24,15 +24,16 @@ const Preset = ({preset_list, setPresetList}) => {
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {preset_list.map((value, index) => (
-                <Draggable draggableId={index.toString()} index={index}>
+                <Draggable draggableId={index.toString()} index={index} key={index}>
                   {(provided, snapshot) => (
                     <Wrap
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      key={index}
                       isDragging={snapshot.isDragging}
                     >
-                      <PresetItem value={value} index={index} OpenIndex={OpenIndex} showDetail={showDetail} />
+                      <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
                     </Wrap>
                   )}
                 </Draggable>

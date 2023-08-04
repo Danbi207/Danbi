@@ -4,7 +4,7 @@ import PresetDetail from './PresetDetail';
 import Edit from './MdEdit.svg';
 import Delete from './MdDeleteForever.svg';
 
-const PresetItem = ({value, index, OpenIndex, showDetail}) => {
+const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     return(
         <>
             <Element key={index}>
@@ -13,7 +13,7 @@ const PresetItem = ({value, index, OpenIndex, showDetail}) => {
                         {value.content ? value.content : `프리셋 ${index + 1}`}
                     </ElementContent>
                     <Btns>
-                        <EditBtn onClick={() => {showDetail(index);}}>
+                        <EditBtn onClick={() => {showDetail(value.title);}}>
                             <EditImg src={Edit}/>
                         </EditBtn>
                         <DeleteBtn>
@@ -22,7 +22,7 @@ const PresetItem = ({value, index, OpenIndex, showDetail}) => {
                     </Btns>
                 </PreSetElement>
             </Element>
-            {OpenIndex === index && (
+            {OpenTitle === value.title && (
             <PresetDetail content={value.content} showDetail={showDetail} />
             )}
         </>

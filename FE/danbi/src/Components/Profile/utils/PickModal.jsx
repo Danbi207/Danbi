@@ -10,6 +10,9 @@ import {
   setName,
   setDewPoint,
 } from '../../../store/Slice/JandiSlice';
+import Rare from './Rare.svg';
+import Epic from './Epic.svg';
+import Legendary from './Legendary.svg';
 
 const PickModal = ({ setPickModalOpen }) => {
   const [ShowAnimation, setShowAnimation] = useState(true);
@@ -73,8 +76,10 @@ const PickModal = ({ setPickModalOpen }) => {
             <Title>사용결과</Title>
             <CloseBtn onClick={CloseModal}>X</CloseBtn>
           </Header>
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            {cur_Tier === 'Rare' ? <Tier src={Rare} style={{width: '1.7rem'}} /> : cur_Tier === 'Epic' ? <Tier src={Epic} style={{width: '4.5rem'}}/> : <Tier src={Legendary} style={{width: '4.5rem'}} />}
+          </div>
           <ContentWrap>
-            <Tier>{cur_Tier}</Tier>
             <Example>
               <Rec $color={(props) => props.theme.colors.titleColor} />
               <Rec $color={cur_UncheckedColor} />
@@ -126,7 +131,7 @@ const PickModalWrap = styled.div`
 
 const Wrap = styled.div`
   width: 21rem;
-  height: 11.25rem;
+  height: 14rem;
   background-color: ${(props) => props.theme.colors.bgColor};
   display: flex;
   flex-direction: column;
@@ -139,9 +144,8 @@ const ContentWrap = styled.div`
   height: 5rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
-  margin: 0.5rem 0;
 `;
 
 const AcceptBtn = styled.button`
@@ -165,7 +169,9 @@ const Header = styled.div`
   margin: 0.5rem;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  font-size: 14px;
+`;
 
 const CloseBtn = styled.button``;
 
@@ -179,14 +185,18 @@ const Footer = styled.div`
 const Point = styled.div`
   font-size: 7px;
   margin-top: 0.25rem;
+  color: lightgray;
 `;
 
-const Tier = styled.div``;
+const Tier = styled.img`
+`
+
 
 const Example = styled.div`
   width: 6.75rem;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
 `;
 
 const Rec = styled.div`
