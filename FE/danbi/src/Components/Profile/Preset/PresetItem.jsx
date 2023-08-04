@@ -8,6 +8,13 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
     const [DeleteActive, setDeleteActive] = useState(false);
 
+    const callConfirm = () => {
+        if(window.confirm('삭제함?')){
+            alert('삭제됨');
+        } else {
+            alert('취소함');
+        }
+    }
     return(
         <>
             <Element key={index}>
@@ -19,7 +26,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                         <EditBtn onClick={() => {showDetail(value.title); setEditActive(!EditActive)}} $EditActive={EditActive} $DeleteActive={DeleteActive} >
                             <EditImg src={Edit}/>
                         </EditBtn>
-                        <DeleteBtn onClick={() => setDeleteActive(!DeleteActive)} $DeleteActive={DeleteActive} $EditActive={EditActive}>
+                        <DeleteBtn onClick={() => {setDeleteActive(!DeleteActive); callConfirm()}} $DeleteActive={DeleteActive} $EditActive={EditActive}>
                             <DeleteImg src={Delete} />
                         </DeleteBtn>
                     </Btns>
@@ -56,7 +63,6 @@ const EditBtn = styled.button`
     margin-right: 10px;
     display: flex;
     align-items: center;
-    visibility: ${props => !props.$EditActive && props.$DeleteActive ? 'hidden' : 'visible'};
 `;
 
 const EditImg = styled.img`
@@ -73,7 +79,7 @@ const DeleteBtn = styled.button`
     height: auto;
     display: flex;
     align-items: center;
-    visibility: ${props => props.$EditActive && !props.$DeleteActive ? 'hidden' : 'visible'};
+    visibility: ${props => props.$EditActive ? 'hidden' : 'visible'};
 `;
 
 const DeleteImg = styled.img`
