@@ -19,7 +19,9 @@ export const reissueAccessToken = async ()=>{
   }
 
   try{
-    const {data} = await axios.post("/api/v1/access-token/issue",{
+    const {data} = await axios({
+      method:"post",
+      url:"/api/v1/access-token/issue",
       headers:{"Authorization" : `Bearer ${refreshToken}`}
     });
     token.setAccessToken(data.accessToken);
@@ -44,7 +46,9 @@ export const authGet = async (url,options)=>{
     const res = await reissueAccessToken();
     if(res === null) return null;
 
-    const {data} = await axios.get(url,{
+    const {data} = await axios({
+      method:"get",
+      url,
       ...options,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
@@ -54,7 +58,8 @@ export const authGet = async (url,options)=>{
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
-      const {data} = await axios.get(url,{
+      const {data} = await axios({
+        method:"get",
         ...options,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
@@ -80,7 +85,8 @@ export const authPost = async (url,options)=>{
     const res = await reissueAccessToken();
     if(res === null) return null;
 
-    const {data} = await axios.post(url,{
+    const {data} = await axios({
+      method:"post",
       ...options,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
@@ -90,7 +96,9 @@ export const authPost = async (url,options)=>{
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
-      const {data} = await axios.post(url,{
+      const {data} = await axios({
+        method:"post",
+        url,
         ...options,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
@@ -116,7 +124,9 @@ export const authDelete = async (url,options)=>{
     const res = await reissueAccessToken();
     if(res === null) return null;
 
-    const {data} = await axios.delete(url,{
+    const {data} = await axios({
+      method:"delete",
+      url,
       ...options,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
@@ -126,7 +136,9 @@ export const authDelete = async (url,options)=>{
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
-      const {data} = await axios.delete(url,{
+      const {data} = await axios.delete({
+        method:"delete",
+        url,
         ...options,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
@@ -152,7 +164,9 @@ export const authPut = async (url,options)=>{
     const res = await reissueAccessToken();
     if(res === null) return null;
 
-    const {data} = await axios.put(url,{
+    const {data} = await axios.put({
+      method:"put",
+      url,
       ...options,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
@@ -162,7 +176,9 @@ export const authPut = async (url,options)=>{
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
-      const {data} = await axios.put(url,{
+      const {data} = await axios.put({
+        method:"put",
+        url,
         ...options,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
