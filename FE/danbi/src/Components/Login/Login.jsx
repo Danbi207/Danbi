@@ -1,8 +1,10 @@
-import React,{useEffect,useState,useCallback} from 'react'
+import React,{useEffect,useCallback} from 'react'
 import styled from 'styled-components';
 import { reissueAccessToken } from '../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const autoLogin = useCallback(async()=>{
     const isLogin = await reissueAccessToken();
     if(isLogin()){
@@ -20,13 +22,7 @@ const Login = () => {
         navigate("/helper", { replace: true });
       }
     }
-  },[]);
-
-  useEffect(()=>{
-    //DO: 데이터 확인 코드
-    if(!userInfo) return;
-    console.log(userInfo);
-  },[userInfo]);
+  },[navigate]);
 
   useEffect(()=>{
     autoLogin();

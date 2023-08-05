@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect ,useCallback} from 'react'
 import { useDispatch} from "react-redux";
 import { useNavigate } from 'react-router';
 import { authGet, setToken,setTokenExpireTime } from '../../../Util/apis/api';
+
 const KaKaoOauth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const KaKaoOauth = () => {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
     localStorage.removeItem("role");
-  },[authGet])  
+  },[])  
 
   useEffect(()=>{
     //FIXME : 자동 로그인 로직
@@ -57,7 +58,7 @@ const KaKaoOauth = () => {
     }).catch((err)=>{
       console.log(err);
     });
-  },[dispatch,navigate])
+  },[dispatch,navigate,logout])
   return (
     <></>
   )
