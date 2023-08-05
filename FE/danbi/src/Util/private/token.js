@@ -21,7 +21,7 @@ export class Token{
     this.#accessToken = "";
   }
 
-  checkExpireTime(){
+  check(){
     return this.#accessToken==="" || (new Date()) >= (new Date(this.#accessTokenExpireTime));
   }
 }
