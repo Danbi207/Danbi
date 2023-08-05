@@ -26,7 +26,7 @@ export const reissueAccessToken = ()=>{
   }
 
   axios({
-    method:"get",
+    method:"post",
     url:"/api/v1/access-token/issue",
     headers:{"Authentication" : `Bearer ${refreshToken}`}
   }).then(({data})=>{
