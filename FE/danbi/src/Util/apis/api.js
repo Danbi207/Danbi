@@ -11,14 +11,6 @@ export const setTokenExpireTime = (payload) => {
   token.setAccessTokenExpireTime(payload);
 }
 
-const authInstance = (url,options)=>{
-  axios.create({
-    baseURL : url,
-    headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    ...options,
-  });
-}
-
 export const reissueAccessToken = ()=>{
   const refreshToken = localStorage.getItem("refreshToken");
   if(!token.check() || !refreshToken || refreshToken===""){
@@ -44,7 +36,10 @@ export const reissueAccessToken = ()=>{
 
 export const authGet = async (url,options)=>{
   try{
-    const {data} = await authInstance(url,options).get();
+    const {data} = await axios.get(url,{
+      ...options,
+      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+    });
 
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
@@ -67,7 +62,10 @@ export const authGet = async (url,options)=>{
 
 export const authPost = async (url,options)=>{
   try{
-    const {data} = await authInstance(url,options).post();
+    const {data} = await axios.post(url,{
+      ...options,
+      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+    });
 
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
@@ -89,7 +87,10 @@ export const authPost = async (url,options)=>{
 
 export const authDelete = async (url,options)=>{
   try{
-    const {data} = await authInstance(url,options).delete();
+    const {data} = await axios.delete(url,{
+      ...options,
+      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+    });
 
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
@@ -112,7 +113,10 @@ export const authDelete = async (url,options)=>{
 
 export const authPut = async (url,options)=>{
   try{
-    const {data} = await authInstance(url,options).put();
+    const {data} = await axios.put(url,{
+      ...options,
+      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+    });
 
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
@@ -130,11 +134,4 @@ export const authPut = async (url,options)=>{
     console.log(err.response);
     return null;
   }
-}
-
-const defaultInstance = (url,options)=>{
-  axios.create({
-    baseURL : url,
-    ...options,
-  });
 }
