@@ -11,7 +11,7 @@ export const setTokenExpireTime = (payload) => {
   token.setAccessTokenExpireTime(payload);
 }
 
-export const reissueAccessToken = ()=>{
+export const reissueAccessToken = (url,options,method)=>{
   const refreshToken = localStorage.getItem("refreshToken");
   
   if(!token.check() || !refreshToken || refreshToken===""){
@@ -25,9 +25,23 @@ export const reissueAccessToken = ()=>{
   }).then(({data})=>{
     token.setAccessToken(data.accessToken);
     token.setAccessTokenExpireTime(data.accessTokenExpireTime);
-    console.log(data);
+
+    if(method==="get"){
+      return authGet(url,options);
+    }
+
+    if(method==="post"){
+      return authPost(url,options);
+    }
+
+    if(method==="put"){
+      return authPut(url,options);
+    }
+
+    if(method==="delete"){
+      return authDelete(url,options);
+    }
   }).catch(err=>{
-    console.log("TEST");
     console.log(err.response);
     localStorage.removeItem("refreshToken");
     token.clear();
@@ -38,104 +52,108 @@ export const reissueAccessToken = ()=>{
 }
 
 export const authGet = async (url,options)=>{
-  try{
-    console.log(token.getAccessToken());
-    const {data} = await axios.get(url,{
-      ...options,
-      headers:{"Authorization" : "Bearer "+token.getAccessToken()},
-    });
-
-    if(data.code === 500){
-      //DO : 토큰만료시 재발급요청
-      if(reissueAccessToken()){
-
-        return null;
+  if(token.check()){//access토큰을 못 쓰는 경우
+    return reissueAccessToken(url,options,"get");
+  }else{//토큰을 쓸 수 있는 경우
+    try{
+      const {data} = await axios.get(url,{
+        ...options,
+        headers:{"Authorization" : "Bearer "+token.getAccessToken()},
+      });
+  
+      if(data.code === 200){
+        return data.data;
       }
-
-      return await authGet(url,options);
+    }catch(err){
+      console.log(err);
+      return null;
     }
-
-    if(data.code === 200){
-      return data.data;
-    }
-  }catch(err){
-    console.log(err);
-    return null;
   }
 }
 
 export const authPost = async (url,options)=>{
-  try{
-    const {data} = await axios.post(url,{
-      ...options,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    });
-
-    if(data.code === 500){
-      //DO : 토큰만료시 재발급요청
-      if(reissueAccessToken()){
-        return null;
+  if(token.check()){//access토큰을 못 쓰는 경우
+    return reissueAccessToken(url,options,"post");
+  }else{//토큰을 쓸 수 있는 경우
+    try{
+      const {data} = await axios.post(url,{
+        ...options,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 500){
+        //DO : 토큰만료시 재발급요청
+        if(reissueAccessToken()){
+          return null;
+        }
+  
+        return await authPost(url,options);
       }
-
-      return await authPost(url,options);
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      console.log(err.response);
+      return null;
     }
-
-    if(data.code === 200){
-      return data.data;
-    }
-  }catch(err){
-    console.log(err.response);
-    return null;
   }
 }
 
 export const authDelete = async (url,options)=>{
-  try{
-    const {data} = await axios.delete(url,{
-      ...options,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    });
-
-    if(data.code === 500){
-      //DO : 토큰만료시 재발급요청
-      if(reissueAccessToken()){
-        return null;
+  if(token.check()){//access토큰을 못 쓰는 경우
+    return reissueAccessToken(url,options,"delete");
+  }else{//토큰을 쓸 수 있는 경우
+    try{
+      const {data} = await axios.delete(url,{
+        ...options,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 500){
+        //DO : 토큰만료시 재발급요청
+        if(reissueAccessToken()){
+          return null;
+        }
+  
+        return await authDelete(url,options);
       }
-
-      return await authDelete(url,options);
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      console.log(err.response);
+      return null;
     }
-
-    if(data.code === 200){
-      return data.data;
-    }
-  }catch(err){
-    console.log(err.response);
-    return null;
   }
 }
 
-
 export const authPut = async (url,options)=>{
-  try{
-    const {data} = await axios.put(url,{
-      ...options,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    });
-
-    if(data.code === 500){
-      //DO : 토큰만료시 재발급요청
-      if(reissueAccessToken()){
-        return null;
+  if(token.check()){//access토큰을 못 쓰는 경우
+    return reissueAccessToken(url,options,"put");
+  }else{//토큰을 쓸 수 있는 경우
+    try{
+      const {data} = await axios.put(url,{
+        ...options,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 500){
+        //DO : 토큰만료시 재발급요청
+        if(reissueAccessToken()){
+          return null;
+        }
+  
+        return await authPut(url,options);
       }
-
-      return await authPut(url,options);
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      console.log(err.response);
+      return null;
     }
-
-    if(data.code === 200){
-      return data.data;
-    }
-  }catch(err){
-    console.log(err.response);
-    return null;
   }
 }

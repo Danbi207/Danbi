@@ -17,11 +17,8 @@ const Login = () => {
 
   useEffect(()=>{
     //DO : AccessToken재발행
-    console.log("AccessToken재발행");
-    if(!reissueAccessToken()){
-      //DO : api분리 테스트용 코드, API 사용법 에시 코드
-      getData();
-    }
+    reissueAccessToken();
+    getData();
   },[getData]);
 
   const kakaoLogin=()=>{
