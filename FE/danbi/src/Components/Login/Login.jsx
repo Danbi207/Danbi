@@ -1,14 +1,25 @@
 import React,{useEffect,useState,useCallback} from 'react'
 import styled from 'styled-components';
-import { authGet, reissueAccessToken } from '../../Util/apis/api';
+import { reissueAccessToken } from '../../Util/apis/api';
 
 const Login = () => {
-  const [userInfo,setUserInfo] = useState();
-  const getData = useCallback(async ()=>{
-    //DO : API분리 테스트용 코드, 유저정보를 불러와 저장
-    const data = await authGet("/api/v1/member");
-    console.log(data);
-    setUserInfo(data);
+  const autoLogin = useCallback(async()=>{
+    const isLogin = await reissueAccessToken();
+    if(isLogin()){
+      const role = localStorage.getItem("role");
+      if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
+        navigate("/userSubmit", { replace: true });
+        return;
+      }
+
+      if(role === "ROLE_IP"){//역할이 IP인 경우
+        navigate("/ip", { replace: true });
+      }
+
+      if(role === "ROLE_HELPER"){//역할이 Helper인경우
+        navigate("/helper", { replace: true });
+      }
+    }
   },[]);
 
   useEffect(()=>{
@@ -18,11 +29,8 @@ const Login = () => {
   },[userInfo]);
 
   useEffect(()=>{
-    //DO : AccessToken재발행
-    if(reissueAccessToken()!==null){
-      getData();
-    }
-  },[getData]);
+    autoLogin();
+  },[autoLogin]);
   
   const kakaoLogin=()=>{
     //TODO : 카카오 로그인 요청 및 인가코드받기 
