@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Token } from "../private/token";
-import { useNavigate } from "react-router-dom";
+
 const token = new Token();
-const navigate = useNavigate();
+
 export const setToken = (payload) => {
   token.setAccessToken(payload);
 }
@@ -48,8 +48,7 @@ export const authGet = async (url,options)=>{
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
       if(reissueAccessToken()){
-        //DO : 리프레쉬토큰도 만료시 홈화면으로 이동
-        navigate("/",{replace:true});
+
         return null;
       }
 
@@ -72,8 +71,6 @@ export const authPost = async (url,options)=>{
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
       if(reissueAccessToken()){
-        //DO : 리프레쉬토큰도 만료시 홈화면으로 이동
-        navigate("/",{replace:true});
         return null;
       }
 
@@ -96,8 +93,6 @@ export const authDelete = async (url,options)=>{
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
       if(reissueAccessToken()){
-        //DO : 리프레쉬토큰도 만료시 홈화면으로 이동
-        navigate("/",{replace:true});
         return null;
       }
 
@@ -121,8 +116,6 @@ export const authPut = async (url,options)=>{
     if(data.code === 500){
       //DO : 토큰만료시 재발급요청
       if(reissueAccessToken()){
-        //DO : 리프레쉬토큰도 만료시 홈화면으로 이동
-        navigate("/",{replace:true});
         return null;
       }
 
