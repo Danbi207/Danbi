@@ -1,17 +1,28 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState,useCallback} from 'react'
 import styled from 'styled-components';
 import { authGet, reissueAccessToken } from '../../Util/apis/api';
-const Login = () => {
 
-  useEffect(async ()=>{
+const Login = () => {
+  const [userInfo,setUserInfo] = useState();
+  const getData = useCallback(async ()=>{
+    //DO : API분리 테스트용 코드, 유저정보를 불러와 저장
+    const data = await authGet("/api/v1/member");
+    setUserInfo(data);
+  },[]);
+
+  useEffect(()=>{
+    //DO: 데이터 확인 코드
+    console.log(userInfo);
+  },[userInfo]);
+
+  useEffect(()=>{
     //DO : AccessToken재발행
     console.log("AccessToken재발행");
     if(!reissueAccessToken()){
-      //DO : api분리 테스트용 코드
-      const data = await authGet("api/v1/member");
-      console.log(data);
+      //DO : api분리 테스트용 코드, API 사용법 에시 코드
+      getData();
     }
-  },[]);
+  },[getData]);
 
   const kakaoLogin=()=>{
     //TODO : 카카오 로그인 요청 및 인가코드받기 
