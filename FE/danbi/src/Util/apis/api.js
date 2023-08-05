@@ -24,8 +24,6 @@ export const reissueAccessToken = ()=>{
   }).then(({data})=>{
     token.setAccessToken(data.accessToken);
     token.setAccessTokenExpireTime(data.accessTokenExpireTime);
-    console.log(data.accessToken);
-    console.log(token.getAccessToken());
   }).catch(err=>{
     console.log(err.response);
     localStorage.removeItem("refreshToken");
@@ -38,9 +36,10 @@ export const reissueAccessToken = ()=>{
 
 export const authGet = async (url,options)=>{
   try{
+    console.log(token.getAccessToken());
     const {data} = await axios.get(url,{
       ...options,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      headers:{"Authorization" : "Bearer "+token.getAccessToken()},
     });
 
     if(data.code === 500){
