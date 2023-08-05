@@ -2,7 +2,7 @@ import axios from "axios";
 import { Token } from "../private/token";
 
 const token = new Token();
-console.log("TEST"+token.getAccessToken());
+
 export const setToken = (payload) => {
   token.setAccessToken(payload);
 }
