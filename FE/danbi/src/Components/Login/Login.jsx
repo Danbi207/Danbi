@@ -6,7 +6,7 @@ const Login = () => {
   const [userInfo,setUserInfo] = useState();
   const getData = useCallback(async ()=>{
     //DO : API분리 테스트용 코드, 유저정보를 불러와 저장
-    const data = await authGet("/api/v1/member?memberId=1&role=ROLE_UNDEFINED");
+    const data = await authGet("/api/v1/profile/1");
     setUserInfo(data);
   },[]);
 

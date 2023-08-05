@@ -43,12 +43,6 @@ export const reissueAccessToken = ()=>{
 }
 
 export const authGet = async (url,options)=>{
-  axios({
-    method:"get",
-    url:"/api/v1/member?memberId=1&role=ROLE_UNDEFINED",
-    headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-  }).then(({data})=>console.log(data))
-  .then(err=>console.log(err));
   try{
     const {data} = await authInstance(url,options).get();
 
@@ -66,7 +60,7 @@ export const authGet = async (url,options)=>{
       return data.data;
     }
   }catch(err){
-    console.log(err.response);
+    console.log(err);
     return null;
   }
 }
