@@ -15,7 +15,7 @@ export const reissueAccessToken = (url,options,method)=>{
   const refreshToken = localStorage.getItem("refreshToken");
   
   if(!token.check() || !refreshToken || refreshToken===""){
-    return true;
+    return -1;
   }
 
   axios({
@@ -45,14 +45,14 @@ export const reissueAccessToken = (url,options,method)=>{
     console.log(err.response);
     localStorage.removeItem("refreshToken");
     token.clear();
-    return true;
+    return -1;
   })
 
-  return false;
+  return 1;
 }
 
 export const authGet = async (url,options)=>{
-  if(token.check()){//access토큰을 못 쓰는 경우
+  if(!token.check()){//access토큰을 못 쓰는 경우
     return reissueAccessToken(url,options,"get");
   }else{//토큰을 쓸 수 있는 경우
     try{
@@ -61,12 +61,10 @@ export const authGet = async (url,options)=>{
         headers:{"Authorization" : "Bearer "+token.getAccessToken()},
       });
 
-      console.log(data);
-      
-      return data.data;
+      return await data.data;
     }catch(err){
       console.log(err);
-      return null;
+      return -1;
     }
   }
 }
