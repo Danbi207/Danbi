@@ -6,20 +6,22 @@ const Login = () => {
   const [userInfo,setUserInfo] = useState();
   const getData = useCallback(async ()=>{
     //DO : API분리 테스트용 코드, 유저정보를 불러와 저장
-    const data = await authGet("/api/v1/profile/1");
+    const data = await authGet("/api/v1/member");
     console.log(data);
     setUserInfo(data);
   },[]);
 
   useEffect(()=>{
     //DO: 데이터 확인 코드
+    if(!userInfo) return;
     console.log(userInfo);
   },[userInfo]);
 
   useEffect(()=>{
     //DO : AccessToken재발행
-    reissueAccessToken();
-    getData();
+    if(reissueAccessToken()!==null){
+      getData();
+    }
   },[getData]);
   
   const kakaoLogin=()=>{
