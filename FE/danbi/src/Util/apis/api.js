@@ -21,7 +21,7 @@ const authInstance = (url,options)=>{
 
 export const reissueAccessToken = ()=>{
   const refreshToken = localStorage.getItem("refreshToken");
-  if(!token.checkExpireTime() || !refreshToken || refreshToken===""){
+  if(!token.check() || !refreshToken || refreshToken===""){
     return true;
   }
 
