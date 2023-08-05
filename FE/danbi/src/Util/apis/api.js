@@ -60,6 +60,7 @@ export const authGet = async (url,options)=>{
     try{
       const {data} = await axios({
         method:"get",
+        url,
         ...options,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
@@ -87,6 +88,7 @@ export const authPost = async (url,options)=>{
 
     const {data} = await axios({
       method:"post",
+      url,
       ...options,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
