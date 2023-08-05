@@ -52,7 +52,7 @@ export const reissueAccessToken = (url,options,method)=>{
 }
 
 export const authGet = async (url,options)=>{
-  if(!token.check()){//access토큰을 못 쓰는 경우
+  if(token.check()){//access토큰을 못 쓰는 경우
     return reissueAccessToken(url,options,"get");
   }else{//토큰을 쓸 수 있는 경우
     try{
