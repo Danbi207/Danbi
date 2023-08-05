@@ -43,6 +43,12 @@ export const reissueAccessToken = ()=>{
 }
 
 export const authGet = async (url,options)=>{
+  axios({
+    method:"get",
+    url:"/api/v1/member?memberId=1&role=ROLE_UNDEFINED",
+    headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+  }).then(({data})=>console.log(data))
+  .then(err=>console.log(err));
   try{
     const {data} = await authInstance(url,options).get();
 
