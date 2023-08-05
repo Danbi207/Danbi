@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
   const autoLogin = useCallback(async()=>{
     const isLogin = await reissueAccessToken();
-    if(isLogin()){
+    if(isLogin){
       const role = localStorage.getItem("role");
       if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
         navigate("/userSubmit", { replace: true });
