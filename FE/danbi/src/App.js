@@ -9,6 +9,7 @@ import { getCookie} from './cookie';
 import {setTheme } from "./store/Slice/settingSlice.js";
 import styled from 'styled-components';
 import Modal from "./Components/Common/Modal/Modal.jsx";
+import { reissueAccessToken } from './Util/apis/api';
 function App() {
   //FIXME : 자동로그인, accesstoken만료시 재발급
   const dispatch = useDispatch();
@@ -16,7 +17,15 @@ function App() {
     //DO : 쿠키에 저장된 theme을 불러와 redux에 저장
     const savedTheme = getCookie('theme');
     dispatch(setTheme(savedTheme));
-  },[dispatch])
+  },[dispatch]);
+
+  useEffect(()=>{
+    console.log("AccessToken재발행");
+    if(!reissueAccessToken()){
+      console.log(localStorage.getItem("role"));
+    }
+  },[]);
+
   const themeMode = useSelector((state) => state.setting.theme);
   const theme = themeMode === 'light' ? light : dark;
   return (

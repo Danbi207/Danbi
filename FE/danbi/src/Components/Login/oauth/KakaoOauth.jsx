@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch} from "react-redux";
-import {setCookie} from "../../../cookie";
-import {setTokenInfo,setRole} from "../../../store/Slice/userSlice.js";
 import { useNavigate } from 'react-router';
+import { setToken,setTokenExpireTime } from '../../../Util/apis/api';
 const KaKaoOauth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,22 +23,12 @@ const KaKaoOauth = () => {
       }
 
       //DO : 토큰정보를 저장
-      const refreshTokenInfo  = {
-        refreshToken:data.refreshToken,
-        refreshTokenExpireTime:data.refreshTokenExpireTime
-      };
-      setCookie("refreshTokenInfo",refreshTokenInfo,{
-        path : "/",//쿠키를 접근할 수 있는 경로 지정
-        secure : false,//HTTPS로만 접근 가능하게 할 것인지 지정
-        httpOnly:true,//document.cookie를 이용해서 쿠키에 접속하는 것을 차단해 비정상적인 접근을 막는다.
-        maxAge : 60*60*24*30*3 //초*분*시간*일*년
-      });
-      dispatch(setTokenInfo({
-        accessToken:data.accessToken,
-        accessTokenExpireTime:data.accessTokenExpireTime,
-        grantType:data.grantType,
-      }));
-      dispatch(setRole(data.role));
+      localStorage.setItem("refreshToken",data.refreshToken);
+      localStorage.setItem("refreshTokenExpireTime",data.refreshTokenExpireTime);
+      localStorage.setItem("role",data.role);
+      
+      setToken(data.access_token);
+      setTokenExpireTime(data.access_token_expiration_time);
       
       //DO : Role에 따라 페이지 라우팅
       switch(data.role){
