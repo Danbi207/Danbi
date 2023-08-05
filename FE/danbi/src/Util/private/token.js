@@ -20,4 +20,8 @@ export class Token{
     this.#accessTokenExpireTime = "";
     this.#accessToken = "";
   }
+
+  checkExpireTime(){
+    return this.#accessToken==="" || (new Date()) >= (new Date(this.#accessTokenExpireTime));
+  }
 }

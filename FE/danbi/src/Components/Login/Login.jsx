@@ -1,12 +1,15 @@
 import React,{useEffect} from 'react'
 import styled from 'styled-components';
-import { reissueAccessToken } from '../../Util/apis/api';
+import { authGet, reissueAccessToken } from '../../Util/apis/api';
 const Login = () => {
 
-  useEffect(()=>{
+  useEffect(async ()=>{
+    //DO : AccessToken재발행
     console.log("AccessToken재발행");
     if(!reissueAccessToken()){
-      console.log(localStorage.getItem("role"));
+      //DO : api분리 테스트용 코드
+      const data = await authGet("api/v1/member");
+      console.log(data);
     }
   },[]);
 
