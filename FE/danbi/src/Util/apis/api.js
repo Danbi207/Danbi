@@ -14,7 +14,7 @@ export const setTokenExpireTime = (payload) => {
 const authInstance = (url,options)=>{
   axios.create({
     baseURL : url,
-    headers:{"Authentication" : `Bearer ${token.getAccessToken()}`},
+    headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     ...options,
   });
 }
@@ -28,7 +28,7 @@ export const reissueAccessToken = ()=>{
   axios({
     method:"post",
     url:"/api/v1/access-token/issue",
-    headers:{"Authentication" : `Bearer ${refreshToken}`}
+    headers:{"Authorization" : `Bearer ${refreshToken}`}
   }).then(({data})=>{
     token.setAccessToken(data.accessToken);
     token.setAccessTokenExpireTime(data.accessTokenExpireTime);
