@@ -2,7 +2,7 @@ import axios from "axios";
 import { Token } from "../private/token";
 
 const token = new Token();
-
+console.log("TEST"+token.getAccessToken());
 export const setToken = (payload) => {
   token.setAccessToken(payload);
 }
@@ -13,6 +13,7 @@ export const setTokenExpireTime = (payload) => {
 
 export const reissueAccessToken = ()=>{
   const refreshToken = localStorage.getItem("refreshToken");
+  
   if(!token.check() || !refreshToken || refreshToken===""){
     return true;
   }
@@ -24,7 +25,9 @@ export const reissueAccessToken = ()=>{
   }).then(({data})=>{
     token.setAccessToken(data.accessToken);
     token.setAccessTokenExpireTime(data.accessTokenExpireTime);
+    console.log(data);
   }).catch(err=>{
+    console.log("TEST");
     console.log(err.response);
     localStorage.removeItem("refreshToken");
     token.clear();
