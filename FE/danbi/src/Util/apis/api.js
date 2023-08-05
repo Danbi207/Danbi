@@ -60,10 +60,10 @@ export const authGet = async (url,options)=>{
         ...options,
         headers:{"Authorization" : "Bearer "+token.getAccessToken()},
       });
-  
-      if(data.code === 200){
-        return data.data;
-      }
+
+      console.log(data);
+      
+      return data.data;
     }catch(err){
       console.log(err);
       return null;

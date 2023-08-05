@@ -7,6 +7,7 @@ const Login = () => {
   const getData = useCallback(async ()=>{
     //DO : API분리 테스트용 코드, 유저정보를 불러와 저장
     const data = await authGet("/api/v1/profile/1");
+    console.log(data);
     setUserInfo(data);
   },[]);
 
@@ -20,7 +21,7 @@ const Login = () => {
     reissueAccessToken();
     getData();
   },[getData]);
-
+  
   const kakaoLogin=()=>{
     //TODO : 카카오 로그인 요청 및 인가코드받기 
     window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_OAUTH_REDIRECT_URI}&response_type=code`;
