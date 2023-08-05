@@ -24,6 +24,8 @@ export const reissueAccessToken = ()=>{
   }).then(({data})=>{
     token.setAccessToken(data.accessToken);
     token.setAccessTokenExpireTime(data.accessTokenExpireTime);
+    console.log(data.accessToken);
+    console.log(token.getAccessToken());
   }).catch(err=>{
     console.log(err.response);
     localStorage.removeItem("refreshToken");
