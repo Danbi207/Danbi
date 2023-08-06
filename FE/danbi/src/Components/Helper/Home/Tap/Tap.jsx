@@ -9,7 +9,7 @@ const Tap = (props) => {
       method:"get",
       url:`${process.env.PUBLIC_URL}/json/helpList.json`
     }).then(({data})=>{
-      props.setHelpList(data.data.help_list.filter(e=>e.face_flag));
+      props.setHelpList(data.data);
     }).catch((err)=>console.log(err));
     props.setMode("contact");
   }
@@ -19,7 +19,7 @@ const Tap = (props) => {
       method:"get",
       url:`${process.env.PUBLIC_URL}/json/helpList.json`
     }).then(({data})=>{
-      props.setHelpList(data.data.help_list.filter(e=>!e.face_flag));
+      props.setHelpList(data.data);
     }).catch((err)=>console.log(err));
     props.setMode("untact");
   }

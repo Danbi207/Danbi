@@ -1,70 +1,83 @@
 .OverlayWrap{
-  position: absolute;
-  left: 0;
-  bottom: 3rem;
-  margin-left: -8rem;
-  color: black;
-  width: 20rem;
-  height: 14rem;
-  background-color: white;
+  width: 100%;
+  height: 19rem;
+  background-color: #fff;
+  color: #000;
   border: 1px solid #000;
   border-radius: 1rem;
   padding: 1rem;
-  padding-top: 2rem;
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
+  position: relative;
 }
 
-.UserProfile{
-  width: 3rem;
-  height: 3rem;
-  border-radius: 3rem;
-  overflow: hidden;
-  background-color: aqua;
+.OverlayWrap *{
+  white-space: nowrap;
 }
-.UserinfoWrap{
-  margin-left: 0.5rem;
-}
-.UserName{
-  font-size: 1.5rem;
-  height: 2rem;
-  line-height: 2rem;
-}
-.UserPoint{
-  height: 1rem;
-  line-height: 1rem;
-}
-.UserWrap{
+
+.RowWrap{
+  height: 5rem;
   display: flex;
   justify-content: space-between;
 }
-.HelpTimeWrap{
-  font-size: 0.5rem;
-  height: 3rem;
-  line-height: 1.5rem;
-  text-align: center;
-}
-.HelpContentWrap{
-  padding: 0.25rem;
-  width: 18rem;
-  height: 4rem;
+
+.HelpContent{
+  width: 100%;
+  height: 7rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
   border-radius: 1rem;
+  background-color: #fff;
   border: 1px solid #000;
-  text-overflow: ellipsis;
 }
 
-.HelpDetailBtn{
-  width: 18rem;
-  height: 2rem;
+.TimeWrap{
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #000;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.UserTitle{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 5rem;
+}
+
+.UserTitle > :first-child{
+  font-size: 1.5rem;
+}
+
+.UserProfile{
+  margin: auto 0;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+}
+
+.UserWrap{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.UserWrap>:first-child{
+  height: 100%;
+  display: flex;
+}
+
+.DetailBtn{
   background-color: #6938D3;
+  width: 100%;
+  height: 3rem;
   color: #fff;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
 }
 
 .CloseBtn{
   position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-  font-size: 1.5rem;
+  top:0.5rem;
+  right: 0.5rem;
 }

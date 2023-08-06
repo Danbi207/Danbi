@@ -5,7 +5,6 @@ import Footer from "../../Common/Footer/Footer.jsx"
 import HelpList from "./HelpList/HelpList.jsx"
 import HelpMap from "./HelpMap/HelpMap.jsx"
 import Tap from "./Tap/Tap.jsx"
-import axios from 'axios';
 const HelperHome = () => {
   const [mode,setMode] = useState("contact");
   const [position,setPosition] = useState(null);

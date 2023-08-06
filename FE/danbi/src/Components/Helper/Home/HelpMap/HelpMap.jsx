@@ -15,24 +15,30 @@ const HelpMap = (props) => {
   const navigate = useNavigate();
   const getOverlay = useCallback((help)=>{
     return `
-    <div class='UserWrap'>
+    <div class='RowWrap'>
       <div class='UserWrap'>
-        <div class='UserProfile'></div>
-        <div class='UserinfoWrap'>
-          <div class='UserName'>김철수</div>
-          <div class='UserPoint'>100 Dew</div>
+        <div>
+          <img class='UserProfile' src='${help.profileUrl}' />
+          <div class='UserTitle'>
+            <div>${help.name}</div>
+            ${
+              help.accuseStack===0? "":
+              help.accuseStack <= 2 ? '<img src='+process.env.PUBLIC_URL+'/assets/yellow-flag.svg />':
+              '<img src='+process.env.PUBLIC_URL+'/assets/red-flag.svg />'
+            }
+          </div>
         </div>
       </div>
-      <div class='HelpTimeWrap'>
-        <div>${help.start_time.split(" ")[0]}</div>
-        <div>${help.start_time.split(" ")[1]}~${help.end_time.split(" ")[1]}</div>
+      <div class='TimeWrap'>
+        날짜 : ${help.startTime.split(" ")[0]}<br/>
+        시간 : ${help.startTime.split(" ")[1]}~${help.endTime.split(" ")[1]}<br/>
+        장소 : ${help.position.meetAddr}
       </div>
     </div>
-    <div class='HelpContentWrap'>${help.content}</div>`;
+    <div class='HelpContent'>${help.content}</div>`;
   },[]);
 
   useEffect(()=>{
-    console.log(kakao);
     //DO : 카카오 맵 초기설정
     const mapOption = { 
       center: new kakao.maps.LatLng(props.position.coords.latitude,props.position.coords.longitude), // 지도의 중심좌표
@@ -46,7 +52,7 @@ const HelpMap = (props) => {
   useEffect(()=>{
     //DO : 도움리스트를 조회하여 마커로 등록
     props.helpList.forEach((help,idx)=>{
-      const markerPosition  = new kakao.maps.LatLng(help.position.latitude, help.position.longitude); 
+      const markerPosition  = new kakao.maps.LatLng(help.position.meetLatitude, help.position.meetLongitude); 
 
       //DO : 마커를 생성
       const marker = new kakao.maps.Marker({
@@ -71,10 +77,10 @@ const HelpMap = (props) => {
       content.insertAdjacentHTML("afterbegin",getOverlay(help));
 
       const helpDetailBtn = document.createElement("button");
-      helpDetailBtn.className="HelpDetailBtn";
+      helpDetailBtn.className="DetailBtn";
       helpDetailBtn.innerText="상세보기";
       helpDetailBtn.onclick = function(){//상세보기 함수
-        navigate(`/detail/${help.help_post_id}`)
+        navigate(`/detail/${help.helpPostId}`)
       }
       content.insertAdjacentElement("beforeend",helpDetailBtn);
 
@@ -85,7 +91,7 @@ const HelpMap = (props) => {
       });
 
       kakao.maps.event.addListener(marker, 'click', function() {//마커 클릭이벤트
-        if(window.innerWidth <= 500){//모바일 버전은 다르게 표시
+        if(window.innerWidth <= 768){//모바일 버전은 다르게 표시
           setCurHelpIdx(idx);
           setDetailMode(true);
         }else{

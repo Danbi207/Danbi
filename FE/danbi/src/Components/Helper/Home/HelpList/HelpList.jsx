@@ -9,8 +9,8 @@ const HelpList = (props) => {
 
   useEffect(()=>{
     let keyIdx = 0;
-    setFriends(props.helpList.filter(e=>e.friend_flag).map(e=><HelpListItem key={keyIdx++} help={e} />));
-    setHelps(props.helpList.filter(e=>!e.friend_flag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setFriends(props.helpList.filter(e=>e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setHelps(props.helpList.filter(e=>!e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
   },[props.helpList]);
 
   return (

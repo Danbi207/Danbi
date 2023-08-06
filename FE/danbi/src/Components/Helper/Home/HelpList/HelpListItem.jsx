@@ -7,48 +7,67 @@ const HelpListItem = (props) => {
     <HelpMapItemWrap detailMode={props.detailMode} >
       <RowWrap>
         <UserWrap>
-          <UserProfile src={props.help.ip.profile_url}></UserProfile>
-          <UserTitle>
-            <UserName>{props.help.ip.name}</UserName>
-            <UserPoint>{props.help.ip.accumulate_dew_point}Dew</UserPoint>
-          </UserTitle>
+          <div>
+            <UserProfile src={props.help.profileUrl}></UserProfile>
+            <UserTitle>
+              <div>{props.help.name}</div>
+              {
+                props.help.accuseStack === 0 ? null:
+                props.help.accuseStack <= 2 ? <img src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
+                <img src={`${process.env.PUBLIC_URL}/assets/red-flag.svg`} />
+              }
+            </UserTitle>
+          </div>
           <TimeWrap>
-            <div>{props.help.start_time.split(" ")[0]}</div>
-            <div>{props.help.start_time.split(" ")[1]}~{props.help.end_time.split(" ")[1]}</div>
+            날짜 : {props.help.startTime.split(" ")[0]}<br/>
+            시간 : {props.help.startTime.split(" ")[1]}~{props.help.endTime.split(" ")[1]}<br/>
+            장소 : {props.help.position.meetAddr}
           </TimeWrap>
         </UserWrap>
       </RowWrap>
       <HelpContent>{props.help.content}</HelpContent>
-      <DetailBtn onClick={()=>{navigate(`/detail/${props.help.help_post_id}`)}}>상세보기</DetailBtn>
+      <DetailBtn onClick={()=>{navigate(`/detail/${props.help.helpPostId}`)}}>상세보기</DetailBtn>
     </HelpMapItemWrap>
   )
 }
 
 const UserWrap=styled.div`
+  width: 100%;
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
+  &>:first-child{
+    height: 100%;
+    display: flex;
+  }
 `
 const UserProfile = styled.img`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 5rem;
+  margin: auto 0;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
 `
 const UserTitle = styled.div`
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-`
-const UserName = styled.div`
-  font-size: 1.5rem;
-`
-const UserPoint = styled.div``
-const TimeWrap = styled.div`
-  height: 5rem;
   align-items: center;
+  width: 5rem;
+  &>:first-child{
+    font-size: 1.5rem;
+  }
+`
+const TimeWrap = styled.div`
+  padding: 0.5rem;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 0.5rem;
+  border: 1px solid ${props=>props.theme.colors.titleColor};
+  overflow-y: hidden;
+  white-space: pre-wrap;
 `
+
+
 const DetailBtn = styled.button`
   background-color: #6938D3;
   width: 100%;
@@ -73,7 +92,10 @@ const RowWrap = styled.div`
 
 const HelpMapItemWrap = styled.div`
   width: 40%;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 1024px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 768px) {
     width: 90%;
   }
   height: 19rem;
@@ -82,5 +104,8 @@ const HelpMapItemWrap = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 1rem;
   padding: 1rem;
+  &>*{
+    white-space: nowrap;
+  }
 `
 export default HelpListItem
