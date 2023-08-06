@@ -82,7 +82,7 @@ const TimeWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   border-radius: 0.5rem;
-  border: 1px solid ${props=>props.theme.colors.titleColor};
+  border: 1px solid #000;
   overflow-y: hidden;
   white-space: pre-wrap;
 `
@@ -94,6 +94,7 @@ const DetailBtn = styled.button`
   height: 3rem;
   color: #fff;
   border-radius: 1rem;
+  font-size: 1.5rem;
 `
 const HelpContent = styled.div`
   width: 100%;
@@ -102,7 +103,7 @@ const HelpContent = styled.div`
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: #fff;
-  border: 1px solid ${props=>props.theme.colors.titleColor};
+  border: 1px solid #000;
 `
 
 const RowWrap = styled.div`
@@ -139,8 +140,8 @@ const HelpMapItemWrap = styled.div`
   height: 20rem;
   position: absolute;
   bottom: 0;
-  background-color: ${props=>props.theme.colors.bgColor};
-  color: ${props=>props.theme.colors.titleColor};
+  background-color: #fff;
+  color: #000;
   z-index: 4;
   border-radius: 1rem 1rem 0 0 ;
   padding: 1rem;
