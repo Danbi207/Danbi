@@ -90,16 +90,17 @@ const HelpMap = (props) => {
       overlay.style.display = 'block';
     });
     markerBtn.style.position="relative";
+    markerBtn.className="markerBtn";
     if(curTime >= helpTime || (helpTime-curTime)/(60 * 60 * 1000) <= 1){//이미 도움이 시작되었지만 매칭이 안된 도움 or 1시간 이내의 도움
       if(help.friendFlag){//친구의 도움요청
         markerBtn.src=`${process.env.PUBLIC_URL}/assets/Marker_firends_haste.svg`;
         markerBtn.alt="";
-        markerBtn.className="haste";
+        markerBtn.classList.add("haste");
         marker.append(markerBtn);
       }else{//일반 도움요청
         markerBtn.src=`${process.env.PUBLIC_URL}/assets/Marker_Normal_haste.svg`;
         markerBtn.alt="";
-        markerBtn.className="haste";
+        markerBtn.classList.add("haste");
         marker.append(markerBtn);
       }
     }else{//긴급이 아닌 도움

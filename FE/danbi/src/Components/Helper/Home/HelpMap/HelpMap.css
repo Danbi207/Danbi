@@ -108,3 +108,18 @@
   padding: 1rem;
 
 }
+.markerBtn{
+  cursor: pointer;
+}
+.haste{
+  animation: motion 0.3s linear 0s infinite alternate;
+}
+
+@keyframes motion{
+  from{
+    transform: translateY(0);
+  }
+  to{
+    transform: translateY(10px);
+  }
+}
