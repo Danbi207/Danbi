@@ -1,14 +1,12 @@
 package com.danbi.domain.fcm.service;
 
 import com.danbi.domain.fcm.client.FcmClient;
-import com.danbi.domain.fcm.dto.FcmMessage;
 import com.danbi.domain.fcm.dto.NotificationRequest;
 import com.danbi.domain.fcm.repository.FcmTokenRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
-import com.danbi.global.jwt.constant.GrantType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
