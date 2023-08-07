@@ -37,9 +37,8 @@ const NavBarWrap = styled.div`
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
   animation: ${props => props.$out ? fadeIn : fadeOut} 0.5s linear;
   transition: visibility 0.5s linear;
-  transform-origin : 100% 0 0
+  transform-origin : 100% 0 0;
 
-  
 `
 const fadeIn = keyframes`
   from {
@@ -140,5 +139,6 @@ const HeaderWrap = styled.div`
   height: 3rem;
   box-sizing: border-box;
   border-bottom:solid #19191B 1px;
+  background-color: ${props=>props.theme.colors.whiteBgColor};
 `
 export default Header

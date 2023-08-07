@@ -49,6 +49,6 @@ function App() {
 
 const AppWrap = styled.div`
   background-color: ${props=>props.theme.colors.bgColor};
-  color: ${props=>props.theme.colors.titleColor};
+  /* color: ${props=>props.theme.colors.titleColor}; */
 `
 export default App;

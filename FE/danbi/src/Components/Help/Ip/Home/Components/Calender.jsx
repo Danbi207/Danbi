@@ -177,7 +177,7 @@ const Calendar = () => {
 
 const CalenderWrap = styled.div `
   width: 90%;
-  height: 100%;
+  height: 50%;
   position: relative;
   left: 5%;
   top: 5%;

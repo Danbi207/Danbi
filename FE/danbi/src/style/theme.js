@@ -64,6 +64,7 @@ export const light ={
     jandibgColor: '#19191B',
     buttonbgColor: '#FFEA7E',
     buttontextColor: '#000000',
+    whiteBgColor : '#FFFFFF',
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,
