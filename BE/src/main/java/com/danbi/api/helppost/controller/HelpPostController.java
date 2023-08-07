@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 @Tag(name = "HelpPost", description = "도움 요청 게시글")
 @RestController
@@ -78,7 +79,7 @@ public class HelpPostController {
                                                                       @PathVariable String latitude,
                                                                       @PathVariable String gender) {
         List<HelperQueryHelpPostDto> allHelpPosts = helpPostInfoService.searchQueryHelpPost(memberInfoDto.getMemberId(),
-                longitude, latitude, gender);
+                longitude, latitude, gender.toLowerCase());
         return ApiResponse.ok(allHelpPosts);
     }
 
@@ -89,7 +90,7 @@ public class HelpPostController {
                                                                                @PathVariable String latitude,
                                                                                @PathVariable String gender) {
         List<HelperFaceHelpPostDto> allHelpPosts = helpPostInfoService.searchFaceHelpPost(memberInfoDto.getMemberId(),
-                longitude, latitude, gender);
+                longitude, latitude, gender.toLowerCase());
         return ApiResponse.ok(allHelpPosts);
     }
 
