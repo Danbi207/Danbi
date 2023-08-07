@@ -40,14 +40,16 @@ public class MemberService {
                 .member(member)
                 .build();
 
-        Profile profile = Profile.builder()
-                .member(member)
-                .build();
-
         Point point = Point.builder()
                 .dewPoint(100L)
                 .accumulateDewPoint(100L)
-                .profile(profile).build();
+                .build();
+
+        Profile profile = Profile.builder()
+                .member(member)
+                .point(point)
+                .build();
+
         pointRepository.save(point);
 
         Item item = Item.builder()

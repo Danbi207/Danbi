@@ -20,7 +20,7 @@ public class Point extends BaseEntity {
     private Long id;
 
 
-    @OneToOne(mappedBy = "point", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "point", cascade = CascadeType.ALL)
     private Profile profile;
 
     @Column(nullable = false)

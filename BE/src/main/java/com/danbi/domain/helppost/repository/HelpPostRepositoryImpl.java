@@ -113,7 +113,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
                 .leftJoin(member.profile, profile)
-                .leftJoin(profile.point, point)
+                .leftJoin(point).on(profile.eq(point.profile))
                 .where(
                         helpPost.id.eq(helpPostId)
                 )
@@ -150,11 +150,12 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .leftJoin(help).on(helpPost.eq(help.helpPost))
                 .leftJoin(helpPost.member, ipMember)
                 .leftJoin(ipMember.profile, ipProfile)
-                .leftJoin(ipProfile.point, ipPoint)
+                .leftJoin(ipPoint).on(ipProfile.eq(ipPoint.profile))
 
                 .leftJoin(help.helper, helperMember)
                 .leftJoin(helperMember.profile, helperProfile)
                 .leftJoin(helperProfile.point, helperPoint)
+                .leftJoin(helperPoint).on(helperProfile.eq(helperPoint.profile))
                 .where(
                         helpPost.id.eq(helpPostId),
                         helpPost.state.eq(State.MATCHED)
@@ -166,7 +167,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     public List<HelpPost> findHelpPostsByBetweenTime(LocalDateTime startTime, LocalDateTime endTime, Long memberId) {
         return jpaQueryFactory.selectFrom(helpPost)
                 .where(helpPost.startTime.between(startTime,endTime)
-                        .or(helpPost.endTime.between(startTime,endTime)),
+                                .or(helpPost.endTime.between(startTime,endTime)),
                         helpPost.member.id.eq(memberId),
                         helpPost.state.ne(State.DELETE))
                 .fetch();
