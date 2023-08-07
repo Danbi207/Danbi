@@ -45,7 +45,7 @@ const TimeTpye = ({location}) => {
         <StartTime ></StartTime>
         <Checkbox></Checkbox>
         {/* <RequestBTN>도움 요청하기</RequestBTN> */}
-        {location.state ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
+        {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
     </Wrap>
   )
 } 
