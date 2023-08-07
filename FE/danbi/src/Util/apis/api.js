@@ -1,7 +1,8 @@
 import axios from "axios";
-import { Token } from "../private/token";
+import { useSelector } from "react-redux";
 
-const token = new Token();
+const token = useSelector(state=>state.user.token);
+console.log(token);
 
 export const setToken = (payload) => {
   token.setAccessToken(payload);
