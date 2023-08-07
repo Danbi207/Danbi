@@ -5,10 +5,12 @@ const token = new Token();
 
 export const setToken = (payload) => {
   token.setAccessToken(payload);
+  console.log(token.getAccessToken());
 }
 
 export const setTokenExpireTime = (payload) => {
   token.setAccessTokenExpireTime(payload);
+  console.log(token.getAccessTokenExpireTime());
 }
 
 export const reissueAccessToken = async ()=>{
