@@ -8,7 +8,17 @@ const Calendar = () => {
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
   const [help,setHelpData] = useState({});  // help 정보 저장
+  const [weekCnt, setWeekCnt] = useState(6);
+
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const getWeek = (year, month) => {
+    //DO : 해당 달의 주차 수를 계산
+    const endDay = new Date(year, month + 1, 0).getDate();
+    const startDay = new Date(year, month, 1).getDay();
+
+    return Math.ceil((endDay + startDay) / 7);
+  };
 
   const getHelpData = (year,month,day) =>{
     month+=1;
@@ -88,7 +98,12 @@ const Calendar = () => {
   // const onDateClick = (day) => {
   //   setSelectedDate(day);
   // };
-  
+
+  useEffect(() => {
+    //DO : 달이 바뀔때마다 주차 수를 자동으로 계산
+    setWeekCnt(getWeek(year, month));
+  }, [year, month]);
+
   // 요일을 가져오는 로직
   const getWeekItems = () => {
     const days = [];
@@ -166,7 +181,7 @@ const Calendar = () => {
           getWeekItems()
         }
       </DaysWrap>
-      <Body>
+      <Body $weekCnt={weekCnt}>
         {
           getCalenderItems()
         }
@@ -260,7 +275,7 @@ const Body = styled.div`
   height: 80%;
   display: grid;
   grid-template-columns: repeat(7,1fr);
-  grid-template-rows: repeat(6,1fr);
+  grid-template-rows: repeat(${(props) => props.$weekCnt}, 1fr);
 `
 
 const CalenderItem = styled.div`
