@@ -13,8 +13,8 @@ const KaKaoOauth = () => {
   const logout = useCallback(async () => {
     await api.authGet("/api/v1/member/logout");
     
-    api.setToken("");
-    api.setTokenExpireTime("");
+    api.setAccessToken("");
+    api.setAccessTokenExpireTime("");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
     localStorage.removeItem("role");
@@ -37,8 +37,8 @@ const KaKaoOauth = () => {
       data : {code,redirectUrl} 
     }).then(({data})=>{
       
-      api.setToken(data.access_token);
-      api.setTokenExpireTime(data.access_token_expiration_time);
+      api.setAccessToken(data.access_token);
+      api.setAccessTokenExpireTime(data.access_token_expiration_time);
       
       //DO : 토큰정보를 저장
       localStorage.setItem("refreshToken",data.refreshToken);
