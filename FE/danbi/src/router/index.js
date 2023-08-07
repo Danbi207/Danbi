@@ -8,7 +8,7 @@ import Friend from "../Components/User/Friend/Friend";
 import UserSubmit from "../Components/User/Join/UserSubmit";
 import IPHome from "../Components/Help/Ip/Home/IPHome";
 import HelperHome from "../Components/Help/Helper/Home/HelperHome";
-
+import Test from "../Components/TEST/TEST"
 const routes = [
   {
     path: "/",
@@ -49,6 +49,10 @@ const routes = [
   {
     path : "/user/friend",
     Component:Friend
+  },
+  {
+    path:"/test",
+    Component:Test
   }
 ];
 export default routes;
