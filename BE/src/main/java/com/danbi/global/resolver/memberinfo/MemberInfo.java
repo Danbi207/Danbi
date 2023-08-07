@@ -1,4 +1,4 @@
-package com.danbi.global.resolver;
+package com.danbi.global.resolver.memberinfo;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -16,9 +16,10 @@ public class GuestBook extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "guestbook_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER) // TODO: LAZY 해야됨
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

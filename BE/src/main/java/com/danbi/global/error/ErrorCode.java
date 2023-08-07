@@ -1,5 +1,6 @@
 package com.danbi.global.error;
 
+import com.google.api.Http;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -79,7 +80,10 @@ public enum ErrorCode {
 
     // File
     EMPTY_FILE(HttpStatus.BAD_REQUEST, "F-001", "빈 파일은 제출할 수 없습니다."),
-    FILE_AMOUNTS_LIMIT(HttpStatus.BAD_REQUEST, "F-002", "제출할 수 있는 파일 수를 초과했습니다.")
+    FILE_AMOUNTS_LIMIT(HttpStatus.BAD_REQUEST, "F-002", "제출할 수 있는 파일 수를 초과했습니다."),
+
+    // Paging
+    PAGING_LIMIT(HttpStatus.BAD_REQUEST, "PA-001", "페이징 크기 제한을 초과했습니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

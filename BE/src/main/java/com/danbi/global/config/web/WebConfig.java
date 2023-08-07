@@ -2,7 +2,8 @@ package com.danbi.global.config.web;
 
 import com.danbi.global.interceptor.AdminAuthorizationInterceptor;
 import com.danbi.global.interceptor.AuthenticationInterceptor;
-import com.danbi.global.resolver.MemberInfoArgumentResolver;
+import com.danbi.global.resolver.memberinfo.MemberInfoArgumentResolver;
+import com.danbi.global.resolver.paging.LimitedPageableArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -64,6 +65,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(memberInfoArgumentResolver);
+        resolvers.add(new LimitedPageableArgumentResolver());
     }
 
 }

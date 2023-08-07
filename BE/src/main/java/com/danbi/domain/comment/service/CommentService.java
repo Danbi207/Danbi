@@ -6,6 +6,7 @@ import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.notfound.CommentNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,8 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public List<Comment> findByGuestBook(GuestBook guestBook) {
-        return commentRepository.findCommentsByGuestBook(guestBook);
+    public List<Comment> findByGuestBook(GuestBook guestBook, Pageable pageable) {
+        return commentRepository.findCommentsByGuestBook(guestBook, pageable);
     }
 
     public Comment findById(Long commentId) {

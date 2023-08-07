@@ -3,12 +3,11 @@ package com.danbi.api.preset.controller;
 import com.danbi.api.ApiResponse;
 import com.danbi.api.preset.dto.*;
 import com.danbi.api.preset.service.PresetManageService;
-import com.danbi.global.resolver.MemberInfo;
-import com.danbi.global.resolver.MemberInfoDto;
+import com.danbi.global.resolver.memberinfo.MemberInfo;
+import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Preset", description = "프리셋")
