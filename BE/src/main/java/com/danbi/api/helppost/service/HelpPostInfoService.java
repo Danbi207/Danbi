@@ -107,7 +107,7 @@ public class HelpPostInfoService {
                     .caution(helpPost.getCaution())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
-                    .faceFlag(helpPost.isFaceFlag())
+                    .emergencyFlag(helpPost.isEmergencyFlag())
                     .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
@@ -135,6 +135,7 @@ public class HelpPostInfoService {
                     .caution(helpPost.getCaution())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
+                    .emergencyFlag(helpPost.isEmergencyFlag())
                     .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
@@ -156,7 +157,7 @@ public class HelpPostInfoService {
                         .accumulateDewPoint(helpPost.getAccumulateDewPoint())
                         .accusePoint(helpPost.getAccusePoint()).build())
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
@@ -193,7 +194,7 @@ public class HelpPostInfoService {
                         .accumulateDewPoint(helpPost.getHelperAccumulateDewPoint())
                         .accusePoint(helpPost.getHelperAccusePoint()).build())
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())

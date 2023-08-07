@@ -40,9 +40,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     public List<HelpPostQueryDto> search(String longitude, String latitude, String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostQueryDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
-                        positions.longitude, positions.latitude,
-                        helpPost.startTime, helpPost.endTime, helpPost.faceFlag,
-                        member.accuseStack
+                        positions.longitude, positions.latitude, helpPost.startTime, helpPost.endTime,
+                        helpPost.emergencyFlag, member.accuseStack
                 ))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
@@ -64,7 +63,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
         return jpaQueryFactory.select(Projections.constructor(HelpPostFaceDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.meetLongitude, positions.meetLatitude, positions.meetAddr,
-                        helpPost.startTime, helpPost.endTime, member.accuseStack))
+                        helpPost.startTime, helpPost.endTime, helpPost.emergencyFlag ,member.accuseStack))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
@@ -107,7 +106,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         member.accuseStack, positions.latitude, positions.longitude, positions.addr,
                         positions.destLatitude, positions.destLongitude, positions.destAddr,
                         positions.meetLatitude, positions.destLongitude, positions.meetAddr,
-                        helpPost.faceFlag, helpPost.reservationFlag, helpPost.content,
+                        helpPost.faceFlag, helpPost.emergencyFlag, helpPost.content,
                         helpPost.startTime, helpPost.endTime, helpPost.caution, helpPost.category))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
@@ -143,7 +142,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         positions.destLatitude, positions.destLongitude, positions.destAddr,
                         positions.meetLatitude, positions.destLongitude, positions.meetAddr,
 
-                        helpPost.faceFlag, helpPost.reservationFlag, helpPost.content,
+                        helpPost.faceFlag, helpPost.emergencyFlag, helpPost.content,
                         helpPost.startTime, helpPost.endTime, helpPost.caution, helpPost.category))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)

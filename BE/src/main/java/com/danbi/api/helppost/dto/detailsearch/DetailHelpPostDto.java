@@ -17,7 +17,7 @@ public class DetailHelpPostDto {
     private IpDto ip;
     private Position position;
     private boolean faceFlag;
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
