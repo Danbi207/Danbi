@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { setReserveType } from '../../../store/Slice/ipSlice'
 
-const TimeTpye = () => {
+const TimeTpye = ({location}) => {
   const ip = useSelector(state => state.ip)
 
   const ipData = {
@@ -44,7 +44,8 @@ const TimeTpye = () => {
         </Boxes>
         <StartTime ></StartTime>
         <Checkbox></Checkbox>
-        <RequestBTN>도움 요청하기</RequestBTN>
+        {/* <RequestBTN>도움 요청하기</RequestBTN> */}
+        {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
     </Wrap>
   )
 } 

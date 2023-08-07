@@ -1,15 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setTier,
-  setCheckedRgb,
-  setUnchedkedRgb,
-  setName,
-  setDewPoint,
-} from '../../../store/Slice/JandiSlice';
+import { useSelector } from 'react-redux';
+import Help from './Help.svg';
+import Buttons from './Buttons.jsx';
 
-const Jandi = ({ help_log, setPickModalOpen, point }) => {
+
+const Jandi = ({ help_log, setPickModalOpen }) => {
   const colCnt = 8;
   const rowCnt = 2;
 
@@ -23,9 +19,16 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
     idx: -1,
   };
 
-  const [page, setPage] = useState(0);
-  const [selectIdx, setSelectIdx] = useState(-1);
-  const [ShowOverLay, setShowOverLay] = useState(overLay);
+  const HelpOver = {
+    x: 0,
+    y: 0,
+    show: false,
+  }
+
+  const [page, setPage] = useState(0); // 이전, 다음 버튼
+  const [selectIdx, setSelectIdx] = useState(-1); // 잔디 선택
+  const [ShowOverLay, setShowOverLay] = useState(overLay); // 잔디 날짜
+  const [ShowHelp, setShowHelp] = useState(HelpOver);  // ? 아이콘
 
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
@@ -44,7 +47,7 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
       idx,
       content: help_log[idx].created_time,
     });
-  };
+    };
   const GrossItems = useMemo(() => {
     const res = [];
     for (
@@ -69,7 +72,7 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
       }
     }
     return res;
-  }, [page, help_log, selectIdx, cur_CheckedColor, cur_UncheckedColor]);
+  }, [page, help_log, selectIdx, cur_CheckedColor, cur_UncheckedColor, ShowOverLay, onGross]);
   
 
   const prevGross = () => {
@@ -90,16 +93,13 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
     });
   };
 
-  const dispatch = useDispatch();
-
-  const handlePickModal = (pickdata) => {
-    setPickModalOpen(true);
-    dispatch(setName(pickdata.item.name));
-    dispatch(setTier(pickdata.item.tier));
-    dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
-    dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-    dispatch(setDewPoint(pickdata.dew_point));
-  };
+  const handleHelp = (e) => {
+    setShowHelp({
+      x: e.clientX,
+      y: e.clientY,
+      show:!ShowHelp.show,
+    })
+  }
 
   const pickdata = {
     item: {
@@ -113,31 +113,29 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
 
   return (
     <ChartWrap>
-      <ChartHeader>나의 도움을 기록해주세요</ChartHeader>
+      <ChartHeader>
+        <ChartTitle>
+        나의 도움을 기록해주세요
+        </ChartTitle>
+        <HelpIcon src={Help} onClick={(e) => handleHelp(e)} />
+      </ChartHeader>
       <GrossWrap $col={colCnt} $row={rowCnt}>
         {GrossItems}
       </GrossWrap>
-      <Btns>
-        <DirectionBtns>
-          <GrossBtn onClick={prevGross}>이전</GrossBtn>
-          <GrossBtn onClick={nextGross}>다음</GrossBtn>
-        </DirectionBtns>
-        <Wrap>
-          <Dew>{point}Dew</Dew>
-          <PickBtn
-            onClick={() => {
-              handlePickModal(pickdata);
-            }}
-          >
-            뽑기
-          </PickBtn>
-        </Wrap>
-      </Btns>
+      <Buttons prevGross={prevGross} nextGross={nextGross} pickdata={pickdata} setPickModalOpen={setPickModalOpen} />
       {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
           {ShowOverLay.content}
         </OverRayWrap>
       )}
+      {
+        ShowHelp.show && (
+          <HelpOverLay $position={ShowHelp}>
+            도움 포인트(DEW)를 <br />
+            사용해서 그래프를 꾸며보세요.
+          </HelpOverLay>
+        )
+      }
     </ChartWrap>
   );
 };
@@ -153,12 +151,10 @@ const ChartWrap = styled.div`
 
 const ChartHeader = styled.div`
   padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
-const GrossBtn = styled.button`
-  width: 2rem;
-  height: 2rem;
-`;
 const GrossWrap = styled.div`
   display: grid;
   width: 100%;
@@ -186,35 +182,6 @@ const EmptyItem = styled.div`
   margin-top: 1px;
 `;
 
-const Btns = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const PickBtn = styled.button`
-  background-color: #6161ff;
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
-  font-size: 20px;
-  text-align: center;
-`;
-
-const Dew = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1rem;
-`;
-
-const Wrap = styled.div`
-  display: flex;
-`;
-const DirectionBtns = styled.div`
-  display: flex;
-`;
-
 const OverRayWrap = styled.div`
   background-color: rgba(128, 128, 128, 0.5);
   position: fixed;
@@ -226,5 +193,19 @@ const OverRayWrap = styled.div`
       ? `${props.$position.x - 100}px`
       : `${props.$position.x}px`};
 `;
+
+const ChartTitle = styled.span`
+  
+`
+const HelpIcon = styled.img`
+  
+`
+const HelpOverLay = styled.span`
+  background-color: gray;
+  position: fixed;
+  top: ${props => props.$position.y}px;
+  left: ${props => props.$position.x}px;
+  white-space: pre;
+`
 
 export default Jandi;

@@ -5,9 +5,9 @@ import PresetItem from './PresetItem.jsx';
 
 const Preset = ({preset_list, setPresetList}) => {
   console.log(preset_list);
-  const [OpenIndex, setOpenIndex] = useState(-1);
-  const showDetail = (index) => {
-    setOpenIndex(index);
+  const [OpenTitle, setOpenTitle] = useState(-1);
+  const showDetail = (title) => {
+    setOpenTitle(title);
   };
   const handleChange = (result) => {
     if (!result.destination) return;
@@ -33,7 +33,7 @@ const Preset = ({preset_list, setPresetList}) => {
                       key={index}
                       isDragging={snapshot.isDragging}
                     >
-                      <PresetItem value={value} index={index} OpenIndex={OpenIndex} key={index} showDetail={showDetail} />
+                      <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
                     </Wrap>
                   )}
                 </Draggable>

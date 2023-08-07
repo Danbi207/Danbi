@@ -7,7 +7,7 @@ import Stop from './IoStopCircle.svg';
 import Play from './IoPlayCircle.svg';
 
 
-const PresetDetail = ({ content, showDetail }) => {
+const PresetDetail = ({ content, showDetail, setDeleteActive, setEditActive }) => {
   const [value, setValue] = useState(content);
 
   const {
@@ -33,11 +33,15 @@ const PresetDetail = ({ content, showDetail }) => {
 
   const CloseDetail = () => {
     showDetail(-1);
+    setDeleteActive(false);
+    setEditActive(false);
   };
 
   const SaveDetail = () => {
     showDetail(-1);
     alert('저장되었습니다.');
+    setDeleteActive(false);
+    setEditActive(false);
   };
 
   const handleBtn = () => {
