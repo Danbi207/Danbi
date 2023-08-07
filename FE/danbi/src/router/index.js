@@ -15,7 +15,7 @@ const routes = [
     Component: Login,
   },
   {
-    path:'/user/login/ouath',
+    path:'/user/login/oauth',
     Component : KakaoOauth
   },
   {
