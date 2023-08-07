@@ -5,9 +5,9 @@ import { useLocation } from 'react-router';
 
 import Header from '../../../Common/Header/Header';
 import Footer from '../../../Common/Footer/Footer';
-import FaceType from './HelpRequest/FaceType';
-import TimeTpye from './HelpRequest/TimeTpye';
-import Tab from '../Tab/Tab';
+import FaceType from './Components/FaceType';
+import TimeTpye from './Components/TimeTpye';
+import Tab from './Components/Tab/Tab';
 
 const IpRequest = () => {
   const ip = useSelector((state)=>state.ip)

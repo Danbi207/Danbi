@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
-import { setCategory, setCurLatitude, setCurLongitude } from '../../../../store/Slice/ipSlice'
+import { setCategory, setCurLatitude, setCurLongitude } from '../../../../../store/Slice/ipSlice'
 
 const Positioin = () => {
   const navigate = useNavigate();

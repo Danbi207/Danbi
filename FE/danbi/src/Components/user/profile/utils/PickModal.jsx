@@ -8,9 +8,9 @@ import {
   setUnchedkedRgb,
   setName,
   setDewPoint,
-} from '../../../store/Slice/JandiSlice';
-import { Jsconfetti } from '../../../App';
-import pick from '../../../Util/assets/animation.json';
+} from '../../../../store/Slice/JandiSlice';
+import { Jsconfetti } from '../../../../App';
+import pick from '../../../../Util/assets/animation.json';
 import axios from 'axios';
 
 const PickModal = ({ setPickModalOpen }) => {

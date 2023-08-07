@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import {setTabMode} from '../../../../store/Slice/ipSlice'
+import {setTabMode} from '../../../../../../store/Slice/ipSlice'
 
 const Tab = () => {
   const dispatch = useDispatch();

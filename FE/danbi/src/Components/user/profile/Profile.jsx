@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import Header from '../Common/Header/Header.jsx';
-import Footer from '../Common/Footer/Footer.jsx';
+import Header from "../../Common/Header/Header.jsx";
+import Footer from "../../Common/Footer/Footer.jsx"
 import UserInfo from './UserInfo.jsx';
 import PresetButton from './Preset/PresetButton.jsx';
 import Jandi from './Jandi/Jandi.jsx';
 import GuestBook from './GuestBook/GuestBook.jsx';
 import PresetModal from './Preset/PresetModal.jsx';
-import PickModal from './utils/PickModal.jsx';
+import PickModal from './Utils/PickModal.jsx';
 
 const data = {
   profile_id: 1,

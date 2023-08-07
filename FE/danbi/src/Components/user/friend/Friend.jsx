@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Waitting from './items/Waitting';
-import Header from '../Common/Header/Header';
-import Footer from '../Common/Footer/Footer';
-import MyFriend from './items/MyFriend';
+import Waitting from './Items/Waitting';
+import Header from '../../Common/Header/Header';
+import Footer from '../../Common/Footer/Footer';
+import MyFriend from './Items/MyFriend';
 
 const myFriends = [
     {

@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components'
 
-import Header from "../Common/Header/Header";
-import Footer from "../Common/Footer/Footer";
-import Calender from "../Calender/Calender";
-import Calender3 from "./components/Calender3";
+import Header from "../../../Common/Header/Header";
+import Footer from "../../../Common/Footer/Footer";
+import Calender from "./Components/Calender";
+// import Calender3 from "./Components/Calender3";
 
 const IPHome = () => {
   const navigate = useNavigate();

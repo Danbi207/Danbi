@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from './example-profile.jpg';
-import AccuseButton from './utils/AccuseButton.jsx';
+import AccuseButton from './Utils/AccuseButton.jsx';
 
 const UserInfo = () => {
   return (

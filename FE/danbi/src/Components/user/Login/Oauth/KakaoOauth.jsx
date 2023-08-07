@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useEffect ,useCallback} from 'react'
 import { useDispatch} from "react-redux";
 import { useNavigate } from 'react-router';
-import { authGet, setToken,setTokenExpireTime } from '../../../Util/apis/api';
+import { authGet, setToken,setTokenExpireTime } from '../../../../Util/apis/api';
 
-import {requestPermission} from '../../../Util/hooks/requestPermission';
+import {requestPermission} from '../../../../Util/hooks/requestPermission';
 
 const KaKaoOauth = () => {
   const navigate = useNavigate();

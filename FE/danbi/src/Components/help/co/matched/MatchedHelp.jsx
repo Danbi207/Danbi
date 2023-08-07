@@ -1,13 +1,13 @@
 import React,{ useState,useEffect,useCallback } from 'react'
-import Header from "../Common/Header/Header.jsx"
-import Footer from "../Common/Footer/Footer.jsx"
-import Tap from "./tap/Tap.jsx"
+import Header from "../../../Common/Header/Header.jsx"
+import Footer from "../../../Common/Footer/Footer.jsx"
+import Tap from "./Tap/Tap.jsx"
 
 import styled from 'styled-components';
 
-import Infomation from './main/infomation/Infomation.jsx';
-import Chat from './main/chat/Chat.jsx';
-import RealtimeMap from './main/realtimeMap/RealtimeMap.jsx';
+import Infomation from './Main/Infomation/Infomation.jsx';
+import Chat from './Main/Chat/Chat.jsx';
+import RealtimeMap from './Main/RealtimeMap/RealtimeMap.jsx';
 import { useParams } from 'react-router-dom';
 
 import axios from 'axios';

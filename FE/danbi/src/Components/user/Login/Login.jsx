@@ -1,8 +1,8 @@
 import React,{useEffect,useCallback} from 'react'
 import styled from 'styled-components';
-import { reissueAccessToken } from '../../Util/apis/api';
+import { reissueAccessToken } from '../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
-import { requestPermission } from '../../Util/hooks/requestPermission';
+import { requestPermission } from '../../../Util/hooks/requestPermission';
 
 const Login = () => {
   const navigate = useNavigate();

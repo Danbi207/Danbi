@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components';
 
-import StartTime from '../Calender/StartTime';
+import StartTime from './StartTime';
 import Checkbox from './Checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setReserveType } from '../../../../store/Slice/ipSlice'
+import { setReserveType } from '../../../../../store/Slice/ipSlice'
 
 const TimeTpye = ({location}) => {
   const ip = useSelector(state => state.ip)

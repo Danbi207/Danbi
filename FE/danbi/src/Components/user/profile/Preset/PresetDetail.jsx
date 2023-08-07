@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { getSpeech } from '../utils/TTS';
+import { getSpeech } from '../Utils/TTS';
 
 
 const PresetDetail = ({ content, showDetail, setDeleteActive, setEditActive }) => {
