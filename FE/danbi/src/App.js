@@ -6,7 +6,7 @@ import {dark,light} from "./style/theme.js";
 import { ThemeProvider } from 'styled-components';
 import { useEffect } from 'react';
 import { getCookie} from './Util/hooks/cookie';
-import {setTheme } from "./store/Slice/settingSlice.js";
+import { setTheme } from "./store/Slice/settingSlice.js";
 import styled from 'styled-components';
 import Modal from "./Components/Common/Modal/Modal.jsx";
 import JSconfetti from 'js-confetti';
@@ -35,7 +35,7 @@ function App() {
                 <Route
                   key={e.path}
                   path={e.path}
-                  element={<e.component />}
+                  element={<e.Component />}
                 />
               );
             })}

@@ -3,7 +3,7 @@ import { useParams, useNavigate  } from 'react-router-dom';
 import Header from "../../../Common/Header/Header"
 import Footer from '../../../Common/Footer/Footer';
 import styled from 'styled-components';
-import HelperDetail from './items/HelperDetail.jsx';
+import HelperDetail from './Items/HelperDetail.jsx';
 
 const Detail = () => {
   const { helpPostId } = useParams();
