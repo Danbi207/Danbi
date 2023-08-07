@@ -6,18 +6,24 @@ import { requestPermission } from '../../Util/hooks/requestPermission';
 
 const Login = () => {
   const navigate = useNavigate();
+
+  // FCM 토큰 함수 호출
+  const  requestFcmToken = useCallback(async ()=> {
+    await requestPermission()
+  },[])
+
   const autoLogin = useCallback(async()=>{
     const isLogin = await reissueAccessToken();
     
-    // FCM 토큰 함수 호출
-    requestPermission()
-
     if(isLogin){
       const role = localStorage.getItem("role");
       if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
-        navigate("/userSubmit", { replace: true });
+        navigate("/usertype", { replace: true });
         return;
       }
+      
+      // FCM 토큰 함수 호출
+      requestFcmToken()
 
       if(role === "ROLE_IP"){//역할이 IP인 경우
         navigate("/ip", { replace: true });
@@ -27,17 +33,12 @@ const Login = () => {
         navigate("/helper", { replace: true });
       }
     }
-  },[navigate]);
+  },[navigate,requestFcmToken]);
 
   useEffect(()=>{
     autoLogin();
   },[autoLogin]);
-
-
-  useEffect(() => {
-    requestPermission()
-  },[])
-  
+ 
   const kakaoLogin=()=>{
     //TODO : 카카오 로그인 요청 및 인가코드받기 
     window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_OAUTH_REDIRECT_URI}&response_type=code`;
