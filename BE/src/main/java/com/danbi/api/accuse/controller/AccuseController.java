@@ -5,12 +5,11 @@ import com.danbi.api.accuse.dto.accuse.AccuseRequestDto;
 import com.danbi.api.accuse.dto.accuse.AccuseResponseDto;
 import com.danbi.api.accuse.dto.detail.AccuseDetailResponseDto;
 import com.danbi.api.accuse.service.AccuseInfoService;
-import com.danbi.global.resolver.MemberInfo;
-import com.danbi.global.resolver.MemberInfoDto;
+import com.danbi.global.resolver.memberinfo.MemberInfo;
+import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Accuse", description = "신고")

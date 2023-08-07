@@ -6,12 +6,15 @@ import com.danbi.api.guestbook.dto.CommentModifyDto;
 import com.danbi.api.guestbook.dto.GuestBookResponseDto;
 import com.danbi.api.guestbook.service.GuestBookCommentService;
 import com.danbi.api.guestbook.service.GuestBookProfileService;
-import com.danbi.global.resolver.MemberInfo;
-import com.danbi.global.resolver.MemberInfoDto;
+import com.danbi.global.resolver.memberinfo.MemberInfo;
+import com.danbi.global.resolver.memberinfo.MemberInfoDto;
+import com.danbi.global.resolver.paging.LimitedSizePagination;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,11 +28,14 @@ public class GuestBookController {
     private final GuestBookProfileService guestBookProfileService;
     private final GuestBookCommentService guestBookCommentService;
 
-    // TODO: 페이징 처리 필요
     @Operation(summary = "해당 프로필의 방명록 조회 API", description = "프로필의 Id 값으로 해당 방명록 조회")
     @GetMapping("/{profileId}")
-    public ApiResponse<GuestBookResponseDto> getGuestBook(@PathVariable Long profileId) {
-        GuestBookResponseDto guestBookResponseDto = guestBookProfileService.getGuestBook(profileId);
+    @LimitedSizePagination
+    public ApiResponse<GuestBookResponseDto> getGuestBook(@PathVariable Long profileId,
+                                                          @PageableDefault(size = 10,
+                                                                  sort = "createTime",
+                                                                  direction = Sort.Direction.DESC) Pageable pageable) {
+        GuestBookResponseDto guestBookResponseDto = guestBookProfileService.getGuestBook(profileId, pageable);
         return ApiResponse.ok(guestBookResponseDto);
     }
 

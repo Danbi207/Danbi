@@ -6,12 +6,11 @@ import com.danbi.api.friend.dto.response.ResponseFriendListDto;
 import com.danbi.api.friend.service.FriendInfoService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
-import com.danbi.global.resolver.MemberInfo;
-import com.danbi.global.resolver.MemberInfoDto;
+import com.danbi.global.resolver.memberinfo.MemberInfo;
+import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Friend", description = "친구 관계")

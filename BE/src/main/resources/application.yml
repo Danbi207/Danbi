@@ -4,13 +4,6 @@ server:
     context-path: /
 
 spring:
-#   개발 데이터베이스 연결
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/danbi?useSSL=false
-#    username: root
-#    password: qlrudauf@123
-#    password: ENC(0us4TH8A/ndv+fnlYXk1tU6G7uCGatoo)
 
   redis:
     pool:

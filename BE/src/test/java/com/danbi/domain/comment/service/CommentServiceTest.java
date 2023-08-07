@@ -11,6 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
@@ -59,8 +62,10 @@ class CommentServiceTest {
         Comment savedComment2 = commentRepository.save(comment2);
         Comment savedComment3 = commentRepository.save(comment3);
 
+        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "createTime");
+
         // when
-        List<Comment> comments = commentService.findByGuestBook(savedGuestBook);
+        List<Comment> comments = commentService.findByGuestBook(savedGuestBook, pageable);
 
         // then
         assertThat(comments).hasSize(3)
