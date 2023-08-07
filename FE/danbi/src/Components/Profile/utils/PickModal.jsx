@@ -10,13 +10,36 @@ import {
   setName,
   setDewPoint,
 } from '../../../store/Slice/JandiSlice';
+import Rare from './Rare.svg';
+import Epic from './Epic.svg';
+import Legendary from './Legendary.svg';
+import { Jsconfetti } from '../../../App';
 
 const PickModal = ({ setPickModalOpen }) => {
   const [ShowAnimation, setShowAnimation] = useState(true);
+  const cur_dew = useSelector((state) => state.Jandi.dew_point);
+  const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
+  const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
+  const cur_Name = useSelector((state) => state.Jandi.item.name);
+  const cur_Tier = useSelector((state) => state.Jandi.item.tier);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowAnimation(false);
+      if(cur_Tier === 'legandary'){
+        Jsconfetti.addConfetti({
+          confettiColors: [
+            "#ff0a54",
+            "#ff477e",
+            "#ff7096",
+            "#ff85a1",
+            "#fbb1bd",
+            "#f9bec7",
+          ],
+          confettiRadius: 5,
+          confettiNumber: 250,
+        });
+      }
     }, 1500);
 
     return () => clearTimeout(timeout);
@@ -25,9 +48,9 @@ const PickModal = ({ setPickModalOpen }) => {
   const CloseModal = () => {
     setPickModalOpen(false);
   };
-
+  
   const dispatch = useDispatch();
-
+  
   const handlePickModal = (pickdata) => {
     setShowAnimation(true);
 
@@ -39,6 +62,20 @@ const PickModal = ({ setPickModalOpen }) => {
       dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
       dispatch(setCheckedRgb(pickdata.item.checkedRgb));
       dispatch(setDewPoint(pickdata.dew_point));
+      if(pickdata.item.tier === 'legandary'){
+        Jsconfetti.addConfetti({
+          confettiColors: [
+            "#ff0a54",
+            "#ff477e",
+            "#ff7096",
+            "#ff85a1",
+            "#fbb1bd",
+            "#f9bec7",
+          ],
+          confettiRadius: 5,
+          confettiNumber: 500,
+        });
+      }
     }, 1500);
   };
 
@@ -52,11 +89,7 @@ const PickModal = ({ setPickModalOpen }) => {
     dew_point: 123456,
   };
 
-  const cur_dew = useSelector((state) => state.Jandi.dew_point);
-  const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
-  const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
-  const cur_Name = useSelector((state) => state.Jandi.item.name);
-  const cur_Tier = useSelector((state) => state.Jandi.item.tier);
+
 
   return (
     <PickModalWrap>
@@ -73,8 +106,10 @@ const PickModal = ({ setPickModalOpen }) => {
             <Title>사용결과</Title>
             <CloseBtn onClick={CloseModal}>X</CloseBtn>
           </Header>
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            {cur_Tier === 'Rare' ? <Tier src={Rare} style={{width: '1.7rem'}} /> : cur_Tier === 'Epic' ? <Tier src={Epic} style={{width: '4.5rem'}}/> : <Tier src={Legendary} style={{width: '4.5rem'}} />}
+          </div>
           <ContentWrap>
-            <Tier>{cur_Tier}</Tier>
             <Example>
               <Rec $color={(props) => props.theme.colors.titleColor} />
               <Rec $color={cur_UncheckedColor} />
@@ -126,7 +161,7 @@ const PickModalWrap = styled.div`
 
 const Wrap = styled.div`
   width: 21rem;
-  height: 11.25rem;
+  height: 14rem;
   background-color: ${(props) => props.theme.colors.bgColor};
   display: flex;
   flex-direction: column;
@@ -139,9 +174,8 @@ const ContentWrap = styled.div`
   height: 5rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
-  margin: 0.5rem 0;
 `;
 
 const AcceptBtn = styled.button`
@@ -165,7 +199,9 @@ const Header = styled.div`
   margin: 0.5rem;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  font-size: 14px;
+`;
 
 const CloseBtn = styled.button``;
 
@@ -179,14 +215,18 @@ const Footer = styled.div`
 const Point = styled.div`
   font-size: 7px;
   margin-top: 0.25rem;
+  color: lightgray;
 `;
 
-const Tier = styled.div``;
+const Tier = styled.img`
+`
+
 
 const Example = styled.div`
   width: 6.75rem;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
 `;
 
 const Rec = styled.div`

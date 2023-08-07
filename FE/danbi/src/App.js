@@ -9,7 +9,12 @@ import { getCookie} from './cookie';
 import {setTheme } from "./store/Slice/settingSlice.js";
 import styled from 'styled-components';
 import Modal from "./Components/Common/Modal/Modal.jsx";
+import JSconfetti from 'js-confetti';
+
+export const Jsconfetti = new JSconfetti();
+
 function App() {
+  // confetti canvas 생성
   //FIXME : 자동로그인, accesstoken만료시 재발급
   const dispatch = useDispatch();
   useEffect(()=>{
