@@ -84,7 +84,7 @@ class GuestBookCommentServiceTest {
         Long memberId = member.getId();
 
         String modifiedContent = "new content";
-        CommentDto.Reqeust reqeust = new CommentDto.Reqeust();
+        CommentDto.Request reqeust = new CommentDto.Request();
         reqeust.setContent(modifiedContent);
 
         // when
@@ -98,6 +98,7 @@ class GuestBookCommentServiceTest {
         assertThat(response.getName()).isEqualTo(member.getName());
     }
 
+    @DisplayName("댓글 수정")
     @Test
     void modifyComment() {
     }
