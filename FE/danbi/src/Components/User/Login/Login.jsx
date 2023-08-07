@@ -1,19 +1,19 @@
 import React,{useEffect,useCallback} from 'react'
 import styled from 'styled-components';
+import { reissueAccessToken } from '../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { requestPermission } from '../../../Util/hooks/requestPermission';
 
 const Login = () => {
   const navigate = useNavigate();
-  const api = useSelector(state=>state.api);
+
   // FCM 토큰 함수 호출
   const  requestFcmToken = useCallback(async ()=> {
-    await requestPermission(api);
+    await requestPermission()
   },[])
 
   const autoLogin = useCallback(async()=>{
-    const isLogin = await api.reissueAccessToken();
+    const isLogin = await reissueAccessToken();
     
     if(isLogin){
       const role = localStorage.getItem("role");
@@ -36,7 +36,6 @@ const Login = () => {
   },[navigate,requestFcmToken]);
 
   useEffect(()=>{
-    console.log(api);
     autoLogin();
   },[autoLogin]);
  

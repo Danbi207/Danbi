@@ -2,19 +2,19 @@
 import React, { useEffect ,useCallback} from 'react'
 import { useDispatch} from "react-redux";
 import { useNavigate } from 'react-router';
+import { authGet, setToken,setTokenExpireTime } from '../../../../Util/apis/api';
 
 import {requestPermission} from '../../../../Util/hooks/requestPermission';
-import { useSelector } from 'react-redux';
 
 const KaKaoOauth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const api = useSelector(state=>state.api);
+  
   const logout = useCallback(async () => {
-    await api.authGet("/api/v1/member/logout");
+    await authGet("/api/v1/member/logout");
     
-    api.setAccessToken("");
-    api.setAccessTokenExpireTime("");
+    setToken("");
+    setTokenExpireTime("");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
     localStorage.removeItem("role");
@@ -22,7 +22,7 @@ const KaKaoOauth = () => {
 
   // FCM 토큰 함수 호출
   const  requestFcmToken = useCallback(async ()=> {
-    await requestPermission(api)
+    await requestPermission()
   },[])
  
 
@@ -36,9 +36,9 @@ const KaKaoOauth = () => {
       url : process.env.REACT_APP_KAKAO_OUATH__PATH,
       data : {code,redirectUrl} 
     }).then(({data})=>{
-      
-      api.setAccessToken(data.access_token);
-      api.setAccessTokenExpireTime(data.access_token_expiration_time);
+      console.log(data);
+      setToken(data.accessToken);
+      setTokenExpireTime(data.accessTokenExpirationTime);
       
       //DO : 토큰정보를 저장
       localStorage.setItem("refreshToken",data.refreshToken);
