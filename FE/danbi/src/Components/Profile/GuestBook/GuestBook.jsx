@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
-import send from '../Send-black.svg';
 import GuestBookComment from './GuestBookComment';
 
 const Comments = [
@@ -123,9 +122,11 @@ const SendBtn = styled.button`
   height: auto;
 `;
 
-const ChatImg = styled.img.attrs({
-  src: `${props => props.theme.images.send}`
-})`
+const ChatImg = styled.img.attrs(
+props => ({
+  src: props.theme.images.send
+})
+)`
   width: 20px;
   height: 20px;
 `;

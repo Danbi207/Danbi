@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Lottie from 'lottie-react';
-import PickAnimation from '../data.json';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setTier,
@@ -10,10 +9,9 @@ import {
   setName,
   setDewPoint,
 } from '../../../store/Slice/JandiSlice';
-import Rare from './Rare.svg';
-import Epic from './Epic.svg';
-import Legendary from './Legendary.svg';
 import { Jsconfetti } from '../../../App';
+import pick from '../../../Util/assets/animation.json';
+import axios from 'axios';
 
 const PickModal = ({ setPickModalOpen }) => {
   const [ShowAnimation, setShowAnimation] = useState(true);
@@ -89,14 +87,12 @@ const PickModal = ({ setPickModalOpen }) => {
     dew_point: 123456,
   };
 
-
-
   return (
     <PickModalWrap>
       {ShowAnimation ? (
         <AnimationWrap>
           <Lottie
-            animationData={PickAnimation}
+            animationData={pick}
             style={{ width: '100%', height: '100%' }}
           />
         </AnimationWrap>
@@ -107,7 +103,7 @@ const PickModal = ({ setPickModalOpen }) => {
             <CloseBtn onClick={CloseModal}>X</CloseBtn>
           </Header>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            {cur_Tier === 'Rare' ? <Tier src={Rare} style={{width: '1.7rem'}} /> : cur_Tier === 'Epic' ? <Tier src={Epic} style={{width: '4.5rem'}}/> : <Tier src={Legendary} style={{width: '4.5rem'}} />}
+            {cur_Tier === 'Rare' ? <Tier $state={'rare'} style={{width: '1.7rem'}} /> : cur_Tier === 'Epic' ? <Tier $state={'epic'} style={{width: '4.5rem'}}/> : <Tier $state={'legendary'} style={{width: '4.5rem'}} />}
           </div>
           <ContentWrap>
             <Example>
@@ -218,7 +214,9 @@ const Point = styled.div`
   color: lightgray;
 `;
 
-const Tier = styled.img`
+const Tier = styled.img.attrs(props => ({
+  src: props.$state === 'rare' ? props.theme.images.rare : props.$state === 'epic' ? props.theme.images.epic : props.theme.images.legendary,
+}))`
 `
 
 
