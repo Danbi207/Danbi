@@ -60,6 +60,7 @@ const TEST = () => {
     }
     const json = request&&request!=="" ? JSON.parse(request) : {};
     json[fileKey] = file;
+    console.log(json);
     const formData = new FormData();
     for (let key in json ) {
       formData.append(key, json[key]);

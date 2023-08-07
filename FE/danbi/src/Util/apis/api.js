@@ -21,7 +21,7 @@ export const reissueAccessToken = async ()=>{
   try{
     const {data} = await axios({
       method:"post",
-      url:"/api/v1/access-token/issue",
+      url: process.env.REACT_APP_SERVER+"/api/v1/access-token/issue",
       headers:{"Authorization" : `Bearer ${refreshToken}`}
     });
     token.setAccessToken(data.accessToken);
@@ -49,7 +49,7 @@ export const authGet = async (url)=>{
 
     const {data} = await axios({
       method:"get",
-      url,
+      url: process.env.REACT_APP_SERVER+url,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
 
@@ -60,7 +60,7 @@ export const authGet = async (url)=>{
     try{
       const {data} = await axios({
         method:"get",
-        url,
+        url: process.env.REACT_APP_SERVER+url,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
   
@@ -87,7 +87,7 @@ export const authPost = async (url,json)=>{
 
     const {data} = await axios({
       method:"post",
-      url,
+      url: process.env.REACT_APP_SERVER+url,
       data:json,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
@@ -99,7 +99,7 @@ export const authPost = async (url,json)=>{
     try{
       const {data} = await axios({
         method:"post",
-        url,
+        url: process.env.REACT_APP_SERVER+url,
         data:json,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
@@ -127,7 +127,7 @@ export const authDelete = async (url,json)=>{
 
     const {data} = await axios({
       method:"delete",
-      url,
+      url: process.env.REACT_APP_SERVER+url,
       data:json,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
@@ -139,7 +139,7 @@ export const authDelete = async (url,json)=>{
     try{
       const {data} = await axios.delete({
         method:"delete",
-        url,
+        url: process.env.REACT_APP_SERVER+url,
         data:json,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
@@ -167,7 +167,7 @@ export const authPut = async (url,json)=>{
 
     const {data} = await axios.put({
       method:"put",
-      url,
+      url: process.env.REACT_APP_SERVER+url,
       data:json,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
@@ -179,7 +179,7 @@ export const authPut = async (url,json)=>{
     try{
       const {data} = await axios.put({
         method:"put",
-        url,
+        url: process.env.REACT_APP_SERVER+url,
         data:json,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
@@ -207,7 +207,7 @@ export const authFilePost = async (url,formData)=>{
 
     const {data} = await axios({
       method:"post",
-      url,
+      url: process.env.REACT_APP_SERVER+url,
       data:formData,
       headers:{
         'content-type': 'multipart/form-data',
@@ -222,7 +222,7 @@ export const authFilePost = async (url,formData)=>{
     try{
       const {data} = await axios({
         method:"post",
-        url,
+        url: process.env.REACT_APP_SERVER+url,
         file:formData,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
