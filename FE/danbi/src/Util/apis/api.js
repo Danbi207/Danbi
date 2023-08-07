@@ -3,18 +3,19 @@ import axios from "axios";
 export default class api{
   #accessToken = "";
   #accessTokenExpireTime = "";
-  setAccessToken(payload){
+
+  setAccessToken = (payload)=>{
     this.#accessToken = payload;
   }
-  setAccessTokenExpireTime(payload){
+  setAccessTokenExpireTime = (payload)=>{
     this.#accessTokenExpireTime = payload;
   }
-  clear(){
+  clear = () =>{
     this.#accessTokenExpireTime = "";
     this.#accessToken = "";
   }
 
-  check(){
+  check = ()=>{
     return this.#accessToken==="" || (new Date()) >= (new Date(this.#accessTokenExpireTime));
   }
 

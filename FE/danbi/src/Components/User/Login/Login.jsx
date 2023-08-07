@@ -36,6 +36,7 @@ const Login = () => {
   },[navigate,requestFcmToken]);
 
   useEffect(()=>{
+    console.log(api);
     autoLogin();
   },[autoLogin]);
  
