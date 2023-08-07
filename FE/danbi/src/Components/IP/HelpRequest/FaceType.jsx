@@ -60,15 +60,16 @@ const SelectBTN = styled.button`
   height: 9.4rem;
   border-radius: 0.75rem;
   font-size: 2.3rem;
-  background-color: ${props=> props.$default === props.$meetType ? '#8383FF' : '#E3E3E3'};
-  color : ${props=> props.$default === props.$meetType ? '#fff' : '#000'};
+  background-color: ${props=> props.$default === props.$meetType ? 
+    props.theme.colors.buttonbgColor : props.theme.colors.boxColor };
+  color : ${props=> props.theme.colors.buttontextColor};
   display: flex;
   justify-content : center;
   align-items : center;
   transition: 0.5s;
   &:hover {
-      background-color: #8383FF;
-      color: white;
+      background-color: ${props=>props.theme.colors.buttonbgColor};
+      color: ${props=> props.theme.colors.buttontextColor};
       transform: scale(1.1);
       transition: 0.5s;
   }
@@ -78,8 +79,8 @@ const NextBTN  = styled.button`
   height: 3rem;
   margin: 1rem auto;
   border-radius: 0.75rem;
-  background-color: #6161FF;
-  color: #fff;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=> props.theme.colors.buttontextColor};
   font-size : 2rem;
   @media screen and (max-width: 500px) {
     width: 20rem;

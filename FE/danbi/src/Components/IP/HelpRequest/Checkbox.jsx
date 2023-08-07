@@ -40,7 +40,6 @@ const InputWrap = styled.form`
 const Input = styled.input`
   accent-color: #6161FF;
 `
-
 const Label = styled.label`
   padding-left: 1rem;
   display: inline-block;
