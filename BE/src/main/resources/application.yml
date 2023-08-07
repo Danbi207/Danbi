@@ -82,3 +82,5 @@ springdoc:
     display-request-duration: true
     operations-sorter: alpha
 
+fcm:
+  certification: ENC(RoPa8n/InwLP1VfUsUmhHdn5yDM8Vnsk04zPJb6LZg0iQ2w6WHRmJ9SEEcP8Ou0y)
