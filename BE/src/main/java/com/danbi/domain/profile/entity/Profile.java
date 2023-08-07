@@ -29,9 +29,10 @@ public class Profile extends BaseEntity {
     private Point point;
 
     @Builder
-    public Profile(Long id, Member member) {
+    public Profile(Long id, Member member, Point point) {
         this.id = id;
         this.member = member;
+        this.point = point;
     }
 
     public void assignMember(Member member) {
