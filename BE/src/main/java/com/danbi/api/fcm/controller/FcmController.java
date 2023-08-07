@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RestController
@@ -29,7 +30,7 @@ public class FcmController {
     }
 
     @PostMapping("/sendMessageTo")
-    public void sendMessageTo(@RequestBody NotificationRequest notificationRequest) throws IOException {
+    public void sendMessageTo(@RequestBody NotificationRequest notificationRequest) throws IOException, ExecutionException, InterruptedException {
         fcmService.sendMessageTo(notificationRequest);
     }
 

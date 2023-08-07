@@ -16,10 +16,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.WebpushConfig;
+import com.google.firebase.messaging.WebpushNotification;
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -81,6 +84,7 @@ public class FcmService {
         FcmMessage.Notification noti = new FcmMessage.Notification(title, body, null);
         FcmMessage.Message message = new FcmMessage.Message(noti, targetToken);
         FcmMessage fcmMessage = new FcmMessage(false, message);
+
 
         return objectMapper.writeValueAsString(fcmMessage);
     }
