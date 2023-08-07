@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { authPost } from "../apis/api";
 
 // 해당 함수만 export로 보낼 때
-export const requestPermission = async () => {
+export const requestPermission = async (api) => {
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: "test-cca3f.firebaseapp.com",
@@ -32,7 +31,7 @@ export const requestPermission = async () => {
 
   const Token = { "FCM_token" : token }
 
-  const res =  await authPost('/api/v1/fcm/token', Token)
+  const res =  await api.authPost('/api/v1/fcm/token', Token)
     if (res) {
       console.log('FCM 토큰을 가져왔습니다.')
     }

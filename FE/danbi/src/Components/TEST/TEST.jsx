@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React,{ useState,useCallback } from 'react'
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { authDelete, authFilePost, authGet, authPost, authPut } from '../../Util/apis/api';
 const TEST = () => {
   const [url,setUrl] = useState("");
   const [method,setMethod] = useState("get");
   const [request,setRequest] = useState("");
   const [file,setFile] = useState(null);
   const [fileKey,setFileKey] = useState("");
+  const api = useSelector(state=>state.api);
   const noTokenApi = useCallback(()=>{
     if(method === "get"){
       axios({
@@ -25,25 +26,25 @@ const TEST = () => {
 
   const tokenApi = useCallback(async ()=>{
     if(method==="get"){
-      const res = await authGet(url);
+      const res = await api.authGet(url);
       if(res === null) alert("로그인이 안되어있습니다")
       console.log(res);
     }
 
     if(method==="post"){
-      const res = await authPost(url,JSON.parse(request));
+      const res = await api.authPost(url,JSON.parse(request));
       if(res === null) alert("로그인이 안되어있습니다")
       console.log(res);
     }
 
     if(method==="put"){
-      const res = await authPut(url,JSON.parse(request));
+      const res = await api.authPut(url,JSON.parse(request));
       if(res === null) alert("로그인이 안되어있습니다")
       console.log(res);
     }
 
     if(method==="delete"){
-      const res = await authDelete(url,JSON.parse(request));
+      const res = await api.authDelete(url,JSON.parse(request));
       if(res === null) alert("로그인이 안되어있습니다")
       console.log(res);
     }
@@ -65,7 +66,7 @@ const TEST = () => {
     for (let key in json ) {
       formData.append(key, json[key]);
     }
-    const res = await authFilePost(url,formData);
+    const res = await api.authFilePost(url,formData);
     if(res === null) alert("로그인이 안되어있습니다")
     console.log(res);
   },[file,request,fileKey,url]);
