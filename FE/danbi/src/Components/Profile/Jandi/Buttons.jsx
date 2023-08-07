@@ -9,7 +9,6 @@ import {
     setDewPoint,
   } from '../../../store/Slice/JandiSlice';
 
-
 const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
     const dispatch = useDispatch();
 

@@ -5,7 +5,7 @@ import Help from './Help.svg';
 import Buttons from './Buttons.jsx';
 
 
-const Jandi = ({ help_log, setPickModalOpen, point }) => {
+const Jandi = ({ help_log, setPickModalOpen }) => {
   const colCnt = 8;
   const rowCnt = 2;
 
@@ -47,7 +47,7 @@ const Jandi = ({ help_log, setPickModalOpen, point }) => {
       idx,
       content: help_log[idx].created_time,
     });
-  };
+    };
   const GrossItems = useMemo(() => {
     const res = [];
     for (
