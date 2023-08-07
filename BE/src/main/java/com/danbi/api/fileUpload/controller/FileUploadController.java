@@ -19,11 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileUploadController {
 
-    private final AmazonS3Client amazonS3Client;
     private final FileUploadService fileUploadService;
-
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
 
     @Operation(summary = "IP 인증 서류 제출 API", description = "IP 인증 서류들 제출")
     @PostMapping("/ip/certification")
