@@ -40,7 +40,7 @@ const GuestBook = () => {
           <ChatForm>
             <Chat />
             <SendBtn>
-              <ChatImg src={send} />
+              <ChatImg />
             </SendBtn>
           </ChatForm>
         </ChatSection>
@@ -69,8 +69,8 @@ const UserDetail = styled.div`
 `;
 
 const ProfileImage = styled.img`
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
 `;
 
@@ -123,7 +123,9 @@ const SendBtn = styled.button`
   height: auto;
 `;
 
-const ChatImg = styled.img`
+const ChatImg = styled.img.attrs({
+  src: `${props => props.theme.images.send}`
+})`
   width: 20px;
   height: 20px;
 `;
