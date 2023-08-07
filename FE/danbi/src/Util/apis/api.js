@@ -51,7 +51,7 @@ export default class api{
     if(!refreshToken || refreshToken===""){
       return null;
     }
-  
+    console.log("accesstoken : ",this.#accessToken);
     if(this.check()){//엑세스 토큰이 없거나 사용불가능한 경우
       const res = await this.reissueAccessToken();
       if(res === null) return null;
@@ -89,7 +89,7 @@ export default class api{
     if(!refreshToken || refreshToken===""){
       return null;
     }
-  
+  console.log("accesstoken : ",this.#accessToken);
     if(this.check()){//엑세스 토큰이 없거나 사용불가능한 경우
       const res = await this.reissueAccessToken();
       if(res === null) return null;
@@ -129,7 +129,7 @@ export default class api{
     if(!refreshToken || refreshToken===""){
       return null;
     }
-  
+  console.log("accesstoken : ",this.#accessToken);
     if(this.check()){//엑세스 토큰이 없거나 사용불가능한 경우
       const res = await this.reissueAccessToken();
       if(res === null) return null;
@@ -169,7 +169,7 @@ export default class api{
     if(!refreshToken || refreshToken===""){
       return null;
     }
-  
+  console.log("accesstoken : ",this.#accessToken);
     if(this.check()){//엑세스 토큰이 없거나 사용불가능한 경우
       const res = await this.reissueAccessToken();
       if(res === null) return null;
@@ -209,7 +209,7 @@ export default class api{
     if(!refreshToken || refreshToken===""){
       return null;
     }
-  
+  console.log("accesstoken : ",this.#accessToken);
     if(this.check()){//엑세스 토큰이 없거나 사용불가능한 경우
       const res = await this.reissueAccessToken();
       if(res === null) return null;
