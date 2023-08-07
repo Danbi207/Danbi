@@ -1,4 +1,4 @@
-package com.danbi.global.resolver;
+package com.danbi.global.resolver.memberinfo;
 
 import com.danbi.domain.member.constant.Role;
 import com.danbi.global.jwt.service.TokenManager;

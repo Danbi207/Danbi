@@ -5,12 +5,11 @@ import com.danbi.api.alarm.dto.request.RequestAlarmDto;
 import com.danbi.api.alarm.dto.response.ResponseAlarmDto;
 import com.danbi.api.alarm.dto.response.ResponseAlarmListDto;
 import com.danbi.api.alarm.service.AlarmInfoService;
-import com.danbi.global.resolver.MemberInfo;
-import com.danbi.global.resolver.MemberInfoDto;
+import com.danbi.global.resolver.memberinfo.MemberInfo;
+import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -20,6 +20,7 @@ public class Help extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "help_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)

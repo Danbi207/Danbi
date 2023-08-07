@@ -2,8 +2,8 @@ package com.danbi.domain.fcm.controller;
 
 import com.danbi.domain.fcm.dto.NotificationRequest;
 import com.danbi.domain.fcm.service.FcmService;
-import com.danbi.global.resolver.MemberInfo;
-import com.danbi.global.resolver.MemberInfoDto;
+import com.danbi.global.resolver.memberinfo.MemberInfo;
+import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

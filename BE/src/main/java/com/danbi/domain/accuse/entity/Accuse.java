@@ -18,6 +18,7 @@ public class Accuse extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accuse_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -10,10 +10,12 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "member_file")
 public class MemberFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_file_id")
     private Long id;
 
     @Column(nullable = false, length = 200)

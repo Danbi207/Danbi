@@ -10,16 +10,16 @@ import com.danbi.api.helppost.dto.helpersearch.query.HelperQueryHelpPostDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthRequestDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.api.helppost.service.HelpPostInfoService;
-import com.danbi.global.resolver.MemberInfo;
-import com.danbi.global.resolver.MemberInfoDto;
+import com.danbi.global.resolver.memberinfo.MemberInfo;
+import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 @Tag(name = "HelpPost", description = "도움 요청 게시글")
 @RestController
@@ -79,7 +79,7 @@ public class HelpPostController {
                                                                       @PathVariable String latitude,
                                                                       @PathVariable String gender) {
         List<HelperQueryHelpPostDto> allHelpPosts = helpPostInfoService.searchQueryHelpPost(memberInfoDto.getMemberId(),
-                longitude, latitude, gender);
+                longitude, latitude, gender.toLowerCase());
         return ApiResponse.ok(allHelpPosts);
     }
 
@@ -90,7 +90,7 @@ public class HelpPostController {
                                                                                @PathVariable String latitude,
                                                                                @PathVariable String gender) {
         List<HelperFaceHelpPostDto> allHelpPosts = helpPostInfoService.searchFaceHelpPost(memberInfoDto.getMemberId(),
-                longitude, latitude, gender);
+                longitude, latitude, gender.toLowerCase());
         return ApiResponse.ok(allHelpPosts);
     }
 

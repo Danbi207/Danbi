@@ -19,6 +19,7 @@ public class HelpPost extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "help_post_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

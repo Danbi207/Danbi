@@ -14,6 +14,7 @@ public class Positions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "positions_id")
     private Long id;
 
     @Column(nullable = false, length = 1023)
