@@ -18,7 +18,7 @@ const Login = () => {
     if(isLogin){
       const role = localStorage.getItem("role");
       if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
-        navigate("/user/join", { replace: true });
+        // navigate("/user/join", { replace: true });
         return;
       }
       
@@ -26,11 +26,11 @@ const Login = () => {
       requestFcmToken()
 
       if(role === "ROLE_IP"){//역할이 IP인 경우
-        navigate("/help/ip", { replace: true });
+        // navigate("/help/ip", { replace: true });
       }
 
       if(role === "ROLE_HELPER"){//역할이 Helper인경우
-        navigate("/help/helper", { replace: true });
+        // navigate("/help/helper", { replace: true });
       }
     }
   },[navigate,requestFcmToken]);

@@ -32,7 +32,7 @@ export const requestPermission = async () => {
 
   const Token = { "FCM_token" : token }
 
-  const res =  await authPost('/api/v1/fcm/token', JSON.parse(Token))
+  const res =  await authPost('/api/v1/fcm/token', Token)
     if (res) {
       console.log('FCM 토큰을 가져왔습니다.')
     }
