@@ -56,7 +56,7 @@ const UserFile = (props) => {
         <ImgNextBtn onClick={nextImage}>-{">"}</ImgNextBtn>
       </UploadWrap>
       <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
-      <NextButton>제출</NextButton>
+      <NextBTN>제출</NextBTN>
     </SubmitWrap>
   );
 }
@@ -74,16 +74,21 @@ const Question = styled.div`
   text-align: center;
 `
 
-const NextButton  = styled.button`
+const NextBTN  = styled.button`
   position: absolute;
-  left: calc((100% - 20rem)/2);
+  left : calc(( 100% - 30rem )/2);
   bottom: 1rem;
-  width: 20rem;
+  width: 30rem;
   height: 3rem;
   border-radius: 0.75rem;
-  background-color: #6161FF;
-  color: #fff;
+  background-color: ${props => props.theme.colors.buttonbgColor};
+  color: ${props => props.theme.colors.buttontextColor};
   font-size : 2rem;
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    height: 3rem;
+    left : calc(( 100% - 20rem )/2);
+  }
 `
 
 const UploadWrap = styled.div `

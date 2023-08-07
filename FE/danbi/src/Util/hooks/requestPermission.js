@@ -30,12 +30,15 @@ export const requestPermission = async () => {
     vapidKey: process.env.REACT_APP_VAPID_KEY,
   });
 
-  const res =  await authPost('/api/v1/fcm/token', {FCM_token: token})
+  const Token = { "FCM_token" : token }
+
+  const res =  await authPost('/api/v1/fcm/token', JSON.parse(Token))
     if (res) {
       console.log('FCM 토큰을 가져왔습니다.')
     }
     else {
       console.log('FCM 토큰을 가져올 수 없습니다.')
+      console.log(Token);
     }
 
   onMessage(messaging, (payload) => {

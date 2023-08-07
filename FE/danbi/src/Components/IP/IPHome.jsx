@@ -1,14 +1,12 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-
 import styled from 'styled-components'
 
 import Header from "../Common/Header/Header";
 import Footer from "../Common/Footer/Footer";
 import Calender from "./Calender/Calender";
-import Calender3 from "./Calender/Calender3";
 
-const IPHome = () => {
+const IPHome = (props) => {
   const navigate = useNavigate();
 
   return (
@@ -16,9 +14,8 @@ const IPHome = () => {
       <Header/>
         <Wrap>
           <Calender/>
-          {/* <Calender3></Calender3> */}
+          <RequestBTN onClick={()=>{navigate('/iprequest')}}>도움 요청하기</RequestBTN>
         </Wrap>
-      <RequestBTN onClick={()=>{navigate('/iprequest')}}>도움 요청하기</RequestBTN>
       <Footer/>
     </IpHomeWrap>
   );
@@ -27,7 +24,6 @@ const IPHome = () => {
 const IpHomeWrap = styled.div`
     width: 100%;
     height: 100%;
-    background-color: ${props=>props.theme.colors.bgColor};
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -35,7 +31,8 @@ const IpHomeWrap = styled.div`
 
 const Wrap = styled.div `
   width: 100%;
-  height: 50%;;
+  height: 100%;;
+  background-color: ${props=>props.theme.colors.bgColor};
 `
 
 const RequestBTN = styled.button`
@@ -45,8 +42,8 @@ const RequestBTN = styled.button`
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
-  background-color: #6161FF;
-  color: #fff;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=>props.theme.colors.buttontextColor};
   font-size : 2rem;
   @media screen and (max-width: 500px) {
     width: 20rem;
