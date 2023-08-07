@@ -30,7 +30,7 @@ export const requestPermission = async () => {
     vapidKey: process.env.REACT_APP_VAPID_KEY,
   });
 
-  const Token = { "FCM_token" : token }
+  const Token = { "fcm_token" : token }
 
   const res =  await authPost('/api/v1/fcm/token', Token)
     if (res) {
