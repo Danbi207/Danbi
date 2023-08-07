@@ -9,6 +9,7 @@ import { getCookie} from './cookie';
 import {setTheme } from "./store/Slice/settingSlice.js";
 import styled from 'styled-components';
 import Modal from "./Components/Common/Modal/Modal.jsx";
+
 function App() {
   //FIXME : 자동로그인, accesstoken만료시 재발급
   const dispatch = useDispatch();

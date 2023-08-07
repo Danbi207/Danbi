@@ -2,11 +2,16 @@ import React,{useEffect,useCallback} from 'react'
 import styled from 'styled-components';
 import { reissueAccessToken } from '../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
+import { requestPermission } from '../../Util/hooks/requestPermission';
 
 const Login = () => {
   const navigate = useNavigate();
   const autoLogin = useCallback(async()=>{
     const isLogin = await reissueAccessToken();
+    
+    // FCM 토큰 함수 호출
+    requestPermission()
+
     if(isLogin){
       const role = localStorage.getItem("role");
       if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
@@ -27,6 +32,11 @@ const Login = () => {
   useEffect(()=>{
     autoLogin();
   },[autoLogin]);
+
+
+  useEffect(() => {
+    requestPermission()
+  },[])
   
   const kakaoLogin=()=>{
     //TODO : 카카오 로그인 요청 및 인가코드받기 
