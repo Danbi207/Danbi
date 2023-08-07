@@ -18,7 +18,7 @@ const Login = () => {
     if(isLogin){
       const role = localStorage.getItem("role");
       if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
-        navigate("/usertype", { replace: true });
+        navigate("/user/join", { replace: true });
         return;
       }
       
