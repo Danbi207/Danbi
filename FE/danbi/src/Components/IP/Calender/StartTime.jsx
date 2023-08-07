@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 import SDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './StartTime.css'
 
 import { getHours, getMinutes } from 'date-fns';
 import setHours from "date-fns/setHours";

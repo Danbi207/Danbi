@@ -4,7 +4,8 @@ import Profile from '../Components/Profile/Profile.jsx';
 import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
 import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
 import IPHome from "../Components/IP/IPHome.jsx";
-import UserSubmit from "../Components/Login/UserSubmit.jsx";
+import UserType from '../Components/Login/UserType.jsx'
+import UserFile from '../Components/Login/UserFile.jsx'
 import IpRequest from "../Components/IP/IpRequest.jsx";
 import Detail from "../Components/Detail/Detail.jsx";
 import MatchedHelp from "../Components/MatchedHelp/MatchedHelp.jsx";
@@ -38,8 +39,12 @@ const routes = [
     component : IPHome,
   },
   {
-    path: "/userSubmit",
-    component : UserSubmit,
+    path: "/userfile",
+    component : UserFile,
+  },
+  {
+    path: "/usertype",
+    component : UserType,
   },
   {
     path: "/iprequest",
