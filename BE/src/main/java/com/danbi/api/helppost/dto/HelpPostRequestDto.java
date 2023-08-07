@@ -26,8 +26,8 @@ public class HelpPostRequestDto {
     @JsonProperty("face_flag")
     private boolean faceFlag;
 
-    @JsonProperty("reservation_flag")
-    private boolean reservationFlag;
+    @JsonProperty("emergency_flag")
+    private boolean emergencyFlag;
 
     @JsonProperty("gender_flag")
     private boolean genderFlag;
@@ -85,7 +85,7 @@ public class HelpPostRequestDto {
                 .content(helpPostRequestDto.getContent())
                 .startTime(helpPostRequestDto.getStartTime())
                 .endTime(helpPostRequestDto.getEndTime())
-                .reservationFlag(helpPostRequestDto.isReservationFlag())
+                .emergencyFlag(helpPostRequestDto.isEmergencyFlag())
                 .faceFlag(helpPostRequestDto.isFaceFlag())
                 .genderFlag(helpPostRequestDto.isGenderFlag())
                 .state(State.ACTIVATE)

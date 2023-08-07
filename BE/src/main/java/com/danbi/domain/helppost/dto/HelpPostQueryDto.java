@@ -24,6 +24,6 @@ public class HelpPostQueryDto {
     private String latitude;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private boolean faceFlag;
+    private boolean emergencyFlag;
     private int accuseStack;
 }

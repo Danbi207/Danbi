@@ -31,6 +31,8 @@ public class HelperFaceHelpPostDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
 
+    private boolean emergencyFlag;
+
     private int accuseStack;
 
     private boolean friendFlag;

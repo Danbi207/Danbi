@@ -35,7 +35,7 @@ public class HelpPost extends BaseEntity {
     @Column(length = 20)
     private LocalDateTime endTime;
 
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
 
     private boolean faceFlag;
 
@@ -58,12 +58,12 @@ public class HelpPost extends BaseEntity {
 
 
     @Builder
-    public HelpPost(Member member, String content, LocalDateTime startTime, LocalDateTime endTime, boolean reservationFlag, boolean faceFlag, State state, boolean genderFlag, Category category, String caution, Positions positions) {
+    public HelpPost(Member member, String content, LocalDateTime startTime, LocalDateTime endTime, boolean emergencyFlag, boolean faceFlag, State state, boolean genderFlag, Category category, String caution, Positions positions) {
         this.member = member;
         this.content = content;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.reservationFlag = reservationFlag;
+        this.emergencyFlag = emergencyFlag;
         this.faceFlag = faceFlag;
         this.genderFlag = genderFlag;
         this.state = state;
@@ -77,7 +77,7 @@ public class HelpPost extends BaseEntity {
         this.content = helpPost.getContent();
         this.startTime = helpPost.getStartTime();
         this.endTime = helpPost.getEndTime();
-        this.reservationFlag = helpPost.isReservationFlag();
+        this.emergencyFlag = helpPost.isEmergencyFlag();
         this.faceFlag = helpPost.isFaceFlag();
         this.genderFlag = helpPost.isGenderFlag();
         this.state = helpPost.getState();

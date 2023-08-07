@@ -20,5 +20,6 @@ public class HelpPostFaceDto {
     private String meetAddr;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private boolean emergencyFlag;
     private int accuseStack;
 }
