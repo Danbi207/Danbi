@@ -1,17 +1,16 @@
-import React from 'react'
+import React,{ useState,useEffect,useCallback } from 'react'
 import Header from "../Common/Header/Header.jsx"
 import Footer from "../Common/Footer/Footer.jsx"
-import Tap from "./Tap/Tap.jsx"
+import Tap from "./tap/Tap.jsx"
 
 import styled from 'styled-components';
-import { useState } from 'react';
-import Infomation from './Main/Infomation/Infomation.jsx';
-import Chat from './Main/Chat/Chat.jsx';
-import RealtimeMap from './Main/RealtimeMap/RealtimeMap.jsx';
+
+import Infomation from './main/infomation/Infomation.jsx';
+import Chat from './main/chat/Chat.jsx';
+import RealtimeMap from './main/realtimeMap/RealtimeMap.jsx';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+
 import axios from 'axios';
-import { useCallback } from 'react';
 const MatchedHelp = () => {
   const [mode,setMode] = useState("Infomation");
   const [help, setHelp] = useState();
@@ -70,19 +69,19 @@ const MatchedHelp = () => {
     <MatchedHelpWrap>
       <Header></Header>
       <Tap checkRoomId={checkRoomId} startCurPosition={startCurPosition} stopCurPosition={stopCurPosition} mode={mode} setMode={setMode}></Tap>
-      <MainWrap>
+      <mainWrap>
         {
           mode === "Infomation" ? <Infomation help={help}/>:
           mode === "Chat" ? <Chat mode={mode} roomId={helpPostId} myProfile = {myProfile}/> :
           mode === "RealtimeMap" ? <RealtimeMap position={help.position}  curposition = {curposition}/>
           : null
         }
-      </MainWrap>
+      </mainWrap>
       <Footer></Footer>
     </MatchedHelpWrap>
   )
 }
-const MainWrap = styled.div`
+const mainWrap = styled.div`
   width: 100%;
   height: calc(100% - 6rem);
 `

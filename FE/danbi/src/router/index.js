@@ -1,74 +1,53 @@
-import Login from "../Components/Login/Login.jsx";
-import Setting from "../Components/Common/Setting/Setting.jsx";
-import Profile from '../Components/Profile/Profile.jsx';
-import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
-import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
-import IPHome from "../Components/IP/IPHome.jsx";
-import UserType from '../Components/Login/UserType.jsx'
-import UserFile from '../Components/Login/UserFile.jsx'
-import IpRequest from "../Components/IP/IpRequest.jsx";
-import Detail from "../Components/Detail/Detail.jsx";
-import MatchedHelp from "../Components/MatchedHelp/MatchedHelp.jsx";
-import Friend from '../Components/Friends/Friend.jsx';
-import IpMap from "../Components/IP/Map/IpMap.jsx";
-import TEST from "../Components/TEST/TEST.jsx";
-
+import Login from "../Components/Login/Login";
+import KakaoOauth from "../Components/Login/oauth/KakaoOauth";
+import IpRequest from "../Components/help/IP/Request/IpRequest";
+import Detail from "../Components/help/co/Detail/Detail";
+import MatchedHelp from "../Components/help/co/matched/MatchedHelp";
+import Profile from "../Components/user/Profile/Profile";
+import Friend from "../Components/user/Friend/Friend";
+import UserSubmit from "../Components/Login/join";
+import IPHome from "../Components/help/IP/Home/IPHome";
+import HelperHome from "../Components/help/Helper/Home/HelperHome";
 const routes = [
   {
     path: "/",
     component: Login,
   },
   {
-    path: "/oauth/kakao",
-    component:KakaoOauth
+    path:'/user/login/ouath',
+    component : KakaoOauth
   },
   {
-    path:"/setting",
-    component : Setting,
+    path : '/user/join',
+    component : UserSubmit,
   },
   {
-    path: "/profile",
-    component : Profile,
+    path: "/help/ip",
+    component : IPHome
   },
   {
-    path: "/helper",
-    component : HelperHome,
+    path : "/help/ip/request",
+    component : IpRequest
   },
   {
-    path: "/ip",
-    component : IPHome,
+    path : "/help/helper",
+    component : HelperHome
   },
   {
-    path: "/userfile",
-    component : UserFile,
+    path : "/help/:role/detail/:helpPostId",
+    component : Detail
   },
   {
-    path: "/usertype",
-    component : UserType,
+    path : "/help/:role/matched/:helpPostId",
+    component : MatchedHelp
   },
   {
-    path: "/iprequest",
-    component : IpRequest,
+    path: "/user/profile/:meberId",
+    component:Profile
   },
   {
-    path: "/ipmap/:mapid",
-    component : IpMap,
-  },
-  {
-    path:"help/:role/detail/:helpPostId",
-    component : Detail,
-  },
-  {
-    path:"/matchedhelp/:helpPostId",
-    component:MatchedHelp,
-  },
-  {
-    path: '/friend',
-    component : Friend
-  },
-  {
-    path: '/test',
-    component : TEST
+    path : "/user/friend",
+    component:Friend
   }
 ];
 export default routes;

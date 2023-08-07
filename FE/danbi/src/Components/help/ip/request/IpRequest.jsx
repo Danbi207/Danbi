@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 
-import Header from '../Common/Header/Header';
-import Footer from '../Common/Footer/Footer';
+import Header from '../../../Common/Header/Header';
+import Footer from '../../../Common/Footer/Footer';
 import FaceType from './HelpRequest/FaceType';
 import TimeTpye from './HelpRequest/TimeTpye';
-import Tab from './Tab/Tab';
+import Tab from '../Tab/Tab';
 
 const IpRequest = () => {
   const ip = useSelector((state)=>state.ip)

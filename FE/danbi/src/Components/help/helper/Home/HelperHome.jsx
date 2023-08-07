@@ -1,10 +1,10 @@
 import React, { useState,useCallback,useEffect } from 'react'
 import styled from 'styled-components';
-import Header from "../../Common/Header/Header.jsx"
-import Footer from "../../Common/Footer/Footer.jsx"
-import HelpList from "./HelpList/HelpList.jsx"
-import HelpMap from "./HelpMap/HelpMap.jsx"
-import Tap from "./Tap/Tap.jsx"
+import Header from "../../../Common/Header/Header.jsx"
+import Footer from "../../../Common/Footer/Footer.jsx"
+import HelpList from "./Components/HelpList/HelpList.jsx"
+import HelpMap from "./Components/HelpMap/HelpMap.jsx"
+import Tap from "./Components/Tap/Tap.jsx"
 import axios from 'axios';
 const HelperHome = () => {
   const [mode,setMode] = useState("contact");

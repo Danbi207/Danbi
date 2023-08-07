@@ -6,7 +6,7 @@ import Preset from './Preset.jsx';
 import Positioin from './Positioin';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setTabMode, setMeetType } from "../../../store/Slice/ipSlice"
+import { setTabMode, setMeetType } from "../../../../store/Slice/ipSlice"
 
 function FaceType() {
   const dispatch = useDispatch();

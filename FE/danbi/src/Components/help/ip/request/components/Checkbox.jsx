@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import {setIsChecked} from '../../../store/Slice/ipSlice'
+import {setIsChecked} from '../../../../../store/Slice/ipSlice'
 
 const Checkbox = () => {
   const dispatch = useDispatch();

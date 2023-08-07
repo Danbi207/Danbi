@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 
-import {setContent} from '../../../store/Slice/ipSlice'
+import {setContent} from '../../../../store/Slice/ipSlice'
 
 
 const HelpDetail = () => {
