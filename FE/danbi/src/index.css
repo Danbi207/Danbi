@@ -1,0 +1,38 @@
+@font-face {
+    font-family: "NanumGothic";
+    src: url("./fonts/NanumGothicExtraBold.otf");
+}
+
+*,*::after,*::before{
+    font-family: "NanumGothic";
+
+    /* 드래그 방지 */
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    user-select:none
+
+    /* 드래그 허용 */
+    /* 
+    -webkit-user-select:all;
+    -moz-user-select:all;
+    -ms-user-select:all;
+    user-select:all
+    */
+}
+*{
+    font-size: 16px;
+}
+#root,.App{
+    width: 100vw;
+    height: 100vh;
+}
+
+button {
+    white-space: nowrap;
+}
+
+body {
+    min-width: 300px;
+}

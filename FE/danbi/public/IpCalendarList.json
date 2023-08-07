@@ -1,0 +1,42 @@
+{
+	"data" : {
+		"helpList": [
+        {
+            "helpPostId": 1,
+            "content": "저는 김민규입니다.",
+            "startTime": "2023-08-05 16:00",
+            "endTime": "2023-08-05 17:00",
+            "state": "ACTIVATE" 
+        },
+        {
+            "helpPostId": 2,
+            "content": "지하철로 이동을 하려고 하는데 도움이 필요해요.",
+            "startTime": "2023-08-05 18:00",
+            "endTime": "2023-08-05 19:30",
+            "state": "ACTIVATE"
+        },
+        {
+            "helpPostId": 3,
+            "content": "ㅁㄴㅇ",
+            "startTime": "2023-08-17 12:00",
+            "endTime": "2023-08-17 13:00",
+            "state": "COMPLETED" 
+        },
+        {
+            "helpPostId": 4,
+            "content": "ㅁㄴㅇ",
+            "startTime": "2023-08-21 12:00",
+            "endTime": "2023-08-21 13:00",
+            "state": "ACTIVATE"
+        },
+        {
+            "helpPostId": 5,
+            "content": "ㅁㄴㅇ",
+            "startTime": "2023-09-01 19:00",
+            "endTime": "2023-01-01 20:30",
+            "state": "MATCHED" 
+        }
+    ]
+	},
+	"message": "등록한 도움요청목록 조회에 성공했습니다."
+}
