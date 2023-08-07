@@ -48,7 +48,7 @@ export const authGet = async (url)=>{
   if(token.check()){//엑세스 토큰이 없거나 사용불가능한 경우
     const res = await reissueAccessToken();
     if(res === null) return null;
-
+    console.log("GET요청 : ",token.getAccessToken());
     const {data} = await axios({
       method:"get",
       url: process.env.REACT_APP_SERVER+url,
