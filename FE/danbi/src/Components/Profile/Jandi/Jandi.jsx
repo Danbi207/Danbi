@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import Help from './Help.svg';
 import Buttons from './Buttons.jsx';
 
 
@@ -117,7 +116,7 @@ const Jandi = ({ help_log, setPickModalOpen }) => {
         <ChartTitle>
         나의 도움을 기록해주세요
         </ChartTitle>
-        <HelpIcon src={Help} onClick={(e) => handleHelp(e)} />
+        <HelpIcon onClick={(e) => handleHelp(e)} />
       </ChartHeader>
       <GrossWrap $col={colCnt} $row={rowCnt}>
         {GrossItems}
@@ -197,7 +196,9 @@ const OverRayWrap = styled.div`
 const ChartTitle = styled.span`
   
 `
-const HelpIcon = styled.img`
+const HelpIcon = styled.img.attrs(props => ({
+  src: props.theme.images.help
+}))`
   
 `
 const HelpOverLay = styled.span`

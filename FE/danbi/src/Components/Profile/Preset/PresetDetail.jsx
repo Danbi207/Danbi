@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { getSpeech } from '../utils/TTS';
-import Record from './IoMicCircle.svg';
-import Stop from './IoStopCircle.svg';
-import Play from './IoPlayCircle.svg';
 
 
 const PresetDetail = ({ content, showDetail, setDeleteActive, setEditActive }) => {
@@ -58,9 +55,9 @@ const PresetDetail = ({ content, showDetail, setDeleteActive, setEditActive }) =
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
         <RecordingBtns>
             <RecordBtn onClick={() => (Recording ? StopRecord() : StartRecord())}>
-              {Recording ? <RecordImg src={Stop} /> : <RecordImg src={Record} />}
+              {Recording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
             </RecordBtn>
-            <TTSBtn onClick={handleBtn}><TTSImg src={Play} /></TTSBtn>
+            <TTSBtn onClick={handleBtn}><TTSImg /></TTSBtn>
         </RecordingBtns>
           ) : null}
         <ConfirmBtns>
@@ -128,10 +125,14 @@ const RecordingBtns = styled.div`
 const ConfirmBtns = styled.div` 
 `
 
-const RecordImg = styled.img`
+const RecordImg = styled.img.attrs(props => ({
+  src: props.$state === 'stop' ? props.theme.images.stop : props.theme.images.record
+}))`
 `
 
-const TTSImg = styled.img`
+const TTSImg = styled.img.attrs(props => ({
+  src: props.theme.images.play
+}))`
 `
 
 export default PresetDetail;

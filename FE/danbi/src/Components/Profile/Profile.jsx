@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
@@ -179,7 +179,8 @@ const Profile = () => {
       <Header />
       <Wrap>
         <UserInfo />
-        {localStorage.getItem('role') === 'ROLE_IP' ?  <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} /> : null}
+        <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
+        {/* {localStorage.getItem('role') === 'ROLE_IP' ?  <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} /> : null} */}
         <JandiWrap>
           <Jandi
             point={cur_dew}

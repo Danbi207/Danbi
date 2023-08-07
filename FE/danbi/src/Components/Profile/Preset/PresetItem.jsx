@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
-import Edit from './MdEdit.svg';
-import Delete from './MdDeleteForever.svg';
 
 const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
@@ -24,10 +22,10 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                     </ElementContent>
                     <Btns>
                         <EditBtn onClick={() => {showDetail(value.title); setEditActive(!EditActive)}} $EditActive={EditActive} $DeleteActive={DeleteActive} >
-                            <EditImg src={Edit}/>
+                            <EditImg />
                         </EditBtn>
                         <DeleteBtn onClick={() => {setDeleteActive(!DeleteActive); callConfirm()}} $DeleteActive={DeleteActive} $EditActive={EditActive}>
-                            <DeleteImg src={Delete} />
+                            <DeleteImg />
                         </DeleteBtn>
                     </Btns>
                 </PreSetElement>
@@ -42,7 +40,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
 const Element = styled.div`
     width: 100%;
     height: 2rem;
-    border: 1px solid white;
+    border: 1px solid ${props => props.theme.colors.titleColor};
     border-radius: 5px;
     margin-bottom: 0.25rem;
 `;
@@ -65,7 +63,9 @@ const EditBtn = styled.button`
     align-items: center;
 `;
 
-const EditImg = styled.img`
+const EditImg = styled.img.attrs(props => ({
+    src: props.theme.images.edit
+}))`
 `;
 
 const ElementContent = styled.div`
@@ -82,7 +82,9 @@ const DeleteBtn = styled.button`
     visibility: ${props => props.$EditActive ? 'hidden' : 'visible'};
 `;
 
-const DeleteImg = styled.img`
+const DeleteImg = styled.img.attrs(props => ({
+    src: props.theme.images.delete
+}))`
 `;
 
 const Btns = styled.div`

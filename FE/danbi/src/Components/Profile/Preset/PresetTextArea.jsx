@@ -30,17 +30,17 @@ const TextAreaWrap = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  border: 1px solid white;
+  border: 1px solid ${props => props.theme.colors.titleColor};
   border-radius: 10px;
   resize: none;
   background-color: transparent;
-  color: white;
   text-align: start;
   outline: none;
   word-break: break-word;
   padding: 0.5rem 0 0.5rem 5px;
   width: 100%;
   height: 6rem;
+  color: ${props => props.theme.colors.titleColor};
   &::placeholder {
     color: #8e8b8b;
   }

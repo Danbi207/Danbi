@@ -2,12 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import friendbadge from '../friendbadge.svg';
-import redcard from '../red-flag.svg';
-import yellowcard from '../yellow-flag.svg';
-import more from '../More-black.svg';
-import back from '../Back.svg';
-
 const UserInfo = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -17,7 +11,7 @@ const UserInfo = ({ data }) => {
       <BackButton onClick={() => {
         navigate('/helper')
       }}>
-        <BackImg src={back} />
+        <BackImg />
       </BackButton>
       <Wrap>
       <ProfileImg src={data.ip.profile_url} />
@@ -25,18 +19,18 @@ const UserInfo = ({ data }) => {
         <BottomWrap>
           <Name>{data.ip.name}</Name>
           <BadgeWrap>
-            {data.friendFlag ? <FriendBadge src={friendbadge} /> : null}
+            {data.friendFlag ? <FriendBadge /> : null}
             {data.ip.accuse_point < 0 ? null : data.ip.accuse_point > 1 ? (
-              <AccuseBadge src={yellowcard} />
+              <AccuseBadge $state={'yellowcard'} />
             ) : (
-              <AccuseBadge src={redcard} />
+              <AccuseBadge $state={'redcard'} />
             )}
           </BadgeWrap>
         </BottomWrap>
         <DewPoint>{data.ip.accumulateDewPoint}Dew</DewPoint>
       </Body>
       <More onClick={() => setIsOpen(!isOpen)}>
-        <MoreImg src={more} />
+        <MoreImg />
         {isOpen && <DropDownMenu>신고</DropDownMenu>}
       </More>
       </Wrap>
@@ -52,15 +46,17 @@ const Wrap = styled.div`
     display: flex;
   height: 4rem;
   width: 100%;
-`
+`;
 
 const BackButton = styled.button`
   display: block;
-`
+`;
 
-const BackImg = styled.img`
+const BackImg = styled.img.attrs(props => ({
+  src: props.theme.images.back
+}))`
   
-`
+`;
 
 const ProfileImg = styled.img`
   width: 4rem;
@@ -94,13 +90,17 @@ const BadgeWrap = styled.div`
   margin-left: 0.25rem;
 `;
 
-const FriendBadge = styled.img`
+const FriendBadge = styled.img.attrs(props => ({
+  src: props.theme.images.friendBadge
+}))`
   width: 1rem;
   height: 1rem;
   margin-right: 0.25rem;
 `;
 
-const AccuseBadge = styled.img`
+const AccuseBadge = styled.img.attrs(props => ({
+  src: props.$state === 'yellow' ? props.theme.images.yellowcard : props.theme.images.redcard,
+}))`
   width: 1rem;
   height: 1rem;
 `;
@@ -113,7 +113,9 @@ const More = styled.button`
   margin-right: 2rem;
 `;
 
-const MoreImg = styled.img`
+const MoreImg = styled.img.attrs(props => ({
+  src: props.theme.images.more
+}))`
   width: 4px;
   height: 1rem;
 `;

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import back from '../Back.svg';
-import Save from '../Button.svg';
 import PresetTextArea from './PresetTextArea';
 import Preset from './Preset.jsx';
 
@@ -34,11 +32,11 @@ const PresetModal = ({ setModalOpen }) => {
       <Modal>
         <ModalHeader>
           <CloseModalBtn onClick={closeBtn}>
-            <CloseImg src={back} />
+            <CloseImg />
           </CloseModalBtn>
           <ModalName>프리셋 설정</ModalName>
           <SaveBtn>
-            <SaveImg src={Save} />
+            <SaveImg />
           </SaveBtn>
         </ModalHeader>
         <ModalBody>
@@ -67,12 +65,13 @@ const PresetModalWrap = styled.div`
 const Modal = styled.div`
   width: 92%;
   height: 21rem;
-  background-color: #19191b;
+  background-color: ${props => props.theme.colors.bgColor};
   position: absolute;
   top: 25%;
   margin: 0 4%;
   overflow-y: auto;
   border-radius: 15px;
+  border: 0.5px solid black;
 `;
 
 const ModalHeader = styled.div`
@@ -86,7 +85,9 @@ const CloseModalBtn = styled.button`
   height: 40px;
 `;
 
-const CloseImg = styled.img``;
+const CloseImg = styled.img.attrs(props => ({
+  src: props.theme.images.close
+}))``;
 
 const ModalName = styled.div`
   text-align: center;
@@ -96,7 +97,9 @@ const SaveBtn = styled.button`
   width: 48px;
   height: 40px;
 `;
-const SaveImg = styled.img``;
+const SaveImg = styled.img.attrs(props => ({
+  src: props.theme.images.save
+}))``;
 
 const ModalBody = styled.div`
   height: auto;

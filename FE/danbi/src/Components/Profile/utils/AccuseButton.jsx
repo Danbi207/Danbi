@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import accuseimg from './MdReport.svg';
 
 const AccuseButton = () => {
   return (
     <AccuseWrap>
-      <AccuseImg src={accuseimg} />
+      <AccuseImg />
     </AccuseWrap>
   );
 };
@@ -20,7 +19,9 @@ const AccuseWrap = styled.button`
   align-items: center;
 `;
 
-const AccuseImg = styled.img`
+const AccuseImg = styled.img.attrs(props => ({
+  src: props.theme.images.accuse
+}))`
   width: 90%;
   height: 90%;
 `;
