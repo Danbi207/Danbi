@@ -26,11 +26,11 @@ const Login = () => {
       requestFcmToken()
 
       if(role === "ROLE_IP"){//역할이 IP인 경우
-        navigate("/ip", { replace: true });
+        navigate("/help/ip", { replace: true });
       }
 
       if(role === "ROLE_HELPER"){//역할이 Helper인경우
-        navigate("/helper", { replace: true });
+        navigate("/help/helper", { replace: true });
       }
     }
   },[navigate,requestFcmToken]);

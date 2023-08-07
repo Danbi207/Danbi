@@ -11,7 +11,7 @@ const KaKaoOauth = () => {
   const dispatch = useDispatch();
   
   const logout = useCallback(async () => {
-    await authGet("api/v1/member/logout");
+    await authGet("/api/v1/member/logout");
     
     setToken("");
     setTokenExpireTime("");
@@ -56,16 +56,16 @@ const KaKaoOauth = () => {
       requestFcmToken()
 
       if(data.role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
-        navigate("/userSubmit", { replace: true });
+        navigate("/user/join", { replace: true });
         return;
       }
 
       if(data.role === "ROLE_IP"){//역할이 IP인 경우
-        navigate("/ip", { replace: true });
+        navigate("/help/ip", { replace: true });
       }
 
       if(data.role === "ROLE_HELPER"){//역할이 Helper인경우
-        navigate("/helper", { replace: true });
+        navigate("/help/helper", { replace: true });
       }
 
 
