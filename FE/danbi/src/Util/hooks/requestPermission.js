@@ -31,7 +31,7 @@ export const requestPermission = async () => {
   });
 
   axios({
-    url: '/api/v1/fcm/token',
+    url: process.env.REACT_APP_SERVER+'/api/v1/fcm/token',
     method: 'post',
     data: {
       FCM_token: token	
