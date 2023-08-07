@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 
 import Header from '../Common/Header/Header';
 import Footer from '../Common/Footer/Footer';
@@ -10,6 +11,8 @@ import Tab from './Tab/Tab';
 
 const IpRequest = () => {
   const ip = useSelector((state)=>state.ip)
+  const location = useLocation();
+  console.log(location)
 
   useEffect(()=>{
     console.log(ip.reservetype);
@@ -20,7 +23,7 @@ const IpRequest = () => {
       <Header></Header>
       <Wrap>
         <Tab></Tab>
-        { ip.tabmode === 'meet' ? <FaceType /> : <TimeTpye />}        
+        { ip.tabmode === 'meet' ? <FaceType /> : <TimeTpye location={location} />}        
       </Wrap> 
       <Footer></Footer>
     </RequestWrap>
