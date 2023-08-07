@@ -16,6 +16,7 @@ public class Point extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "point_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -15,6 +15,7 @@ public class Block extends BaseEntity {
 
     @Id
     @GeneratedValue
+    @Column(name = "block_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

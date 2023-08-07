@@ -16,6 +16,7 @@ public class Preset extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "preset_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

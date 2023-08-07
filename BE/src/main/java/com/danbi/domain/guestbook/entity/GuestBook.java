@@ -16,6 +16,7 @@ public class GuestBook extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "guestbook_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
