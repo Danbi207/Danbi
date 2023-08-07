@@ -31,7 +31,7 @@ export const requestPermission = async () => {
   });
 
   axios({
-    url: 'http://localhost:8080/api/v1/fcm/token',
+    url: '/api/v1/fcm/token',
     method: 'post',
     data: {
       FCM_token: token	
