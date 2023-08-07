@@ -19,8 +19,8 @@ public class Point extends BaseEntity {
     @Column(name = "point_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
+
+    @OneToOne(mappedBy = "point", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Profile profile;
 
     @Column(nullable = false)
