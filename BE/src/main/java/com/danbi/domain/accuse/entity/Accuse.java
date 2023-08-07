@@ -35,8 +35,6 @@ public class Accuse extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(length = 200) // TODO: 확인후 추가
-    private String evidenceUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
@@ -51,12 +49,11 @@ public class Accuse extends BaseEntity {
     }
 
     @Builder
-    public Accuse(Member targetMember, Member reporter,String title, String content, String evidenceUrl, AccuseType accuseType, State state) {
+    public Accuse(Member targetMember, Member reporter,String title, String content, AccuseType accuseType, State state) {
         this.targetMember = targetMember;
         this.reporter = reporter;
         this.title = title;
         this.content = content;
-        this.evidenceUrl = evidenceUrl;
         this.accuseType = accuseType;
         this.state = state;
     }
