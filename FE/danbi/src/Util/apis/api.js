@@ -36,7 +36,7 @@ export const reissueAccessToken = async ()=>{
   }
 }
 
-export const authGet = async (url,options)=>{
+export const authGet = async (url)=>{
   const refreshToken = localStorage.getItem("refreshToken");
   
   if(!refreshToken || refreshToken===""){
@@ -50,7 +50,6 @@ export const authGet = async (url,options)=>{
     const {data} = await axios({
       method:"get",
       url,
-      ...options,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
 
@@ -62,7 +61,6 @@ export const authGet = async (url,options)=>{
       const {data} = await axios({
         method:"get",
         url,
-        ...options,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
   
@@ -76,7 +74,7 @@ export const authGet = async (url,options)=>{
   }
 }
 
-export const authPost = async (url,options)=>{
+export const authPost = async (url,json)=>{
   const refreshToken = localStorage.getItem("refreshToken");
   
   if(!refreshToken || refreshToken===""){
@@ -90,7 +88,7 @@ export const authPost = async (url,options)=>{
     const {data} = await axios({
       method:"post",
       url,
-      ...options,
+      data:json,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
 
@@ -102,7 +100,7 @@ export const authPost = async (url,options)=>{
       const {data} = await axios({
         method:"post",
         url,
-        ...options,
+        data:json,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
   
@@ -116,7 +114,7 @@ export const authPost = async (url,options)=>{
   }
 }
 
-export const authDelete = async (url,options)=>{
+export const authDelete = async (url,json)=>{
   const refreshToken = localStorage.getItem("refreshToken");
   
   if(!refreshToken || refreshToken===""){
@@ -130,7 +128,7 @@ export const authDelete = async (url,options)=>{
     const {data} = await axios({
       method:"delete",
       url,
-      ...options,
+      data:json,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
 
@@ -142,7 +140,7 @@ export const authDelete = async (url,options)=>{
       const {data} = await axios.delete({
         method:"delete",
         url,
-        ...options,
+        data:json,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
   
@@ -156,7 +154,7 @@ export const authDelete = async (url,options)=>{
   }
 }
 
-export const authPut = async (url,options)=>{
+export const authPut = async (url,json)=>{
   const refreshToken = localStorage.getItem("refreshToken");
   
   if(!refreshToken || refreshToken===""){
@@ -170,7 +168,7 @@ export const authPut = async (url,options)=>{
     const {data} = await axios.put({
       method:"put",
       url,
-      ...options,
+      data:json,
       headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
     });
 
@@ -182,7 +180,50 @@ export const authPut = async (url,options)=>{
       const {data} = await axios.put({
         method:"put",
         url,
-        ...options,
+        data:json,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      console.log(err.response);
+      return null;
+    }
+  }
+}
+
+export const authFilePost = async (url,formData)=>{
+  const refreshToken = localStorage.getItem("refreshToken");
+  
+  if(!refreshToken || refreshToken===""){
+    return null;
+  }
+
+  if(token.check()){//엑세스 토큰이 없거나 사용불가능한 경우
+    const res = await reissueAccessToken();
+    if(res === null) return null;
+
+    const {data} = await axios({
+      method:"post",
+      url,
+      data:formData,
+      headers:{
+        'content-type': 'multipart/form-data',
+        "Authorization" : `Bearer ${token.getAccessToken()}`
+      },
+    });
+
+    if(data.code === 200){
+      return data.data;
+    }
+  }else{//엑세스 토큰이 사용가능한 경우
+    try{
+      const {data} = await axios({
+        method:"post",
+        url,
+        file:formData,
         headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
       });
   
