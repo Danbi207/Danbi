@@ -19,20 +19,21 @@ const HelperHome = () => {
     try{
       const data = await authGet("/api/v1/member");
       if(data){
+        console.log(data);
         dispatch(setUserInfo(data));
         setGender(data.gender);
-        setUntact();
+        setUntact(data.gender);
       }
     }catch(err){
       console.log(err.response);
     }
-  },[dispatch]);
+  },[dispatch,setGender]);
 
 
 
-  const setUntact = useCallback(async () => {
+  const setUntact = useCallback(async (gen) => {
     try{
-      const {data} = await authPost("/api/v1/help/untact",{gender});
+      const {data} = await authPost("/api/v1/help/untact",{gender:gen});
       if(data){
         setHelpList(data);
         setMode("untact");
