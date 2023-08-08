@@ -35,6 +35,7 @@ const Chat = (props) => {
       content:chatValue,
       date: getDay(),
     };
+    console.log(message);
     socketRef.current.emit("message", message);
     const messageEl = document.createElement("div");
     messageEl.className="RightChatWrap";
