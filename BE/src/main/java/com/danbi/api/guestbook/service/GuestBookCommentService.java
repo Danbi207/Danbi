@@ -25,7 +25,7 @@ public class GuestBookCommentService {
     private final MemberService memberService;
 
     @Transactional
-    public CommentDto.Response saveComment(Long guestBookId, CommentDto.Reqeust reqeust,Long memberId) {
+    public CommentDto.Response saveComment(Long guestBookId, CommentDto.Request reqeust,Long memberId) {
         GuestBook guestBook = guestBookService.findById(guestBookId);
         Member member = memberService.findByMemberId(memberId);
 

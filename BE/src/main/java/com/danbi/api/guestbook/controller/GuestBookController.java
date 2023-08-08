@@ -43,10 +43,10 @@ public class GuestBookController {
     // TODO: Swagger에 MemberInfoDto 보이는데 HttpHeader로 바꿔야 됨
     @PostMapping("/{guestBookId}")
     public ApiResponse<CommentDto.Response> createComment(@PathVariable Long guestBookId,
-                                                             @RequestBody CommentDto.Reqeust reqeust,
-                                                             @MemberInfo MemberInfoDto memberInfoDto) {
+                                                          @Valid @RequestBody CommentDto.Request request,
+                                                          @MemberInfo MemberInfoDto memberInfoDto) {
 
-        CommentDto.Response response = guestBookCommentService.saveComment(guestBookId, reqeust, memberInfoDto.getMemberId());
+        CommentDto.Response response = guestBookCommentService.saveComment(guestBookId, request, memberInfoDto.getMemberId());
         return ApiResponse.ok(response);
     }
 
@@ -61,7 +61,7 @@ public class GuestBookController {
     }
 
     @DeleteMapping("/{guestbookId}/{commentId}")
-    public ApiResponse<String> modifyComment(@PathVariable("guestbookId") Long guestBookId,
+    public ApiResponse<String> deleteComment(@PathVariable("guestbookId") Long guestBookId,
                                                 @PathVariable Long commentId,
                                                 @MemberInfo MemberInfoDto memberInfoDto) {
         guestBookCommentService.deleteComment(memberInfoDto.getMemberId(), guestBookId, commentId);

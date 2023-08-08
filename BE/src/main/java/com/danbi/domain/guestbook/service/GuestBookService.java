@@ -19,22 +19,12 @@ public class GuestBookService {
     private final GuestBookRepository guestBookRepository;
 
     public GuestBook findById(Long id) {
-        Optional<GuestBook> op = guestBookRepository.findById(id);
-
-        if(op.isEmpty()) {
-            throw new GuestBookNotFoundException(ErrorCode.GUESTBOOK_NOT_EXISTS);
-        }
-
-        return op.get();
+        return guestBookRepository.findById(id)
+                .orElseThrow(() -> new GuestBookNotFoundException(ErrorCode.GUESTBOOK_NOT_EXISTS));
     }
 
     public GuestBook findByMember(Member member) {
-        Optional<GuestBook> op = guestBookRepository.findGuestBookByMember(member);
-
-        if(op.isEmpty()) {
-            throw new GuestBookNotFoundException(ErrorCode.GUESTBOOK_NOT_EXISTS);
-        }
-
-        return op.get();
+        return guestBookRepository.findGuestBookByMember(member)
+                .orElseThrow(() -> new GuestBookNotFoundException(ErrorCode.GUESTBOOK_NOT_EXISTS));
     }
 }

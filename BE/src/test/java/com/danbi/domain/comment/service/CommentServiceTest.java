@@ -33,47 +33,56 @@ class CommentServiceTest {
     @Autowired
     private GuestBookRepository guestBookRepository;
 
+    GuestBook guestBook;
+    Comment comment1;
+    Comment comment2;
+    Comment comment3;
+
+    @BeforeEach
+    void setup() {
+        guestBook = GuestBook.builder()
+                .build();
+        GuestBook savedGuestBook = guestBookRepository.save(guestBook);
+
+        comment1 = Comment.builder()
+                .guestBook(savedGuestBook)
+                .content("댓글1")
+                .build();
+
+        comment2 = Comment.builder()
+                .guestBook(savedGuestBook)
+                .content("댓글2")
+                .build();
+
+        comment3 = Comment.builder()
+                .guestBook(savedGuestBook)
+                .content("댓글3")
+                .build();
+
+        commentRepository.save(comment1);
+        commentRepository.save(comment2);
+        commentRepository.save(comment3);
+    }
+
 
     @DisplayName("방명록에 있는 모든 댓글 조회")
     @Test
     void findByGuestBook() {
         // given
-        GuestBook guestBook = GuestBook.builder()
-                .build();
-        GuestBook savedGuestBook = guestBookRepository.save(guestBook);
 
-        Comment comment1 = Comment.builder()
-                .guestBook(savedGuestBook)
-                .content("댓글1")
-                .build();
-
-        Comment comment2 = Comment.builder()
-                .guestBook(savedGuestBook)
-                .content("댓글2")
-                .build();
-
-        Comment comment3 = Comment.builder()
-                .guestBook(savedGuestBook)
-                .content("댓글3")
-                .build();
-
-//        commentRepository.saveAll(List.of(comment1, comment2, comment3));
-        Comment savedComment1 = commentRepository.save(comment1);
-        Comment savedComment2 = commentRepository.save(comment2);
-        Comment savedComment3 = commentRepository.save(comment3);
 
         Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "createTime");
 
         // when
-        List<Comment> comments = commentService.findByGuestBook(savedGuestBook, pageable);
+        List<Comment> comments = commentService.findByGuestBook(guestBook, pageable);
 
         // then
         assertThat(comments).hasSize(3)
                 .extracting("id", "content")
                 .containsExactlyInAnyOrder(
-                        tuple(savedComment1.getId(), "댓글1"),
-                        tuple(savedComment2.getId(), "댓글2"),
-                        tuple(savedComment3.getId(), "댓글3")
+                        tuple(comment1.getId(), "댓글1"),
+                        tuple(comment2.getId(), "댓글2"),
+                        tuple(comment3.getId(), "댓글3")
                 );
     }
 
@@ -81,29 +90,49 @@ class CommentServiceTest {
     @Test
     void findById() {
         // given
-        Comment comment = Comment.builder()
-                .content("댓글1")
-                .build();
-
-        Comment savedComment = commentRepository.save(comment);
 
         // when
-        Comment result = commentService.findById(savedComment.getId());
+        Comment result = commentService.findById(comment1.getId());
 
         // then
-        assertThat(result.getId()).isEqualTo(savedComment.getId());
-        assertThat(result.getContent()).isEqualTo(savedComment.getContent());
+        assertThat(result.getId()).isEqualTo(comment1.getId());
+        assertThat(result.getContent()).isEqualTo(comment1.getContent());
     }
 
     @Test
     void saveComment() {
+        // given
+
+        // when
+        Comment savedComment = commentService.saveComment(comment1);
+        // then
+        assertThat(savedComment.getId()).isEqualTo(comment1.getId());
+        assertThat(savedComment.getContent()).isEqualTo(comment1.getContent());
     }
 
     @Test
     void modifyContent() {
+        // given
+        String modifiedContent = "new content";
+        // when
+        Comment modifiedComment = commentService.modifyContent(comment1, modifiedContent);
+        // then
+        assertThat(modifiedComment.getId()).isEqualTo(comment1.getId());
+        assertThat(modifiedComment.getContent()).isEqualTo(modifiedContent);
     }
 
     @Test
     void deleteComment() {
+        // given
+        // when
+        commentService.deleteComment(comment1);
+        // then
+        List<Comment> comments = commentRepository.findAll();
+        assertThat(comments).hasSize(2)
+                .extracting("id", "content")
+                .containsExactlyInAnyOrder(
+                        tuple(comment2.getId(), "댓글2"),
+                        tuple(comment3.getId(), "댓글3")
+                );
     }
 }
