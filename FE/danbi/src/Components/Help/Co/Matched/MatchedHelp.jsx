@@ -7,6 +7,7 @@ import Infomation from './Main/Infomation/Infomation.jsx';
 import Chat from './Main/Chat/Chat.jsx';
 import RealtimeMap from './Main/RealtimeMap/RealtimeMap.jsx';
 import { useParams } from 'react-router-dom';
+import {authGet} from "../../../../Util/apis/api.js";
 
 import axios from 'axios';
 import { useSelector } from 'react-redux';
