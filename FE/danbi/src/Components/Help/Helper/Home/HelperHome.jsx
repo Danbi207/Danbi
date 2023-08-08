@@ -19,6 +19,7 @@ const HelperHome = () => {
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
+      console.log(data);
       if(data){
         console.log(data);
         dispatch(setUserId(data.userId));
@@ -102,13 +103,14 @@ const HelperHome = () => {
   },[setCurPosition,setMode,gender,position]);
 
   useEffect(()=>{
-    if(gender&&gender!==""){
+    if(!gender || gender===""){
       getUserInfo();
     }
   },[getUserInfo,gender]);
 
   useEffect(()=>{
-    setUntact();
+    if(gender&&gender!=="")
+      setUntact();
   },[gender,setUntact]);
 
   return (
