@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Waitting from './Items/Waitting';
 import Header from '../../Common/Header/Header';
@@ -6,81 +6,16 @@ import Footer from '../../Common/Footer/Footer';
 import MyFriend from './Items/MyFriend';
 import { authGet } from '../../../Util/apis/api';
 
-const myFriends = [
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-];
-
-const waittingFriends = [
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-  {
-    profile_url: './example-profile.jpg',
-    name: '김민규',
-    dew_point: 123,
-  },
-];
-
 const Friend = () => {
+  const [waittingFriends, setWaittingFriends] = useState([]); // 초기값을 빈 배열로 설정
+  const [myFriends, setMyFriends] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const waittingFriends1 = await authGet('/api/v1/friends/responses');
-        const myFriends1 = await authGet('/api/v1/friends');
-        console.log(waittingFriends1);
-        console.log(myFriends1);
+        const waittingResponse = await authGet('/api/v1/friends/responses');
+        const myFriendResponse = await authGet('/api/v1/friends');
+        setWaittingFriends(waittingResponse); // 상태 업데이트
+        setMyFriends(myFriendResponse); // 상태 업데이트
       } catch (err) {
         console.log(err);
       }
