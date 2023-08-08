@@ -65,7 +65,9 @@ const KaKaoOauth = () => {
       // FCM 토큰을 요청
       requestFcmToken();
 
-      if(data.role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
+      // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
+      if(data.role==="ROLE_UNDEFINED" || data.role==="ROLE_UNSUBMIT_IP"){
+        localStorage.setItem("role",data.role);
         navigate("/user/join", { replace: true });
         return;
       }

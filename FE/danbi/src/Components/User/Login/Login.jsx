@@ -32,11 +32,12 @@ const Login = () => {
     
     if(isLogin){
       const role = localStorage.getItem("role");
-      if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
+      // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
+      if(role==="ROLE_UNDEFINED" || role==="ROLE_UNSUBMIT_IP"){
         navigate("/user/join", { replace: true });
         return;
       }
-      
+
       // FCM 토큰 함수 호출
       requestFcmToken()
 

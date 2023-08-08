@@ -1,12 +1,39 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useRef } from 'react';
 import styled from 'styled-components'
+import { authPost, reissueAccessToken, authFilePost } from '../../../Util/apis/api';
+
 
 const UserFile = ({role, usertype, setUserType}) => {
   const hiddenFileInputRef = useRef();
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
   const [imageFiles, setImageFiles] = useState([]); // 이미지 파일들을 저장하기 위한 state
+
+  const PutFileRole = useCallback(async () => {
+    try {
+      await authPost('/api/v1/member/role', {"role" : "ROLE_UNSUBMIT_IP"});
+      await reissueAccessToken();
+      localStorage.setItem('role', "ROLE_UNSUBMIT_IP");  
+    } catch (error) {
+        console.error("에러 발생:", error);
+    }
+  }, []);
+
+
+  const FileSubmit = useCallback(async () => {
+    try {
+      await authFilePost('api/v1/submit/ip/certification', imageFiles);
+      // DO : 로그아웃
+      await authPost('/api/v1.member/logout', {}) 
+      localStorage.removeItem('role');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('refreshTokenExpireTime');
+    } catch (error) {
+        console.error("에러 발생:", error);
+    }
+  }, [imageFiles]);
+  
 
   const onChange = (e) => {
     const files = [...e.target.files]; 
@@ -15,8 +42,7 @@ const UserFile = ({role, usertype, setUserType}) => {
     // 선택된 모든 파일들을 FormData에 추가
     const formData = new FormData(); 
     files.forEach((file) => {
-      const fileName = file.name
-      formData.append(fileName, file);
+      formData.append('file', file);
     });
 
     // 이미지 파일 미리보기 생성
@@ -45,11 +71,6 @@ const UserFile = ({role, usertype, setUserType}) => {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + imagePreviews.length) % imagePreviews.length);
   };
 
-  const SubmitFiles = ()=>{
-    // FIXME : axios 요청
-    console.log(imageFiles)
-  }
-
   return (
     <SubmitWrap>
       <Question>서류를 제출해주세요</Question>
@@ -65,7 +86,7 @@ const UserFile = ({role, usertype, setUserType}) => {
       <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange}
         ref={hiddenFileInputRef}  />
       {/* <UploadBtn onClick={()=>hiddenFileInputRef.current.click()}>업로드</UploadBtn> */}
-      <NextBTN onClick={()=>{SubmitFiles()}}>제출</NextBTN>
+      <NextBTN onClick={()=>{PutFileRole(); FileSubmit();}}>제출</NextBTN>
     </SubmitWrap>
   );
 }
