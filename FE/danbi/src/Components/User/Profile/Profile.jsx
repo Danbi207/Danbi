@@ -18,11 +18,11 @@ const Profile = () => {
   const [PickModalOpen, setPickModalOpen] = useState(false);
   const [data, setData] = useState({});
   // TODO : userId params 조회
-  const { targetId } = useParams();
+  const { userId } = useParams();
 
   const fetchData = async () => {
     try {
-      const res = await authGet(`/api/v1/profile/${targetId}`);
+      const res = await authGet(`/api/v1/profile/${userId}`);
       console.log(res);
       setData(res);
     } catch (err) {
@@ -30,9 +30,6 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [targetId]);
   console.log(localStorage.getItem('role'));
 
   return (
