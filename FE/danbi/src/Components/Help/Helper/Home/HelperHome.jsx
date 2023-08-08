@@ -5,37 +5,29 @@ import Footer from "../../../Common/Footer/Footer.jsx"
 import HelpList from "./Components/HelpList/HelpList.jsx"
 import HelpMap from "./Components/HelpMap/HelpMap.jsx"
 import Tap from "./Components/Tap/Tap.jsx"
-import axios from 'axios';
+import {authGet} from "../../../../Util/apis/api.js"
 const HelperHome = () => {
-  const [mode,setMode] = useState("contact");
+  const [mode,setMode] = useState("unntact");
   const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
-  const setContact = useCallback(() => {
-    axios({
-      method:"get",
-      url:`${process.env.PUBLIC_URL}/json/helpList.json`
-    }).then(({data})=>{
-      setHelpList(data.data);
-    }).catch((err)=>console.log(err));
-    setMode("contact");
-  },[setHelpList,setMode]);
 
-  const setUntact = useCallback(() => {
-    axios({
-      method:"get",
-      url:`${process.env.PUBLIC_URL}/json/helpList.json`
-    }).then(({data})=>{
-      setHelpList(data.data);
-    }).catch((err)=>console.log(err));
-    setMode("untact");
+  const setUntact = useCallback(async () => {
+    try{
+      const {data} = await authGet("/api/v1/untact");
+      if(data){
+        setHelpList(data);
+        setMode("untact");
+      }
+    }catch(err){
+      console.log(err.response);
+    }
   },[setHelpList,setMode]);
-
-  const setMap = useCallback(()=>{
+  const setCurPosition = useCallback(()=>{
     //DO : gps 현재 위치 얻기
     if (navigator.geolocation) { // GPS를 지원하면
       navigator.geolocation.getCurrentPosition(function(e) {
         setPosition(e);
-        setMode("map");
+        return true;
       }, function(error) {
         console.error(error);
       }, {
@@ -47,7 +39,37 @@ const HelperHome = () => {
       alert('GPS를 허용하지 않아 도움목록을 조회할 수 없습니다. GPS를 허용해주세요!');
       setUntact();
     }
-  },[setPosition,setMode,setUntact]);
+    return false;
+  },[setUntact]);
+
+  const setContact = useCallback(async() => {
+    if(setCurPosition()){
+      try{
+        const {data} = await authGet(`/api/v1/contact/${position.coord.longitude}/${position.coords.latitude}`);
+        if(data){
+          setHelpList(data);
+          setMode("contact");
+        }
+      }catch(err){
+        console.log(err.response);
+      }
+    }
+  },[setHelpList,setMode]);
+
+
+  const setMap = useCallback(async ()=>{
+    if(setCurPosition()){
+      try{
+        const {data} = await authGet(`/api/v1/contact/${position.coord.longitude}/${position.coords.latitude}`);
+        if(data){
+          setHelpList(data);
+          setMode("map");
+        }
+      }catch(err){
+        console.log(err.response);
+      }
+    }
+  },[setCurPosition,setMode]);
 
   useEffect(()=>{setUntact();},[setUntact]);
 
