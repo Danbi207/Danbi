@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FriendRepository extends JpaRepository<Friend, Long> {
+public interface FriendRepository extends JpaRepository<Friend, Long>, FriendRepositoryCustom {
 
 
     boolean existsByFromAndToAndTypeAndState(Member from, Member to, Type type, State state);

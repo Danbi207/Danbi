@@ -96,7 +96,7 @@ public class HelpPostInfoService {
         List<HelperQueryHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostQueryDto helpPost : helpPosts) {
 
-            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getIpId());
+            boolean isFriend = friendInfoService.checkFriend(memberId, helpPost.getIpId()); // 바꾼거
 
             HelperQueryHelpPostDto post = HelperQueryHelpPostDto.builder()
                     .helpPostId(helpPost.getHelpPostId())
@@ -120,7 +120,7 @@ public class HelpPostInfoService {
         List<HelperFaceHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostFaceDto helpPost : helpPosts) {
 
-            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getIpId());
+            boolean isFriend = friendInfoService.checkFriend(memberId, helpPost.getIpId());
 
             HelperFaceHelpPostDto post = HelperFaceHelpPostDto.builder()
                     .helpPostId(helpPost.getHelpPostId())

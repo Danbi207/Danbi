@@ -107,4 +107,11 @@ public class FriendServiceImpl implements FriendService {
         return checkFromFriend(friend) || checkToFriend(friend);
     }
 
+    @Override
+    public boolean checkFriend(Long fromMemberId, Long toMemberId) {
+        Optional<Friend> friend = friendRepository.searchFriendByFromAndTo(fromMemberId, toMemberId);
+        return friend.isPresent() ? true : false;
+    }
+
+
 }

@@ -27,4 +27,6 @@ public interface FriendInfoService {
 
     boolean isFriend(Long from, Long to);
 
+    boolean checkFriend(Long fromMemberId, Long toMemberId); // querydsl
+
 }

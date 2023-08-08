@@ -171,9 +171,12 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                 .type(Type.PERMIT)
                 .state(State.ACTIVATE)
                 .build();
-
         return friendService.isFriend(friend);
 
     }
 
+    @Override
+    public boolean checkFriend(Long fromMemberId, Long toMemberId) {
+        return friendService.checkFriend(fromMemberId, toMemberId);
+    }
 }
