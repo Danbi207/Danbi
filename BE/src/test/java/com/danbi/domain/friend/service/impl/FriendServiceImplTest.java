@@ -260,8 +260,6 @@ class FriendServiceImplTest {
         Friend savedFriend = friendService.saveFriend(friend1);
         //then
         friendService.getFriendByFromOrToAndType(fromMember, toMember);
-
-
     }
 
     @Test
