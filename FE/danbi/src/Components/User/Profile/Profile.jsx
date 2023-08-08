@@ -177,6 +177,8 @@ const Profile = () => {
   const [PickModalOpen, setPickModalOpen] = useState(false);
   const cur_dew = useSelector((state) => state.Jandi.dew_point);
   
+
+
   // TODO : memberId redux 조회
   const userId = useSelector((state) => state.user.profileId);
   useEffect(() => {
