@@ -6,7 +6,7 @@ import com.danbi.domain.Item.entity.Item;
 import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.constant.Role;
-import com.danbi.domain.member.dto.MemberInfoDto;
+import com.danbi.domain.member.dto.MemberDataDto;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
 import com.danbi.domain.point.entity.Point;
@@ -17,10 +17,13 @@ import com.danbi.global.error.exception.AuthenticationException;
 import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.error.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -90,7 +93,7 @@ public class MemberService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
     }
 
-    public MemberInfoDto searchMember(Long memberId) {
+    public MemberDataDto searchMember(Long memberId) {
         return memberRepository.searchMember(memberId);
     }
 
@@ -112,4 +115,7 @@ public class MemberService {
         member.updateRole(nextRole);
     }
 
+    public Page<Member> findAll(Pageable pageable) {
+        return memberRepository.findAll(pageable);
+    }
 }
