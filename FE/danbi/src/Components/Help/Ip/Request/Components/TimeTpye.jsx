@@ -1,19 +1,10 @@
 import React from 'react'
 import styled from 'styled-components';
 
-<<<<<<< HEAD:FE/danbi/src/Components/IP/HelpRequest/TimeTpye.jsx
-=======
-import StartTime from './StartTime';
->>>>>>> b96b6296dcaa6c66b0bb3d6d299c2f8314aac0b5:FE/danbi/src/Components/Help/Ip/Request/Components/TimeTpye.jsx
 import Checkbox from './Checkbox';
-import { useDispatch, useSelector } from 'react-redux';
-import Calendar from '../Calender/Calender';
+import { useSelector } from 'react-redux';
+import Calendar from '../../Home/Components/Calender'
 import TimeSelect from './TimeSelect';
-
-<<<<<<< HEAD:FE/danbi/src/Components/IP/HelpRequest/TimeTpye.jsx
-=======
-import { setReserveType } from '../../../../../store/Slice/ipSlice'
->>>>>>> b96b6296dcaa6c66b0bb3d6d299c2f8314aac0b5:FE/danbi/src/Components/Help/Ip/Request/Components/TimeTpye.jsx
 
 const TimeTpye = ({location}) => {
   const ip = useSelector(state => state.ip)
