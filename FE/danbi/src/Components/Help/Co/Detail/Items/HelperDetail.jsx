@@ -1,4 +1,4 @@
-import React, { useEffet } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import UserInfo from './HelpDetail/UserInfo.jsx';
 import HelpDetailInfo from './HelpDetail/HelpDetailInfo.jsx';
@@ -40,7 +40,7 @@ const data = {
 
 const HelperDetail = ({ helpPostId }) => {
 
-  useEffet(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const data1 = await authGet(`/api/v1/detail/${helpPostId}`);
