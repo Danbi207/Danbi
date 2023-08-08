@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
 
+
 const Waitting = ({value}) => {
+    
+
     return(
         <WaittingWrap>
             <InfoWrap>

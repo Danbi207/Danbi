@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Buttons from './Buttons.jsx';
+import { setCheckedRgb, setUnchedkedRgb, setTier, setName } from '../../../../store/Slice/JandiSlice.js';
 
-
-const Jandi = ({ help_log, setPickModalOpen }) => {
+const Jandi = ({ help_log, setPickModalOpen, item }) => {
   const colCnt = 8;
   const rowCnt = 2;
 
@@ -29,9 +29,17 @@ const Jandi = ({ help_log, setPickModalOpen }) => {
   const [ShowOverLay, setShowOverLay] = useState(overLay); // 잔디 날짜
   const [ShowHelp, setShowHelp] = useState(HelpOver);  // ? 아이콘
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCheckedRgb(item.checkedRgb));
+    dispatch(setUnchedkedRgb(item.uncheckedRgb));
+    dispatch(setName(item.name));
+    dispatch(setTier(item.tier));    
+  }, [item])
+  
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
-
+  
   const onGross = (e, idx) => {
     if (selectIdx !== idx) {
       setSelectIdx(idx);
@@ -46,7 +54,7 @@ const Jandi = ({ help_log, setPickModalOpen }) => {
       idx,
       content: help_log[idx].created_time,
     });
-    };
+  };
   const GrossItems = useMemo(() => {
     const res = [];
     for (

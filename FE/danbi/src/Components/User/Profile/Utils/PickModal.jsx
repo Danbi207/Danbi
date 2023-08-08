@@ -51,7 +51,8 @@ const PickModal = ({ setPickModalOpen }) => {
   
   const handlePickModal = (pickdata) => {
     setShowAnimation(true);
-
+    const pickdata1 = authPost('/api/v1/item', {});
+    
     setTimeout(() => {
       setShowAnimation(false);
       setPickModalOpen(true);
@@ -86,7 +87,7 @@ const PickModal = ({ setPickModalOpen }) => {
     },
     dew_point: 123456,
   };
-  const pickdata1 = authPost('/api/v1/item', {});
+
   return (
     <PickModalWrap>
       {ShowAnimation ? (

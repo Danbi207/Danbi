@@ -178,7 +178,7 @@ const Profile = () => {
   const cur_dew = useSelector((state) => state.Jandi.dew_point);
   
   // TODO : memberId redux 조회
-  const userId = useSelector(state => state.userReducer.profileId);
+  const userId = useSelector((state) => state.userReducer.profileId);
   const data1 = authGet(`/api/v1/profile/${userId}`);
 
   return (
@@ -193,6 +193,7 @@ const Profile = () => {
             point={cur_dew}
             help_log={data.help_log}
             setPickModalOpen={setPickModalOpen}
+            item={data1.item}
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
