@@ -33,14 +33,21 @@ const MatchedHelp = () => {
     setCurPosition(null);
    }
   };
-  useEffect(()=>{
-    axios({
-      method:"get",
-      url : `${process.env.PUBLIC_URL}/json/MatchedHelp.json`
-    }).then(({data})=>{
-      setHelp(data.data);
-    }).catch(err=>console.log(err));
+
+  const getHelp = useCallback(async () => {
+    try{
+      const data = await authGet(`/api/v1/help/matched/${helpPostId}`);
+      setHelp(data);
+    }catch(err){
+      console.log(err.response);
+    }
   },[]);
+  
+  
+  useEffect(()=>{
+    console.log(myProfile);
+    getHelp()
+  },[getHelp]);
 
   const checkRoomId = useCallback(() => {
     axios({
