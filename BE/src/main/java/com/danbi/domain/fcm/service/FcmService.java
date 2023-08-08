@@ -88,7 +88,7 @@ public class FcmService {
         Message message = Message.builder()
                 .setToken(targetToken)
                 .setWebpushConfig(WebpushConfig.builder().putHeader("ttl", "300")
-                        .setNotification(new WebpushNotification(title, body))
+                        .setNotification(new WebpushNotification(title, body, "https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567061659/noticon/zsflwysrgmkd14jwwe7v.png"))
                         .setFcmOptions(WebpushFcmOptions.builder()
                                 .build())
                         .build()

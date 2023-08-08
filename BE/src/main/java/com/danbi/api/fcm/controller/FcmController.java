@@ -1,5 +1,6 @@
 package com.danbi.api.fcm.controller;
 
+import com.danbi.api.ApiResponse;
 import com.danbi.api.fcm.dto.FcmRequestDto;
 import com.danbi.domain.fcm.dto.NotificationRequest;
 import com.danbi.domain.fcm.service.FcmService;
@@ -24,14 +25,15 @@ public class FcmController {
     private final FcmService fcmService;
 
     @PostMapping("/token")
-    public String registerToken(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody FcmRequestDto fcmRequestDto) {
+    public ApiResponse<String> registerToken(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody FcmRequestDto fcmRequestDto) {
         fcmService.saveToken(memberInfoDto.getMemberId(), fcmRequestDto.getFcmToken());
-        return "'" +  fcmRequestDto.getFcmToken() + "'";
+        return ApiResponse.ok(fcmRequestDto.getFcmToken());
     }
 
     @PostMapping("/sendMessageTo")
-    public void sendMessageTo(@RequestBody NotificationRequest notificationRequest) throws IOException, ExecutionException, InterruptedException {
+    public ApiResponse<String> sendMessageTo(@RequestBody NotificationRequest notificationRequest) throws IOException, ExecutionException, InterruptedException {
         fcmService.sendMessageTo(notificationRequest);
+        return ApiResponse.ok("메시지 전송을 성골했습니다.");
     }
 
 }
