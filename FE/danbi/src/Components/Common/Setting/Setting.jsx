@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import { useDispatch} from "react-redux";
 import {setTheme} from "../../../store/Slice/settingSlice.js";
-import {setCookie,getCookie} from "../../../cookie";
+import {setCookie,getCookie} from "../../../Util/hooks/cookie/index.js";
 
 const Setting = (props) => {
 const dispatch = useDispatch();

@@ -1,64 +1,58 @@
-import Login from "../Components/Login/Login.jsx";
-import Setting from "../Components/Common/Setting/Setting.jsx";
-import Profile from '../Components/Profile/Profile.jsx';
-import KakaoOauth from "../Components/Login/oauth/KakaoOauth.jsx";
-import HelperHome from "../Components/Helper/Home/HelperHome.jsx"
-import IPHome from "../Components/IP/IPHome.jsx";
-import UserSubmit from "../Components/Login/UserSubmit.jsx";
-import IpRequest from "../Components/IP/IpRequest.jsx";
-import Detail from "../Components/Detail/Detail.jsx";
-import MatchedHelp from "../Components/MatchedHelp/MatchedHelp.jsx";
-import Friend from '../Components/Friends/Friend.jsx';
-import IpMap from "../Components/IP/Map/IpMap.jsx";
-
+import Login from "../Components/User/Login/Login";
+import KakaoOauth from "../Components/User/Login/Oauth/KakaoOauth";
+import IpRequest from "../Components/Help/Ip/Request/IpRequest";
+import Detail from "../Components/Help/Co/Detail/Detail";
+import MatchedHelp from "../Components/Help/Co/Matched/MatchedHelp";
+import Profile from "../Components/User/Profile/Profile";
+import Friend from "../Components/User/Friend/Friend";
+import UserSubmit from "../Components/User/Join/UserSubmit";
+import IPHome from "../Components/Help/Ip/Home/IPHome";
+import HelperHome from "../Components/Help/Helper/Home/HelperHome";
+import Test from "../Components/TEST/TEST"
 const routes = [
   {
     path: "/",
-    component: Login,
+    Component: Login,
   },
   {
-    path: "/oauth/kakao",
-    component:KakaoOauth
+    path:'/user/login/oauth',
+    Component : KakaoOauth
   },
   {
-    path:"/setting",
-    component : Setting,
+    path : '/user/join',
+    Component : UserSubmit,
   },
   {
-    path: "/profile",
-    component : Profile,
+    path: "/help/ip",
+    Component : IPHome
   },
   {
-    path: "/helper",
-    component : HelperHome,
+    path : "/help/ip/request",
+    Component : IpRequest
   },
   {
-    path: "/ip",
-    component : IPHome,
+    path : "/help/helper",
+    Component : HelperHome
   },
   {
-    path: "/userSubmit",
-    component : UserSubmit,
+    path : "/help/:role/detail/:helpPostId",
+    Component : Detail
   },
   {
-    path: "/iprequest",
-    component : IpRequest,
+    path : "/help/:role/matched/:helpPostId",
+    Component : MatchedHelp
   },
   {
-    path: "/ipmap/:mapid",
-    component : IpMap,
+    path: "/user/profile/:meberId",
+    Component:Profile
   },
   {
-    path:"help/:role/detail/:helpPostId",
-    component : Detail,
+    path : "/user/friend",
+    Component:Friend
   },
   {
-    path:"/matchedhelp/:helpPostId",
-    component:MatchedHelp,
-  },
-  {
-    path: '/friend',
-    component : Friend
-  },
+    path:"/test",
+    Component:Test
+  }
 ];
 export default routes;
