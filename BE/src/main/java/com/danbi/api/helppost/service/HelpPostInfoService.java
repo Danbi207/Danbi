@@ -91,8 +91,8 @@ public class HelpPostInfoService {
     }
 
 
-    public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
-        List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
+    public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String gender) {
+        List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(gender);
         List<HelperQueryHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostQueryDto helpPost : helpPosts) {
 
@@ -106,7 +106,7 @@ public class HelpPostInfoService {
                     .caution(helpPost.getCaution())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
-                    .faceFlag(helpPost.isFaceFlag())
+                    .emergencyFlag(helpPost.isEmergencyFlag())
                     .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
@@ -114,8 +114,9 @@ public class HelpPostInfoService {
         return helpList;
     }
 
-    public List<HelperFaceHelpPostDto> searchFaceHelpPost(Long memberId, String longitude, String latitude) {
-        List<HelpPostFaceDto> helpPosts = helpPostService.searchAllByFace(longitude, latitude);
+    public List<HelperFaceHelpPostDto> searchFaceHelpPost(Long memberId, String longitude,
+                                                          String latitude, String gender) {
+        List<HelpPostFaceDto> helpPosts = helpPostService.searchAllByFace(longitude, latitude, gender);
         List<HelperFaceHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostFaceDto helpPost : helpPosts) {
 
@@ -133,6 +134,7 @@ public class HelpPostInfoService {
                     .caution(helpPost.getCaution())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
+                    .emergencyFlag(helpPost.isEmergencyFlag())
                     .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
@@ -150,10 +152,11 @@ public class HelpPostInfoService {
                 .ip(IpDto.builder()
                         .ipId(helpPost.getIpId())
                         .name(helpPost.getName())
+                        .profileUrl(helpPost.getProfileUrl())
                         .accumulateDewPoint(helpPost.getAccumulateDewPoint())
                         .accusePoint(helpPost.getAccusePoint()).build())
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
@@ -180,15 +183,17 @@ public class HelpPostInfoService {
                 .ip(IpMatchedDto.builder()
                         .ipId(helpPost.getIpId())
                         .name(helpPost.getIpName())
+                        .profileUrl(helpPost.getIpProfileUrl())
                         .accumulateDewPoint(helpPost.getIpAccumulateDewPoint())
                         .accusePoint(helpPost.getIpAccusePoint()).build())
                 .helper(HelperMatchedDto.builder()
                         .helperId(helpPost.getHelperId())
                         .name(helpPost.getHelperName())
+                        .profileUrl(helpPost.getHelperProfileUrl())
                         .accumulateDewPoint(helpPost.getHelperAccumulateDewPoint())
                         .accusePoint(helpPost.getHelperAccusePoint()).build())
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())

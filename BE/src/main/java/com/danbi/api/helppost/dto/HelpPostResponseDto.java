@@ -20,11 +20,9 @@ public class HelpPostResponseDto {
 
     private Position position;
 
-    @JsonProperty("face_flag")
     private boolean faceFlag;
 
-    @JsonProperty("reservation_flag")
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
 
     private String content;
 
@@ -48,22 +46,16 @@ public class HelpPostResponseDto {
 
         private String addr;
 
-        @JsonProperty("dest_latitude")
         private String destLatitude;
 
-        @JsonProperty("dest_longitude")
         private String destLongitude;
 
-        @JsonProperty("dest_addr")
         private String destAddr;
 
-        @JsonProperty("meet_latitude")
         private String meetLatitude;
 
-        @JsonProperty("meet_longitude")
         private String meetLongitude;
 
-        @JsonProperty("meet_addr")
         private String meetAddr;
     }
 
@@ -85,7 +77,7 @@ public class HelpPostResponseDto {
                 .helpId(helpPost.getId())
                 .position(position)
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())

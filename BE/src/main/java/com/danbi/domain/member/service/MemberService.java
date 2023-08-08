@@ -5,6 +5,7 @@ import com.danbi.domain.Item.constant.Ranking;
 import com.danbi.domain.Item.entity.Item;
 import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
+import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.dto.MemberInfoDto;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
@@ -39,14 +40,16 @@ public class MemberService {
                 .member(member)
                 .build();
 
-        Profile profile = Profile.builder()
-                .member(member)
-                .build();
-
         Point point = Point.builder()
                 .dewPoint(100L)
                 .accumulateDewPoint(100L)
-                .profile(profile).build();
+                .build();
+
+        Profile profile = Profile.builder()
+                .member(member)
+                .point(point)
+                .build();
+
         pointRepository.save(point);
 
         Item item = Item.builder()
@@ -89,6 +92,11 @@ public class MemberService {
 
     public MemberInfoDto searchMember(Long memberId) {
         return memberRepository.searchMember(memberId);
+    }
+
+    @Transactional
+    public void updateRole(Member member, Role role) {
+        member.updateRole(role);
     }
 
 }

@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
+import java.util.Map;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -33,5 +36,6 @@ public class FcmMessage {
         private String body;
         private String image;
     }
+
 
 }

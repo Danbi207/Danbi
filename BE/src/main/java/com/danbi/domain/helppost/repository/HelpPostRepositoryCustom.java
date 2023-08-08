@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface HelpPostRepositoryCustom {
-    List<HelpPostQueryDto> search(String longitude, String latitude);
-    List<HelpPostFaceDto> searchFace(String longitude, String latitude);
+    List<HelpPostQueryDto> search(String gender);
+    List<HelpPostFaceDto> searchFace(String longitude, String latitude, String gender);
 
     HelpPostDetailQeuryDto searchDetail(Long helpPostId);
 

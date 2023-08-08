@@ -1,7 +1,6 @@
 package com.danbi.domain.alarm.service.impl;
 
 import com.danbi.domain.alarm.constant.State;
-import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.alarm.entity.Alarm;
 import com.danbi.domain.alarm.repository.AlarmRepository;
 import com.danbi.domain.alarm.service.AlarmService;
@@ -30,11 +29,6 @@ public class AlarmServiceImpl implements AlarmService {
     private final AlarmRepository alarmRepository;
     private final MemberService memberService;
 
-    @Override
-    public List<Alarm> getAlarmList(Long memberId) {
-        Member findMember = memberService.findByMemberId(memberId);
-        return null;
-    }
 
     @Transactional
     @Override
@@ -102,14 +96,19 @@ public class AlarmServiceImpl implements AlarmService {
     @Override
     public Long countNotReadAlarm(Long memberId) {
         Member findMember = memberService.findByMemberId(memberId);
-        alarmRepository.countByReadFlagAndToAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
-        return null;
+        return alarmRepository.countByReadFlagAndToAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
     }
 
     @Override
     public List<Alarm> getNotReadAlarm(Long memberId) {
         Member findMember = memberService.findByMemberId(memberId);
         return alarmRepository.findByReadFlagAndToAndStateNotAndStateNot(false, findMember, State.DESTROY, State.RECEIVER_DESTROY);
+    }
+
+    @Override
+    public List<Alarm> getMyAlarms(Long memberId) {
+        Member findMember = memberService.findByMemberId(memberId);
+        return alarmRepository.findALLByFromOrTo(findMember);
     }
 
 }

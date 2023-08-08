@@ -7,6 +7,8 @@ import com.danbi.domain.member.constant.OauthType;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.constant.State;
 import com.danbi.domain.profile.entity.Profile;
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.jwt.dto.JwtDto;
 import com.danbi.global.util.DateTimeUtils;
 import lombok.AccessLevel;
@@ -24,6 +26,7 @@ public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -108,5 +111,16 @@ public class Member extends BaseEntity {
 
     public void plusStack() {
         this.accuseStack += 1;
+    }
+
+    public void updateRole(Role role) {
+        validateRole(role);
+        this.role = role;
+    }
+
+    private void validateRole(Role role) {
+        if(!Role.isMemberRole(role)) {
+            throw new BusinessException(ErrorCode.MEMBER_ROLE_NOT_EXIST);
+        }
     }
 }

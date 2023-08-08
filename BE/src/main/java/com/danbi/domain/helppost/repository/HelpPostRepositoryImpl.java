@@ -10,10 +10,12 @@ import com.danbi.domain.helppost.dto.HelpPostQueryDto;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.entity.QHelpPost;
 import com.danbi.domain.helppost.entity.QPositions;
+import com.danbi.domain.member.constant.Gender;
 import com.danbi.domain.member.entity.QMember;
 import com.danbi.domain.point.entity.QPoint;
 import com.danbi.domain.profile.entity.QProfile;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -35,31 +37,31 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<HelpPostQueryDto> search(String longitude, String latitude) {
+    public List<HelpPostQueryDto> search(String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostQueryDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
-                        positions.longitude, positions.latitude,
-                        helpPost.startTime, helpPost.endTime, helpPost.faceFlag,
-                        member.accuseStack
+                        positions.longitude, positions.latitude, helpPost.startTime, helpPost.endTime,
+                        helpPost.emergencyFlag, member.accuseStack
                 ))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
                 .leftJoin(member.profile, profile)
                 .where(
-                        positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
-                        positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
-                        helpPost.state.ne(State.DELETE)
+                        helpPost.faceFlag.eq(false),
+                        helpPost.state.ne(State.DELETE),
+                        helpPost.state.ne(State.COMPLETED),
+                        searchByGender(gender)
                 )
                 .fetch();
     }
 
     @Override
-    public List<HelpPostFaceDto> searchFace(String longitude, String latitude) {
+    public List<HelpPostFaceDto> searchFace(String longitude, String latitude, String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostFaceDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.meetLongitude, positions.meetLatitude, positions.meetAddr,
-                        helpPost.startTime, helpPost.endTime, member.accuseStack))
+                        helpPost.startTime, helpPost.endTime, helpPost.emergencyFlag ,member.accuseStack))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
@@ -68,9 +70,18 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
                         helpPost.faceFlag.eq(true),
-                        helpPost.state.ne(State.DELETE)
+                        helpPost.state.ne(State.DELETE),
+                        helpPost.state.ne(State.COMPLETED),
+                        searchByGender(gender)
                 )
                 .fetch();
+    }
+
+    private BooleanExpression searchByGender(String gender) {
+        if (gender.equals("male")) {
+            return helpPost.genderFlag.eq(false).or(helpPost.member.gender.eq(Gender.male));
+        }
+        return helpPost.genderFlag.eq(false).or(helpPost.member.gender.eq(Gender.female));
     }
 
     private String subtractFromString(String str) {
@@ -93,13 +104,13 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         member.accuseStack, positions.latitude, positions.longitude, positions.addr,
                         positions.destLatitude, positions.destLongitude, positions.destAddr,
                         positions.meetLatitude, positions.destLongitude, positions.meetAddr,
-                        helpPost.faceFlag, helpPost.reservationFlag, helpPost.content,
+                        helpPost.faceFlag, helpPost.emergencyFlag, helpPost.content,
                         helpPost.startTime, helpPost.endTime, helpPost.caution, helpPost.category))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(helpPost.member, member)
                 .leftJoin(member.profile, profile)
-                .leftJoin(profile.point, point)
+                .leftJoin(point).on(profile.eq(point.profile))
                 .where(
                         helpPost.id.eq(helpPostId)
                 )
@@ -129,18 +140,19 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         positions.destLatitude, positions.destLongitude, positions.destAddr,
                         positions.meetLatitude, positions.destLongitude, positions.meetAddr,
 
-                        helpPost.faceFlag, helpPost.reservationFlag, helpPost.content,
+                        helpPost.faceFlag, helpPost.emergencyFlag, helpPost.content,
                         helpPost.startTime, helpPost.endTime, helpPost.caution, helpPost.category))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)
                 .leftJoin(help).on(helpPost.eq(help.helpPost))
                 .leftJoin(helpPost.member, ipMember)
                 .leftJoin(ipMember.profile, ipProfile)
-                .leftJoin(ipProfile.point, ipPoint)
+                .leftJoin(ipPoint).on(ipProfile.eq(ipPoint.profile))
 
                 .leftJoin(help.helper, helperMember)
                 .leftJoin(helperMember.profile, helperProfile)
                 .leftJoin(helperProfile.point, helperPoint)
+                .leftJoin(helperPoint).on(helperProfile.eq(helperPoint.profile))
                 .where(
                         helpPost.id.eq(helpPostId),
                         helpPost.state.eq(State.MATCHED)
@@ -152,7 +164,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     public List<HelpPost> findHelpPostsByBetweenTime(LocalDateTime startTime, LocalDateTime endTime, Long memberId) {
         return jpaQueryFactory.selectFrom(helpPost)
                 .where(helpPost.startTime.between(startTime,endTime)
-                        .or(helpPost.endTime.between(startTime,endTime)),
+                                .or(helpPost.endTime.between(startTime,endTime)),
                         helpPost.member.id.eq(memberId),
                         helpPost.state.ne(State.DELETE))
                 .fetch();

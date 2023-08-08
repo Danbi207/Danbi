@@ -17,7 +17,7 @@ public class DetailHelpPostDto {
     private IpDto ip;
     private Position position;
     private boolean faceFlag;
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
@@ -37,22 +37,16 @@ public class DetailHelpPostDto {
 
         private String addr;
 
-        @JsonProperty("dest_latitude")
         private String destLatitude;
 
-        @JsonProperty("dest_longitude")
         private String destLongitude;
 
-        @JsonProperty("dest_addr")
         private String destAddr;
 
-        @JsonProperty("meet_latitude")
         private String meetLatitude;
 
-        @JsonProperty("meet_longitude")
         private String meetLongitude;
 
-        @JsonProperty("meet_addr")
         private String meetAddr;
     }
 }

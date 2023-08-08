@@ -19,6 +19,7 @@ public class HelpPost extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "help_post_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,9 +35,11 @@ public class HelpPost extends BaseEntity {
     @Column(length = 20)
     private LocalDateTime endTime;
 
+    private boolean emergencyFlag;
 
-    private boolean reservationFlag;
     private boolean faceFlag;
+
+    private boolean genderFlag;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
@@ -53,14 +56,16 @@ public class HelpPost extends BaseEntity {
     @OneToOne(mappedBy = "helpPost", cascade = CascadeType.ALL)
     private Positions positions;
 
+
     @Builder
-    public HelpPost(Member member, String content, LocalDateTime startTime, LocalDateTime endTime, boolean reservationFlag, boolean faceFlag, State state, Category category, String caution, Positions positions) {
+    public HelpPost(Member member, String content, LocalDateTime startTime, LocalDateTime endTime, boolean emergencyFlag, boolean faceFlag, State state, boolean genderFlag, Category category, String caution, Positions positions) {
         this.member = member;
         this.content = content;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.reservationFlag = reservationFlag;
+        this.emergencyFlag = emergencyFlag;
         this.faceFlag = faceFlag;
+        this.genderFlag = genderFlag;
         this.state = state;
         this.category = category;
         this.caution = caution;
@@ -72,8 +77,9 @@ public class HelpPost extends BaseEntity {
         this.content = helpPost.getContent();
         this.startTime = helpPost.getStartTime();
         this.endTime = helpPost.getEndTime();
-        this.reservationFlag = helpPost.isReservationFlag();
+        this.emergencyFlag = helpPost.isEmergencyFlag();
         this.faceFlag = helpPost.isFaceFlag();
+        this.genderFlag = helpPost.isGenderFlag();
         this.state = helpPost.getState();
         this.category = helpPost.getCategory();
         this.caution = helpPost.getCaution();

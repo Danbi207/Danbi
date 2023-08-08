@@ -1,24 +1,23 @@
 package com.danbi.domain.fcm.service;
 
 import com.danbi.domain.fcm.client.FcmClient;
-import com.danbi.domain.fcm.dto.FcmMessage;
 import com.danbi.domain.fcm.dto.NotificationRequest;
 import com.danbi.domain.fcm.repository.FcmTokenRepository;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
-import com.danbi.global.jwt.constant.GrantType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.messaging.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Service
@@ -48,15 +47,17 @@ public class FcmService {
         return fcmTokenRepository.getToken(email);
     }
 
-    public void sendMessageTo(NotificationRequest notificationRequest) throws IOException {
+    public void sendMessageTo(NotificationRequest notificationRequest) throws IOException, ExecutionException, InterruptedException {
         if(!hasKey(notificationRequest.getEmail())){
             throw new BusinessException(ErrorCode.NOT_EXIST_FCM_TOKEN);
         }
 
         String targetToken = getToken(notificationRequest.getEmail());
-        String message = makeMessage(targetToken, notificationRequest.getTitle(), notificationRequest.getMessage());
-        fcmClient.sendDataMessage(CONTENT_TYPE,
-                GrantType.BEARER.getType() + " " + getAccessToken(),message);
+        Message message = makeMessage(targetToken, notificationRequest.getTitle(), notificationRequest.getMessage());
+        String response = FirebaseMessaging.getInstance().sendAsync(message).get();
+        log.info("SentMessage : {}", response);
+//        fcmClient.sendDataMessage(CONTENT_TYPE,
+//                GrantType.BEARER.getType() + " " + getAccessToken(),message);
     }
 
     //FCM에 push 요청을 보낼 때 인증을 위해 Header에 포함시킬 AccessToken 생성
@@ -77,12 +78,26 @@ public class FcmService {
     }
 
     //FCM 알림 메시지 생성
-    private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
-        FcmMessage.Notification noti = new FcmMessage.Notification(title, body, null);
-        FcmMessage.Message message = new FcmMessage.Message(noti, targetToken);
-        FcmMessage fcmMessage = new FcmMessage(false, message);
+    private Message makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
 
-        return objectMapper.writeValueAsString(fcmMessage);
+
+//        FcmMessage.Notification noti = new FcmMessage.Notification(title, body, null);
+//        FcmMessage.Message message = new FcmMessage.Message(noti, targetToken);
+//        FcmMessage fcmMessage = new FcmMessage(false, message);
+
+        Message message = Message.builder()
+                .setToken(targetToken)
+                .setWebpushConfig(WebpushConfig.builder().putHeader("ttl", "300")
+                        .setNotification(new WebpushNotification(title, body, "https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567061659/noticon/zsflwysrgmkd14jwwe7v.png"))
+                        .setFcmOptions(WebpushFcmOptions.builder()
+                                .build())
+                        .build()
+                )
+                .build();
+        return message;
     }
+
+
+
 
 }

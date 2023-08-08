@@ -1,5 +1,6 @@
 package com.danbi.global.error;
 
+import com.google.api.Http;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -21,6 +22,7 @@ public enum ErrorCode {
     INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입 입니다.(memberType : KAKAO)"),
     ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "M-002", "이미 가입된 회원 입니다."),
     MEMBER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
+    MEMBER_ROLE_NOT_EXIST(HttpStatus.BAD_REQUEST, "M-004", "해당 역할은 존재하지 않습니다."),
 
     // 프로필
     PROFILE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "P-001", "해당 프로필은 존재하지 않습니다."),
@@ -54,6 +56,7 @@ public enum ErrorCode {
     HELPPOST_MISMATCH_START_END_TIME(HttpStatus.BAD_REQUEST,"HP-003","이미 해당 시간에 도움요청이 등록되어 있습니다."),
     HELPPOST_MISMATCH_ISMATCHED(HttpStatus.BAD_REQUEST,"HP-004","매칭된 도움 요청이 아닙니다."),
     HELPPOST_NOT_EXISTS(HttpStatus.BAD_REQUEST,"HP-005","해당번호의 매칭된 도움은 없습니다."),
+    HELPPOST_MISMATCH_GENDER(HttpStatus.BAD_REQUEST,"HP-006","성별 요청이 잘못되었습니다."),
 
     // Help
     HELP_MISMATCH_IP(HttpStatus.BAD_REQUEST,"H-001","해당 도움의 IP와 유저가 동일하지 않습니다."),
@@ -74,6 +77,13 @@ public enum ErrorCode {
 
     // Item
     ITEM_NEGATIVE_POINT(HttpStatus.BAD_REQUEST,"IT-001","보유중인 포인트가 뽑기에 필요한 포인트 이하입니다."),
+
+    // File
+    EMPTY_FILE(HttpStatus.BAD_REQUEST, "F-001", "빈 파일은 제출할 수 없습니다."),
+    FILE_AMOUNTS_LIMIT(HttpStatus.BAD_REQUEST, "F-002", "제출할 수 있는 파일 수를 초과했습니다."),
+
+    // Paging
+    PAGING_LIMIT(HttpStatus.BAD_REQUEST, "PA-001", "페이징 크기 제한을 초과했습니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

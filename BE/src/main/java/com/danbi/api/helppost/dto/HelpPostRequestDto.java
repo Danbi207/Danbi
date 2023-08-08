@@ -23,11 +23,11 @@ public class HelpPostRequestDto {
 
     private Position position;
 
-    @JsonProperty("face_flag")
     private boolean faceFlag;
 
-    @JsonProperty("reservation_flag")
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
+
+    private boolean genderFlag;
 
     @NotBlank(message = "요청글은 필수입니다.")
     @Length(max = 500, message = "요청글은 최대 500글자 입니다.")
@@ -56,22 +56,16 @@ public class HelpPostRequestDto {
 
         private String addr;
 
-        @JsonProperty("dest_latitude")
         private String destLatitude;
 
-        @JsonProperty("dest_longitude")
         private String destLongitude;
 
-        @JsonProperty("dest_addr")
         private String destAddr;
 
-        @JsonProperty("meet_latitude")
         private String meetLatitude;
 
-        @JsonProperty("meet_longitude")
         private String meetLongitude;
 
-        @JsonProperty("meet_addr")
         private String meetAddr;
 
     }
@@ -82,8 +76,9 @@ public class HelpPostRequestDto {
                 .content(helpPostRequestDto.getContent())
                 .startTime(helpPostRequestDto.getStartTime())
                 .endTime(helpPostRequestDto.getEndTime())
-                .reservationFlag(helpPostRequestDto.isReservationFlag())
+                .emergencyFlag(helpPostRequestDto.isEmergencyFlag())
                 .faceFlag(helpPostRequestDto.isFaceFlag())
+                .genderFlag(helpPostRequestDto.isGenderFlag())
                 .state(State.ACTIVATE)
                 .positions(positions)
                 .category(helpPostRequestDto.getCategory())

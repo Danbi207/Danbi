@@ -47,6 +47,7 @@ public class ProfileInfoService {
 
         return ProfileResponseDto.builder()
                 .profileId(profileInfo.getProfileId())
+                .guestBookId(profileInfo.getGuestBookId())
                 .name(profileInfo.getName())
                 .profileUrl(profileInfo.getProfileUrl())
                 .accusePoint(profileInfo.getAccusePoint())

@@ -20,8 +20,6 @@ import java.util.List;
 public class AccuseService {
 
     private final AccuseRepository accuseRepository;
-    private final MemberService memberService;
-
 
 
     public Accuse createAccuse(Accuse accuse, Long fromId) {

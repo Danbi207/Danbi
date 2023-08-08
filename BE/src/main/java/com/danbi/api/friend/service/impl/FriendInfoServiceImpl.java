@@ -99,6 +99,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getTo().getId())
                     .build();
             result.add(responseFriendDto);
         }
@@ -116,10 +117,11 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
-                            .profileUrl(friend.getFrom().getProfileUrl())
-                            .name(friend.getFrom().getName())
-                            .dewPoint(point.getAccumulateDewPoint())
-                            .build();
+                    .profileUrl(friend.getFrom().getProfileUrl())
+                    .name(friend.getFrom().getName())
+                    .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getFrom().getId())
+                    .build();
             result.add(responseFriendDto);
         }
 
@@ -160,7 +162,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
     }
 
     @Override
-    public boolean isFriend(Long from, Long to){
+    public boolean isFriend(Long from, Long to) {
         Member fromMember = memberService.findByMemberId(from);
         Member toMember = memberService.findByMemberId(to);
         Friend friend = Friend.builder()

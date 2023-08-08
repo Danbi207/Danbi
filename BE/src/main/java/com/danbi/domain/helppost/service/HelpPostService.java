@@ -82,13 +82,21 @@ public class HelpPostService {
 
     // querydsl 사용
     @Transactional(readOnly = true)
-    public List<HelpPostQueryDto> searchAllByQuery(String longitude, String latitude) {
-        return helpPostRepository.search(longitude, latitude);
+    public List<HelpPostQueryDto> searchAllByQuery(String gender) {
+        validateGenderIsRight(gender);
+        return helpPostRepository.search(gender);
     }
 
     @Transactional(readOnly = true)
-    public List<HelpPostFaceDto> searchAllByFace(String longitude, String latitude) {
-        return helpPostRepository.searchFace(longitude,latitude);
+    public List<HelpPostFaceDto> searchAllByFace(String longitude, String latitude, String gender) {
+        validateGenderIsRight(gender);
+        return helpPostRepository.searchFace(longitude,latitude, gender);
+    }
+
+    private void validateGenderIsRight(String gender) {
+        if ( !(gender.equals("male") || gender.equals("female")) ) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_GENDER);
+        }
     }
 
     @Transactional(readOnly = true)

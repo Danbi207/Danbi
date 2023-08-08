@@ -16,10 +16,11 @@ public class Point extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "point_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
+
+    @OneToOne(mappedBy = "point", cascade = CascadeType.ALL)
     private Profile profile;
 
     @Column(nullable = false)
