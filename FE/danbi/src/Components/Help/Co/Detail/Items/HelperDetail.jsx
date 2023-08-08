@@ -57,9 +57,9 @@ const HelperDetail = ({ helpPostId }) => {
 
   return (
     <HelperDetailWrap>
-      <UserInfo data={data} />
+      {data ? <UserInfo data={data}/> : <UserInfo/>}
       <HR />
-      <HelpDetailInfo data={data} />
+      {data ? <HelpDetailInfo data={data} /> : <HelpDetailInfo/>}
       <ButtonWrap>
         <AcceptButton />
       </ButtonWrap>
