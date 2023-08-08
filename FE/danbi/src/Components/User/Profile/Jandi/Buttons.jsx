@@ -8,18 +8,20 @@ import {
     setName,
     setDewPoint,
   } from '../../../../store/Slice/JandiSlice';
+import { authPost } from '../../../../Util/apis/api';
 
 const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
     const dispatch = useDispatch();
 
     const handlePickModal = (pickdata) => {
         setPickModalOpen(true);
+        const pickdata1 = authPost('/api/v1/item', {});
         dispatch(setName(pickdata.item.name));
         dispatch(setTier(pickdata.item.tier));
         dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
         dispatch(setCheckedRgb(pickdata.item.checkedRgb));
         dispatch(setDewPoint(pickdata.dew_point));
-      };
+    };
 
     return(
         <Btns>

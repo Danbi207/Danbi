@@ -28,13 +28,13 @@ const Comments = [
   },
 ];
 
-const GuestBook = ({guestBookData}) => {
+const GuestBook = ({guestBookId, comments}) => {
   const [textArea, setTextArea] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     const textJson = {
       "content": textArea,
-      "guestBookId": guestBookData.guest_book_id,
+      "guestBookId": guestBookId,
     };
     authPost('/api/v1/guestbook', textJson);
   }
@@ -56,7 +56,7 @@ const GuestBook = ({guestBookData}) => {
         </ChatSection>
       </ChatWrap>
       {Comments.map((comment, index) => (
-        <GuestBookComment key={index} comment={comment} />
+        <GuestBookComment key={index} comment={comment} writerName={comment.name} />
       ))}
     </GuestBookWrap>
   );

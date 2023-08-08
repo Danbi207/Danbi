@@ -11,7 +11,7 @@ import {
 } from '../../../../store/Slice/JandiSlice';
 import { Jsconfetti } from '../../../../App';
 import pick from '../../../../Util/assets/animation.json';
-import axios from 'axios';
+import { authPost } from '../../../../Util/apis/api';
 
 const PickModal = ({ setPickModalOpen }) => {
   const [ShowAnimation, setShowAnimation] = useState(true);
@@ -86,7 +86,7 @@ const PickModal = ({ setPickModalOpen }) => {
     },
     dew_point: 123456,
   };
-
+  const pickdata1 = authPost('/api/v1/item', {});
   return (
     <PickModalWrap>
       {ShowAnimation ? (
