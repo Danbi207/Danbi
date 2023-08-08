@@ -13,8 +13,8 @@ const HelpListItem = (props) => {
               <div>{props.help.name}</div>
               {
                 props.help.accuseStack === 0 ? null:
-                props.help.accuseStack <= 2 ? <img src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
-                <img src={`${process.env.PUBLIC_URL}/assets/red-flag.svg`} />
+                props.help.accuseStack <= 2 ? <img alt='' src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
+                <img alt='' src={`${process.env.PUBLIC_URL}/assets/red-flag.svg`} />
               }
             </UserTitle>
           </div>

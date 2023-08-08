@@ -48,7 +48,6 @@ const HelperHome = () => {
     if (navigator.geolocation) { // GPS를 지원하면
       navigator.geolocation.getCurrentPosition(function(e) {
         setPosition(e);
-        return true;
       }, function(error) {
         console.error(error);
       }, {
@@ -59,8 +58,9 @@ const HelperHome = () => {
     } else {
       alert('GPS를 허용하지 않아 도움목록을 조회할 수 없습니다. GPS를 허용해주세요!');
       setUntact();
+      return false;
     }
-    return false;
+    return true;
   },[setUntact]);
 
   const setContact = useCallback(async() => {
