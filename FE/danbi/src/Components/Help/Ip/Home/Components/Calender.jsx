@@ -46,9 +46,13 @@ const Calendar = () => {
 
   // 캘린더에서 달마다 목록을 가져오게 만들기
   const GetMonth = useCallback(async () => {
+    let temp = month+1;
+    if(temp < 10){
+      temp = "0"+month;
+    }
     const res = {};
     try {
-      const data = await authPost('api/v1/help/registers', {"yearAndMonth" : year+"-"+month+"-01"});
+      const data = await authPost('api/v1/help/registers', {"yearAndMonth" : year+"-"+temp+"-01"});
       if (data) {
         for(let i = 0; i < data.data.helpList.length; i++){
           const temp = data.data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
@@ -76,7 +80,7 @@ const Calendar = () => {
       setHelpData(res);
       console.error("에러 발생", error);
     }
-  },[])
+  },[year, month])
 
   // useEffect(()=>{
   //   GetMonth();
