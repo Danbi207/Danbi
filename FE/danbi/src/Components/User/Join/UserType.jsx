@@ -1,29 +1,40 @@
 import React, { useState }  from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 import styled from 'styled-components';
+import { authPost, reissueAccessToken } from '../../../Util/apis/api';
 
-const UserType = (props) => {
-  const [usertype, setUserType] = useState('undifine');
+
+const UserType = ({role, usertype, setUserType}) => {
   const [explainmode, setExplainMode] = useState('');
-  const navigate = useNavigate();
-
+  
+  const PutRole = useCallback(async () => {
+    try {
+      await authPost('/api/v1/member', {"role" : usertype});
+      console.log();
+      reissueAccessToken();
+      localStorage.setItem('role', usertype);  
+    } catch (error) {
+        console.error("에러 발생:", error);
+    }
+  }, []);
+    
   return (
     <SelectWrap>
         <TypesSelect>
             <Question>서비스 유형을 선택하세요</Question>
             <Boxes>
-              <SelectBTN $default='helper' $select={usertype} onClick={()=>{
-                setUserType('helper'); setExplainMode('helper');}}>
-                <p>도움을</p><p>줄래요</p>
+              <SelectBTN $default='helper' $select={role} onClick={()=>{
+                setUserType('ROLE_HELPER'); setExplainMode('ROLE_HELPER');}}>
+                <p>도움을</p><p>줄래요</p>ROLE_HELPER 
               </SelectBTN>
-              { explainmode === 'helper' ? <TextWrap>장애인분들에게 대면 / 비대면으로 도움을 제공해요</TextWrap> : null }
-              <SelectBTN $default='ip' $select={usertype} onClick={()=>{
-                setUserType('ip'); setExplainMode('ip')}}>
+              { explainmode === 'ROLE_HELPER' ? <TextWrap>장애인분들에게 대면 / 비대면으로 도움을 제공해요</TextWrap> : null }
+              <SelectBTN $default='ip' $select={role} onClick={()=>{
+                setUserType('ROLE_UNCERTIFICATED_IP'); setExplainMode('ip')}}>
                 <p>도움을</p><p>받을래요</p>
               </SelectBTN>
-              { explainmode === 'ip' ? <TextWrap>대면 / 비대면으로 이동과 기타 도움을 받아요</TextWrap> : null }
+              { explainmode === 'ROLE_UNCERTIFICATED_IP' ? <TextWrap>대면 / 비대면으로 이동과 기타 도움을 받아요</TextWrap> : null }
             </Boxes>
-          <NextBTN onClick={()=>{navigate('/userfile')}}>다음</NextBTN>
+          <NextBTN onClick={()=>{PutRole()}}>다음</NextBTN>
         </TypesSelect>
     </SelectWrap>
   )
