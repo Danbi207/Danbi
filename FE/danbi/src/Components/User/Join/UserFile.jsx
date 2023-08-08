@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useRef } from 'react';
 import styled from 'styled-components'
 import { authPost, reissueAccessToken, authFilePost } from '../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserFile = ({ usertype, setUserType}) => {
@@ -9,6 +10,7 @@ const UserFile = ({ usertype, setUserType}) => {
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
   const [imageFiles, setImageFiles] = useState([]); // 이미지 파일들을 저장하기 위한 state
+  const navigate = useNavigate();
 
   const PutFileRole = useCallback(async () => {
     try {
@@ -29,10 +31,11 @@ const UserFile = ({ usertype, setUserType}) => {
       localStorage.removeItem('role');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('refreshTokenExpireTime');
+      navigate('/')
     } catch (error) {
         console.error("에러 발생:", error);
     }
-  }, [imageFiles]);
+  }, [imageFiles,navigate]);
   
   const onChange = (e) => {
     const files = [...e.target.files]; 
