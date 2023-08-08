@@ -21,11 +21,10 @@ public class AdminIPController {
     private final AdminIPService adminIPService;
 
     @Operation(summary = "IP 회원 인증 서류 조회 API", description = "IP 회원 인증 서류 조회")
-    @GetMapping("/file/{ipId}/{fileId}")
+    @GetMapping("/file/{ipId}")
     public ApiResponse<List<IPCertFileResponseDto>> findIPCertFiles(@PathVariable Long ipId,
-                                                                    @PathVariable Long fileId,
                                                                     @MemberInfo MemberInfoDto memberInfoDto) {
-        List<IPCertFileResponseDto> ipCertFiles = adminIPService.findIPCertFiles(memberInfoDto.getMemberId());
+        List<IPCertFileResponseDto> ipCertFiles = adminIPService.findIPCertFiles(ipId);
         return ApiResponse.ok(ipCertFiles);
     }
 }

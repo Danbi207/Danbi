@@ -23,8 +23,8 @@ public class AdminIPService {
     private final MemberFileService memberFileService;
     private final MemberRepository memberRepository;
 
-    public List<IPCertFileResponseDto> findIPCertFiles(Long memberId) {
-        Member member = memberRepository.findById(memberId)
+    public List<IPCertFileResponseDto> findIPCertFiles(Long targetIpId) {
+        Member member = memberRepository.findById(targetIpId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
 
         List<MemberFile> ipCertificationFiles = memberFileService.findIPCertificationFiles(member);
