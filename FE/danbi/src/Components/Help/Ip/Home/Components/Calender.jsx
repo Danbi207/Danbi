@@ -11,7 +11,6 @@ const Calendar = () => {
   const [help,setHelpData] = useState({});  // help 정보 저장
   const [weekCnt, setWeekCnt] = useState(6);
 
-
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const getWeek = (year, month) => {
@@ -42,53 +41,47 @@ const Calendar = () => {
     if(!(day in help[year][month])){ //day가 help[year][month]에 있는지 판단
       return [];
     }
+
     return help[year][month][day];
   }
 
   // 캘린더에서 달마다 목록 가져오는 예시
-
-  // const GetMonth = useCallback(async (year, month, day) => {
-  //   try {
-  //     await authPost('api/v1/help/registers', {"yearAndMonth" : "2023-01-01"});
-      
-  //   }
-  //   catch (error) {
-  //     console.error("에러 발생", error);
-  //   }
-  // })
-
-
-  useEffect(()=>{
-    //DO : IP 도움목록을 불러와 데이터 저장
+  const GetMonth = useCallback(async (year, month) => {
     const res = {};
-    axios({
-      method:"get",
-      url:`${process.env.PUBLIC_URL}/IpCalendarList.json`
-    }).then(({data})=>{
-      for(let i = 0; i < data.data.helpList.length; i++){
-        const temp = data.data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
-        const date = temp[0].split("-"); //[year,month,day]
-        
-        if(!(date[0] in res)){ //year가 res안에 있는지 판단
-          res[date[0]]={}; //없다면 객체생성
+    try {
+      const data = await authPost('api/v1/help/registers', {"yearAndMonth" : year+"-"+month+"-01"});
+      if (data) {
+        for(let i = 0; i < data.data.helpList.length; i++){
+          const temp = data.data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
+          const date = temp[0].split("-"); //[year,month,day]
+          
+          if(!(date[0] in res)){ //year가 res안에 있는지 판단
+            res[date[0]]={}; //없다면 객체생성
+          }
+  
+          if(!(date[1] in res[date[0]])){ //month가 res[year]에 있는지 판단
+            res[date[0]][date[1]]={}; //없다면 객체s생성
+          }
+          
+          if(!(date[2] in res[date[0]][date[1]])){ //day가 res[year][month]에 있는지 판단
+            res[date[0]][date[1]][date[2]]=[]; //없다면 배열생성
+          }
+  
+          res[date[0]][date[1]][date[2]].push(data.data.helpList[i]); //res[year][month][day]에 data를 push
         }
-
-        if(!(date[1] in res[date[0]])){ //month가 res[year]에 있는지 판단
-          res[date[0]][date[1]]={}; //없다면 객체s생성
-        }
-        
-        if(!(date[2] in res[date[0]][date[1]])){ //day가 res[year][month]에 있는지 판단
-          res[date[0]][date[1]][date[2]]=[]; //없다면 배열생성
-        }
-
-        res[date[0]][date[1]][date[2]].push(data.data.helpList[i]); //res[year][month][day]에 data를 push
       }
-
       setHelpData(res);
       console.log(res);
-    }).catch((err)=>console.log(err));
-    setHelpData(res);
-  },[]);
+    }
+    catch (error) {
+      setHelpData(res);
+      console.error("에러 발생", error);
+    }
+  },[])
+
+  useEffect(()=>{
+    GetMonth();
+  }, [GetMonth]);
   
   const nextMonth = ()=> {
     let temp = month+1;
