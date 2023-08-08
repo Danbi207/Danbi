@@ -23,7 +23,7 @@ const IpRequest = () => {
       <Header></Header>
       <Tab></Tab>
       <Wrap>
-        { ip.tabmode === 'meet' ? <FaceType /> : <TimeTpye location={location} />}        
+        { ip.tabmode === 'meet' ? <FaceType location={location}/> : <TimeTpye/>}        
       </Wrap> 
       <Footer></Footer>
     </RequestWrap>

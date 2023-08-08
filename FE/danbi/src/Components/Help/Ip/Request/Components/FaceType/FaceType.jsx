@@ -6,9 +6,9 @@ import Preset from './Preset.jsx';
 import Positioin from './Positioin';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setTabMode, setMeetType } from "../../../../../../store/Slice/ipSlice"
+import { setMeetType } from "../../../../../../store/Slice/ipSlice"
 
-function FaceType() {
+function FaceType({location}) {
   const dispatch = useDispatch();
   const meetType = useSelector(state => state.ip.meetType);
 
@@ -26,7 +26,7 @@ function FaceType() {
       { meetType === 'face' ? <Positioin/> : null}  
       <HelpDetail/>
       <Preset/>
-      <NextBTN onClick={() => { dispatch(setTabMode('time')); } }>다음</NextBTN>
+      {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
     </Wrap>
   );
 }
@@ -88,6 +88,23 @@ const NextBTN  = styled.button`
     left : calc(( 100% - 20rem )/2);
     bottom: 3.2rem;
     position: absolute;
+  }
+`
+
+const RequestBTN = styled.button`
+  position: absolute;
+  left : calc(( 100% - 30rem )/2);
+  bottom: 5rem;
+  width: 30rem;
+  height: 3rem;
+  border-radius: 2rem;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=>props.theme.colors.buttontextColor};
+  font-size : 2rem;
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    height: 5rem;
+    left : calc(( 100% - 20rem )/2);
   }
 `
 
