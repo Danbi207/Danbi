@@ -95,6 +95,10 @@ const Calendar = () => {
     }
   };
 
+  // const onDateClick = (day) => {
+  //   setSelectedDate(day);
+  // };
+
   useEffect(() => {
     //DO : 달이 바뀔때마다 주차 수를 자동으로 계산
     setWeekCnt(getWeek(year, month));

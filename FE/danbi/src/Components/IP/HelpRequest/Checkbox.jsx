@@ -30,7 +30,7 @@ const Wrap = styled.div `
 `
 const PresetName = styled.div `
     height: 3rem;
-    padding: 1rem;
+    padding: 2rem 0;
 `
 
 const InputWrap = styled.form`

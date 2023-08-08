@@ -23,7 +23,7 @@ const IPHome = (props) => {
 
 const IpHomeWrap = styled.div`
     width: 100%;
-    height: 100%;
+    height: 60%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;

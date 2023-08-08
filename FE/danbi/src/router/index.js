@@ -10,7 +10,7 @@ import IpRequest from "../Components/IP/IpRequest.jsx";
 import Detail from "../Components/Detail/Detail.jsx";
 import MatchedHelp from "../Components/MatchedHelp/MatchedHelp.jsx";
 import Friend from '../Components/Friends/Friend.jsx';
-import IpMap from "../Components/IP/Map/IpMap.jsx";
+import IpMap from "../Components/IP/Home/Map/IpMap.jsx";
 import TEST from "../Components/TEST/TEST.jsx";
 
 const routes = [

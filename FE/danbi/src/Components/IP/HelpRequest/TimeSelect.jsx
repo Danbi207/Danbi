@@ -22,8 +22,8 @@ const customStyles = {
   container: (provided, state) => ({
     ...provided,
     display: 'inline-block',
-    marginRight : '0.5rem',
-    marginLeft : '0.5rem',
+    marginRight : '1rem',
+    marginLeft : '1rem',
   }),
     control : (provided) => ({
         ...provided,
@@ -50,31 +50,37 @@ const TimeSelect = () => {
   return (
     <SelctWrap>
       <PresetName>시작 시간</PresetName>
-      <StyledSelect
-        onChange={(selectedOption) => setHourValue(selectedOption ? selectedOption.value : '')}
-        placeholder="시간"
-        options={hours}
-        styles={customStyles}
-      />
-      <StyledSelect
-        onChange={(selectedOption) => setMinuteValue(selectedOption ? selectedOption.value : '')}
-        placeholder="분"
-        options={minutes}
-        styles={customStyles}
-      />
+      <Wrap>
+        <StyledSelect
+          onChange={(selectedOption) => setHourValue(selectedOption ? selectedOption.value : '')}
+          placeholder="시간"
+          options={hours}
+          styles={customStyles}
+        />
+        <StyledSelect
+          onChange={(selectedOption) => setMinuteValue(selectedOption ? selectedOption.value : '')}
+          placeholder="분"
+          options={minutes}
+          styles={customStyles}
+        />
+      </Wrap>
     </SelctWrap>
   )
 }
 
 const SelctWrap = styled.div`
-  width: 90%;
-  height: 25%;
-  background-color: red;
+  width: 100%;
+  height: 30%;
+  /* background-color: red; */
+`
+const Wrap = styled.div`
+  display: flex;
+  justify-content: space-around;
 `
 
 const PresetName = styled.div`
   height: 3rem;
-  padding: 1rem;
+  padding: 2rem 0;
 `
 
 const StyledSelect = styled(Select)`

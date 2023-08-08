@@ -35,19 +35,18 @@ const TimeTpye = ({location}) => {
   
   return (
     <Wrap>
-      <SelectWrap>
       <CalendarWrap>
         <Calendar/>
+      </CalendarWrap>
+      <SelectWrap>
         <TimeSelect/>
         <PresetName>이용 시간</PresetName>
         <ButtonWrap>
           <TimeButton>15분</TimeButton>
           <TimeButton>30분</TimeButton> 
-          
           <TimeButton>45분</TimeButton>
           <TimeButton>60분</TimeButton>
         </ButtonWrap>
-      </CalendarWrap>
         <Checkbox></Checkbox>
         {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
         </SelectWrap>
@@ -58,42 +57,42 @@ const TimeTpye = ({location}) => {
 const Wrap = styled.div`
   width : 100%;
   height: 100%;
+  padding: 1rem;
 `
 
 const CalendarWrap = styled.div`
-  width: 90%;
-  height: 60%;
+  width: 100%;
+  height: 40%;
 `
 
 const SelectWrap = styled.div`
-
-
+  width: 100%;
+  height: 40%;
 `
 
 const PresetName = styled.div `
-    height: 3rem;
-    padding: 1rem;
+  height: 3rem;
+  padding: 2rem 0;
 `
 
 const ButtonWrap = styled.div`
-  width: 90%;
+  width: 100%;
   height: 17%;
   flex-wrap: wrap;
-  display: flex;
-  justify-content: space-around;
-  /* align-content: start; */
-  background-color: blue;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  place-items: center;
+  grid-row-gap: 0.5rem;
 `
 
 const TimeButton = styled.button`
-  width: 7rem;
+  width: 8rem;
   height: 2rem;
   font-size: 1.2rem;
   border: 1px solid #000;
   border-radius: 5rem;
   background-color: white;
 `
-
 
 const RequestBTN = styled.button`
   position: absolute;
