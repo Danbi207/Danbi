@@ -10,8 +10,12 @@ import lombok.Getter;
 public class HelperMatchedDto {
 
     private Long helperId;
+
     private String name;
+
     private String profileUrl;
+
     private Long accumulateDewPoint;
+
     private int accusePoint;
 }

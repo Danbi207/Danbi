@@ -37,22 +37,16 @@ public class DetailHelpPostDto {
 
         private String addr;
 
-        @JsonProperty("dest_latitude")
         private String destLatitude;
 
-        @JsonProperty("dest_longitude")
         private String destLongitude;
 
-        @JsonProperty("dest_addr")
         private String destAddr;
 
-        @JsonProperty("meet_latitude")
         private String meetLatitude;
 
-        @JsonProperty("meet_longitude")
         private String meetLongitude;
 
-        @JsonProperty("meet_addr")
         private String meetAddr;
     }
 }
