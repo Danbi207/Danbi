@@ -1,26 +1,11 @@
 import React,{useEffect,useCallback} from 'react'
 import styled from 'styled-components';
-import { authGet, reissueAccessToken } from '../../../Util/apis/api';
-import {setUserInfo} from "../../../store/Slice/userSlice";
+import {reissueAccessToken } from '../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 import { requestPermission } from '../../../Util/hooks/requestPermission';
-import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const getUserInfo = useCallback(async()=>{
-    try{
-      const data = await authGet("/api/v1/member");
-      if(data){
-        dispatch(setUserInfo(data));
-        console.log(data);
-      }
-    }catch(err){
-      console.log(err.response);
-    }
-  },[dispatch]);
 
   // FCM 토큰 함수 호출
   const  requestFcmToken = useCallback(async ()=> {
@@ -41,9 +26,6 @@ const Login = () => {
       // FCM 토큰 함수 호출
       requestFcmToken()
 
-      //유저정보 저장
-      getUserInfo();
-
       if(role === "ROLE_IP"){//역할이 IP인 경우
         localStorage.setItem("role","ip");
         navigate("/help/ip", { replace: true });
@@ -54,7 +36,7 @@ const Login = () => {
         navigate("/help/helper", { replace: true });
       }
     }
-  },[navigate,requestFcmToken,getUserInfo]);
+  },[navigate,requestFcmToken]);
 
   useEffect(()=>{
     autoLogin();

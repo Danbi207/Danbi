@@ -5,14 +5,30 @@ import Footer from "../../../Common/Footer/Footer.jsx"
 import HelpList from "./Components/HelpList/HelpList.jsx"
 import HelpMap from "./Components/HelpMap/HelpMap.jsx"
 import Tap from "./Components/Tap/Tap.jsx"
-import { authPost} from "../../../../Util/apis/api.js"
-import { useSelector } from 'react-redux';
+import { authGet, authPost} from "../../../../Util/apis/api.js"
+import {setUserInfo} from "../../../../store/Slice/userSlice.js"
+import { useDispatch } from "react-redux";
 const HelperHome = () => {
   const [mode,setMode] = useState("unntact");
   const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
+  const [gender, setGender] = useState("");
+  const dispatch = useDispatch();
+  
+  const getUserInfo = useCallback(async()=>{
+    try{
+      const data = await authGet("/api/v1/member");
+      if(data){
+        dispatch(setUserInfo(data));
+        setGender(data.gender);
+        setUntact();
+      }
+    }catch(err){
+      console.log(err.response);
+    }
+  },[dispatch]);
 
-  const gender = useSelector(state=>state.user.gender);
+
 
   const setUntact = useCallback(async () => {
     try{
@@ -25,6 +41,7 @@ const HelperHome = () => {
       console.log(err.response);
     }
   },[setHelpList,setMode]);
+
   const setCurPosition = useCallback(()=>{
     //DO : gps 현재 위치 얻기
     if (navigator.geolocation) { // GPS를 지원하면
@@ -82,7 +99,9 @@ const HelperHome = () => {
     }
   },[setCurPosition,setMode]);
 
-  useEffect(()=>{setUntact();},[setUntact]);
+  useEffect(()=>{
+    getUserInfo();
+  },[getUserInfo]);
 
   return (
     <HelperHomeWrap>
