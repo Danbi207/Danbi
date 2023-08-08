@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 import static com.danbi.domain.help.entity.QHelp.help;
@@ -181,5 +182,20 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         helpPost.member.id.eq(memberId),
                         helpPost.state.ne(State.DELETE))
                 .fetch();
+    }
+
+    @Override
+    public Optional<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId) {
+
+        HelpPost helpPost = jpaQueryFactory.selectFrom(QHelpPost.helpPost)
+                .innerJoin(help).on(QHelpPost.helpPost.eq(help.helpPost))
+                .leftJoin(QHelpPost.helpPost.positions, positions).fetchJoin()
+                .where(
+                        help.helper.id.eq(memberId),
+                        QHelpPost.helpPost.state.eq(State.MATCHED),
+                        QHelpPost.helpPost.startTime.before(time),
+                        QHelpPost.helpPost.endTime.after(time)
+                ).fetchOne();
+        return Optional.ofNullable(helpPost);
     }
 }

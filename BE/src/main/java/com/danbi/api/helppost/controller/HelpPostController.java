@@ -9,6 +9,7 @@ import com.danbi.api.helppost.dto.helpersearch.contact.ContactRequestDto;
 import com.danbi.api.helppost.dto.helpersearch.face.HelperFaceHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.query.HelperQueryHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.untact.UntactRequestDto;
+import com.danbi.api.helppost.dto.helpertime.HelperTimeResponseDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthRequestDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.api.helppost.service.HelpPostInfoService;
@@ -98,5 +99,12 @@ public class HelpPostController {
                                                                        @PathVariable Long helpPostId) {
         DetailMatchedHelpPostDto matchedHelpPost = helpPostInfoService.searchMatchedHelpPost(helpPostId);
         return ApiResponse.ok(matchedHelpPost);
+    }
+
+    @Operation(summary = "헬퍼 지금 도움중 인지 체크 API", description = "헬퍼 지금 도움중 인지 체크 API")
+    @GetMapping("/time") // 헬퍼 지금 도움중 인지 체크
+    public ApiResponse<HelperTimeResponseDto> checkHelperMatchedTime(@MemberInfo MemberInfoDto memberInfoDto) {
+        HelperTimeResponseDto helperTimeResponseDto = helpPostInfoService.checkHelperMatchedTime(memberInfoDto.getMemberId());
+        return ApiResponse.ok(helperTimeResponseDto);
     }
 }
