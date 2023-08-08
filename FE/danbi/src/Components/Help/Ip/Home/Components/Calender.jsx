@@ -45,7 +45,7 @@ const Calendar = () => {
   }
 
   // 캘린더에서 달마다 목록을 가져오게 만들기
-  const GetMonth = useCallback(async (year, month) => {
+  const GetMonth = useCallback(async () => {
     const res = {};
     try {
       const data = await authPost('api/v1/help/registers', {"yearAndMonth" : year+"-"+month+"-01"});
