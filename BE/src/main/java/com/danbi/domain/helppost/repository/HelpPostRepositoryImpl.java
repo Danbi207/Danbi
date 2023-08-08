@@ -37,7 +37,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<HelpPostQueryDto> search(String longitude, String latitude, String gender) {
+    public List<HelpPostQueryDto> search(String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostQueryDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
                         positions.longitude, positions.latitude, helpPost.startTime, helpPost.endTime,
@@ -48,8 +48,6 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .leftJoin(helpPost.member, member)
                 .leftJoin(member.profile, profile)
                 .where(
-                        positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
-                        positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
                         helpPost.faceFlag.eq(false),
                         helpPost.state.ne(State.DELETE),
                         helpPost.state.ne(State.COMPLETED),

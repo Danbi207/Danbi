@@ -10,8 +10,12 @@ import lombok.Getter;
 public class IpMatchedDto {
 
     private Long ipId;
+
     private String name;
+
     private String profileUrl;
+
     private Long accumulateDewPoint;
+
     private int accusePoint;
 }

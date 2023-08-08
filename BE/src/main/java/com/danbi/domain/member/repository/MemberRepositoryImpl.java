@@ -21,10 +21,9 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     public MemberInfoDto searchMember(Long memberId) {
         return jpaQueryFactory.select(Projections.constructor(MemberInfoDto.class,
                         member.id, profile.id, member.name, member.profileUrl,
-                        member.accuseStack, point.accumulateDewPoint, point.dewPoint))
+                        member.gender))
                 .from(member)
                 .innerJoin(member.profile, profile)
-                .leftJoin(profile.point, point)
                 .where(member.id.eq(memberId))
                 .fetchOne();
     }

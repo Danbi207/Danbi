@@ -28,8 +28,7 @@ public class MemberInfoService {
                 .profileId(memberInfo.getProfileId())
                 .name(memberInfo.getName())
                 .profileUrl(memberInfo.getProfileUrl())
-                .accumulateDewPoint(memberInfo.getAccumulateDewPoint())
-                .dewPoint(memberInfo.getDewPoint()).build();
+                .gender(memberInfo.getGender()).build();
     }
 
 }

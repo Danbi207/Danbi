@@ -25,12 +25,8 @@ public class CommentService {
     }
 
     public Comment findById(Long commentId) {
-        Optional<Comment> op = commentRepository.findById(commentId);
-
-        if (op.isEmpty()) {
-            throw new CommentNotFoundException(ErrorCode.COMMENT_NOT_EXISTS);
-        }
-        return op.get();
+        return commentRepository.findById(commentId)
+                .orElseThrow(() -> new CommentNotFoundException(ErrorCode.COMMENT_NOT_EXISTS));
     }
 
     @Transactional
