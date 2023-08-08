@@ -17,7 +17,6 @@ public class AccuseResponseDto {
 
     private Long accuseId;
     private AccuseMemberDto memberInfo;
-    private String title;
     private String content;
     private AccuseType accuseType;
     private State state;
