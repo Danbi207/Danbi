@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
 import GuestBookComment from './GuestBookComment';
+import { authPost } from '../../../../Util/apis/api';
 
 const Comments = [
   {
@@ -27,7 +28,17 @@ const Comments = [
   },
 ];
 
-const GuestBook = () => {
+const GuestBook = ({guestBookData}) => {
+  const [textArea, setTextArea] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const textJson = {
+      "content": textArea,
+      "guestBookId": guestBookData.guest_book_id,
+    };
+    authPost('/api/v1/guestbook', textJson);
+  }
+
   return (
     <GuestBookWrap>
       <ChatWrap>
@@ -36,8 +47,8 @@ const GuestBook = () => {
           <UserName>김민규</UserName>
         </UserDetail>
         <ChatSection>
-          <ChatForm>
-            <Chat />
+          <ChatForm onSubmit={handleSubmit}>
+            <Chat value={textArea} />
             <SendBtn>
               <ChatImg />
             </SendBtn>

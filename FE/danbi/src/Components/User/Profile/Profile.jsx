@@ -10,6 +10,7 @@ import Jandi from './Jandi/Jandi.jsx';
 import GuestBook from './GuestBook/GuestBook.jsx';
 import PresetModal from './Preset/PresetModal.jsx';
 import PickModal from './Utils/PickModal.jsx';
+import { authGet } from '../../../Util/apis/api.js';
 
 const data = {
   profile_id: 1,
@@ -169,10 +170,16 @@ const data = {
   },
 };
 
+
+
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
   const cur_dew = useSelector((state) => state.Jandi.dew_point);
+  
+  // TODO : memberId redux 조회
+  // const data1 = authGet(`/api/v1/profile/${memberId}`);
+  // const guestBookData = authGet(`/api/v1/profile/guestbook/${memberId}`);
 
   return (
     <ProfileWrap>
@@ -189,7 +196,7 @@ const Profile = () => {
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
-        <GuestBook />
+        <GuestBook /> {/* guestBookData={guestBookData} */}
         {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
       </Wrap>
       <Footer />

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PresetTextArea from './PresetTextArea';
 import Preset from './Preset.jsx';
+import { authGet, authPost } from '../../../../Util/apis/api';
 
 const PresetModal = ({ setModalOpen }) => {
   const closeBtn = () => {
@@ -27,6 +28,17 @@ const PresetModal = ({ setModalOpen }) => {
       sequence: 1,
     }
   ])
+  
+  // TODO : presetList 조회
+  const [presetList2, setPresetList2] = useState([]);
+  useEffect(() => {
+    setPresetList2(authGet('/api/v1/preset'))
+  }, [])
+
+  const handleSave = () => {
+    authPost(`api/v1/preset/sequence`);
+  }
+
   return (
     <PresetModalWrap>
       <Modal>
@@ -35,7 +47,7 @@ const PresetModal = ({ setModalOpen }) => {
             <CloseImg />
           </CloseModalBtn>
           <ModalName>프리셋 설정</ModalName>
-          <SaveBtn>
+          <SaveBtn onClick={handleSave}>
             <SaveImg />
           </SaveBtn>
         </ModalHeader>
