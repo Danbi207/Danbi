@@ -52,6 +52,7 @@ public class ProfileInfoService {
                 .profileUrl(profileInfo.getProfileUrl())
                 .accusePoint(profileInfo.getAccusePoint())
                 .dewPoint(profileInfo.getDewPoint())
+                .accumulatePoint(profileInfo.getAccumulatePoint())
                 .item(ProfileItemResponseDto.builder()
                         .ranking(profileInfo.getRanking().getTier())
                         .name(profileInfo.getColor().getName())
