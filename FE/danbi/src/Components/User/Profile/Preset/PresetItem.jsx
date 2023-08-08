@@ -2,23 +2,29 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
 import { authDelete } from '../../../../Util/apis/api';
+import { async } from '@firebase/util';
 
 const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
     const [DeleteActive, setDeleteActive] = useState(false);
 
-    const callConfirm = () => {
+    const callConfirm = async () => {
         if(window.confirm('삭제함?')){
-            alert('삭제됨');
+            try{
+                const data = await authDelete(`/api/v1/preset/${value.PresetId}`);
+                console.log(data);
+                alert('삭제됨');
+            } catch(err) {
+                console.log(err);
+            }
         } else {
             alert('취소함');
         }
     }
 
     const handleDelete = () => {
-        setDeleteActive(!DeleteActive); 
         callConfirm();
-        authDelete(`/api/v1/preset/${value.PresetId}`);
+        setDeleteActive(!DeleteActive); 
     }
 
     return(

@@ -30,13 +30,18 @@ const Comments = [
 
 const GuestBook = ({guestBookId, comments}) => {
   const [textArea, setTextArea] = useState("");
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const textJson = {
       "content": textArea,
-      "guestBookId": guestBookId,
+      "guestBookId": guestBookId
     };
-    authPost('/api/v1/guestbook', textJson);
+    try {
+      const data = authPost('/api/v1/guestbook', textJson);
+      console.log(data);
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   return (

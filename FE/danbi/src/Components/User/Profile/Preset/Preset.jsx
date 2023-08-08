@@ -5,6 +5,9 @@ import PresetItem from './PresetItem.jsx';
 
 const Preset = ({preset_list, setPresetList}) => {
   console.log(preset_list);
+  const sortedPresetList = preset_list.sort((a, b) => {
+    return a.sequence - b.sequence
+  })
   const [OpenTitle, setOpenTitle] = useState(-1);
   const showDetail = (title) => {
     setOpenTitle(title);
