@@ -19,11 +19,11 @@ const Profile = () => {
   const [data, setData] = useState(null);
   // TODO : userId params 조회
   const { targetId } = useParams();
-  const userId = useSelector((state) => state.user.userId);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setData(await authGet(`/api/v1/profile/${targetId}`));
+        const res = await authGet(`/api/v1/profile/${targetId}`);
+        setData(res);
       } catch (err) {
         console.log(err);
       }
