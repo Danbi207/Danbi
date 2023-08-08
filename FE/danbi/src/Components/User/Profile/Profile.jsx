@@ -10,6 +10,7 @@ import Jandi from './Jandi/Jandi.jsx';
 import GuestBook from './GuestBook/GuestBook.jsx';
 import PresetModal from './Preset/PresetModal.jsx';
 import PickModal from './Utils/PickModal.jsx';
+import { authGet } from '../../../Util/apis/api.js';
 
 const data = {
   profile_id: 1,
@@ -168,6 +169,9 @@ const data = {
     ],
   },
 };
+
+// TODO : memberId redux 조회
+// const data1 = authGet(`/api/v1/profile/${memberId}`);
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
