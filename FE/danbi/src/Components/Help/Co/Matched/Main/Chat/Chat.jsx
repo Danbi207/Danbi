@@ -30,6 +30,7 @@ const Chat = (props) => {
   const sendMessage = ()=>{
     const message = {
       helpId:props.roomId,
+      userId : props.myProfile.userId,
       name:props.myProfile.name,
       content:chatValue,
       date: getDay(),
@@ -108,15 +109,19 @@ const Chat = (props) => {
 
   useEffect(()=>{
     //DO : 지난 채팅내역을 불러옴
-    //FIXME : 채팅내역에서 nickname을 비교해 내가 친 채팅인지 상대방이 친 채팅인지 구분하여 넣기
     axios({
       method:"get",
       url:`/room/chat/${props.roomId}`,
     }).then(({data})=>{
       for(let i = 0; i < data.length; i++){
         const messageEl = document.createElement("div");
-        messageEl.className="RightChatWrap";
-        messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
+        if(data[i].userId===props.myProfile.userId){
+          messageEl.className="RightChatWrap";
+          messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
+        }else{
+          messageEl.className="LeftChatWrap";
+          messageEl.innerHTML = `<span>${data[i].name} : ${data[i].content}</span><span>${data[i].date}</span>`;
+        }
         chatRef.current.appendChild(messageEl);
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
       }
@@ -184,20 +189,24 @@ const Chat = (props) => {
           <VideoTitle>나</VideoTitle>
           <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
-            <ControlBtn onClick={()=>{
+            <ControlBtn on={onVideo} onClick={()=>{
               stream.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
               setOnVideo(!onVideo);
-            }} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
+            }} >
               {
-                onVideo ? "화면 끄기" : "화면 켜기"
+                onVideo ? <>
+                <img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />화면 끄기</> : 
+                <><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_off_FILL1_wght400_GRAD0_opsz48 1.svg`} />화면 켜기</>
               }
             </ControlBtn>
-            <ControlBtn onClick={()=>{
+            <ControlBtn on={onAudio} onClick={()=>{
               stream.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
               setOnAudio(!onAudio);
-            }}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
+            }}>
               {
-                onAudio ? "소리 끄기" : "소리 켜기"
+                onAudio ? <>
+                  <img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />소리 끄기</> : 
+                  <><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_off_FILL1_wght400_GRAD0_opsz48 1.svg`} />소리 켜기</>
               }
             </ControlBtn>
           </ControlBtnWrap>
@@ -232,10 +241,13 @@ const ControlBtn = styled.button`
   padding: 0 0.5rem;
   height: 1.5rem;
   border-radius: 1rem;
-  background-color: #FFEA7E;
+  background-color: ${props=>props.on ? "#39D353":"#E85151"};
   color: #000;
   &>img{
     vertical-align: middle;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
   }
 `
 const ControlBtnWrap = styled.div`
