@@ -82,9 +82,9 @@ public class HelpPostService {
 
     // querydsl 사용
     @Transactional(readOnly = true)
-    public List<HelpPostQueryDto> searchAllByQuery(String longitude, String latitude, String gender) {
+    public List<HelpPostQueryDto> searchAllByQuery(String gender) {
         validateGenderIsRight(gender);
-        return helpPostRepository.search(longitude, latitude, gender);
+        return helpPostRepository.search(gender);
     }
 
     @Transactional(readOnly = true)

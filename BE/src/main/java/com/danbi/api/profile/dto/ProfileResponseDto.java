@@ -14,6 +14,7 @@ import java.util.List;
 public class ProfileResponseDto {
 
     private Long profileId;
+    private Long guestBookId;
     private String name;
     private String profileUrl;
     private int accusePoint;

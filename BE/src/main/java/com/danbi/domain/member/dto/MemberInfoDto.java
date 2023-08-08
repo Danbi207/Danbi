@@ -1,5 +1,6 @@
 package com.danbi.domain.member.dto;
 
+import com.danbi.domain.member.constant.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,6 @@ public class MemberInfoDto {
     private Long profileId;
     private String name;
     private String profileUrl;
-    private int accusePoint;
-    private Long accumulateDewPoint;
-    private Long dewPoint;
+    private Gender gender;
+
 }

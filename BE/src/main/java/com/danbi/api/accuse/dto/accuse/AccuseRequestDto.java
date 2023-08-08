@@ -17,7 +17,6 @@ public class AccuseRequestDto {
 
     private String content;
 
-    @JsonProperty("accuse_type")
     private AccuseType accuseType;
 
 }
