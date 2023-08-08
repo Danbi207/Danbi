@@ -14,7 +14,8 @@ const UserType = ({ usertype, setUserType}) => {
       await authPost('/api/v1/member/role', {"role" : role});
       await reissueAccessToken();
       if (role === 'ROLE_HELPER'){
-        localStorage.setItem('helper')
+        // FIXME : role을 수정해야 하는지 확인
+        localStorage.setItem('role', 'helper')
         navigate('/help/helper')
         return;
       }
