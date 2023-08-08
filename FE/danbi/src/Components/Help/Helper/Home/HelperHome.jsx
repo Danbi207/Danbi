@@ -6,8 +6,9 @@ import HelpList from "./Components/HelpList/HelpList.jsx"
 import HelpMap from "./Components/HelpMap/HelpMap.jsx"
 import Tap from "./Components/Tap/Tap.jsx"
 import { authGet, authPost} from "../../../../Util/apis/api.js"
-import {setUserInfo} from "../../../../store/Slice/userSlice.js"
+import {setUserId,setProfileId,setName,setProfileUrl,setGender} from "../../../../store/Slice/userSlice.js"
 import {useSelector, useDispatch } from "react-redux";
+
 const HelperHome = () => {
   const [mode,setMode] = useState("unntact");
   const [position,setPosition] = useState(null);
@@ -18,7 +19,11 @@ const HelperHome = () => {
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
-      dispatch(setUserInfo(data));
+      dispatch(setUserId(data.userId));
+      dispatch(setProfileId(data.profileId));
+      dispatch(setName(data.name));
+      dispatch(setProfileUrl(data.profileUrl));
+      dispatch(setGender(data.gender));
     }catch(err){
       console.log(err.response);
     }

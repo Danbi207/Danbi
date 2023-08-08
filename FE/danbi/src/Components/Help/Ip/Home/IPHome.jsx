@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Header from "../../../Common/Header/Header";
 import Footer from "../../../Common/Footer/Footer";
 import Calender from "./Components/Calender";
-import {setUserInfo} from "../../../../store/Slice/userSlice";
+import {setUserId,setProfileId,setName,setProfileUrl,setGender}  from "../../../../store/Slice/userSlice";
 import { useDispatch } from "react-redux";
 import {authGet} from "../../../../Util/apis/api";
 const IPHome = (props) => {
@@ -15,9 +15,11 @@ const IPHome = (props) => {
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
-      if(data){
-        dispatch(setUserInfo(data));
-      }
+      dispatch(setUserId(data.userId));
+      dispatch(setProfileId(data.profileId));
+      dispatch(setName(data.name));
+      dispatch(setProfileUrl(data.profileUrl));
+      dispatch(setGender(data.gender));
     }catch(err){
       console.log(err.response);
     }

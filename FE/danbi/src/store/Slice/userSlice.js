@@ -10,13 +10,25 @@ export const userSlice = createSlice({
       "gender":""
     },
     reducers: {
-      setUserInfo : (state,action)=>{
-        console.log(action);
-        state = action.payload;
+      setUserId : (state,action)=>{
+        state.userId = action.payload;
       },
+      setProfileId : (state,action)=>{
+        state.profileId = action.payload;
+      },
+      setName : (state,action)=>{
+        state.name = action.payload;
+      },
+      setProfileUrl : (state,action)=>{
+        state.profileUrl = action.payload;
+      },
+      setGender : (state,action)=>{
+        state.gender = action.payload;
+      }
+      
     }
 });
 
-export const {setUserInfo} = userSlice.actions;
+export const {setUserId,setProfileId,setName,setProfileUrl,setGender} = userSlice.actions;
 
 export default userSlice.reducer;
