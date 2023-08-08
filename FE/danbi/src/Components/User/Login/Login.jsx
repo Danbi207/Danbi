@@ -6,6 +6,19 @@ import { requestPermission } from '../../../Util/hooks/requestPermission';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const getUserInfo = useCallback(async()=>{
+    try{
+      const data = await authGet("/api/v1/member");
+      if(data){
+        dispatch(setUserInfo(data));
+        console.log(data);
+      }
+    }catch(err){
+      console.log(err.response);
+    }
+  },[dispatch]);
 
   // FCM 토큰 함수 호출
   const  requestFcmToken = useCallback(async ()=> {
@@ -25,12 +38,17 @@ const Login = () => {
       // FCM 토큰 함수 호출
       requestFcmToken()
 
+      //유저정보 저장
+      getUserInfo();
+
       if(role === "ROLE_IP"){//역할이 IP인 경우
-        // navigate("/help/ip", { replace: true });
+        localStorage.setItem("role","ip");
+        navigate("/help/ip", { replace: true });
       }
 
       if(role === "ROLE_HELPER"){//역할이 Helper인경우
-        // navigate("/help/helper", { replace: true });
+        localStorage.setItem("role","helper");
+        navigate("/help/helper", { replace: true });
       }
     }
   },[navigate,requestFcmToken]);

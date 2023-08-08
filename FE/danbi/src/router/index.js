@@ -23,23 +23,23 @@ const routes = [
     Component : UserSubmit,
   },
   {
-    path: "/Help/ip",
+    path: "/help/ip",
     Component : IPHome
   },
   {
-    path : "/Help/ip/request",
+    path : "/help/ip/request",
     Component : IpRequest
   },
   {
-    path : "/Help/Helper",
+    path : "/help/helper",
     Component : HelperHome
   },
   {
-    path : "/Help/:role/detail/:HelpPostId",
+    path : "/help/:role/detail/:helpPostId",
     Component : Detail
   },
   {
-    path : "/Help/:role/matched/:HelpPostId",
+    path : "/help/:role/matched/:helpPostId",
     Component : MatchedHelp
   },
   {
