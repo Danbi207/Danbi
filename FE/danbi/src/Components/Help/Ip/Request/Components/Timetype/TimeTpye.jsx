@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Checkbox from './Checkbox';
 import { useSelector } from 'react-redux';
-import Calendar from '../../Home/Components/Calender'
+import Calendar from '../../../Home/Components/Calender'
 import TimeSelect from './TimeSelect';
 
 const TimeTpye = ({location}) => {

@@ -2,7 +2,7 @@ import React, {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { setOpenIndex } from '../../../../../store/Slice/ipSlice'
+import { setOpenIndex } from '../../../../../../store/Slice/ipSlice'
 
 const Preset = () => {
   const dispatch = useDispatch();

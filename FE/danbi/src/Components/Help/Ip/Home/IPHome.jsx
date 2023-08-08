@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 
 import Header from "../../../Common/Header/Header";
-import Footer from "../../../Common/Footer/Footer";
-import Calender from "./Components/Calender";
+import Footer from '../../../Common/Footer/Footer'
+import Calender from '../Home/Components/Calender';
 
 const IPHome = (props) => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const IPHome = (props) => {
       <Header/>
         <Wrap>
           <Calender/>
-          <RequestBTN onClick={()=>{navigate('/iprequest')}}>도움 요청하기</RequestBTN>
+          <RequestBTN onClick={()=>{navigate('/help/ip/request')}}>도움 요청하기</RequestBTN>
         </Wrap>
       <Footer/>
     </IpHomeWrap>

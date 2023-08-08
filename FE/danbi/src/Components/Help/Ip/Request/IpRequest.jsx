@@ -5,8 +5,8 @@ import { useLocation } from 'react-router';
 
 import Header from '../../../Common/Header/Header';
 import Footer from '../../../Common/Footer/Footer';
-import FaceType from './Components/FaceType';
-import TimeTpye from './Components/TimeTpye';
+import FaceType from './Components/FaceType/FaceType';
+import TimeTpye from './Components/Timetype/TimeTpye';
 import Tab from './Components/Tab/Tab';
 
 const IpRequest = () => {

@@ -2,8 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
-import { useCallback } from 'react';
-import { authPost } from '../../../../../Util/apis/api';
 
 
 const Calendar = () => {
@@ -11,8 +9,6 @@ const Calendar = () => {
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
   const [help,setHelpData] = useState({});  // help 정보 저장
   const [weekCnt, setWeekCnt] = useState(6);
-
-  console.log(month)
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -46,21 +42,6 @@ const Calendar = () => {
     }
     return help[year][month][day];
   }
-
-  const CreateDate =  useCallback(async(year, month, day) => {
-    return year+"-"+month+"-"+day
-  })
-
-  const GetMonth = useCallback(async (year, month, day) => {
-    try {
-      await authPost('api/v1/help/registers', {"yearAndMonth" : "2023-01-01"});
-      
-    }
-    catch (error) {
-      console.error("에러 발생", error);
-    }
-  })
-
 
   useEffect(()=>{
     //DO : IP 도움목록을 불러와 데이터 저장
