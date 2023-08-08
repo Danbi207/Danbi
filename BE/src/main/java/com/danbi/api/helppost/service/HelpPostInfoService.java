@@ -10,6 +10,7 @@ import com.danbi.api.helppost.dto.helpersearch.face.HelperFaceHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.query.HelperQueryHelpPostDto;
 import com.danbi.api.helppost.dto.HelpPostRequestDto;
 import com.danbi.api.helppost.dto.HelpPostResponseDto;
+import com.danbi.api.helppost.dto.helpertime.HelperTimeResponseDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthDetailDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.domain.help.constant.State;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -227,5 +229,11 @@ public class HelpPostInfoService {
 
         return HelpPostByMonthResponseDto.builder()
                 .helpList(helpPostsByMonth).build();
+    }
+
+    public HelperTimeResponseDto checkHelperMatchedTime(Long memberId) {
+        LocalDateTime time = LocalDateTime.now();
+        return HelperTimeResponseDto.builder()
+                .helperMatched(helpPostService.checkHelperTime(time, memberId)).build();
     }
 }
