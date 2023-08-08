@@ -19,18 +19,16 @@ const Profile = () => {
   const [data, setData] = useState({});
   // TODO : userId params 조회
   const { targetId } = useParams();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await authGet(`/api/v1/profile/${targetId}`);
-        console.log(res);
-        setData(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+    try {
+      const res = await authGet(`/api/v1/profile/${targetId}`);
+      console.log(res);
+      setData(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  fetchData();
   console.log(localStorage.getItem('role'));
 
   return (
