@@ -8,16 +8,15 @@ import Chat from './Main/Chat/Chat.jsx';
 import RealtimeMap from './Main/RealtimeMap/RealtimeMap.jsx';
 import { useParams } from 'react-router-dom';
 import {authGet} from "../../../../Util/apis/api.js";
-
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+
 const MatchedHelp = () => {
   const [mode,setMode] = useState("Infomation");
   const [help, setHelp] = useState();
   const { helpPostId } = useParams();
   const [curposition,setCurPosition] = useState(null);
   const [watchID,setWatchID] = useState(null);
-  const myProfile = useSelector(state=>state.user);
+  const [myProfile,setMyProfile] = useState(null);
   const stopCurPosition = ()=>{
     if(watchID !== null){
       navigator.geolocation.clearWatch(watchID);
@@ -44,9 +43,22 @@ const MatchedHelp = () => {
     }
   },[]);
   
+  const getMyProfile = useCallback(async()=>{
+    try{
+      const data = await authGet("/api/v1/help/member");
+      if(data){
+        setMyProfile(data);
+      }
+    }catch(err){
+      console.log(err.response);
+    }
+  },[]);
+
+  useEffect(()=>{
+    getMyProfile();
+  },[]);
   
   useEffect(()=>{
-    console.log(myProfile);
     getHelp()
   },[getHelp]);
 
@@ -61,7 +73,7 @@ const MatchedHelp = () => {
       }else{
         setMode("Chat");
       }
-      });
+    });
   },[helpPostId]);
 
   return (
