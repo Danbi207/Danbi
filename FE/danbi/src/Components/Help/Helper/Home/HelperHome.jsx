@@ -19,11 +19,14 @@ const HelperHome = () => {
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
-      dispatch(setUserId(data.userId));
-      dispatch(setProfileId(data.profileId));
-      dispatch(setName(data.name));
-      dispatch(setProfileUrl(data.profileUrl));
-      dispatch(setGender(data.gender));
+      if(data){
+        console.log(data);
+        dispatch(setUserId(data.userId));
+        dispatch(setProfileId(data.profileId));
+        dispatch(setName(data.name));
+        dispatch(setProfileUrl(data.profileUrl));
+        dispatch(setGender(data.gender));
+      }
     }catch(err){
       console.log(err.response);
     }
