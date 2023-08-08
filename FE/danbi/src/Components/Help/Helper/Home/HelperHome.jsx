@@ -8,32 +8,28 @@ import Tap from "./Components/Tap/Tap.jsx"
 import { authGet, authPost} from "../../../../Util/apis/api.js"
 import {setUserInfo} from "../../../../store/Slice/userSlice.js"
 import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
 const HelperHome = () => {
   const [mode,setMode] = useState("unntact");
   const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
-  const [gender, setGender] = useState("");
+  const gender = useSelector(state=>state.user.gender);
   const dispatch = useDispatch();
   
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
       if(data){
-        console.log(data);
         dispatch(setUserInfo(data));
-        setGender(data.gender);
-        setUntact(data.gender);
       }
     }catch(err){
       console.log(err.response);
     }
-  },[dispatch,setGender]);
+  },[dispatch]);
 
-
-
-  const setUntact = useCallback(async (gen) => {
+  const setUntact = useCallback(async () => {
     try{
-      const {data} = await authPost("/api/v1/help/untact",{gender:gen});
+      const {data} = await authPost("/api/v1/help/untact",{gender});
       if(data){
         setHelpList(data);
         setMode("untact");
@@ -41,7 +37,7 @@ const HelperHome = () => {
     }catch(err){
       console.log(err.response);
     }
-  },[setHelpList,setMode]);
+  },[setHelpList,setMode,gender]);
 
   const setCurPosition = useCallback(()=>{
     //DO : gps 현재 위치 얻기
@@ -67,7 +63,7 @@ const HelperHome = () => {
     if(setCurPosition()){
       try{
         const {data} = await authPost(`/api/v1/help/contact`,{
-          longitude:position.coord.longitude+"",
+          longitude:position.coords.longitude+"",
           latitude:position.coords.latitude+"",
           gender
         });
@@ -79,14 +75,14 @@ const HelperHome = () => {
         console.log(err.response);
       }
     }
-  },[setHelpList,setMode]);
+  },[setHelpList,setMode,gender,position.coords,setCurPosition]);
 
 
   const setMap = useCallback(async ()=>{
     if(setCurPosition()){
       try{
         const {data} = await authPost(`/api/v1/help/contact`,{
-          longitude:position.coord.longitude+"",
+          longitude:position.coords.longitude+"",
           latitude:position.coords.latitude+"",
           gender
         });
@@ -98,11 +94,17 @@ const HelperHome = () => {
         console.log(err.response);
       }
     }
-  },[setCurPosition,setMode]);
+  },[setCurPosition,setMode,gender,position.coords]);
 
   useEffect(()=>{
-    getUserInfo();
-  },[getUserInfo]);
+    if(!gender){
+      getUserInfo();
+    }
+  },[getUserInfo,gender]);
+
+  useEffect(()=>{
+    setUntact();
+  },[gender,setUntact]);
 
   return (
     <HelperHomeWrap>
