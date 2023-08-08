@@ -7,17 +7,15 @@ import MyFriend from './Items/MyFriend';
 import { authGet } from '../../../Util/apis/api';
 
 const Friend = () => {
-  const [waittingFriends, setWaittingFriends] = useState([]); // 초기값을 빈 배열로 설정
+  const [waittingFriends, setWaittingFriends] = useState([]);
   const [myFriends, setMyFriends] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const waittingResponse = await authGet('/api/v1/friends/responses');
         const myFriendResponse = await authGet('/api/v1/friends');
-        setWaittingFriends(waittingResponse.result); // 상태 업데이트
-        setMyFriends(myFriendResponse.result); // 상태 업데이트
-        console.log(myFriends);
-        console.log(waittingFriends);
+        setWaittingFriends(waittingResponse.result);
+        setMyFriends(myFriendResponse.result);
       } catch (err) {
         console.log(err);
       }

@@ -30,7 +30,7 @@ const Profile = () => {
       }
     };
     fetchData();
-  }, [targetId]);
+  }, []);
   console.log(localStorage.getItem('role'));
 
   return (
