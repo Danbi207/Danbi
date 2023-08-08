@@ -71,7 +71,7 @@ const Chat = (props) => {
         }
       };
       socketRef.current.emit("join_room", {
-        room: props.roomId,
+        room: props.roomId
       });
     } catch (e) {
       console.error(e);
@@ -189,7 +189,7 @@ const Chat = (props) => {
           <VideoTitle>나</VideoTitle>
           <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
-            <ControlBtn on={onVideo} onClick={()=>{
+            <ControlBtn $on={onVideo} onClick={()=>{
               stream.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
               setOnVideo(!onVideo);
             }} >
@@ -199,7 +199,7 @@ const Chat = (props) => {
                 <><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_off_FILL1_wght400_GRAD0_opsz48 1.svg`} />화면 켜기</>
               }
             </ControlBtn>
-            <ControlBtn on={onAudio} onClick={()=>{
+            <ControlBtn $on={onAudio} onClick={()=>{
               stream.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
               setOnAudio(!onAudio);
             }}>
@@ -241,7 +241,7 @@ const ControlBtn = styled.button`
   padding: 0 0.5rem;
   height: 1.5rem;
   border-radius: 1rem;
-  background-color: ${props=>props.on ? "#39D353":"#E85151"};
+  background-color: ${props=>props.$on ? "#39D353":"#E85151"};
   color: #000;
   &>img{
     vertical-align: middle;
