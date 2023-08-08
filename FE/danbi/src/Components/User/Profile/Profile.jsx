@@ -29,6 +29,7 @@ const Profile = () => {
       console.log(err);
     }
   };
+  fetchData();
 
   console.log(localStorage.getItem('role'));
 
