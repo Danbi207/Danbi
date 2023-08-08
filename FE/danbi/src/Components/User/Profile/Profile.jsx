@@ -44,7 +44,7 @@ const Profile = () => {
         <JandiWrap>
           <Jandi
             point={data.dewPoint}
-            help_log={data.help_log}
+            help_log={data.helpLog}
             setPickModalOpen={setPickModalOpen}
             item={data.item}
           />

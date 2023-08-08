@@ -14,8 +14,10 @@ const Friend = () => {
       try {
         const waittingResponse = await authGet('/api/v1/friends/responses');
         const myFriendResponse = await authGet('/api/v1/friends');
-        setWaittingFriends(waittingResponse); // 상태 업데이트
-        setMyFriends(myFriendResponse); // 상태 업데이트
+        setWaittingFriends(waittingResponse.result); // 상태 업데이트
+        setMyFriends(myFriendResponse.result); // 상태 업데이트
+        console.log(myFriends);
+        console.log(waittingFriends);
       } catch (err) {
         console.log(err);
       }
