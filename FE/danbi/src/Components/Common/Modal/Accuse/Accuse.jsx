@@ -4,12 +4,16 @@ import {setMode} from '../../../../store/Slice/ModalSlice';
 import { useDispatch } from 'react-redux';
 import { useRef } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import {authFilePost} from "../../../../Util/apis/api";
 const Accuse = () => {
   const dispatch = useDispatch();
+  const targetMemberId = useSelector(state=>state.modal.targetMemberId);
   const hiddenFileInputRef = useRef();
   const [imageSrc, setImageSrc] = useState(null);
   const [content,setContent] = useState("");
   const [file,setFile] = useState(null);
+  const [accuseType,setAccuseType] = useState("SEXUAL_HARASSMENT");
   const encodeFileToBase64 = (fileBlob) => {
     //DO : 이미지를 Base64로 인코딩 -> 이미지 미리보기기능
     if(!fileBlob) return;
@@ -24,16 +28,46 @@ const Accuse = () => {
     });
   };
 
-  const submitAccuse = ()=>{
+  const submitAccuse = async()=>{
+    if(!file) {
+      alert("사진을 업로드 해주세요");
+      return;
+    }
+
     //DO : 신고
-    //FIXME : axios연결
-    console.log(file,content);
+    const data = {file,accuseRequestDto:{
+      targetMemberId,
+      content,
+      accuseType
+    }}
+
+    data["file"] = file;
+
+    const formData = new FormData();
+    for (let key in data ) {
+      formData.append(key, data[key]);
+    }
+    try{
+      const res = await authFilePost("/api/v1/accuse",formData);
+      console.log(res);
+    }catch(err){
+      console.log(err.response);
+    }
   }
 
   return (
     <ModalWrap>
       <AccuseWrap>
-        <CloseBtn onClick={()=>dispatch(setMode(false))}>X</CloseBtn>
+        <div>
+          <TitleWrap>신고유형</TitleWrap>
+          <select onChange={e=>setAccuseType(e.target.value)}>
+            <option value="SEXUAL_HARASSMENT">성희롱</option>
+            <option value="ABUSE">욕설</option>
+            <option value="VIOLENCE">폭력</option>
+            <option value="ETC">기타</option>
+          </select>
+        </div>
+        <CloseBtn onClick={()=>dispatch(setMode(""))}>X</CloseBtn>
         <TitleWrap>신고내용</TitleWrap>
         <ContentWrap onChange={(e)=>setContent(e.target.value)}></ContentWrap>
         <TitleWrap>신고내용</TitleWrap>
@@ -51,6 +85,7 @@ const Accuse = () => {
     </ModalWrap>
   )
 }
+
 const AccuseBtn = styled.button`
   left: 0;
   bottom : 0;
@@ -76,7 +111,7 @@ const UploadBtn = styled.button`
 const ImageWrap = styled.div`
   margin-left: 10%;
   width: 80%;
-  height: 10rem;
+  height: 8rem;
   border: 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 0.5rem;
   background-color: ${props=>props.theme.colors.bgColor};
@@ -90,7 +125,7 @@ const ImageWrap = styled.div`
     width : 100%;
     height: 100%;
     text-align: center;
-    line-height: 10rem;
+    line-height: 8rem;
   }
 `
 
@@ -108,7 +143,7 @@ const ContentWrap = styled.textarea`
 
 const TitleWrap = styled.div`
   font-size: 1.5rem;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 `
 
 const CloseBtn = styled.button`
@@ -121,6 +156,18 @@ const AccuseWrap = styled.div`
   width: 100%;
   height: 100%;
   padding: 1rem 0;
+
+  &>:first-child{
+    display: flex;
+    align-items: center;
+  }
+
+  & select{
+    margin-left: 1rem;
+    height: 1.5rem;
+    font-size: 1rem;
+  }
+
 `
 const ModalWrap = styled.div`
   position: fixed;

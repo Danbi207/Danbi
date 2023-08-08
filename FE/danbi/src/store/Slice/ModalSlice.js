@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const modalSlice = createSlice({
   name: "modal",
   initialState: {
-    mode : false,
+    mode : "accuse",
+    accuse:{
+      targetMemberId:null,
+    }
   },
   reducers: {
     setMode : (state,action)=>{
