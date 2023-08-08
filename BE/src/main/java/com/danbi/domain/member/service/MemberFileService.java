@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -23,6 +25,10 @@ public class MemberFileService {
                 .build();
 
         return memberFileRepository.save(memberFile);
+    }
+
+    public List<MemberFile> findIPCertificationFiles(Member member) {
+        return memberFileRepository.findIPCertFiles(member);
     }
 
 }
