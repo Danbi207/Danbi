@@ -34,7 +34,7 @@ const IPHome = (props) => {
       <Header/>
         <Wrap>
           <Calender/>
-          <RequestBTN onClick={()=>{navigate('/iprequest')}}>도움 요청하기</RequestBTN>
+          <RequestBTN onClick={()=>{navigate('/help/ip/request')}}>도움 요청하기</RequestBTN>
         </Wrap>
       <Footer/>
     </IpHomeWrap>

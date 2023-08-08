@@ -5,8 +5,8 @@ import { useLocation } from 'react-router';
 
 import Header from '../../../Common/Header/Header';
 import Footer from '../../../Common/Footer/Footer';
-import FaceType from './Components/FaceType';
-import TimeTpye from './Components/TimeTpye';
+import FaceType from './Components/FaceType/FaceType';
+import TimeTpye from './Components/Timetype/TimeTpye';
 import Tab from './Components/Tab/Tab';
 
 const IpRequest = () => {
@@ -23,7 +23,7 @@ const IpRequest = () => {
       <Header></Header>
       <Tab></Tab>
       <Wrap>
-        { ip.tabmode === 'meet' ? <FaceType /> : <TimeTpye location={location} />}        
+        { ip.tabmode === 'meet' ? <FaceType location={location}/> : <TimeTpye/>}        
       </Wrap> 
       <Footer></Footer>
     </RequestWrap>

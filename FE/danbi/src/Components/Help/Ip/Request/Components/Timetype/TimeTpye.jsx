@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components';
 
 import Checkbox from './Checkbox';
-import { useSelector } from 'react-redux';
-import Calendar from '../../Home/Components/Calender'
+import { useSelector, useDispatch } from 'react-redux';
+import Calendar from '../../../Home/Components/Calender'
 import TimeSelect from './TimeSelect';
+import { setTabMode } from "../../../../../../store/Slice/ipSlice"
 
-const TimeTpye = ({location}) => {
+const TimeTpye = () => {
   const ip = useSelector(state => state.ip)
+  const dispatch = useDispatch();
 
   const ipData = {
 		"help_id" : 1,
@@ -47,7 +49,7 @@ const TimeTpye = ({location}) => {
           <TimeButton>60분</TimeButton>
         </ButtonWrap>
         <Checkbox></Checkbox>
-        {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
+        <NextBTN onClick={() => { dispatch(setTabMode('time')); } }>다음</NextBTN>
         </SelectWrap>
     </Wrap>
   )
@@ -107,6 +109,23 @@ const RequestBTN = styled.button`
     width: 20rem;
     height: 5rem;
     left : calc(( 100% - 20rem )/2);
+  }
+`
+
+const NextBTN  = styled.button`
+  width: 30rem;
+  height: 3rem;
+  margin: 1rem auto;
+  border-radius: 0.75rem;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=> props.theme.colors.buttontextColor};
+  font-size : 2rem;
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    height: 3rem;
+    left : calc(( 100% - 20rem )/2);
+    bottom: 3.2rem;
+    position: absolute;
   }
 `
 
