@@ -10,7 +10,7 @@ import {setUserId,setProfileId,setName,setProfileUrl,setGender} from "../../../.
 import {useSelector, useDispatch } from "react-redux";
 
 const HelperHome = () => {
-  const [mode,setMode] = useState("unntact");
+  const [mode,setMode] = useState("untact");
   const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
   const gender = useSelector(state=>state.user.gender);
@@ -19,9 +19,7 @@ const HelperHome = () => {
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
-      console.log(data);
       if(data){
-        console.log(data);
         dispatch(setUserId(data.userId));
         dispatch(setProfileId(data.profileId));
         dispatch(setName(data.name));
@@ -35,7 +33,7 @@ const HelperHome = () => {
 
   const setUntact = useCallback(async () => {
     try{
-      const {data} = await authPost("/api/v1/help/untact",{gender});
+      const data = await authPost("/api/v1/help/untact",{gender});
       if(data){
         setHelpList(data);
         setMode("untact");
@@ -68,7 +66,7 @@ const HelperHome = () => {
   const setContact = useCallback(async() => {
     if(setCurPosition()){
       try{
-        const {data} = await authPost(`/api/v1/help/contact`,{
+        const data = await authPost(`/api/v1/help/contact`,{
           longitude:position.coords.longitude+"",
           latitude:position.coords.latitude+"",
           gender
@@ -87,7 +85,7 @@ const HelperHome = () => {
   const setMap = useCallback(async ()=>{
     if(setCurPosition()){
       try{
-        const {data} = await authPost(`/api/v1/help/contact`,{
+        const data = await authPost(`/api/v1/help/contact`,{
           longitude:position.coords.longitude+"",
           latitude:position.coords.latitude+"",
           gender
