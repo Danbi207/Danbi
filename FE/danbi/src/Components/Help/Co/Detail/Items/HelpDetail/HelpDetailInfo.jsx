@@ -25,11 +25,12 @@ const HelpDetailInfo = ({ data }) => {
         <CautionBody>{data.caution}</CautionBody>
       </CautionInfo>
       {
-        data.faceFlag ? null :
+        data.faceFlag ?
         <MapInfo>
           <MapHeader>위치 정보</MapHeader>
           <DetailMap position={data.position} />
         </MapInfo>
+        :null
       }
     </DetailWrap>
   );
