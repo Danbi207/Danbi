@@ -1,11 +1,14 @@
 package com.danbi.api.admin.service;
 
 import com.danbi.api.admin.dto.IPCertFileResponseDto;
+import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.entity.MemberFile;
 import com.danbi.domain.member.repository.MemberRepository;
 import com.danbi.domain.member.service.MemberFileService;
+import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.error.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ public class AdminIPService {
 
     private final MemberFileService memberFileService;
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     public List<IPCertFileResponseDto> findIPCertFiles(Long targetIpId) {
         Member member = memberRepository.findById(targetIpId)
@@ -38,6 +42,22 @@ public class AdminIPService {
                 .collect(Collectors.toList());
         return iPCertFileResponseDtos;
 
+    }
+
+    public void permitIp(Long targetIpId) {
+        Member member = memberRepository.findById(targetIpId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+
+        checkIPRole(member);
+
+        memberService.updateRole(member, Role.ROLE_IP);
+    }
+
+    private void checkIPRole(Member ipMember) {
+        Role role = ipMember.getRole();
+        if(!role.equals(Role.ROLE_UNCERTIFICATED_IP)) {
+            throw new BusinessException(ErrorCode.INVALID_CERTIFICATE_IP);
+        }
     }
 
 }
