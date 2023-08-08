@@ -33,9 +33,11 @@ public class HelpPostRequestDto {
     @Length(max = 500, message = "요청글은 최대 500글자 입니다.")
     private String content;
 
+    @JsonProperty("start_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
 
+    @JsonProperty("end_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
 

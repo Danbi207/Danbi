@@ -95,8 +95,8 @@ public class HelpPostController {
     @Operation(summary = "매칭된 도움, 도움 요청 게시글 쿼리 API", description = "매칭된 도움, 도움 요청 게시글 쿼리 API")
     @GetMapping("/matched/{helpPostId}") // 현재 등록된 모든 도움 대면 요청 게시글 조회(querydsl)
     public ApiResponse<DetailMatchedHelpPostDto> searchMatchedHelpPost(@MemberInfo MemberInfoDto memberInfoDto,
-                                                                       @PathVariable Long helppostId) {
-        DetailMatchedHelpPostDto matchedHelpPost = helpPostInfoService.searchMatchedHelpPost(helppostId);
+                                                                       @PathVariable Long helpPostId) {
+        DetailMatchedHelpPostDto matchedHelpPost = helpPostInfoService.searchMatchedHelpPost(helpPostId);
         return ApiResponse.ok(matchedHelpPost);
     }
 }
