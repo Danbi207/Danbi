@@ -95,8 +95,21 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateRole(Member member, Role role) {
-        member.updateRole(role);
+    public void updateRole(Member member, Role nextRole) {
+        Role beforeRole = member.getRole();
+        if(nextRole.equals(Role.ROLE_UNSUBMIT_IP) && !beforeRole.equals(Role.ROLE_UNDEFINED)) {
+            throw new BusinessException(ErrorCode.INVALID_UPDATE_ROLE);
+        }
+        if(nextRole.equals(Role.ROLE_UNCERTIFICATED_IP) && !beforeRole.equals(Role.ROLE_UNSUBMIT_IP)) {
+            throw new BusinessException(ErrorCode.INVALID_UPDATE_ROLE);
+        }
+        if(nextRole.equals(Role.ROLE_IP) && !beforeRole.equals(Role.ROLE_UNCERTIFICATED_IP)) {
+            throw new BusinessException(ErrorCode.INVALID_UPDATE_ROLE);
+        }
+        
+        // TODO: ROLE_ADMIN으로 업데이트는 일단 열어놨음
+
+        member.updateRole(nextRole);
     }
 
 }

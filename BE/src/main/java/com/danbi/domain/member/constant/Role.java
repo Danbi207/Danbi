@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public enum Role {
 
     ROLE_UNDEFINED,
+    ROLE_UNSUBMIT_IP,
     ROLE_UNCERTIFICATED_IP,
     ROLE_IP,
     ROLE_HELPER,

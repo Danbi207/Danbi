@@ -17,6 +17,7 @@ public enum ErrorCode {
     NOT_ACCESS_TOKEN_TYPE(HttpStatus.UNAUTHORIZED, "A-007", "해당 토큰은 ACCESS TOKEN이 아닙니다."),
     FORBIDDEN_ADMIN(HttpStatus.FORBIDDEN, "A-008", "관리자 Role이 아닙니다."),
     ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "A-009", "해당 access token은 만료됐습니다."),
+    INVALID_UPDATE_ROLE(HttpStatus.UNAUTHORIZED, "A-010", "해당 Role로 변경할 수 없습니다."),
 
     // 회원
     INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입 입니다.(memberType : KAKAO)"),
