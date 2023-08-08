@@ -5,11 +5,11 @@ import AccuseButton from './Utils/AccuseButton.jsx';
 import { useSelector } from 'react-redux';
 
 const UserInfo = () => {
-  const profileUrl = useSelector(state => state.user.profileUrl);
+  const profileUrl = useSelector((state) => state.user.profileUrl);
   console.log(profileUrl);
   return (
     <UserInfoWrap>
-      <ProfileImage src={example} alt="img" />
+      <ProfileImage $profileUrl={profileUrl} alt="img" />
       <UserDetail>
         <UserName>김민규</UserName>
         <Btns>
@@ -28,7 +28,9 @@ const UserInfoWrap = styled.div`
   padding: 0 1rem 0 2.5rem;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImage = styled.img.attrs((props) => ({
+  src: props.profileUrl,
+}))`
   height: 6rem;
   width: 7rem;
   border-radius: 50%;

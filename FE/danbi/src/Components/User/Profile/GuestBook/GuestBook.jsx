@@ -1,54 +1,32 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
 import GuestBookComment from './GuestBookComment';
 import { authPost } from '../../../../Util/apis/api';
+import { useSelector } from 'react-redux';
 
-const Comments = [
-  {
-    name: '김민규',
-    profile_url: './example-profile.jpg',
-    content: '저는 쓸개입니다.',
-    created_time: '2023-07-26',
-    updated_time: '2023-07-26',
-  },
-  {
-    name: '윤태웅',
-    profile_url: './example-profile.jpg',
-    content: '역시 김민규 좀 그렇네요...',
-    created_time: '2023-07-25',
-    updated_time: '2023-07-25',
-  },
-  {
-    name: '김민규',
-    profile_url: './example-profile.jpg',
-    content: '저는 쓸개입니다.',
-    created_time: '2023-07-26',
-    updated_time: '2023-07-26',
-  },
-];
-
-const GuestBook = ({guestBookId, comments}) => {
-  const [textArea, setTextArea] = useState("");
+const GuestBook = ({ guestBookId, comments }) => {
+  const [textArea, setTextArea] = useState('');
+  const profileUrl = useSelector((state) => state.user.profileUrl);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const textJson = {
-      "content": textArea,
-      "guestBookId": guestBookId
+      content: textArea,
+      guestBookId,
     };
     try {
       const data = authPost('/api/v1/guestbook', textJson);
       console.log(data);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <GuestBookWrap>
       <ChatWrap>
         <UserDetail>
-          <ProfileImage src={example} alt="img" />
+          <ProfileImage $profileUrl={profileUrl} alt="img" />
           <UserName>김민규</UserName>
         </UserDetail>
         <ChatSection>
@@ -60,7 +38,7 @@ const GuestBook = ({guestBookId, comments}) => {
           </ChatForm>
         </ChatSection>
       </ChatWrap>
-      {Comments.map((comment, index) => (
+      {comments.map((comment, index) => (
         <GuestBookComment key={index} comment={comment} writerName={comment.name} />
       ))}
     </GuestBookWrap>
@@ -83,7 +61,9 @@ const UserDetail = styled.div`
   width: 6rem;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImage = styled.img.attrs((props) => ({
+  src: props.$profileUrl,
+}))`
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -138,11 +118,9 @@ const SendBtn = styled.button`
   height: auto;
 `;
 
-const ChatImg = styled.img.attrs(
-props => ({
-  src: props.theme.images.send
-})
-)`
+const ChatImg = styled.img.attrs((props) => ({
+  src: props.theme.images.send,
+}))`
   width: 20px;
   height: 20px;
 `;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import Header from "../../Common/Header/Header.jsx";
-import Footer from "../../Common/Footer/Footer.jsx"
+import Header from '../../Common/Header/Header.jsx';
+import Footer from '../../Common/Footer/Footer.jsx';
 import UserInfo from './UserInfo.jsx';
 import PresetButton from './Preset/PresetButton.jsx';
 import Jandi from './Jandi/Jandi.jsx';
@@ -13,205 +13,43 @@ import PickModal from './Utils/PickModal.jsx';
 import { authGet } from '../../../Util/apis/api.js';
 import { useParams } from 'react-router-dom';
 
-const data = {
-  profile_id: 1,
-  name: '김민규',
-  profile_url: 'adf',
-  accuse_point: 123,
-  dew_point: 10,
-  help_log: [
-    {
-      help_id: 1,
-      created_time: '2020-01-01',
-    },
-    {
-      help_id: 2,
-      created_time: '2020-01-02',
-    },
-    {
-      help_id: 3,
-      created_time: '2020-01-03',
-    },
-    {
-      help_id: 4,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 5,
-      created_time: '2020-01-01',
-    },
-    {
-      help_id: 6,
-      created_time: '2020-01-02',
-    },
-    {
-      help_id: 7,
-      created_time: '2020-01-03',
-    },
-    {
-      help_id: 8,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 9,
-      created_time: '2020-01-01',
-    },
-    {
-      help_id: 10,
-      created_time: '2020-01-02',
-    },
-    {
-      help_id: 11,
-      created_time: '2020-01-03',
-    },
-    {
-      help_id: 12,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 13,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 14,
-      created_time: '2020-01-01',
-    },
-    {
-      help_id: 15,
-      created_time: '2020-01-02',
-    },
-    {
-      help_id: 16,
-      created_time: '2020-01-03',
-    },
-    {
-      help_id: 17,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 18,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 19,
-      created_time: '2020-01-01',
-    },
-    {
-      help_id: 20,
-      created_time: '2020-01-02',
-    },
-    {
-      help_id: 21,
-      created_time: '2020-01-03',
-    },
-    {
-      help_id: 22,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 23,
-      created_time: '2020-01-04',
-    },
-    {
-      help_id: 24,
-      created_time: '2020-01-01',
-    },
-    {
-      help_id: 25,
-      created_time: '2020-01-02',
-    },
-    {
-      help_id: 26,
-      created_time: '2020-01-03',
-    },
-    {
-      help_id: 27,
-      created_time: '2020-01-04',
-    },
-  ],
-  item: { '잔디 모양': 'HEART', '잔디 컬러': 'RED' },
-  guest_book: {
-    comments: [
-      {
-        name: '이름',
-        profile_url: 'ㅁㄴ일',
-        content: 'asdfa',
-        created_time: '2023-01-02',
-        updated_time: '2020-01-01',
-      },
-      {
-        name: '이름',
-        profile_url: 'ㅁㄴ일',
-        content: 'asdfa',
-        created_time: '2023-01-02',
-        updated_time: '2020-01-01',
-      },
-      {
-        name: '이름',
-        profile_url: 'ㅁㄴ일',
-        content: 'asdfa',
-        created_time: '2023-01-02',
-        updated_time: '2020-01-01',
-      },
-      {
-        name: '이름',
-        profile_url: 'ㅁㄴ일',
-        content: 'asdfa',
-        created_time: '2023-01-02',
-        updated_time: '2020-01-01',
-      },
-      {
-        name: '이름',
-        profile_url: 'ㅁㄴ일',
-        content: 'asdfa',
-        created_time: '2023-01-02',
-        updated_time: '2020-01-01',
-      },
-    ],
-  },
-};
-
-
-
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
-  const cur_dew = useSelector((state) => state.Jandi.dew_point);
-  
-
-  console.log('영재형 바보임');
+  const [data, setData] = useState(null);
   // TODO : userId params 조회
-  const {userId} = useParams();
-  console.log(userId);
+  const { targetId } = useParams();
+  const userId = useSelector((state) => state.user.userId);
   useEffect(() => {
     const fetchData = async () => {
-      try{
-        const data1 = await authGet(`/api/v1/profile/${userId}`);
-      } catch(err) {
+      try {
+        setData(await authGet(`/api/v1/profile/${targetId}`));
+      } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  })
-  console.log('김민규 극혐')
+  });
+  console.log(localStorage.getItem('role'));
 
   return (
     <ProfileWrap>
       <Header />
       <Wrap>
-        <UserInfo />
-        <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
-        {/* {localStorage.getItem('role') === 'ROLE_IP' ?  <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} /> : null} */}
+        <UserInfo url={data.profileUrl} />
+        {localStorage.getItem('role') === 'ip' ? (
+          <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
+        ) : null}
         <JandiWrap>
           <Jandi
-            point={cur_dew}
+            point={data.dewPoint}
             help_log={data.help_log}
             setPickModalOpen={setPickModalOpen}
             item={data.item}
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
-        <GuestBook /> {/* guestBookId={guestBookId} comments={data1.comments} */}
+        <GuestBook guestBookId={data.guestBookId} comments={data.comments} />
         {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
       </Wrap>
       <Footer />

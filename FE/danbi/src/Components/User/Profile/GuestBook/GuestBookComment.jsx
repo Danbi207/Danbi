@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import ex from '../example-profile.jpg';
+import { useSelector } from 'react-redux';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
-const GuestBookComment = ({ comment, userName }) => {
+const GuestBookComment = ({ comment, writerName }) => {
+  const userName = useSelector((state) => state.user.name);
 
   return (
     <CommentWrap>
@@ -15,6 +17,12 @@ const GuestBookComment = ({ comment, userName }) => {
         </ContentHeader>
         <Content>{comment.content}</Content>
       </ContentWrap>
+      {writerName === userName ? (
+        <Buttons>
+          <EditBtn>수정</EditBtn>
+          <DeleteBtn>삭제</DeleteBtn>
+        </Buttons>
+      ) : null}
     </CommentWrap>
   );
 };
@@ -52,4 +60,12 @@ const Content = styled.span`
   font-size: 14px;
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+`;
+
+const EditBtn = styled.button``;
+const DeleteBtn = styled.button``;
 export default GuestBookComment;
