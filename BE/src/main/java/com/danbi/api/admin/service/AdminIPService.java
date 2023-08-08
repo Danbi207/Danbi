@@ -48,16 +48,23 @@ public class AdminIPService {
         Member member = memberRepository.findById(targetIpId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
 
-        checkIPRole(member);
+        checkValidIPRole(member);
 
         memberService.updateRole(member, Role.ROLE_IP);
     }
 
-    private void checkIPRole(Member ipMember) {
+    private void checkValidIPRole(Member ipMember) {
         Role role = ipMember.getRole();
         if(!role.equals(Role.ROLE_UNCERTIFICATED_IP)) {
             throw new BusinessException(ErrorCode.INVALID_CERTIFICATE_IP);
         }
     }
 
+    public void rejectIP(Long targetIpId) {
+        Member member = memberRepository.findById(targetIpId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+
+        // 거절 하면 서류 제출 안한 상태로 돌림
+        member.updateRole(Role.ROLE_UNSUBMIT_IP);
+    }
 }
