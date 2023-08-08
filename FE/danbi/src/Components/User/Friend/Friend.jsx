@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import styled from 'styled-components';
 import Waitting from './Items/Waitting';
 import Header from '../../Common/Header/Header';
 import Footer from '../../Common/Footer/Footer';
 import MyFriend from './Items/MyFriend';
+import { authGet } from '../../../Util/apis/api';
 
 const myFriends = [
     {
@@ -73,6 +74,12 @@ const waittingFriends = [
 ]
 
 const Friend = () => {
+
+    useEffect(() => {
+        const waittingFriends1 = authGet('/api/v1/friends/response');
+        const myFriends1 = authGet('/api/v1/friends');
+    }, [])
+
     return(
     <Wrap>
         <Header />

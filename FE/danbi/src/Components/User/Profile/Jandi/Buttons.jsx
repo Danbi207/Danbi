@@ -31,13 +31,13 @@ const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
         </DirectionBtns>
         <Wrap>
           <Dew>{pickdata.dew_point}Dew</Dew>
-          <PickBtn
+          {/* <PickBtn
             onClick={() => {
               handlePickModal(pickdata);
             }}
           >
             뽑기
-          </PickBtn>
+          </PickBtn> */}
         </Wrap>
       </Btns>
     )
