@@ -170,13 +170,16 @@ const data = {
   },
 };
 
-// TODO : memberId redux 조회
-// const data1 = authGet(`/api/v1/profile/${memberId}`);
+
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
   const cur_dew = useSelector((state) => state.Jandi.dew_point);
+  
+  // TODO : memberId redux 조회
+  // const data1 = authGet(`/api/v1/profile/${memberId}`);
+  // const guestBookData = authGet(`/api/v1/profile/guestbook/${memberId}`);
 
   return (
     <ProfileWrap>
@@ -193,7 +196,7 @@ const Profile = () => {
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
-        <GuestBook />
+        <GuestBook /> {/* guestBookData={guestBookData} */}
         {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
       </Wrap>
       <Footer />
