@@ -40,12 +40,14 @@ class GuestBookCommentServiceTest {
     @Autowired
     private GuestBookCommentService guestBookCommentService;
 
-    Member member1;
-    Member member2;
-    GuestBook guestBook;
-    Comment comment1;
-    
-    List<Comment> beforeComments;
+    private Member member1;
+    private Member member2;
+    private GuestBook guestBook;
+    private Comment comment1;
+    private Comment comment2;
+    private Comment comment3;
+
+    private List<Comment> beforeComments;
 
     @BeforeEach
     void setup() {
@@ -82,11 +84,11 @@ class GuestBookCommentServiceTest {
                 .member(member1)
                 .content("comment1")
                 .build();
-        Comment comment2 = Comment.builder()
+        comment2 = Comment.builder()
                 .member(member1)
                 .content("comment2")
                 .build();
-        Comment comment3 = Comment.builder()
+        comment3 = Comment.builder()
                 .member(member1)
                 .content("comment3")
                 .build();
@@ -149,5 +151,16 @@ class GuestBookCommentServiceTest {
     @DisplayName("댓글 삭제")
     @Test
     void deleteComment() {
+        // given
+        // when
+        guestBookCommentService.deleteComment(member1.getId(), guestBook.getId(), comment1.getId());
+        List<Comment> afterComments = commentRepository.findAll();
+        // then
+        assertThat(afterComments).hasSize(beforeComments.size() - 1)
+                .extracting("id", "content")
+                .containsExactlyInAnyOrder(
+                        tuple(comment2.getId(), comment2.getContent()),
+                        tuple(comment3.getId(), comment3.getContent())
+                );
     }
 }
