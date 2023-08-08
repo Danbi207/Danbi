@@ -19,6 +19,7 @@ const Profile = () => {
   const [data, setData] = useState({});
   // TODO : userId params 조회
   const { targetId } = useParams();
+
   const fetchData = async () => {
     try {
       const res = await authGet(`/api/v1/profile/${targetId}`);
@@ -28,7 +29,10 @@ const Profile = () => {
       console.log(err);
     }
   };
-  fetchData();
+
+  useEffect(() => {
+    fetchData();
+  }, [targetId]);
   console.log(localStorage.getItem('role'));
 
   return (
