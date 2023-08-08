@@ -68,7 +68,7 @@ const HelperDetail = ({ helpPostId }) => {
     caution: 'qweqweqwe',
     category: 'ETC',
   });
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -82,7 +82,7 @@ const HelperDetail = ({ helpPostId }) => {
       }
     }
     fetchData();
-  })
+  },[helpPostId])
 
   return (
     <HelperDetailWrap>
