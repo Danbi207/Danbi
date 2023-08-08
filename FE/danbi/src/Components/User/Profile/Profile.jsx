@@ -23,13 +23,14 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const res = await authGet(`/api/v1/profile/${targetId}`);
+        console.log(res);
         setData(res);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  });
+  }, [targetId]);
   console.log(localStorage.getItem('role'));
 
   return (
