@@ -12,11 +12,7 @@ import Tab from './Components/Tab/Tab';
 const IpRequest = () => {
   const ip = useSelector((state)=>state.ip)
   const location = useLocation();
-  console.log(location)
-
-  useEffect(()=>{
-    console.log(ip.reservetype);
-  },[ip.reservetype])
+  // console.log(location)
 
   return (
     <RequestWrap>

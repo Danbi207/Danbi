@@ -3,9 +3,10 @@ import styled from 'styled-components';
 
 import Checkbox from './Checkbox';
 import { useSelector, useDispatch } from 'react-redux';
-import Calendar from '../../../Home/Components/Calender'
+import Calendar from '../Calendar/Calender'
 import TimeSelect from './TimeSelect';
 import { setTabMode } from "../../../../../../store/Slice/ipSlice"
+import UseTime from './UseTime';
 
 const TimeTpye = () => {
   const ip = useSelector(state => state.ip)
@@ -41,13 +42,7 @@ const TimeTpye = () => {
       </CalendarWrap>
       <SelectWrap>
         <TimeSelect/>
-        <PresetName>이용 시간</PresetName>
-        <ButtonWrap>
-          <TimeButton>15분</TimeButton>
-          <TimeButton>30분</TimeButton> 
-          <TimeButton>45분</TimeButton>
-          <TimeButton>60분</TimeButton>
-        </ButtonWrap>
+        <UseTime/>
         <Checkbox></Checkbox>
         <NextBTN onClick={() => { dispatch(setTabMode('time')); } }>다음</NextBTN>
         </SelectWrap>
@@ -76,24 +71,7 @@ const PresetName = styled.div `
   padding: 2rem 0;
 `
 
-const ButtonWrap = styled.div`
-  width: 100%;
-  height: 17%;
-  flex-wrap: wrap;
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  place-items: center;
-  grid-row-gap: 0.5rem;
-`
 
-const TimeButton = styled.button`
-  width: 8rem;
-  height: 2rem;
-  font-size: 1.2rem;
-  border: 1px solid #000;
-  border-radius: 5rem;
-  background-color: white;
-`
 
 const RequestBTN = styled.button`
   position: absolute;

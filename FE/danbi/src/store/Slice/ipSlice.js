@@ -5,15 +5,15 @@ export const ipSlice = createSlice({
   initialState: {
     help_id : 1,
     position : {
-      cur_longitude : "128.3444",
-      cur_latitude : "36.119485",
-      cur_addr : "",
-      dest_longitude : "128.3444",
-      dest_latitude : "128.3444",
-      dest_addr : "", 
-      meet_longitude : "128.3444",
-      meet_latitude : "128.3444",
-      meet_addr : "",
+      cur_longitude : null,
+      cur_latitude : null,
+      cur_addr : null,
+      dest_longitude : null,
+      dest_latitude : null,
+      dest_addr : null, 
+      meet_longitude : null,
+      meet_latitude : null,
+      meet_addr : null,
     },
     tabmode : 'time',
     reservetype : '',
@@ -22,6 +22,9 @@ export const ipSlice = createSlice({
     content : '',
     openIndex : 0,
     ischecked : false,
+    currentDay : [],
+    currentTime : [],
+    useTimes : 0,
   },
   reducers: {
     setTabMode : (state,action)=>{
@@ -69,11 +72,21 @@ export const ipSlice = createSlice({
     setCurLatitude : (state, action) => {
       state.position.cur_latitude = action.payload;
     },
+    setCurrentDay : (state, action) => {
+      state.currentDay = action.payload;
+    },
+    setCurrentTime : (state, action) => {
+      state.currentTime = action.payload;
+    },
+    setUseTimes : (state, action) => {
+      state.useTimes = action.payload;
+    }
   },
 });
 
 export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex, setCategory,
-               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude
+               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude,
+               setCurrentDay, setUseTimes, setCurrentTime
               } = ipSlice.actions;
 
 export default ipSlice.reducer;
