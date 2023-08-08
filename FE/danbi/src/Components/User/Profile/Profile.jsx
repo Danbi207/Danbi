@@ -181,6 +181,7 @@ const Profile = () => {
   console.log('영재형 바보임');
   // TODO : memberId redux 조회
   const userId = useSelector((state) => state.user.profileId);
+  console.log(userId);
   useEffect(() => {
     const fetchData = async () => {
       try{
