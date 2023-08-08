@@ -20,4 +20,7 @@ public class ResponseFriendDto {
 
     @JsonProperty("dew_point")
     private Long dewPoint;
+
+    @JsonProperty("target_id")
+    private Long targetId;
 }
