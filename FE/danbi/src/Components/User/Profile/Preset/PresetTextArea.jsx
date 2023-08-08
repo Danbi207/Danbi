@@ -5,14 +5,19 @@ import { authPost } from '../../../../Util/apis/api';
 const PresetTextArea = ({ setOpenTextArea }) => {
   const [textArea, setTextArea] = useState("");
   
-  const SavePreset = () => {
+  const SavePreset = async () => {
     setOpenTextArea(false);
     const textJson = {
       "title": textArea,
       "content": textArea,
-      "sequence": 0,
+      "sequence": 0
     }
-    authPost('/api/v1/preset', textJson);
+    try{
+      const data = await authPost('/api/v1/preset', textJson);
+      console.log(data);
+    } catch(err) {
+      console.log(err);
+    }
   };
 
   const ClosePreset = () => {

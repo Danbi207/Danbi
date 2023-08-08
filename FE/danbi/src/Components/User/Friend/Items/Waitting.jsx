@@ -1,10 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
+import { authPost, authDelete } from '../../../../Util/apis/api';
 
 
 const Waitting = ({value}) => {
     
+    const handleAccept = async () => {
+        const target_id = {
+            "target_id" : value.target_id
+        };
+
+        try{
+            const res = await authPost('/api/v1/friends/permit', target_id);
+            console.log(res);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    
+    const handleDelete = async () => {
+        const target_id = {
+            "target_id": value.target_id
+        }
+        try{
+            const res = await authDelete('/api/v1/friends/delete', target_id);
+            console.log(res);
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
     return(
         <WaittingWrap>
@@ -13,10 +38,10 @@ const Waitting = ({value}) => {
                 <Name>{value.name}</Name>
             </InfoWrap>
             <Btns>
-                <AcceptBtn>
+                <AcceptBtn onClick={handleAccept}>
                     수락
                 </AcceptBtn>
-                <DeleteBtn>
+                <DeleteBtn onClick={handleDelete}>
                     삭제
                 </DeleteBtn>
             </Btns>

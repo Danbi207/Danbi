@@ -49,33 +49,36 @@ const PickModal = ({ setPickModalOpen }) => {
   
   const dispatch = useDispatch();
   
-  const handlePickModal = (pickdata) => {
-    setShowAnimation(true);
-    const pickdata1 = authPost('/api/v1/item', {});
-    
-    setTimeout(() => {
-      setShowAnimation(false);
-      setPickModalOpen(true);
-      dispatch(setName(pickdata.item.name));
-      dispatch(setTier(pickdata.item.tier));
-      dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
-      dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-      dispatch(setDewPoint(pickdata.dew_point));
-      if(pickdata.item.tier === 'legandary'){
-        Jsconfetti.addConfetti({
-          confettiColors: [
-            "#ff0a54",
-            "#ff477e",
-            "#ff7096",
-            "#ff85a1",
-            "#fbb1bd",
-            "#f9bec7",
-          ],
-          confettiRadius: 5,
-          confettiNumber: 500,
-        });
-      }
-    }, 1500);
+  const handlePickModal = async (pickdata) => {
+    try{
+      setShowAnimation(true);
+      const pickdata1 = await authPost('/api/v1/item', {});
+      setTimeout(() => {
+        setShowAnimation(false);
+        setPickModalOpen(true);
+        dispatch(setName(pickdata.item.name));
+        dispatch(setTier(pickdata.item.tier));
+        dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+        dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+        dispatch(setDewPoint(pickdata.dew_point));
+        if(pickdata.item.tier === 'legandary'){
+          Jsconfetti.addConfetti({
+            confettiColors: [
+              "#ff0a54",
+              "#ff477e",
+              "#ff7096",
+              "#ff85a1",
+              "#fbb1bd",
+              "#f9bec7",
+            ],
+            confettiRadius: 5,
+            confettiNumber: 500,
+          });
+        }
+      }, 1500);
+    } catch(err) {
+      console.log(err);
+    }
   };
 
   const pickdata = {

@@ -32,7 +32,15 @@ const PresetModal = ({ setModalOpen }) => {
   // TODO : presetList 조회
   const [presetList2, setPresetList2] = useState([]);
   useEffect(() => {
-    setPresetList2(authGet('/api/v1/preset'))
+    const fetchData = async () => {
+      try{
+      const data = await authGet('/api/v1/preset');
+      setPresetList2(data.presetList);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    fetchData();
   }, [])
 
   const handleSave = () => {

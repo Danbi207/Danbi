@@ -1,8 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
+import { authDelete } from '../../../../Util/apis/api';
+
 
 const MyFriend = ({value}) => {
+
+    const handleDelete = async () => {
+        try{
+            const res = await authDelete(`/api/v1/friends/delete/${value.target_id}`);
+            console.log(res);
+        } catch(err) {
+            console.log(err)
+        }
+    }
     return(
         <MyFriendWrap>
             <InfoWrap>
