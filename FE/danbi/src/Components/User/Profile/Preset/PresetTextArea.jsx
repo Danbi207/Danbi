@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { authPost } from '../../../../Util/apis/api';
 
 const PresetTextArea = ({ setOpenTextArea }) => {
+  const [textArea, setTextArea] = useState("");
+  
   const SavePreset = () => {
     setOpenTextArea(false);
+    const textJson = {
+      "title": textArea,
+      "content": textArea,
+      "sequence": 0,
+    }
+    authPost('/api/v1/preset', textJson);
   };
+
   const ClosePreset = () => {
     setOpenTextArea(false);
   };
@@ -14,6 +24,7 @@ const PresetTextArea = ({ setOpenTextArea }) => {
       <TextArea
         placeholder="저는 휠체어를 타고 있습니다.
 조심해서 밀어주세요!"
+        value={textArea}
       />
       <Btns>
         <CancleBtn onClick={ClosePreset}>취소</CancleBtn>

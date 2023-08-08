@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { getSpeech } from '../Utils/TTS';
+import { authPut } from '../../../../Util/apis/api';
 
-
-const PresetDetail = ({ content, showDetail, setDeleteActive, setEditActive }) => {
-  const [value, setValue] = useState(content);
+const PresetDetail = ({ Content, PresetId, showDetail, setDeleteActive, setEditActive }) => {
+  const [value, setValue] = useState(Content);
 
   const {
     transcript,
@@ -39,6 +39,7 @@ const PresetDetail = ({ content, showDetail, setDeleteActive, setEditActive }) =
     alert('저장되었습니다.');
     setDeleteActive(false);
     setEditActive(false);
+    authPut(`/api/v1/preset/update/${PresetId}`);
   };
 
   const handleBtn = () => {

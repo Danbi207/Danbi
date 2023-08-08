@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
+import { authDelete } from '../../../../Util/apis/api';
 
 const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
@@ -13,6 +14,13 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
             alert('취소함');
         }
     }
+
+    const handleDelete = () => {
+        setDeleteActive(!DeleteActive); 
+        callConfirm();
+        authDelete(`/api/v1/preset/${value.PresetId}`);
+    }
+
     return(
         <>
             <Element key={index}>
@@ -24,14 +32,14 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                         <EditBtn onClick={() => {showDetail(value.title); setEditActive(!EditActive)}} $EditActive={EditActive} $DeleteActive={DeleteActive} >
                             <EditImg />
                         </EditBtn>
-                        <DeleteBtn onClick={() => {setDeleteActive(!DeleteActive); callConfirm()}} $DeleteActive={DeleteActive} $EditActive={EditActive}>
+                        <DeleteBtn onClick={handleDelete} $DeleteActive={DeleteActive} $EditActive={EditActive}>
                             <DeleteImg />
                         </DeleteBtn>
                     </Btns>
                 </PreSetElement>
             </Element>
             {OpenTitle === value.title && (
-            <PresetDetail content={value.content} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
+            <PresetDetail content={value.Content} presetId={value.PresetId} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
             )}
         </>
     );
