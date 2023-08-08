@@ -6,9 +6,9 @@ import { authPost } from "../apis/api";
 export const requestPermission = async () => {
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: "test-cca3f.firebaseapp.com",
-    projectId: "test-cca3f",
-    storageBucket: "test-cca3f.appspot.com",
+    authDomain: "danbi-1fa19.firebaseapp.com",
+    projectId: "danbi-1fa19",
+    storageBucket: "danbi-1fa19.appspot.com",
     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
@@ -30,15 +30,15 @@ export const requestPermission = async () => {
     vapidKey: process.env.REACT_APP_VAPID_KEY,
   });
 
-  const Token = { "FCM_token" : token }
+  const Token = { "fcm_token" : token }
 
-  const res =  await authPost('/api/v1/fcm/token', JSON.parse(Token))
+  const res =  await authPost('/api/v1/fcm/token', Token)
     if (res) {
       console.log('FCM 토큰을 가져왔습니다.')
+      console.log(Token);
     }
     else {
       console.log('FCM 토큰을 가져올 수 없습니다.')
-      console.log(Token);
     }
 
   onMessage(messaging, (payload) => {
