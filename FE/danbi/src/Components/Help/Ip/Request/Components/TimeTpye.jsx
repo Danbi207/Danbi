@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components';
 
-import StartTime from './StartTime';
 import Checkbox from './Checkbox';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { setReserveType } from '../../../../../store/Slice/ipSlice'
+import { useSelector } from 'react-redux';
+import Calendar from '../../Home/Components/Calender'
+import TimeSelect from './TimeSelect';
 
 const TimeTpye = ({location}) => {
   const ip = useSelector(state => state.ip)
@@ -32,51 +31,67 @@ const TimeTpye = ({location}) => {
 			"end_time" : "2023-01-01 13:00",
   }
 
-  const dispatch = useDispatch();
-  const reservetype = useSelector(state => state.ip.reservetype)
-  // 도움 요청하기 버튼을 통해서 ip 데이터를 쏠 수 있게
   
   return (
     <Wrap>
-        <Boxes>
-          <SelectBTN $default='now' $reservetype={reservetype} onClick={()=>{dispatch(setReserveType('now'))}}>즉시</SelectBTN>
-          <SelectBTN $default='reserve' $reservetype={reservetype} onClick={()=>{dispatch(setReserveType('reserve'))}}>예약</SelectBTN>
-        </Boxes>
-        <StartTime ></StartTime>
+      <CalendarWrap>
+        <Calendar/>
+      </CalendarWrap>
+      <SelectWrap>
+        <TimeSelect/>
+        <PresetName>이용 시간</PresetName>
+        <ButtonWrap>
+          <TimeButton>15분</TimeButton>
+          <TimeButton>30분</TimeButton> 
+          <TimeButton>45분</TimeButton>
+          <TimeButton>60분</TimeButton>
+        </ButtonWrap>
         <Checkbox></Checkbox>
-        {/* <RequestBTN>도움 요청하기</RequestBTN> */}
         {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
+        </SelectWrap>
     </Wrap>
   )
 } 
 
 const Wrap = styled.div`
+  width : 100%;
+  height: 100%;
+  padding: 1rem;
 `
 
-const Boxes = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    margin: 2rem 0rem;
+const CalendarWrap = styled.div`
+  width: 100%;
+  height: 40%;
 `
 
-const SelectBTN = styled.button`
-    width: 9.4rem;
-    height: 9.4rem;
-    border-radius: 0.75rem;
-    font-size: 2.3rem;
-    background-color: ${props=> props.$default === props.$reservetype ? '#8383FF' : '#E3E3E3'};
-    color : ${props=> props.$default === props.$reservetype ? '#fff' : '#000'};
-    display: flex;
-    justify-content : center;
-    align-items : center;
-    transition: 0.5s;
-    &:hover {
-        background-color: #8383FF;
-        color: white;
-        transform: scale(1.1);
-        transition: 0.5s;
-    }
-` 
+const SelectWrap = styled.div`
+  width: 100%;
+  height: 40%;
+`
+
+const PresetName = styled.div `
+  height: 3rem;
+  padding: 2rem 0;
+`
+
+const ButtonWrap = styled.div`
+  width: 100%;
+  height: 17%;
+  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  place-items: center;
+  grid-row-gap: 0.5rem;
+`
+
+const TimeButton = styled.button`
+  width: 8rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  border: 1px solid #000;
+  border-radius: 5rem;
+  background-color: white;
+`
 
 const RequestBTN = styled.button`
   position: absolute;
@@ -85,8 +100,8 @@ const RequestBTN = styled.button`
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
-  background-color: #6161FF;
-  color: #fff;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=>props.theme.colors.buttontextColor};
   font-size : 2rem;
   @media screen and (max-width: 500px) {
     width: 20rem;

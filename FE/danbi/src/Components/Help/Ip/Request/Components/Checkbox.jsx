@@ -30,7 +30,7 @@ const Wrap = styled.div `
 `
 const PresetName = styled.div `
     height: 3rem;
-    padding: 1rem;
+    padding: 2rem 0;
 `
 
 const InputWrap = styled.form`
@@ -40,10 +40,9 @@ const InputWrap = styled.form`
 const Input = styled.input`
   accent-color: #6161FF;
 `
-
 const Label = styled.label`
   padding-left: 1rem;
-  display: inline-block;
+  /* display: inline-block; */
 ` 
 
 

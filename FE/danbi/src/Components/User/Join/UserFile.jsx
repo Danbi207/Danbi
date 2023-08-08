@@ -1,27 +1,29 @@
 import React, { useState } from 'react'
+import { useRef } from 'react';
 import styled from 'styled-components'
 
 const UserFile = (props) => {
+  const hiddenFileInputRef = useRef();
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
+  const [imageFiles, setImageFiles] = useState([]); // 이미지 파일들을 저장하기 위한 state
+
 
   const onChange = (e) => {
-    const files = e.target.files; // 선택된 파일들의 목록
-    const formData = new FormData(); // FormData 객체 생성
+    const files = [...e.target.files]; 
+    setImageFiles(files); 
 
     // 선택된 모든 파일들을 FormData에 추가
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    const formData = new FormData(); 
+    files.forEach((file) => {
       const fileName = file.name
       formData.append(fileName, file);
-    }
+    });
 
     // 이미지 파일 미리보기 생성
     const previewURLs = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    files.forEach((file) => {
       const reader = new FileReader();
-
       reader.onloadend = () => {
         previewURLs.push(reader.result);
         if (previewURLs.length === files.length) {
@@ -29,8 +31,7 @@ const UserFile = (props) => {
         }
       };
       reader.readAsDataURL(file);
-    }
-
+    });
     // 초기화: 첫 번째 이미지로 돌아가기
     setCurrentImageIndex(0);
   };
@@ -45,18 +46,27 @@ const UserFile = (props) => {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + imagePreviews.length) % imagePreviews.length);
   };
 
+  const SubmitFiles = ()=>{
+    // FIXME : axios 요청
+    console.log(imageFiles)
+  }
+
   return (
     <SubmitWrap>
       <Question>서류를 제출해주세요</Question>
       <UploadWrap>  
         <ImgPrevBtn onClick={prevImage}>{"<"}-</ImgPrevBtn>
         <ImgDiv>
-          <img src={imagePreviews[currentImageIndex]} alt=''/>
+          { imagePreviews !== [] ? 
+            <img src={imagePreviews[currentImageIndex]} alt=''/>
+            : <div>이미지가 없습니다.</div> }
         </ImgDiv>
         <ImgNextBtn onClick={nextImage}>-{">"}</ImgNextBtn>
       </UploadWrap>
-      <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
-      <NextBTN>제출</NextBTN>
+      <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange}
+        ref={hiddenFileInputRef}  />
+      {/* <UploadBtn onClick={()=>hiddenFileInputRef.current.click()}>업로드</UploadBtn> */}
+      <NextBTN onClick={()=>{SubmitFiles()}}>제출</NextBTN>
     </SubmitWrap>
   );
 }
@@ -73,6 +83,15 @@ const Question = styled.div`
   font-size: 1.5rem;
   text-align: center;
 `
+
+// const UploadBtn = styled.button`
+//   margin-top: 0.5rem;
+//   margin-left: 10%;
+//   width: 5rem;
+//   height: 1.5rem;
+//   border-radius: 0.5rem;
+//   background-color: #6161FF;
+// `
 
 const NextBTN  = styled.button`
   position: absolute;
@@ -132,6 +151,7 @@ const SubmitInput = styled.input`
   width: 30rem;
   margin-left: calc((100% - 25rem)/2);
   margin-top: 1rem;
+  /* display: none; */
 `
 
 export default UserFile;

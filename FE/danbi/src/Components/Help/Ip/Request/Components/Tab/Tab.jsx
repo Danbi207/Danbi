@@ -10,8 +10,8 @@ const Tab = () => {
 
   return (
     <TapWarp>
-        <TapItem $default='meet' $tabmode={tabmode} onClick={()=>{dispatch(setTabMode('meet'))}}>대면여부</TapItem>
         <TapItem $default='time' $tabmode={tabmode} onClick={()=>{dispatch(setTabMode('time'))}}>시간예약</TapItem>
+        <TapItem $default='meet' $tabmode={tabmode} onClick={()=>{dispatch(setTabMode('meet'))}}>대면여부</TapItem>
     </TapWarp>
   )
 }

@@ -21,8 +21,8 @@ const IpRequest = () => {
   return (
     <RequestWrap>
       <Header></Header>
+      <Tab></Tab>
       <Wrap>
-        <Tab></Tab>
         { ip.tabmode === 'meet' ? <FaceType /> : <TimeTpye location={location} />}        
       </Wrap> 
       <Footer></Footer>
@@ -41,9 +41,5 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
 `
-
-
- 
-
 
 export default IpRequest;

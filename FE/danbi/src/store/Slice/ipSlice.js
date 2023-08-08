@@ -15,7 +15,7 @@ export const ipSlice = createSlice({
       meet_latitude : "128.3444",
       meet_addr : "",
     },
-    tabmode : 'meet',
+    tabmode : 'time',
     reservetype : '',
     meetType : '',
     category : 'NONE',
