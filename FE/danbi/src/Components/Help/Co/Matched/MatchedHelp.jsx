@@ -45,7 +45,7 @@ const MatchedHelp = () => {
   
   const getMyProfile = useCallback(async()=>{
     try{
-      const data = await authGet("/api/v1/help/member");
+      const data = await authGet("/api/v1/member");
       if(data){
         setMyProfile(data);
       }
