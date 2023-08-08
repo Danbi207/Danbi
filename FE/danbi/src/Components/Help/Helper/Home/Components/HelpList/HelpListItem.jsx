@@ -26,7 +26,7 @@ const HelpListItem = (props) => {
         </UserWrap>
       </RowWrap>
       <HelpContent>{props.help.content}</HelpContent>
-      <DetailBtn onClick={()=>{navigate(`/detail/${props.help.helpPostId}`)}}>상세보기</DetailBtn>
+      <DetailBtn onClick={()=>{navigate(`/help/helper/detail/${props.help.helpPostId}`)}}>상세보기</DetailBtn>
     </HelpMapItemWrap>
   )
 }

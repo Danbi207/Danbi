@@ -68,7 +68,7 @@ const HelpMap = (props) => {
     DetailBtn.className="DetailBtn";
     DetailBtn.innerText="상세보기";
     DetailBtn.addEventListener("click",()=>{
-      navigate(`/detail/${help.helpPostId}`);
+      navigate(`/help/helper/detail//${help.helpPostId}`);
     });
     overlay.append(DetailBtn);
 

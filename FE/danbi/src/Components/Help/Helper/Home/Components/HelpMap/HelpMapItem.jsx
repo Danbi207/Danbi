@@ -32,7 +32,7 @@ const HelpMapItem = (props) => {
                 </UserWrap>
               </RowWrap>
               <HelpContent>{props.curHelp.content}</HelpContent>
-              <DetailBtn onClick={()=>{navigate(`/detail/${props.curHelp.helpPostId}`)}}>상세보기</DetailBtn>
+              <DetailBtn onClick={()=>{navigate(`/help/helper/detail/${props.curHelp.helpPostId}`)}}>상세보기</DetailBtn>
             </HelpMapItemWrap>
           </>
           :null

@@ -5,7 +5,7 @@ import Footer from "../../../Common/Footer/Footer.jsx"
 import HelpList from "./Components/HelpList/HelpList.jsx"
 import HelpMap from "./Components/HelpMap/HelpMap.jsx"
 import Tap from "./Components/Tap/Tap.jsx"
-import {authGet, authPost} from "../../../../Util/apis/api.js"
+import { authPost} from "../../../../Util/apis/api.js"
 import { useSelector } from 'react-redux';
 const HelperHome = () => {
   const [mode,setMode] = useState("unntact");
