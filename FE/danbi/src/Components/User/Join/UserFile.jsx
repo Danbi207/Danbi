@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { authPost, reissueAccessToken, authFilePost } from '../../../Util/apis/api';
 
 
-const UserFile = ({role, usertype, setUserType}) => {
+const UserFile = ({ usertype, setUserType}) => {
   const hiddenFileInputRef = useRef();
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스

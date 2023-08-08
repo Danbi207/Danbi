@@ -4,18 +4,20 @@ import styled from 'styled-components';
 import { authPost, reissueAccessToken } from '../../../Util/apis/api';
 
 
-const UserType = ({role, usertype, setUserType}) => {
+const UserType = ({ usertype, setUserType}) => {
   const [explainmode, setExplainMode] = useState('');
-  
+  const [role, setRole] = useState(usertype)
+
   const PutRole = useCallback(async () => {
     try {
-      await authPost('/api/v1/member/role', {"role" : usertype});
+      await authPost('/api/v1/member/role', {"role" : role});
       await reissueAccessToken();
-      localStorage.setItem('role', usertype);  
+      localStorage.setItem('role', role);  
+      setUserType(role)
     } catch (error) {
         console.error("에러 발생:", error);
     }
-  }, [usertype]);
+  }, [role,setUserType]);
     
   return (
     <SelectWrap>
@@ -23,12 +25,12 @@ const UserType = ({role, usertype, setUserType}) => {
             <Question>서비스 유형을 선택하세요</Question>
             <Boxes>
               <SelectBTN $default='helper' $select={role} onClick={()=>{
-                setUserType('ROLE_HELPER'); setExplainMode('ROLE_HELPER');}}>
+                setRole('ROLE_HELPER'); setExplainMode('ROLE_HELPER');}}>
                 <p>도움을</p><p>줄래요</p>
               </SelectBTN>
               { explainmode === 'ROLE_HELPER' ? <TextWrap>장애인분들에게 대면 / 비대면으로 도움을 제공해요</TextWrap> : null }
               <SelectBTN $default='ip' $select={role} onClick={()=>{
-                setUserType('ROLE_UNCERTIFICATED_IP '); setExplainMode('ROLE_UNCERTIFICATED_IP ')}}>
+                setRole('ROLE_UNCERTIFICATED_IP '); setExplainMode('ROLE_UNCERTIFICATED_IP ')}}>
                 <p>도움을</p><p>받을래요</p>
               </SelectBTN>
               { explainmode === 'ROLE_UNCERTIFICATED_IP ' ? <TextWrap>대면 / 비대면으로 이동과 기타 도움을 받아요</TextWrap> : null }

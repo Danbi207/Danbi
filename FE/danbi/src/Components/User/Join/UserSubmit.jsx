@@ -5,15 +5,14 @@ import UserFile from './UserFile';
 import { useState } from 'react';
 
 const UserSubmit = () => {
-  const role = localStorage.getItem('role')
-  const [usertype, setUserType] = useState(role);
- 
+  const [usertype, setUserType] = useState(localStorage.getItem('role'));
+
   return (
     <SubmitWrap>
     {
-      role === 'ROLE_UNDEFINED' ? 
-      <UserType role={role} usertype={usertype} setUserType={setUserType}/> : 
-      <UserFile role={role} usertype={usertype} setUserType={setUserType}/>
+      usertype === 'ROLE_UNDEFINED' ? 
+      <UserType usertype={usertype} setUserType={setUserType}/> : 
+      <UserFile usertype={usertype} setUserType={setUserType}/>
     }
   </SubmitWrap>
   )
