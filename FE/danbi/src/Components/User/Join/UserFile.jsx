@@ -12,9 +12,9 @@ const UserFile = ({ usertype, setUserType}) => {
 
   const PutFileRole = useCallback(async () => {
     try {
-      await authPost('/api/v1/member/role', {"role" : "ROLE_UNSUBMIT_IP"});
+      await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP "});
       await reissueAccessToken();
-      localStorage.setItem('role', "ROLE_UNSUBMIT_IP");  
+      localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP ");  
     } catch (error) {
         console.error("에러 발생:", error);
     }
@@ -23,9 +23,9 @@ const UserFile = ({ usertype, setUserType}) => {
 
   const FileSubmit = useCallback(async () => {
     try {
-      await authFilePost('api/v1/submit/ip/certification', imageFiles);
+      await authFilePost('/api/v1/submit/ip/certification', imageFiles);
       // DO : 로그아웃
-      await authPost('/api/v1.member/logout', {}) 
+      await authPost('/api/v1/member/logout', {}) 
       localStorage.removeItem('role');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('refreshTokenExpireTime');
@@ -34,7 +34,6 @@ const UserFile = ({ usertype, setUserType}) => {
     }
   }, [imageFiles]);
   
-
   const onChange = (e) => {
     const files = [...e.target.files]; 
     setImageFiles(files); 
