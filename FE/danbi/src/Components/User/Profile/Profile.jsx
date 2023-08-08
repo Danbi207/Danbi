@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom';
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
   // TODO : userId params 조회
   const { targetId } = useParams();
   useEffect(() => {
