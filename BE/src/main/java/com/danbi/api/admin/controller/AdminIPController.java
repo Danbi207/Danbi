@@ -29,14 +29,14 @@ public class AdminIPController {
     }
 
     @Operation(summary = "IP 회원 인증 승인 처리 API", description = "IP 회원 인증 승인 처리")
-    @GetMapping("/permit/{ipId}")
+    @PostMapping("/permit/{ipId}")
     public ApiResponse<String> permitIP(@PathVariable Long ipId, @MemberInfo MemberInfoDto memberInfoDto) {
         adminIPService.permitIp(ipId);
         return ApiResponse.ok("success");
     }
 
-    @Operation(summary = "IP 회원 인증 거정 처리 API", description = "IP 회원 인증 거정 처리")
-    @GetMapping("/permit/{ipId}")
+    @Operation(summary = "IP 회원 인증 거절 처리 API", description = "IP 회원 인증 거절 처리")
+    @PostMapping("/reject/{ipId}")
     public ApiResponse<String> rejectIP(@PathVariable Long ipId, @MemberInfo MemberInfoDto memberInfoDto) {
         adminIPService.rejectIP(ipId);
         return ApiResponse.ok("success");

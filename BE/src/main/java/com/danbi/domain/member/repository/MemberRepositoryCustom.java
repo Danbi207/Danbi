@@ -1,8 +1,8 @@
 package com.danbi.domain.member.repository;
 
-import com.danbi.domain.member.dto.MemberInfoDto;
+import com.danbi.domain.member.dto.MemberDataDto;
 
 public interface MemberRepositoryCustom {
 
-    MemberInfoDto searchMember(Long memberId);
+    MemberDataDto searchMember(Long memberId);
 }
