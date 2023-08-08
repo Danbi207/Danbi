@@ -13,8 +13,6 @@ public class AccuseRequestDto {
 
     private Long targetMemberId;
 
-    private String title;
-
     private String content;
 
     private AccuseType accuseType;
