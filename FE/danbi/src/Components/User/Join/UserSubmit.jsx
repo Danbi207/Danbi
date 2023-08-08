@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import UserType from './UserType';
 import UserFile from './UserFile';
-import { useState } from 'react';
 
 const UserSubmit = () => {
   const [usertype, setUserType] = useState(localStorage.getItem('role'));
