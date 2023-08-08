@@ -9,7 +9,7 @@ const UserType = ({role, usertype, setUserType}) => {
   
   const PutRole = useCallback(async () => {
     try {
-      await authPost('/api/v1/member', {"role" : usertype});
+      await authPost('/api/v1/member/role', {"role" : usertype});
       console.log();
       reissueAccessToken();
       localStorage.setItem('role', usertype);  
@@ -25,7 +25,7 @@ const UserType = ({role, usertype, setUserType}) => {
             <Boxes>
               <SelectBTN $default='helper' $select={role} onClick={()=>{
                 setUserType('ROLE_HELPER'); setExplainMode('ROLE_HELPER');}}>
-                <p>도움을</p><p>줄래요</p>ROLE_HELPER 
+                <p>도움을</p><p>줄래요</p>
               </SelectBTN>
               { explainmode === 'ROLE_HELPER' ? <TextWrap>장애인분들에게 대면 / 비대면으로 도움을 제공해요</TextWrap> : null }
               <SelectBTN $default='ip' $select={role} onClick={()=>{
