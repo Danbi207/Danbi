@@ -75,7 +75,7 @@ const HelperHome = () => {
         console.log(err.response);
       }
     }
-  },[setHelpList,setMode,gender,position.coords,setCurPosition]);
+  },[setHelpList,setMode,gender,setCurPosition,position]);
 
 
   const setMap = useCallback(async ()=>{
@@ -94,7 +94,7 @@ const HelperHome = () => {
         console.log(err.response);
       }
     }
-  },[setCurPosition,setMode,gender,position.coords]);
+  },[setCurPosition,setMode,gender,position]);
 
   useEffect(()=>{
     if(!gender){
