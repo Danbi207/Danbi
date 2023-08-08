@@ -10,7 +10,39 @@ import { setMeetType } from "../../../../../../store/Slice/ipSlice"
 
 function FaceType({location}) {
   const dispatch = useDispatch();
-  const meetType = useSelector(state => state.ip.meetType);
+  const ip = useSelector(state => state.ip)
+  const meetType = ip.meetType
+  const currentDay = ip.currentDay
+  const currentTime = ip.currentTime
+  const useTimes = ip.useTimes
+
+  // YYYY-MM-DD HH:mm 포맷으로 변환
+  const formatDateTime = (day, time) => {
+    return `${day[0]}-${String(day[1]).padStart(2, '0')}-${String(day[2]).padStart(2, '0')} ${String(time[0]).padStart(2, '0')}:${String(time[1]).padStart(2, '0')}`;
+  };
+
+  const startTime = formatDateTime(currentDay, currentTime);
+
+  // 끝 시간 계산
+  let endHour = currentTime[0];
+  let endMinute = currentTime[1] + useTimes;
+
+  // 60분을 넘어가면 시간에 1을 더하고, 분에서 60을 빼줍니다.
+  while (endMinute >= 60) {
+    endHour += 1;
+    endMinute -= 60;
+  }
+
+  // 만약 시간이 24를 넘어가면, 일자에 1을 더해주고 시간에서 24를 빼줍니다.
+  if (endHour >= 24) {
+    endHour -= 24;
+    currentDay[2] += 1; // 일자에 1을 더해줍니다. (단, 월마다의 일자 한계는 고려하지 않았습니다.)
+  }
+
+  const endTime = formatDateTime(currentDay, [endHour, endMinute]);
+
+  console.log(`startTime: ${startTime}`);
+  console.log(`endTime: ${endTime}`);
 
   useEffect(()=>{
     console.log(meetType)
@@ -72,22 +104,6 @@ const SelectBTN = styled.button`
       color: ${props=> props.theme.colors.buttontextColor};
       transform: scale(1.1);
       transition: 0.5s;
-  }
-` 
-const NextBTN  = styled.button`
-  width: 30rem;
-  height: 3rem;
-  margin: 1rem auto;
-  border-radius: 0.75rem;
-  background-color: ${props=>props.theme.colors.buttonbgColor};
-  color: ${props=> props.theme.colors.buttontextColor};
-  font-size : 2rem;
-  @media screen and (max-width: 500px) {
-    width: 20rem;
-    height: 3rem;
-    left : calc(( 100% - 20rem )/2);
-    bottom: 3.2rem;
-    position: absolute;
   }
 `
 

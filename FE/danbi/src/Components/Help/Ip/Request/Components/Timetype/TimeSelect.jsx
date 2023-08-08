@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
+import { setCurrentTime } from '../../../../../../store/Slice/ipSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 let hours = [];
 for (let i = 6; i < 24; i++){
     let op = {};
-    op.value = ('0' + i).slice(-2);
+    op.value = (i)
     op.label = ('0' + i).slice(-2) + '시';
     hours.push(op);
 }
@@ -13,11 +16,12 @@ for (let i = 6; i < 24; i++){
 let minutes = [];
 for (let i = 0; i < 60; i =i+5){
   let op = {};
-  op.value = ('0' + i).slice(-2);
+  op.value = (i)
   op.label = ('0' + i).slice(-2) + '분';
   minutes.push(op);
 }
 
+// 달력 커스텀
 const customStyles = {
   container: (provided, state) => ({
     ...provided,
@@ -46,6 +50,13 @@ const customStyles = {
 const TimeSelect = () => {
   const [hourvalue, setHourValue] = useState('');
   const [minutevalue, setMinuteValue] = useState('');
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(setCurrentTime([hourvalue, minutevalue]))
+    console.log([hourvalue, minutevalue])
+  },[hourvalue, minutevalue, dispatch])
 
   return (
     <SelctWrap>

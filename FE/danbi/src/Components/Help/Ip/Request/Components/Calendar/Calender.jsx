@@ -1,16 +1,16 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
-
+import {setCurrentDay} from '../../../../../../store/Slice/ipSlice';
+import { useDispatch } from 'react-redux';
 
 const Calendar = () => {
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
-  const [help,setHelpData] = useState({});  // help 정보 저장
   const [weekCnt, setWeekCnt] = useState(6);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const dispatch = useDispatch();
 
   const getWeek = (year, month) => {
     //DO : 해당 달의 주차 수를 계산
@@ -19,61 +19,6 @@ const Calendar = () => {
 
     return Math.ceil((endDay + startDay) / 7);
   };
-
-  const getHelpData = (year,month,day) =>{
-    month+=1;
-    if(month < 10){ //달력포맷팅 1 -> 01
-      month = "0"+month;
-    }
-    if(day < 10){ //날짜포맷팅 1 -> 01
-      day = "0"+day;
-    }
-    
-    if(!(year in help)){ //year가 help 있는지 판단
-      return [];
-    }
-    
-    if(!(month in help[year])){ //month가 help[year]에 있는지 판단
-      return [];
-    }
-    
-    if(!(day in help[year][month])){ //day가 help[year][month]에 있는지 판단
-      return [];
-    }
-    return help[year][month][day];
-  }
-
-  useEffect(()=>{
-    //DO : IP 도움목록을 불러와 데이터 저장
-    const res = {};
-    axios({
-      method:"get",
-      url:`${process.env.PUBLIC_URL}/IpCalendarList.json`
-    }).then(({data})=>{
-      for(let i = 0; i < data.data.helpList.length; i++){
-        const temp = data.data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
-        const date = temp[0].split("-"); //[year,month,day]
-        
-        if(!(date[0] in res)){ //year가 res안에 있는지 판단
-          res[date[0]]={}; //없다면 객체생성
-        }
-
-        if(!(date[1] in res[date[0]])){ //month가 res[year]에 있는지 판단
-          res[date[0]][date[1]]={}; //없다면 객체s생성
-        }
-        
-        if(!(date[2] in res[date[0]][date[1]])){ //day가 res[year][month]에 있는지 판단
-          res[date[0]][date[1]][date[2]]=[]; //없다면 배열생성
-        }
-
-        res[date[0]][date[1]][date[2]].push(data.data.helpList[i]); //res[year][month][day]에 data를 push
-      }
-
-      setHelpData(res);
-      console.log(res);
-    }).catch((err)=>console.log(err));
-    setHelpData(res);
-  },[]);
   
   const nextMonth = ()=> {
     let temp = month+1;
@@ -121,6 +66,7 @@ const Calendar = () => {
     const endDate = new Date(year,(month+1),0); //현재달 마지막날
     const lastEndDate = new Date(year, month, 0) // 전달의 마지막 날
     const nextStartDate = new Date(year, (month +2), 1) // 다음 달의 1일d
+    
 
     for (let i = startDate.getDay()-1; i >= 0; i--){ // 첫째 날 전일에 날짜 넣기
       res.unshift(
@@ -132,6 +78,7 @@ const Calendar = () => {
     for(let i = startDate.getDate(); i <= endDate.getDate(); i++){ //달력값 넣기
       let className = 'valid'
       
+      // 선택된 날이 오늘이면
       if (selectedDate.getFullYear() === year 
             && selectedDate.getMonth() === month
             && selectedDate.getDate() === i) {
@@ -140,10 +87,7 @@ const Calendar = () => {
 
       res.push(<CalenderItem
         className={className}
-        onClick={()=>{
-        getHelpData(year ,month, i);
-        console.log(getHelpData(year ,month, i));
-        }} key={"calender"+i}>{i}</CalenderItem>)
+        onClick={()=>{dispatch(setCurrentDay([year, month, i])); console.log([year, month, i])}} key={"calender"+i}>{i}</CalenderItem>)
     }
     
     for (let i = endDate.getDay(); i < 6; i++) { // 마지막 날 이후 날짜 넣기
