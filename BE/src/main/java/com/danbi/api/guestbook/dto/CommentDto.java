@@ -2,9 +2,7 @@ package com.danbi.api.guestbook.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -16,6 +14,8 @@ public class CommentDto {
     @Schema(description = "방명록에 댓글 작성 요청 DTO")
     @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Request {
 
         @Schema(description = "댓글 내용")
