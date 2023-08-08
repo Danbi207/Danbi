@@ -24,4 +24,6 @@ public interface HelpPostRepositoryCustom {
     List<HelpPost> findHelpPostByMonth(LocalDate startTime, Long memberId);
 
     Optional<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId);
+
+    List<HelpPost> checkIsHelperCanHelp(Long memberId, LocalDateTime startTime, LocalDateTime endTime);
 }
