@@ -178,7 +178,7 @@ const Profile = () => {
   const cur_dew = useSelector((state) => state.Jandi.dew_point);
   
 
-
+  console.log('영재형 바보임');
   // TODO : memberId redux 조회
   const userId = useSelector((state) => state.user.profileId);
   useEffect(() => {
@@ -191,6 +191,7 @@ const Profile = () => {
     };
     fetchData();
   })
+  console.log('김민규 극혐')
 
   return (
     <ProfileWrap>
