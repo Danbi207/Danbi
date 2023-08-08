@@ -11,10 +11,12 @@ const HelperHome = () => {
   const [mode,setMode] = useState("unntact");
   const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
-  const userInfo = useSelector(state=>state.user);
+
+  const gender = useSelector(state=>state.user.gender);
+
   const setUntact = useCallback(async () => {
     try{
-      const {data} = await authPost("/api/v1/help/untact",{gender:userInfo.gender});
+      const {data} = await authPost("/api/v1/help/untact",{gender});
       if(data){
         setHelpList(data);
         setMode("untact");
