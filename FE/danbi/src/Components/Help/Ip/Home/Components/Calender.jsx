@@ -54,8 +54,8 @@ const Calendar = () => {
     try {
       const data = await authPost('/api/v1/help/registers', {"yearAndMonth" : year+"-"+temp+"-01"});
       if (data) {
-        for(let i = 0; i < data.data.helpList.length; i++){
-          const temp = data.data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
+        for(let i = 0; i < data.helpList.length; i++){
+          const temp = data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
           const date = temp[0].split("-"); //[year,month,day]
           
           if(!(date[0] in res)){ //year가 res안에 있는지 판단
@@ -70,7 +70,7 @@ const Calendar = () => {
             res[date[0]][date[1]][date[2]]=[]; //없다면 배열생성
           }
   
-          res[date[0]][date[1]][date[2]].push(data.data.helpList[i]); //res[year][month][day]에 data를 push
+          res[date[0]][date[1]][date[2]].push(data.helpList[i]); //res[year][month][day]에 data를 push
         }
       }
       setHelpData(res);
