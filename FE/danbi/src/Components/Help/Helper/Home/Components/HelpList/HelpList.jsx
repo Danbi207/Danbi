@@ -25,7 +25,7 @@ const HelpList = (props) => {
 }
 const HR = styled.div`
   width: 40%;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 768px) {
     width: 90%;
   }
   height: 1px;

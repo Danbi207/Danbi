@@ -65,6 +65,9 @@ const TimeWrap = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
   overflow-y: hidden;
   white-space: pre-wrap;
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `
 
 
