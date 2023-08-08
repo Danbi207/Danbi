@@ -7,8 +7,7 @@ import HelpMap from "./Components/HelpMap/HelpMap.jsx"
 import Tap from "./Components/Tap/Tap.jsx"
 import { authGet, authPost} from "../../../../Util/apis/api.js"
 import {setUserInfo} from "../../../../store/Slice/userSlice.js"
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux';
+import {useSelector, useDispatch } from "react-redux";
 const HelperHome = () => {
   const [mode,setMode] = useState("unntact");
   const [position,setPosition] = useState(null);
@@ -19,9 +18,7 @@ const HelperHome = () => {
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
-      if(data){
-        dispatch(setUserInfo(data));
-      }
+      dispatch(setUserInfo(data));
     }catch(err){
       console.log(err.response);
     }
