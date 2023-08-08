@@ -7,7 +7,7 @@ const Modal = () => {
   return (
     <>
       {
-        mode ? <>
+        mode === "accuse" ? <>
           <BackgroundWrap></BackgroundWrap>
           <Accuse></Accuse>
         </> : null
