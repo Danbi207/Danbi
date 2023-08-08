@@ -51,7 +51,7 @@ const HelperHome = () => {
         const {data} = await authPost(`/api/v1/help/contact`,{
           longitude:position.coord.longitude+"",
           latitude:position.coords.latitude+"",
-          gender:userInfo.gender
+          gender
         });
         if(data){
           setHelpList(data);
@@ -70,7 +70,7 @@ const HelperHome = () => {
         const {data} = await authPost(`/api/v1/help/contact`,{
           longitude:position.coord.longitude+"",
           latitude:position.coords.latitude+"",
-          gender:userInfo.gender
+          gender
         });
         if(data){
           setHelpList(data);
