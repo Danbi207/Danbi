@@ -21,7 +21,7 @@ const HelpListItem = (props) => {
           <TimeWrap>
             날짜 : {props.help.startTime.split(" ")[0]}<br/>
             시간 : {props.help.startTime.split(" ")[1]}~{props.help.endTime.split(" ")[1]}<br/>
-            장소 : {props.help.position.meetAddr}
+            {props.help.position ? `장소 : ${props.help.position.meetAddr}` : ""}
           </TimeWrap>
         </UserWrap>
       </RowWrap>
