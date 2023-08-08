@@ -99,7 +99,7 @@ const HelperHome = () => {
   },[setCurPosition,setMode,gender,position]);
 
   useEffect(()=>{
-    if(!gender){
+    if(gender&&gender!==""){
       getUserInfo();
     }
   },[getUserInfo,gender]);
