@@ -1,50 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserInfo from './HelpDetail/UserInfo.jsx';
 import HelpDetailInfo from './HelpDetail/HelpDetailInfo.jsx';
 import AcceptButton from './HelpDetail/AcceptButton.jsx';
 import { authGet } from '../../../../../Util/apis/api.js';
 
-const data = {
-  data: {
-    helpPostId: 1,
-    ip: {
-      ipId: 1,
-      name: '김민규',
-      profileUrl: null,
-      accumulateDewPoint: 100,
-      accusePoint: 0,
-    },
-    position: {
-      latitude: 37.566826,
-      longitude: 126.9786567,
-      addr: '태웅시',
-      dest_latitude: 37.566826,
-      dest_longitude: 126.9786567,
-      dest_addr: '태웅동',
-      meet_latitude: 37.616826,
-      meet_longitude: 126.9786567,
-      meet_addr: '태웅리',
-    },
-    faceFlag: true,
-    reservationFlag: true,
-    content: 'ㅁㄴㅇ',
-    startTime: '2023-01-01 12:00',
-    endTime: '2023-01-01 13:00',
-    friendFlag: true,
-    caution: 'qweqweqwe',
-    category: 'ETC',
-  },
-  code: 200,
-};
+// const data = {
+//   data: {
+//     helpPostId: 1,
+//     ip: {
+//       ipId: 1,
+//       name: '김민규',
+//       profileUrl: null,
+//       accumulateDewPoint: 100,
+//       accusePoint: 0,
+//     },
+//     position: {
+//       latitude: 37.566826,
+//       longitude: 126.9786567,
+//       addr: '태웅시',
+//       dest_latitude: 37.566826,
+//       dest_longitude: 126.9786567,
+//       dest_addr: '태웅동',
+//       meet_latitude: 37.616826,
+//       meet_longitude: 126.9786567,
+//       meet_addr: '태웅리',
+//     },
+//     faceFlag: true,
+//     reservationFlag: true,
+//     content: 'ㅁㄴㅇ',
+//     startTime: '2023-01-01 12:00',
+//     endTime: '2023-01-01 13:00',
+//     friendFlag: true,
+//     caution: 'qweqweqwe',
+//     category: 'ETC',
+//   },
+//   code: 200,
+// };
 
 const HelperDetail = ({ helpPostId }) => {
-
+  const [data,setData] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data1 = await authGet(`/api/v1/detail/${helpPostId}`);
-        console.log(data1)
+        const data1 = await authGet(`/api/v1/help/detail/${helpPostId}`);
+        if(data1){
+          console.log(data1)
+          setData(data1);
+        }
       } catch(err) {
         console.log(err)
       }
@@ -54,9 +57,9 @@ const HelperDetail = ({ helpPostId }) => {
 
   return (
     <HelperDetailWrap>
-      <UserInfo data={data.data} />
+      <UserInfo data={data} />
       <HR />
-      <HelpDetailInfo data={data.data} />
+      <HelpDetailInfo data={data} />
       <ButtonWrap>
         <AcceptButton />
       </ButtonWrap>
