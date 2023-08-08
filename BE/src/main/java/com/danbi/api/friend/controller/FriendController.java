@@ -39,7 +39,7 @@ public class FriendController {
     }
 
     @Operation(summary = "친구관계 삭제 API", description = "친구관계 삭제 API")
-    @PostMapping("/delete/{friendId}")
+    @DeleteMapping("/delete/{friendId}")
     public ApiResponse<String> deleteFriend(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("friendId") Long friendId) {
         friendInfoService.deleteFriend(memberInfoDto.getMemberId(), friendId);
         return ApiResponse.ok("친구요청 삭제에 성공했습니다.");

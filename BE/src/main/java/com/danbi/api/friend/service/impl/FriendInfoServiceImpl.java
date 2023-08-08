@@ -142,6 +142,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getTo().getId())
                     .build();
             result.add(responseFriendDto);
         }
@@ -154,6 +155,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getFrom().getId())
                     .build();
             result.add(responseFriendDto);
         }
