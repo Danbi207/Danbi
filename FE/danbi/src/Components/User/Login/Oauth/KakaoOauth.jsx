@@ -17,7 +17,6 @@ const KaKaoOauth = () => {
     setTokenExpireTime("");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
-    localStorage.removeItem("role");
   },[])  
 
   const getUserInfo = useCallback(async()=>{
@@ -55,7 +54,6 @@ const KaKaoOauth = () => {
       //DO : 토큰정보를 저장
       localStorage.setItem("refreshToken",data.refreshToken);
       localStorage.setItem("refreshTokenExpireTime",data.refreshTokenExpireTime);
-      localStorage.setItem("role",data.role);
       
       
       if(data.role === "ROLE_UNCERTIFICATED_IP"){//서류제출까지 완료하였으나 허가안나는 경우
@@ -65,7 +63,7 @@ const KaKaoOauth = () => {
       }
     
       // FCM 토큰을 요청
-      requestFcmToken()
+      requestFcmToken();
 
       if(data.role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
         navigate("/user/join", { replace: true });
@@ -76,10 +74,12 @@ const KaKaoOauth = () => {
       getUserInfo()
 
       if(data.role === "ROLE_IP"){//역할이 IP인 경우
+        localStorage.setItem("role","ip");
         navigate("/help/ip", { replace: true });
       }
 
       if(data.role === "ROLE_HELPER"){//역할이 Helper인경우
+        localStorage.setItem("role","helper");
         navigate("/help/helper", { replace: true });
       }
 
