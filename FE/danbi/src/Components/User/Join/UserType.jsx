@@ -16,7 +16,7 @@ const UserType = ({role, usertype, setUserType}) => {
     } catch (error) {
         console.error("에러 발생:", error);
     }
-  }, []);
+  }, [usertype]);
     
   return (
     <SelectWrap>
@@ -29,7 +29,7 @@ const UserType = ({role, usertype, setUserType}) => {
               </SelectBTN>
               { explainmode === 'ROLE_HELPER' ? <TextWrap>장애인분들에게 대면 / 비대면으로 도움을 제공해요</TextWrap> : null }
               <SelectBTN $default='ip' $select={role} onClick={()=>{
-                setUserType('ROLE_UNCERTIFICATED_IP'); setExplainMode('ip')}}>
+                setUserType('ROLE_UNCERTIFICATED_IP'); setExplainMode('ROLE_UNCERTIFICATED_IP')}}>
                 <p>도움을</p><p>받을래요</p>
               </SelectBTN>
               { explainmode === 'ROLE_UNCERTIFICATED_IP' ? <TextWrap>대면 / 비대면으로 이동과 기타 도움을 받아요</TextWrap> : null }

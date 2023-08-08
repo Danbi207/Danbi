@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import { useRef } from 'react';
 import styled from 'styled-components'
 
-const UserFile = (props) => {
+const UserFile = ({role, usertype, setUserType}) => {
   const hiddenFileInputRef = useRef();
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
   const [imageFiles, setImageFiles] = useState([]); // 이미지 파일들을 저장하기 위한 state
-
 
   const onChange = (e) => {
     const files = [...e.target.files]; 
