@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 
@@ -6,8 +6,25 @@ import Header from "../../../Common/Header/Header";
 import Footer from '../../../Common/Footer/Footer'
 import Calender from '../Home/Components/Calender';
 
+import {setUserInfo} from "../../../../store/Slice/userSlice";
+import { useDispatch } from "react-redux";
+import {authGet} from "../../../../Util/apis/api";
 const IPHome = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const getUserInfo = useCallback(async()=>{
+    try{
+      const data = await authGet("/api/v1/member");
+      if(data){
+        dispatch(setUserInfo(data));
+      }
+    }catch(err){
+      console.log(err.response);
+    }
+  },[dispatch]);
+
+  useEffect(()=>{getUserInfo()},[getUserInfo]);
 
   return (
     <IpHomeWrap>

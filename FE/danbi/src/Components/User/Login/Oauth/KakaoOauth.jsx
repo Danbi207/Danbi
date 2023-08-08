@@ -1,14 +1,11 @@
   import axios from 'axios';
 import React, { useEffect ,useCallback} from 'react';
-import { useDispatch} from "react-redux";
 import { useNavigate } from 'react-router';
 import { authGet, setToken,setTokenExpireTime } from '../../../../Util/apis/api';
-import {setUserInfo} from "../../../../store/Slice/userSlice";
 import {requestPermission} from '../../../../Util/hooks/requestPermission';
 
 const KaKaoOauth = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   
   const logout = useCallback(async () => {
     await authGet("/api/v1/member/logout");
@@ -18,18 +15,6 @@ const KaKaoOauth = () => {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
   },[])  
-
-  const getUserInfo = useCallback(async()=>{
-    try{
-      const data = await authGet("/api/v1/member");
-      if(data){
-        dispatch(setUserInfo(data));
-        console.log(data);
-      }
-    }catch(err){
-      console.log(err.response);
-    }
-  },[dispatch]);
 
   // FCM 토큰 함수 호출
   const  requestFcmToken = useCallback(async ()=> {
@@ -72,9 +57,6 @@ const KaKaoOauth = () => {
         return;
       }
 
-      //유저정보 조회 및 저장
-      getUserInfo()
-
       if(data.role === "ROLE_IP"){//역할이 IP인 경우
         localStorage.setItem("role","ip");
         navigate("/help/ip", { replace: true });
@@ -89,7 +71,7 @@ const KaKaoOauth = () => {
     }).catch((err)=>{
       console.log(err);
     });
-  },[dispatch,navigate,logout,requestFcmToken,getUserInfo])
+  },[navigate,logout,requestFcmToken])
   return (
     <></>
   )
