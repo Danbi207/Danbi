@@ -2,22 +2,32 @@ import React, { useState }  from 'react'
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { authPost, reissueAccessToken } from '../../../Util/apis/api';
-
+import { useNavigate } from 'react-router-dom';
 
 const UserType = ({ usertype, setUserType}) => {
   const [explainmode, setExplainMode] = useState('');
   const [role, setRole] = useState(usertype)
+  const navigate = useNavigate();
 
   const PutRole = useCallback(async () => {
     try {
       await authPost('/api/v1/member/role', {"role" : role});
       await reissueAccessToken();
-      localStorage.setItem('role', role);  
-      setUserType(role)
+      if (role === 'ROLE_HELPER'){
+        localStorage.setItem('helper')
+        navigate('/help/helper')
+        return;
+      }
+
+      if (role === "ROLE_UNSUBMIT_IP"){
+        localStorage.setItem('role', role);  
+        setUserType(role)
+        return;
+      }
     } catch (error) {
         console.error("에러 발생:", error);
     }
-  }, [role,setUserType]);
+  }, [role,setUserType,navigate]);
     
   return (
     <SelectWrap>
