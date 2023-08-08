@@ -14,7 +14,7 @@ const HelperHome = () => {
   const userInfo = useSelector(state=>state.user);
   const setUntact = useCallback(async () => {
     try{
-      const {data} = await authPost("/api/v1/untact",{gender:userInfo.gender});
+      const {data} = await authPost("/api/v1/help/untact",{gender:userInfo.gender});
       if(data){
         setHelpList(data);
         setMode("untact");
@@ -46,7 +46,7 @@ const HelperHome = () => {
   const setContact = useCallback(async() => {
     if(setCurPosition()){
       try{
-        const {data} = await authPost(`/api/v1/contact`,{
+        const {data} = await authPost(`/api/v1/help/contact`,{
           longitude:position.coord.longitude+"",
           latitude:position.coords.latitude+"",
           gender:userInfo.gender
@@ -65,7 +65,7 @@ const HelperHome = () => {
   const setMap = useCallback(async ()=>{
     if(setCurPosition()){
       try{
-        const {data} = await authPost(`/api/v1/contact`,{
+        const {data} = await authPost(`/api/v1/help/contact`,{
           longitude:position.coord.longitude+"",
           latitude:position.coords.latitude+"",
           gender:userInfo.gender
