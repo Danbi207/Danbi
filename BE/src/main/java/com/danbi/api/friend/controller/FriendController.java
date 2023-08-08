@@ -39,9 +39,9 @@ public class FriendController {
     }
 
     @Operation(summary = "친구관계 삭제 API", description = "친구관계 삭제 API")
-    @PostMapping("/delete/{friend_id}")
-    public ApiResponse<String> deleteFriend(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable Long friend_id) {
-        friendInfoService.deleteFriend(memberInfoDto.getMemberId(), friend_id);
+    @PostMapping("/delete/{friendId}")
+    public ApiResponse<String> deleteFriend(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("friendId") Long friendId) {
+        friendInfoService.deleteFriend(memberInfoDto.getMemberId(), friendId);
         return ApiResponse.ok("친구요청 삭제에 성공했습니다.");
     }
 
@@ -67,8 +67,8 @@ public class FriendController {
     }
 
     @Operation(summary = "내 친구인지 확인API", description = "내 친구인지 확인")
-    @GetMapping("/{member_id}")
-    public ApiResponse<Boolean> isMyFriend(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("member_id") Long memberId) {
+    @GetMapping("/{memberId}")
+    public ApiResponse<Boolean> isMyFriend(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("memberId") Long memberId) {
         return ApiResponse.ok(friendInfoService.isFriend(memberInfoDto.getMemberId(), memberId));
     }
 }
