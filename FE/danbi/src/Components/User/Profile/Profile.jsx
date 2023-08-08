@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
@@ -178,8 +178,17 @@ const Profile = () => {
   const cur_dew = useSelector((state) => state.Jandi.dew_point);
   
   // TODO : memberId redux 조회
-  const userId = useSelector((state) => state.userReducer.profileId);
-  const data1 = authGet(`/api/v1/profile/${userId}`);
+  const userId = useSelector((state) => state.user.profileId);
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const data1 = await authGet(`/api/v1/profile/${userId}`);
+      } catch(err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  })
 
   return (
     <ProfileWrap>
@@ -193,7 +202,7 @@ const Profile = () => {
             point={cur_dew}
             help_log={data.help_log}
             setPickModalOpen={setPickModalOpen}
-            item={data1.item}
+            item={data.item}
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}

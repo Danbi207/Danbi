@@ -34,12 +34,17 @@ const PresetDetail = ({ Content, PresetId, showDetail, setDeleteActive, setEditA
     setEditActive(false);
   };
 
-  const SaveDetail = () => {
-    showDetail(-1);
-    alert('저장되었습니다.');
-    setDeleteActive(false);
-    setEditActive(false);
-    authPut(`/api/v1/preset/update/${PresetId}`);
+  const SaveDetail = async () => {
+    try{
+      const data = await authPut(`/api/v1/preset/update/${PresetId}`);
+      console.log(data);
+      showDetail(-1);
+      alert('저장되었습니다.');
+      setDeleteActive(false);
+      setEditActive(false);
+    } catch(err) {
+      console.log(err);
+    }
   };
 
   const handleBtn = () => {

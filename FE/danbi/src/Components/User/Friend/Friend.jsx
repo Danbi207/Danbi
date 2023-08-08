@@ -76,8 +76,17 @@ const waittingFriends = [
 const Friend = () => {
 
     useEffect(() => {
-        const waittingFriends1 = authGet('/api/v1/friends/response');
-        const myFriends1 = authGet('/api/v1/friends');
+        const fetchData = async () => {
+            try {
+                const waittingFriends1 = authGet('/api/v1/friends/response');
+                const myFriends1 = authGet('/api/v1/friends');
+                console.log(waittingFriends1);
+                console.log(myFriends1);
+            } catch(err) {
+                console.log(err)
+            }
+        };
+        fetchData();
     }, [])
 
     return(

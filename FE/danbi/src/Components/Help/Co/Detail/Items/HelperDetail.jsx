@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffet } from 'react';
 import styled from 'styled-components';
 import UserInfo from './HelpDetail/UserInfo.jsx';
 import HelpDetailInfo from './HelpDetail/HelpDetailInfo.jsx';
 import AcceptButton from './HelpDetail/AcceptButton.jsx';
+import { authGet } from '../../../../../Util/apis/api.js';
 
 const data = {
   data: {
@@ -38,6 +39,19 @@ const data = {
 };
 
 const HelperDetail = ({ helpPostId }) => {
+
+  useEffet(() => {
+    const fetchData = async () => {
+      try {
+        const data1 = await authGet(`/api/v1/detail/${helpPostId}`);
+        console.log(data1)
+      } catch(err) {
+        console.log(err)
+      }
+    }
+    fetchData();
+  })
+
   return (
     <HelperDetailWrap>
       <UserInfo data={data.data} />

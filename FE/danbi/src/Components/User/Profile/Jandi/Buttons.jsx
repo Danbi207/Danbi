@@ -13,14 +13,18 @@ import { authPost } from '../../../../Util/apis/api';
 const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
     const dispatch = useDispatch();
 
-    const handlePickModal = (pickdata) => {
+    const handlePickModal = async (pickdata) => {
         setPickModalOpen(true);
-        const pickdata1 = authPost('/api/v1/item', {});
-        dispatch(setName(pickdata.item.name));
-        dispatch(setTier(pickdata.item.tier));
-        dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
-        dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-        dispatch(setDewPoint(pickdata.dew_point));
+        try {
+          const pickdata1 = await authPost('/api/v1/item', {});
+          dispatch(setName(pickdata.item.name));
+          dispatch(setTier(pickdata.item.tier));
+          dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+          dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+          dispatch(setDewPoint(pickdata.dew_point));
+        } catch(err) {
+          console.log(err);
+        }
     };
 
     return(
@@ -31,13 +35,13 @@ const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
         </DirectionBtns>
         <Wrap>
           <Dew>{pickdata.dew_point}Dew</Dew>
-          {/* <PickBtn
+          <PickBtn
             onClick={() => {
               handlePickModal(pickdata);
             }}
           >
             뽑기
-          </PickBtn> */}
+          </PickBtn>
         </Wrap>
       </Btns>
     )
