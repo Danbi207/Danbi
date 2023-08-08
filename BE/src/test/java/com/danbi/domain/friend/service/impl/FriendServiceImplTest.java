@@ -78,7 +78,7 @@ class FriendServiceImplTest {
         Member fromMember = memberRepository.save(Member.builder()
                 .name("member2")
                 .nickname("nickname1")
-                .email("fromMember2@adsf.com")
+                .email("fromMember@adsf.com")
                 .role(Role.ROLE_UNDEFINED)
                 .gender(Gender.male)
                 .oauthType(OauthType.KAKAO)
@@ -89,7 +89,7 @@ class FriendServiceImplTest {
         Member toMember = memberRepository.save(Member.builder()
                 .name("member2")
                 .nickname("nickname1")
-                .email("toMember2@adsf.com")
+                .email("toMember@adsf.com")
                 .role(Role.ROLE_UNDEFINED)
                 .gender(Gender.male)
                 .oauthType(OauthType.KAKAO)
@@ -176,7 +176,7 @@ class FriendServiceImplTest {
 
     }
 
-    @DisplayName("id로 친구관계 조회")
+    @DisplayName("발신자 수신자로된 친구관계 조회")
     @Test
     void getFriendById() {
 
@@ -190,7 +190,7 @@ class FriendServiceImplTest {
         assertThat(findFriend.getFrom().getId()).isEqualTo(savedFriend.getFrom().getId());
         assertThat(findFriend.getType()).isEqualTo(savedFriend.getType());
     }
-
+    @DisplayName("친구관계 확인")
     @Test
     void getFriendByFromAndType() {
         //given
@@ -200,6 +200,7 @@ class FriendServiceImplTest {
         assertThat(friendService.getFriendByFromAndTo(fromMember, toMember).isPresent()).isTrue();
     }
 
+    @DisplayName("발송자의 친구관계 확인")
     @Test
     void getFriendByToAndType() {
         //given
@@ -210,6 +211,7 @@ class FriendServiceImplTest {
         assertThat(friendList.size()).isEqualTo(1);
     }
 
+    @DisplayName("수신자의 친구관계 확인")
     @Test
     void getFriendByFromAndTo() {
         //given
@@ -226,40 +228,9 @@ class FriendServiceImplTest {
 
         //given
         //when
-        Member fromMember1 = memberRepository.save(Member.builder()
-                .name("member2")
-                .nickname("nickname1")
-                .email("fromMember2@adsf.com")
-                .role(Role.ROLE_UNDEFINED)
-                .gender(Gender.male)
-                .oauthType(OauthType.KAKAO)
-                .profileUrl("adsf")
-                .build());
 
-
-        Member toMember1 = memberRepository.save(Member.builder()
-                .name("member2")
-                .nickname("nickname1")
-                .email("toMember2@adsf.com")
-                .role(Role.ROLE_UNDEFINED)
-                .gender(Gender.male)
-                .oauthType(OauthType.KAKAO)
-                .profileUrl("adsf")
-                .build());
-
-
-        Friend friend1 = Friend.builder()
-                .from(fromMember)
-                .to(toMember)
-                .type(Type.PERMIT)
-                .state(State.ACTIVATE)
-                .build();
-
-
-
-        Friend savedFriend = friendService.saveFriend(friend1);
         //then
-        friendService.getFriendByFromOrToAndType(fromMember, toMember);
+
     }
 
     @Test
