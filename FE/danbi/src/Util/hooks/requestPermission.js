@@ -35,10 +35,10 @@ export const requestPermission = async () => {
   const res =  await authPost('/api/v1/fcm/token', Token)
     if (res) {
       console.log('FCM 토큰을 가져왔습니다.')
+      console.log(Token);
     }
     else {
       console.log('FCM 토큰을 가져올 수 없습니다.')
-      console.log(Token);
     }
 
   onMessage(messaging, (payload) => {
