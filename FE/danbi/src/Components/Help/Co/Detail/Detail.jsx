@@ -10,8 +10,8 @@ const Detail = () => {
   const { role } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    if (role === 'IP') {
-      navigate('/iprequest', { state: { helpPostId: helpPostId } });
+    if (role === 'ip') {
+      navigate('/help/ip/request', { state: { helpPostId: helpPostId } });
     }
   }, [role, helpPostId, navigate])
   return (
