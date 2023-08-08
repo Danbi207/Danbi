@@ -42,7 +42,7 @@ const Input = styled.input`
 `
 const Label = styled.label`
   padding-left: 1rem;
-  display: inline-block;
+  /* display: inline-block; */
 ` 
 
 

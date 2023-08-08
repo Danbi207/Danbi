@@ -192,11 +192,11 @@ const Calendar = () => {
 
 const CalenderWrap = styled.div `
   width: 90%;
-  height: 50%;
+  height: auto
   /* position: relative;
   left: 5%;
-  top: 5%; */
-  /* background-color: #e9b5b5; */
+  top: 5%;  */
+  /* background-color: #e9b5b5;*/
 `
 
 const HeaderWrap = styled.div `

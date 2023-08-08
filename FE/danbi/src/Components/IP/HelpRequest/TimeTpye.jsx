@@ -35,16 +35,22 @@ const TimeTpye = ({location}) => {
   
   return (
     <Wrap>
+      <SelectWrap>
       <CalendarWrap>
         <Calendar/>
         <TimeSelect/>
-        <TimeWrap>
         <PresetName>이용 시간</PresetName>
-
-        </TimeWrap>
+        <ButtonWrap>
+          <TimeButton>15분</TimeButton>
+          <TimeButton>30분</TimeButton> 
+          
+          <TimeButton>45분</TimeButton>
+          <TimeButton>60분</TimeButton>
+        </ButtonWrap>
       </CalendarWrap>
         <Checkbox></Checkbox>
         {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
+        </SelectWrap>
     </Wrap>
   )
 } 
@@ -59,16 +65,33 @@ const CalendarWrap = styled.div`
   height: 60%;
 `
 
+const SelectWrap = styled.div`
 
-const TimeWrap = styled.div`
-  width: 90%;
-  height: 25%;
-  background-color: blue;
+
 `
 
 const PresetName = styled.div `
     height: 3rem;
     padding: 1rem;
+`
+
+const ButtonWrap = styled.div`
+  width: 90%;
+  height: 17%;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-around;
+  /* align-content: start; */
+  background-color: blue;
+`
+
+const TimeButton = styled.button`
+  width: 7rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  border: 1px solid #000;
+  border-radius: 5rem;
+  background-color: white;
 `
 
 
@@ -79,8 +102,8 @@ const RequestBTN = styled.button`
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
-  background-color: #6161FF;
-  color: #fff;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=>props.theme.colors.buttontextColor};
   font-size : 2rem;
   @media screen and (max-width: 500px) {
     width: 20rem;
