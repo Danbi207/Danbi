@@ -24,10 +24,13 @@ const HelpDetailInfo = ({ data }) => {
         <CautionHeader>주의 사항</CautionHeader>
         <CautionBody>{data.caution}</CautionBody>
       </CautionInfo>
-      <MapInfo>
-        <MapHeader>위치 정보</MapHeader>
-        <DetailMap position={data.position} />
-      </MapInfo>
+      {
+        data.faceFlag ? null :
+        <MapInfo>
+          <MapHeader>위치 정보</MapHeader>
+          <DetailMap position={data.position} />
+        </MapInfo>
+      }
     </DetailWrap>
   );
 };
