@@ -1,8 +1,10 @@
 import React,{useEffect,useCallback} from 'react'
 import styled from 'styled-components';
-import { reissueAccessToken } from '../../../Util/apis/api';
+import { authGet, reissueAccessToken } from '../../../Util/apis/api';
+import {setUserInfo} from "../../../store/Slice/userSlice";
 import { useNavigate } from 'react-router-dom';
 import { requestPermission } from '../../../Util/hooks/requestPermission';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ const Login = () => {
         navigate("/help/helper", { replace: true });
       }
     }
-  },[navigate,requestFcmToken]);
+  },[navigate,requestFcmToken,getUserInfo]);
 
   useEffect(()=>{
     autoLogin();
