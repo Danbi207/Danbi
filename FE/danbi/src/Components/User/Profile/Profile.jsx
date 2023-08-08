@@ -11,6 +11,7 @@ import GuestBook from './GuestBook/GuestBook.jsx';
 import PresetModal from './Preset/PresetModal.jsx';
 import PickModal from './Utils/PickModal.jsx';
 import { authGet } from '../../../Util/apis/api.js';
+import { useParams } from 'react-router-dom';
 
 const data = {
   profile_id: 1,
@@ -179,8 +180,8 @@ const Profile = () => {
   
 
   console.log('영재형 바보임');
-  // TODO : memberId redux 조회
-  const userId = useSelector((state) => state.user.profileId);
+  // TODO : userId params 조회
+  const {userId} = useParams();
   console.log(userId);
   useEffect(() => {
     const fetchData = async () => {

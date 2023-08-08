@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import styled from 'styled-components';
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
   const navigate = useNavigate();
+  const userId = useSelector(state=>state.user.userId);
 
   /* Todo : 1. setting에서 해당하는 모드에 따라 white, black 이미지를 가져올 수 있게(theme.js 참고) 
   2. Mode를 통해 해당되는 페이지에 이동시 Filled 이미지가 나올 수 있게 */
@@ -20,9 +21,9 @@ const Footer = () => {
 
   return (
     <FooterWrap>      
-      <FriendsImg $mode={mode} onClick={()=>{setMode("friend"); navigate("/friend")}}></FriendsImg>
-      <Homeimg $mode={mode} onClick={()=>{setMode("home"); navigate("/helper") }}></Homeimg>
-      <ProfileImg $mode={mode} onClick={()=>{setMode("profile"); navigate("/profile") }}></ProfileImg>
+      <FriendsImg $mode={mode} onClick={()=>{setMode("friend"); navigate("/user/friend")}}></FriendsImg>
+      <Homeimg $mode={mode} onClick={()=>{setMode("home"); navigate(`/help/${localStorage.getItem("role")}`) }}></Homeimg>
+      <ProfileImg $mode={mode} onClick={()=>{setMode("profile"); navigate(`/user/profile/${userId}`) }}></ProfileImg>
     </FooterWrap> 
   )
 }

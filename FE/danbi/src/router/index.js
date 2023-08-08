@@ -43,7 +43,7 @@ const routes = [
     Component : MatchedHelp
   },
   {
-    path: "/user/profile/:meberId",
+    path: "/user/profile/:userId",
     Component:Profile
   },
   {
