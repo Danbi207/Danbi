@@ -64,3 +64,5 @@ cloud:
     credentials:
       access-key: asdfdsaf
       secret-key: asdfsdfas
+fcm:
+  certification: firebase/firebase_service_key.json

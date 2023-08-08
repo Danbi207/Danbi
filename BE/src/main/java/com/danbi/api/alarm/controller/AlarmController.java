@@ -49,23 +49,23 @@ public class AlarmController {
 
     @Operation(summary = "알림 읽음처리 API", description = "알림 읽음처리")
     @GetMapping("/read")
-    ResponseEntity<String> readAlarm(@MemberInfo MemberInfoDto memberInfoDto) {
+    ApiResponse<String> readAlarm(@MemberInfo MemberInfoDto memberInfoDto) {
         alarmInfoService.readAlarm(memberInfoDto.getMemberId());
-        return ResponseEntity.ok("알림을 읽음 처리했습니다.");
+        return ApiResponse.ok("알림을 읽음 처리했습니다.");
     }
 
     @Operation(summary = "알림 삭제처리 API", description = "알림 삭제처리")
     @DeleteMapping("/{alarm_id}")
-    ResponseEntity<String> deleteAlarm(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("alarm_id") Long alarmId) {
+    ApiResponse<String> deleteAlarm(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("alarm_id") Long alarmId) {
         alarmInfoService.deleteAlarm(memberInfoDto.getMemberId(), alarmId);
-        return ResponseEntity.ok("알림을 삭제 처리했습니다.");
+        return ApiResponse.ok("알림을 삭제 처리했습니다.");
     }
 
     @Operation(summary = "알림 생성 API", description = "알림 생성")
     @PostMapping
-    ResponseEntity<String> registerAlarm(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody RequestAlarmDto requestAlarmDto) {
+    ApiResponse<String> registerAlarm(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody RequestAlarmDto requestAlarmDto) {
         alarmInfoService.registerAlarm(memberInfoDto.getMemberId(), requestAlarmDto);
-        return ResponseEntity.ok("알림을 생성했습니다.");
+        return ApiResponse.ok("알림을 생성했습니다.");
     }
 
 }
