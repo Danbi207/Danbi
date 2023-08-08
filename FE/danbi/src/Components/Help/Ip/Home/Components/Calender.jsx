@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
@@ -45,7 +44,7 @@ const Calendar = () => {
     return help[year][month][day];
   }
 
-  // 캘린더에서 달마다 목록 가져오는 예시
+  // 캘린더에서 달마다 목록을 가져오게 만들기
   const GetMonth = useCallback(async (year, month) => {
     const res = {};
     try {
@@ -79,9 +78,9 @@ const Calendar = () => {
     }
   },[])
 
-  useEffect(()=>{
-    GetMonth();
-  }, [GetMonth]);
+  // useEffect(()=>{
+  //   GetMonth();
+  // }, [GetMonth]);
   
   const nextMonth = ()=> {
     let temp = month+1;
@@ -103,10 +102,11 @@ const Calendar = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect((year, month) => {
     //DO : 달이 바뀔때마다 주차 수를 자동으로 계산
     setWeekCnt(getWeek(year, month));
-  }, [year, month]);
+    GetMonth();
+  }, [year, month, GetMonth]);
 
   // 요일을 가져오는 로직
   const getWeekItems = () => {
