@@ -30,4 +30,6 @@ public interface FriendService {
 
     void validateDuplicateFriend(Friend friend);
     public boolean isFriend(Friend friend);
+
+    public boolean checkFriend(Long fromMemberId, Long toMemberId);
 }
