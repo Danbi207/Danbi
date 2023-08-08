@@ -5,15 +5,16 @@ import Footer from "../../../Common/Footer/Footer.jsx"
 import HelpList from "./Components/HelpList/HelpList.jsx"
 import HelpMap from "./Components/HelpMap/HelpMap.jsx"
 import Tap from "./Components/Tap/Tap.jsx"
-import {authGet} from "../../../../Util/apis/api.js"
+import {authGet, authPost} from "../../../../Util/apis/api.js"
+import { useSelector } from 'react-redux';
 const HelperHome = () => {
   const [mode,setMode] = useState("unntact");
   const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
-
+  const userInfo = useSelector(state=>state.user);
   const setUntact = useCallback(async () => {
     try{
-      const {data} = await authGet("/api/v1/untact");
+      const {data} = await authPost("/api/v1/untact",{gender:userInfo.gender});
       if(data){
         setHelpList(data);
         setMode("untact");
@@ -45,7 +46,11 @@ const HelperHome = () => {
   const setContact = useCallback(async() => {
     if(setCurPosition()){
       try{
-        const {data} = await authGet(`/api/v1/contact/${position.coord.longitude}/${position.coords.latitude}`);
+        const {data} = await authPost(`/api/v1/contact`,{
+          longitude:position.coord.longitude+"",
+          latitude:position.coords.latitude+"",
+          gender:userInfo.gender
+        });
         if(data){
           setHelpList(data);
           setMode("contact");
@@ -60,7 +65,11 @@ const HelperHome = () => {
   const setMap = useCallback(async ()=>{
     if(setCurPosition()){
       try{
-        const {data} = await authGet(`/api/v1/contact/${position.coord.longitude}/${position.coords.latitude}`);
+        const {data} = await authPost(`/api/v1/contact`,{
+          longitude:position.coord.longitude+"",
+          latitude:position.coords.latitude+"",
+          gender:userInfo.gender
+        });
         if(data){
           setHelpList(data);
           setMode("map");
