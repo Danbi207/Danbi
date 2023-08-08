@@ -2,8 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import example from './example-profile.jpg';
 import AccuseButton from './Utils/AccuseButton.jsx';
+import { useSelector } from 'react-redux';
 
 const UserInfo = () => {
+  const profileUrl = useSelector(state => state.userReducer.profileUrl);
+
   return (
     <UserInfoWrap>
       <ProfileImage src={example} alt="img" />

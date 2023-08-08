@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import ex from '../example-profile.jpg';
 
-const GuestBookComment = ({ comment }) => {
+// userName이 redux의 name과 같으면 수정/삭제 버튼
+const GuestBookComment = ({ comment, userName }) => {
+
   return (
     <CommentWrap>
       <GuestImg src={ex} alt="프로필 사진" />
