@@ -25,6 +25,7 @@ const KaKaoOauth = () => {
       const data = await authGet("/api/v1/member");
       if(data){
         dispatch(setUserInfo(data));
+        console.log(data);
       }
     }catch(err){
       console.log(err.response);
