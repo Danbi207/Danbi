@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
 import { authDelete } from '../../../../Util/apis/api';
-import { async } from '@firebase/util';
 
 const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);

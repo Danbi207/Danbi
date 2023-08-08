@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Waitting from './Items/Waitting';
 import Header from '../../Common/Header/Header';
