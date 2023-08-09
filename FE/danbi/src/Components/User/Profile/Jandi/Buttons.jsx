@@ -21,7 +21,7 @@ const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
           dispatch(setTier(pickdata.item.tier));
           dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
           dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-          dispatch(setDewPoint(pickdata.dew_point));
+          dispatch(setDewPoint(pickdata.dewPoint));
         } catch(err) {
           console.log(err);
         }
@@ -34,7 +34,7 @@ const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
           <GrossBtn onClick={nextGross}>다음</GrossBtn>
         </DirectionBtns>
         <Wrap>
-          <Dew>{pickdata.dew_point}Dew</Dew>
+          <Dew>{pickdata.dewPoint}Dew</Dew>
           <PickBtn
             onClick={() => {
               handlePickModal();

@@ -15,7 +15,7 @@ import { authPost } from '../../../../Util/apis/api';
 
 const PickModal = ({ setPickModalOpen }) => {
   const [ShowAnimation, setShowAnimation] = useState(true);
-  const cur_dew = useSelector((state) => state.Jandi.dew_point);
+  const cur_dew = useSelector((state) => state.Jandi.dewPoint);
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
   const cur_Name = useSelector((state) => state.Jandi.item.name);
@@ -49,7 +49,7 @@ const PickModal = ({ setPickModalOpen }) => {
   
   const dispatch = useDispatch();
   
-  const handlePickModal = async (pickdata) => {
+  const handlePickModal = async () => {
     try{
       setShowAnimation(true);
       const pickdata = await authPost('/api/v1/item', {});
@@ -60,7 +60,7 @@ const PickModal = ({ setPickModalOpen }) => {
         dispatch(setTier(pickdata.item.tier));
         dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
         dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-        dispatch(setDewPoint(pickdata.dew_point));
+        dispatch(setDewPoint(pickdata.dewPoint));
         if(pickdata.item.tier === 'legandary'){
           Jsconfetti.addConfetti({
             confettiColors: [

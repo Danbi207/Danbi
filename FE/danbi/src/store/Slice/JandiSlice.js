@@ -9,7 +9,7 @@ export const JandiSlice = createSlice({
 			checkedRgb : "#006D32",
 			tier : "COMMON"
 		},
-		dew_point : 123456,
+		dewPoint : 123456,
     },
     reducers: {
         setUnchedkedRgb: (state, action) => {
@@ -25,7 +25,7 @@ export const JandiSlice = createSlice({
             state.item.tier = action.payload
         },
         setDewPoint: (state, action) => {
-            state.data = action.payload
+            state.dewPoint = action.payload
         }
     }
 });
