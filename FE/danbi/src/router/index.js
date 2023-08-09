@@ -9,6 +9,8 @@ import UserSubmit from "../Components/User/Join/UserSubmit";
 import IPHome from "../Components/Help/Ip/Home/IPHome";
 import HelperHome from "../Components/Help/Helper/Home/HelperHome";
 import Test from "../Components/TEST/TEST"
+import IpMap from '../Components/Help/Ip/Request/Components/Map/IpMap'
+
 const routes = [
   {
     path: "/",
@@ -29,6 +31,10 @@ const routes = [
   {
     path : "/help/ip/request",
     Component : IpRequest
+  },
+  {
+    path : "/help/ip/request/map/:mode",
+    Component : IpMap
   },
   {
     path : "/help/helper",

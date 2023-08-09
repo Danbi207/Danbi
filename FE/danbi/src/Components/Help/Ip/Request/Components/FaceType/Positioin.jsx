@@ -37,7 +37,7 @@ const Positioin = () => {
     } else {
       alert('GPS를 지원하지 않습니다.')
     };
-    navigate(`/ipmap/${mode}` )
+    navigate(`/help/ip/request/map/${mode}` )
   }
   
   return (
