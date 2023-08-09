@@ -31,6 +31,9 @@ const PresetModal = ({ setModalOpen }) => {
   }, [fetchData]);
 
   const handleSave = async () => {
+    for(let i=0; i < presetList.length; i++){
+      presetList[i].sequence = i;
+    }
     await authPost(`api/v1/preset/sequence`, presetList);
   }
 
