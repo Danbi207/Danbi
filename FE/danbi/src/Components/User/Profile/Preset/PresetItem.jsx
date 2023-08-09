@@ -7,9 +7,10 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
     const [DeleteActive, setDeleteActive] = useState(false);
     console.log(value.id);
-    const callConfirm = async () => {
+    const callConfirm = async (e) => {
         if(window.confirm('삭제함?')){
             try{
+                e.prevenDefault(); 
                 const data = await authDelete(`/api/v1/preset/${value.id}`, {});
                 console.log(data);
                 alert('삭제됨');

@@ -4,8 +4,8 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { getSpeech } from '../Utils/TTS';
 import { authPut } from '../../../../Util/apis/api';
 
-const PresetDetail = ({ Content, PresetId, showDetail, setDeleteActive, setEditActive }) => {
-  const [value, setValue] = useState(Content);
+const PresetDetail = ({ content, PresetId, showDetail, setDeleteActive, setEditActive }) => {
+  const [value, setValue] = useState(content);
 
   const {
     transcript,
