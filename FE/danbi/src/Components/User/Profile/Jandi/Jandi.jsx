@@ -58,7 +58,7 @@ const Jandi = ({ help_log, setPickModalOpen, item }) => {
       y: e.clientY,
       show: idx !== ShowOverLay.idx,
       idx,
-      content: help_log[idx].created_time,
+      content: help_log[idx].createdTime,
     });
   };
   const GrossItems = useMemo(() => {
