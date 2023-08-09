@@ -34,7 +34,10 @@ const PresetModal = ({ setModalOpen }) => {
     for(let i=0; i < presetList.length; i++){
       presetList[i].sequence = i;
     }
-    await authPost(`api/v1/preset/sequence`, presetList);
+    const config = {
+      "presets": presetList
+    }
+    await authPost(`api/v1/preset/sequence`, config);
   }
 
   return (
