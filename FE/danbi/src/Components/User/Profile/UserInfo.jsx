@@ -6,7 +6,7 @@ import { authPost } from '../../../Util/apis/api.js';
 const UserInfo = ({url, name, targetId}) => {
   const handlePlus = async () => {
     const data = {
-      "targetId": targetId
+      "target_id": targetId
     }
     const res = await authPost('/api/v1/friends', data);
     console.log(res);

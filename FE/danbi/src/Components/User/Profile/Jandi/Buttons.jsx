@@ -17,7 +17,7 @@ const Buttons = ({prevGross, nextGross, setPickModalOpen, dewPoint}) => {
         try {
           const pickdata = await authPost('/api/v1/item', {});
           dispatch(setName(pickdata.item.name));
-          dispatch(setTier(pickdata.item.tier));
+          dispatch(setTier(pickdata.item.ranking));
           dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
           dispatch(setCheckedRgb(pickdata.item.checkedRgb));
           dispatch(setDewPoint(pickdata.dewPoint));
