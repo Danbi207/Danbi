@@ -40,7 +40,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     @Override
     public List<HelpPostQueryDto> search(String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostQueryDto.class,
-                        helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
+                        helpPost.id, member.id, member.name, member.profileUrl, helpPost.content,
                         positions.longitude, positions.latitude, helpPost.startTime, helpPost.endTime,
                         helpPost.emergencyFlag, member.accuseStack
                 ))
@@ -50,8 +50,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .leftJoin(member.profile, profile)
                 .where(
                         helpPost.faceFlag.eq(false),
-                        helpPost.state.ne(State.DELETE),
-                        helpPost.state.ne(State.COMPLETED),
+                        helpPost.state.eq(State.ACTIVATE),
                         searchByGender(gender)
                 )
                 .fetch();
@@ -60,7 +59,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     @Override
     public List<HelpPostFaceDto> searchFace(String longitude, String latitude, String gender) {
         return jpaQueryFactory.select(Projections.constructor(HelpPostFaceDto.class,
-                        helpPost.id, member.id, member.name, member.profileUrl, helpPost.caution,
+                        helpPost.id, member.id, member.name, member.profileUrl, helpPost.content,
                         positions.meetLongitude, positions.meetLatitude, positions.meetAddr,
                         helpPost.startTime, helpPost.endTime, helpPost.emergencyFlag ,member.accuseStack))
                 .from(helpPost)
@@ -71,8 +70,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
                         positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
                         helpPost.faceFlag.eq(true),
-                        helpPost.state.ne(State.DELETE),
-                        helpPost.state.ne(State.COMPLETED),
+                        helpPost.state.eq(State.ACTIVATE),
                         searchByGender(gender)
                 )
                 .fetch();
@@ -167,7 +165,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .where(helpPost.startTime.between(startTime,endTime)
                                 .or(helpPost.endTime.between(startTime,endTime)),
                         helpPost.member.id.eq(memberId),
-                        helpPost.state.ne(State.DELETE))
+                        helpPost.state.notIn(State.DELETE,State.COMPLETED)
+                        )
                 .fetch();
     }
 
