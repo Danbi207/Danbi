@@ -1,7 +1,6 @@
 import React, { useState,useCallback,useEffect, useRef } from 'react'
 import styled  from 'styled-components';
 import HelpMapItemMobile from "./HelpMapItemMobile.jsx";
-import { useNavigate } from 'react-router-dom';
 import {Map,CustomOverlayMap} from "react-kakao-maps-sdk";
 import HelpMapItemPC from './HelpMapItemPC.jsx';
 
@@ -20,14 +19,30 @@ const HelpMap = ({position,helpList}) => {
   },[]);
 
   const getMarker = useCallback((help,idx)=>{
-    if(emergencyFlag){
+    if(help.emergencyFlag){
       return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
-        <Marker src={`${process.env.PUBLIC_URL}/assets/haste.svg`} onClick={()=>showDetail(help,idx)} >
+        <Marker $haste={true} src={`${process.env.PUBLIC_URL}/assets/haste.svg`} onClick={()=>showDetail(help,idx)} >
           <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
           <div onClick={()=>setVisible("none")}>X</div>
         </Marker>;
       </CustomOverlayMap>
     }
+
+    if(help.friendFlag){
+      return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
+        <Marker $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
+          <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
+          <div onClick={()=>setVisible("none")}>X</div>
+        </Marker>;
+      </CustomOverlayMap>
+    }
+
+    return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
+        <Marker $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
+          <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
+          <div onClick={()=>setVisible("none")}>X</div>
+        </Marker>;
+      </CustomOverlayMap>
   },[]);
 
   return (
@@ -51,12 +66,22 @@ const HelpMapWrap = styled.div`
   width: 100%;
   height: 100%;
 `
+const moveY = keyframes`
+  from{
+    transform: translateY(0);
+  }
+  to{
+    transform: translateY(10px);
+  }
+`
 
 const Marker = styled.img`
   width: 1rem;
   height: 1rem;
   cursor: pointer;
   position: relative;
+  animation: ${props=>props.$haste ? moveY : null} 0.3s linear 0s infinite alternate;
+
   &>:last-child{
     position: absolute;
     top: 0.25rem;
