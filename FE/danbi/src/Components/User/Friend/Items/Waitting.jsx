@@ -19,11 +19,8 @@ const Waitting = ({ value }) => {
   };
 
   const handleDelete = async () => {
-    const target_id = {
-      targetId: value.targetId,
-    };
     try {
-      const res = await authDelete('/api/v1/friends/delete', target_id);
+      const res = await authDelete(`/api/v1/friends/delete/${value.targetId}`, {});
       console.log(res);
     } catch (err) {
       console.log(err);
