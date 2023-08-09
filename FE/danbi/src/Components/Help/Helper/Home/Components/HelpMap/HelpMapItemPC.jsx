@@ -1,10 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-const HelpMapItemPC = ({help,visible,defaultIdx,curIdx}) => {
+const HelpMapItemPC = ({help,visible,defaultIdx,curIdx,setCurIdx}) => {
   const navigate = useNavigate();
   return (
     <HelpMapItemWrap $visible={visible==="pc" && defaultIdx===curIdx}>
+      <div onClick={()=>setCurIdx(-1)}>X</div>
       <RowWrap>
         <UserWrap>
           <div>
@@ -26,7 +27,7 @@ const HelpMapItemPC = ({help,visible,defaultIdx,curIdx}) => {
         </UserWrap>
       </RowWrap>
       <HelpContent>{help.content}</HelpContent>
-      <DetailBtn onClick={()=>{navigate(`/help/helper/detail${help.helpPostId}`)}}>상세보기</DetailBtn>
+      <DetailBtn onClick={()=>{navigate(`/help/helper/detail/${help.helpPostId}`)}}>상세보기</DetailBtn>
     </HelpMapItemWrap>
   )
 }
@@ -95,8 +96,8 @@ const RowWrap = styled.div`
 `
 
 const HelpMapItemWrap = styled.div`
-  top: 0;
-  left: 15rem;
+  top: 1rem;
+  left: -15rem;
   position: absolute;
   width: 30rem;
   height: 19rem;
@@ -109,5 +110,11 @@ const HelpMapItemWrap = styled.div`
     white-space: nowrap;
   }
   visibility: ${props=>props.$visible ? "visible" : "hidden"};
+  &>:first-child{
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    cursor: pointer;
+  }
 `
 export default HelpMapItemPC;
