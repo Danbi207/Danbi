@@ -2,39 +2,15 @@ import React from 'react'
 import styled from 'styled-components';
 
 import Checkbox from './Checkbox';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Calendar from '../Calendar/Calender'
 import TimeSelect from './TimeSelect';
 import { setTabMode } from "../../../../../../store/Slice/ipSlice"
 import UseTime from './UseTime';
 
 const TimeTpye = () => {
-  const ip = useSelector(state => state.ip)
   const dispatch = useDispatch();
 
-  const ipData = {
-		"help_id" : 1,
-		 "position" : {
-				"cur_longitude" : "128.3444",
-				"cur_latitude" : "36.119485",
-				"cur_addr" : "",
-				"dest_longitude" : "128.3444",
-				"dest_latitude" : "128.3444",
-				"dest_addr" : "", 
-				"meet_longitude" : "128.3444",
-				"meet_latitude" : "128.3444",
-				"meet_addr" : "",
-			},
-      "category" : "ETC",
-      "caution" : "qweqweqwe", // 주의 사항(content)
-			"face_flag": ip.meetType === 'meet', // 대면
-			"reservation_flag": ip.meetType === 'reserve', // 예약
-			"content": ip.content, // 도움 상세정보
-			"start_time" : "2023-01-01 12:00",
-			"end_time" : "2023-01-01 13:00",
-  }
-
-  
   return (
     <Wrap>
       <CalendarWrap>
