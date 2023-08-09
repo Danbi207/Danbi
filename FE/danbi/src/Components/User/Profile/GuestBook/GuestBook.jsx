@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import example from '../example-profile.jpg';
 import GuestBookComment from './GuestBookComment';
 import { authPost } from '../../../../Util/apis/api';
 import { useSelector } from 'react-redux';
@@ -17,7 +16,7 @@ const GuestBook = ({ guestBookId, comments }) => {
       guestBookId,
     };
     try {
-      const data = authPost('/api/v1/guestbook', textJson);
+      const data = await authPost('/api/v1/guestbook', textJson);
       console.log(data);
     } catch (err) {
       console.log(err);
