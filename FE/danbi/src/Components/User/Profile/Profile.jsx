@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
 import Header from '../../Common/Header/Header.jsx';
 import Footer from '../../Common/Footer/Footer.jsx';
@@ -16,21 +15,33 @@ import { useParams } from 'react-router-dom';
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    "dewPoint": 0,
+    "profileUrl": "",
+    "helpLog": [],
+    "item": {},
+    "guestBookId": 0,
+    "comments": [],
+    "accusePoint": 0,
+    "profileId": 0,
+    "name": ""
+  });
+
   // TODO : userId params 조회
   const { userId } = useParams();
 
-  const fetchData = async () => {
-    try {
+  const fetchData = useCallback(async () => {
+      try {
       const res = await authGet(`/api/v1/profile/${userId}`);
-      console.log(res);
       setData(res);
-      console.log(data);
-    } catch (err) {
+      } catch (err) {
       console.log(err);
-    }
-  };
-  fetchData();
+      }
+    }, [userId]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   console.log(localStorage.getItem('role'));
 
