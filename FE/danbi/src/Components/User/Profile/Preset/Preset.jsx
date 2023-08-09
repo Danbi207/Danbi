@@ -9,7 +9,6 @@ const Preset = ({preset_list, setPresetList}) => {
   const showDetail = (title) => {
     setOpenTitle(title);
   };
-  
   const handleChange = (result) => {
     if (!result.destination) return;
     const items = [...preset_list];
@@ -34,7 +33,7 @@ const Preset = ({preset_list, setPresetList}) => {
                       key={index}
                       $isDragging={snapshot.isDragging}
                     >
-                      <PresetItem setPresetList={setPresetList} value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
+                      <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
                     </Wrap>
                   )}
                 </Draggable>
