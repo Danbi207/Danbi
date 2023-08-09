@@ -8,7 +8,7 @@ const Preset = () => {
 
   const getPresetInfo = useCallback(async () => {
     try {
-      const { data } = await authGet("/api/v1/preset");
+      const {data} = await authGet("/api/v1/preset");
       setPresetList(data); // data를 업데이트
     }
     catch(err) {
@@ -36,7 +36,6 @@ const Preset = () => {
       <Wrap>
         <PresetSelect onChange={handlePresetSelect}>
           <PresetOption value={0}>선택해주세요</PresetOption>
-
             {presetList.map((item, idx) => (
             <PresetOption key={idx + 1} value={idx + 1}>
               {item.title}
