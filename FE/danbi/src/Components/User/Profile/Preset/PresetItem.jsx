@@ -6,7 +6,7 @@ import { authDelete } from '../../../../Util/apis/api';
 const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
     const [DeleteActive, setDeleteActive] = useState(false);
-
+    console.log(value);
     const callConfirm = async () => {
         if(window.confirm('삭제함?')){
             try{
