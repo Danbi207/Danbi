@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import routes from "./router";
 import {dark,light} from "./style/theme.js";
 import { ThemeProvider } from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { getCookie} from './Util/hooks/cookie';
 import { setTheme } from "./store/Slice/settingSlice.js";
 import styled from 'styled-components';
@@ -19,7 +19,7 @@ export const Jsconfetti = new JSconfetti();
 
 function App() {
   const dispatch = useDispatch();
-  const [loading,setLoading] = useState(false);
+  const [loading,setLoading] = useState(true);
 
   useEffect(()=>{
     //axios 호출시 인터셉트
@@ -68,7 +68,7 @@ function App() {
         </BrowserRouter>
         <Modal/>
       </AppWrap>
-      <Loading/>
+      <Loading loading={loading}/>
     </ThemeProvider>
   );
 }
