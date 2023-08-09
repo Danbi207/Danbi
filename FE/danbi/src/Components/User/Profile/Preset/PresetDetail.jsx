@@ -37,7 +37,7 @@ const PresetDetail = ({ Content, PresetId, showDetail, setDeleteActive, setEditA
 
   const SaveDetail = async () => {
     try{
-      const data = await authPut(`/api/v1/preset/update/${PresetId}`);
+      const data = await authPut(`/api/v1/preset/update/${PresetId}`, {value});
       console.log(data);
       showDetail(-1);
       alert('저장되었습니다.');

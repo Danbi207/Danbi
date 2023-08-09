@@ -10,7 +10,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const callConfirm = async () => {
         if(window.confirm('삭제함?')){
             try{
-                const data = await authDelete(`/api/v1/preset/${value.id}`);
+                const data = await authDelete(`/api/v1/preset/${value.id}`, {});
                 console.log(data);
                 alert('삭제됨');
             } catch(err) {
