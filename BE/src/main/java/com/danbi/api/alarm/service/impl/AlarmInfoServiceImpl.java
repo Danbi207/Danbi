@@ -113,7 +113,8 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
         Alarm findAlarm = alarmService.getAlarmById(memberId, alarmId);
         if (findAlarm.getTo().getId() == memberId) {
             alarmService.deleteAlarmByTo(memberId, alarmId);
-        } else {
+        }
+        if(findAlarm.getFrom().getId() == memberId) {
             alarmService.deleteAlarmByFrom(memberId, alarmId);
         }
     }

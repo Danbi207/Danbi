@@ -1,11 +1,19 @@
 package com.danbi.domain.alarm.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum Type {
 
-    HELP("도움"),
-    JOIN("가입"),
-    FRIEND("친구"),
-    ACCUSE("신고")
+    HELP_MATCHING("도움매칭"),
+    HELP_IP_COMPLETE("IP 도움완료"),
+    HELP_HELPER_COMPLETE("HELPER 도움완료"),
+    HELP_CANCEL("도움취소"),
+    FRIEND_REQUEST("친구신청"),
+    FRIEND_PERMIT("친구승인"),
+
+    ACCUSE_SENT("신고발신"),
+    ACCUSE_PERMIT("신고승인"),
     ;
 
 

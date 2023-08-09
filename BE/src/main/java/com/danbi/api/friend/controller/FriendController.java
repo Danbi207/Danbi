@@ -4,6 +4,8 @@ import com.danbi.api.ApiResponse;
 import com.danbi.api.friend.dto.request.RequestFriendDto;
 import com.danbi.api.friend.dto.response.ResponseFriendListDto;
 import com.danbi.api.friend.service.FriendInfoService;
+import com.danbi.domain.alarm.constant.Type;
+import com.danbi.global.aop.NotificationTrace;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.resolver.memberinfo.MemberInfo;
@@ -21,6 +23,7 @@ public class FriendController {
 
     private final FriendInfoService friendInfoService;
 
+    @NotificationTrace(type= Type.FRIEND_REQUEST)
     @Operation(summary = "친구 요청 보내기 API", description = "친구 요청 보내기 API")
     @PostMapping
     public ApiResponse<String> requestFriend(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody RequestFriendDto requestFriendDto) {
@@ -28,6 +31,7 @@ public class FriendController {
         return ApiResponse.ok("친구요청에 성공했습니다.");
     }
 
+    @NotificationTrace(type = Type.FRIEND_PERMIT)
     @Operation(summary = "친구 요청 수락 API", description = "친구 요청 수락 API")
     @PostMapping("/permit")
     public ApiResponse<String> acceptFriend(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody RequestFriendDto requestFriendDto) {

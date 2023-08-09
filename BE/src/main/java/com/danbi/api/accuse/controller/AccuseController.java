@@ -5,6 +5,8 @@ import com.danbi.api.accuse.dto.accuse.AccuseRequestDto;
 import com.danbi.api.accuse.dto.accuse.AccuseResponseDto;
 import com.danbi.api.accuse.dto.detail.AccuseDetailResponseDto;
 import com.danbi.api.accuse.service.AccuseInfoService;
+import com.danbi.domain.alarm.constant.Type;
+import com.danbi.global.aop.NotificationTrace;
 import com.danbi.global.resolver.memberinfo.MemberInfo;
 import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +27,7 @@ public class AccuseController {
 
     private final AccuseInfoService accuseInfoService;
 
+    @NotificationTrace(type = Type.ACCUSE_SENT)
     @Operation(summary = "회원 신고 API", description = "회원 신고 API")
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ApiResponse<AccuseResponseDto> accuse(@MemberInfo MemberInfoDto memberInfoDto,
@@ -42,6 +45,7 @@ public class AccuseController {
         return ApiResponse.ok(accuseDetailResponseDto);
     }
 
+    @NotificationTrace(type = Type.ACCUSE_PERMIT)
     @Operation(summary = "신고 승인 API", description = "신고 승인 API")
     @GetMapping("/approval/{accuse_id}")
     public ApiResponse<String> approveAccuse(@PathVariable Long accuse_id) {
