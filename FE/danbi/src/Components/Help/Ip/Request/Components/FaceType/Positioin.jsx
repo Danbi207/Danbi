@@ -22,9 +22,9 @@ const Positioin = () => {
         setGeoPosition(geoPosition);
         dispatch(setCurLatitude(geoPosition.coords.latitude));
         dispatch(setCurLongitude(geoPosition.coords.longitude));
-        console.log(geoPosition)
-        console.log(geoPosition.coords.latitude)
-        console.log(geoPosition.coords.longitude)
+        // console.log(geoPosition)
+        // console.log(geoPosition.coords.latitude)
+        // console.log(geoPosition.coords.longitude)
         
       }, function(err) {
         alert('위치 동의가 필요합니다.');

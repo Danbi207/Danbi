@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const IpMap = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {mapid} = useParams();
+  const {mode} = useParams();
 
   const { kakao } = window;
   const mapRef = useRef();
@@ -43,7 +43,7 @@ const IpMap = () => {
       var latlng = mouseEvent.latLng;
       
       // eslint-disable-next-line no-unused-expressions
-      mapid === '0'
+      mode === '0'
       ? (dispatch(setMeetLongitude(latlng.getLat())),
         dispatch(setMeetLatitude(latlng.getLng())))
       : (dispatch(setDestLongitude(latlng.getLat())),
@@ -57,7 +57,7 @@ const IpMap = () => {
           var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
           var content = !!result[0].road_address ? '<div class="Wrap"><p>도로명주소 :' + detailAddr + '</p></div>' : 
           '<div class="Wrap"> <p>지번주소 :' + detailAddr + '</p></div>';
-          mapid === '0'
+          mode === '0'
           ? dispatch(setMeetAddr(detailAddr))
           : dispatch(setDestAddr(detailAddr));
           console.log(detailAddr);
