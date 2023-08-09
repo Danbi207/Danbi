@@ -98,7 +98,7 @@ const PickModal = ({ setPickModalOpen }) => {
             <CloseBtn onClick={CloseModal}>X</CloseBtn>
           </Header>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            {cur_Tier === 'Rare' ? <Tier $state={'rare'} style={{width: '1.7rem'}} /> : cur_Tier === 'Epic' ? <Tier $state={'epic'} style={{width: '4.5rem'}}/> : <Tier $state={'legendary'} style={{width: '4.5rem'}} />}
+            {cur_Tier === 'rare' ? <Tier $state={'rare'} style={{width: '1.7rem'}} /> : cur_Tier === 'epic' ? <Tier $state={'epic'} style={{width: '4.5rem'}}/> : <Tier $state={'legendary'} style={{width: '4.5rem'}} />}
           </div>
           <ContentWrap>
             <Example>
