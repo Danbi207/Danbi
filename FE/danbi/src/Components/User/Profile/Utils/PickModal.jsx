@@ -57,7 +57,7 @@ const PickModal = ({ setPickModalOpen }) => {
         setShowAnimation(false);
         setPickModalOpen(true);
         dispatch(setName(pickdata.item.name));
-        dispatch(setTier(pickdata.item.tier));
+        dispatch(setTier(pickdata.item.ranking));
         dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
         dispatch(setCheckedRgb(pickdata.item.checkedRgb));
         dispatch(setDewPoint(pickdata.dewPoint));

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { authPost } from '../../../../Util/apis/api';
 
-const PresetTextArea = ({ setOpenTextArea, length }) => {
+const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) => {
   const [textArea, setTextArea] = useState("");
   
   const SavePreset = async () => {
-    setOpenTextArea(false);
+    setOpenTextArea(!OpenTextArea);
     const textJson = {
       "title": textArea,
       "content": textArea,
@@ -14,6 +14,7 @@ const PresetTextArea = ({ setOpenTextArea, length }) => {
     }
     try{
       const data = await authPost('/api/v1/preset/create', textJson);
+      fetchData();
       console.log(data);
     } catch(err) {
       console.log(err);

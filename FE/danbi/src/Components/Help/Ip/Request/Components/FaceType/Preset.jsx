@@ -8,8 +8,14 @@ const Preset = () => {
 
   const getPresetInfo = useCallback(async () => {
     try {
-      const {data} = await authGet("/api/v1/preset");
-      setPresetList(data); // data를 업데이트
+      const data = await authGet("/api/v1/preset");
+      if (data){
+        console.log(data);
+        setPresetList(data.presetList); // data를 업데이트
+      }
+      else {
+        console.log('안되는 중')
+      }
     }
     catch(err) {
       console.log(err.error);
@@ -22,8 +28,8 @@ const Preset = () => {
 
   const handlePresetSelect = (e) => {
     let idx = parseInt(e.target.value); // 문자열을 숫자로 다시 포매팅
+    console.log(idx)
     if (idx !== 0) {
-      console.log(idx)
       setSelectedContent(presetList[idx-1].content);
     } else {
       setSelectedContent('');
@@ -36,7 +42,7 @@ const Preset = () => {
       <Wrap>
         <PresetSelect onChange={handlePresetSelect}>
           <PresetOption value={0}>선택해주세요</PresetOption>
-            {presetList && presetList.length > 0 && presetList.map((item, idx) => (
+            {presetList && presetList.map((item, idx) => (
             <PresetOption key={idx + 1} value={idx + 1}>
               {item.title}
             </PresetOption>

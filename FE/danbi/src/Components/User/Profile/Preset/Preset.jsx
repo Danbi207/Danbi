@@ -34,7 +34,7 @@ const Preset = ({preset_list, setPresetList}) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       key={index}
-                      isdragging={snapshot.isDragging}
+                      $isDragging={snapshot.isDragging}
                     >
                       <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
                     </Wrap>
@@ -62,7 +62,7 @@ width: 100%;
   justify-content: end;
   height: auto;
   margin-bottom: 0.5rem;
-  transform: ${props => props.isDragging ? 'scale(1.1)' : 'scale(1)'};
+  transform: ${props => props.$isDragging ? 'scale(1.1)' : 'scale(1)'};
 `;
 
 export default Preset;
