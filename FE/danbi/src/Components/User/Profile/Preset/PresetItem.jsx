@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
 import { authDelete } from '../../../../Util/apis/api';
@@ -8,22 +8,19 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [DeleteActive, setDeleteActive] = useState(false);
     console.log(value.id);
     
-    const callConfirm = async () => {
+    const callConfirm = useCallback(async () => {
         try{
             const deleteUrl = `/api/v1/preset/${value.id}`;
             console.log(deleteUrl);
             const data = await authDelete(deleteUrl, {});
             console.log(data);
             alert('삭제됨');
+            setDeleteActive(!DeleteActive); 
         } catch(err) {
             console.log(err);
         }
-    }
+    }, [value.id]);
 
-    const handleDelete = () => {
-        callConfirm();
-        setDeleteActive(!DeleteActive); 
-    }
 
     return(
         <>
@@ -36,7 +33,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                         <EditBtn onClick={() => {showDetail(value.title); setEditActive(!EditActive)}} $EditActive={EditActive} $DeleteActive={DeleteActive} >
                             <EditImg />
                         </EditBtn>
-                        <DeleteBtn onClick={handleDelete} $DeleteActive={DeleteActive} $EditActive={EditActive}>
+                        <DeleteBtn onClick={callConfirm} $DeleteActive={DeleteActive} $EditActive={EditActive}>
                             <DeleteImg />
                         </DeleteBtn>
                     </Btns>
