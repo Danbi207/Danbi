@@ -113,6 +113,12 @@ public class Member extends BaseEntity {
         this.accuseStack += 1;
     }
 
+    public void minusStack() {
+        if (this.accuseStack - 1 >= 0) {
+            this.accuseStack -= 1;
+        }
+    }
+
     public void updateRole(Role role) {
         validateRole(role);
         this.role = role;
