@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ResponseAlarmDto {
 
-    @JsonProperty("alarm_id")
+    @JsonProperty("alarmId")
     private Long alarmId;
 
-    @JsonProperty("from_name")
+    @JsonProperty("fromName")
     private String fromName;
 
-    @JsonProperty("to_name")
+    @JsonProperty("toName")
     private String toName;
 
     @JsonProperty("title")
@@ -32,11 +32,11 @@ public class ResponseAlarmDto {
     @JsonProperty("type")
     private Type type;
 
-    @JsonProperty("creat_time")
+    @JsonProperty("creatTime")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime createTime;
 
-    @JsonProperty("read_flag")
+    @JsonProperty("readFlag")
     private boolean readFlag;
 
 }
