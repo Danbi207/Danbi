@@ -52,7 +52,7 @@ const PickModal = ({ setPickModalOpen }) => {
   const handlePickModal = async (pickdata) => {
     try{
       setShowAnimation(true);
-      const pickdata1 = await authPost('/api/v1/item', {});
+      const pickdata = await authPost('/api/v1/item', {});
       setTimeout(() => {
         setShowAnimation(false);
         setPickModalOpen(true);
@@ -81,15 +81,6 @@ const PickModal = ({ setPickModalOpen }) => {
     }
   };
 
-  const pickdata = {
-    item: {
-      name: '보라',
-      uncheckedRgb: '#c283d4',
-      checkedRgb: '#a558b8',
-      tier: 'Rare',
-    },
-    dew_point: 123456,
-  };
 
   return (
     <PickModalWrap>
@@ -122,7 +113,7 @@ const PickModal = ({ setPickModalOpen }) => {
           <Footer>
             <AcceptBtn
               onClick={() => {
-                handlePickModal(pickdata);
+                handlePickModal();
               }}
             >
               한 번 더 사용하기

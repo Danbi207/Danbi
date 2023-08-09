@@ -117,16 +117,6 @@ const Jandi = ({ help_log, setPickModalOpen, item }) => {
     });
   };
 
-  const pickdata = {
-    item: {
-      name: '핑크소세지',
-      uncheckedRgb: '#FFACAC',
-      checkedRgb: '#FFEEBB',
-      tier: 'legandary',
-    },
-    dew_point: 123456,
-  };
-
   return (
     <ChartWrap>
       <ChartHeader>
@@ -139,7 +129,6 @@ const Jandi = ({ help_log, setPickModalOpen, item }) => {
       <Buttons
         prevGross={prevGross}
         nextGross={nextGross}
-        pickdata={pickdata}
         setPickModalOpen={setPickModalOpen}
       />
       {ShowOverLay.show && (

@@ -49,7 +49,7 @@ const Profile = () => {
     <ProfileWrap>
       <Header />
       <Wrap>
-        <UserInfo url={data.profileUrl} />
+        <UserInfo url={data.profileUrl} name={data.name} />
         {localStorage.getItem('role') === 'ip' ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
         ) : null}

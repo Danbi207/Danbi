@@ -16,7 +16,7 @@ const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
     const handlePickModal = async (pickdata) => {
         setPickModalOpen(true);
         try {
-          const pickdata1 = await authPost('/api/v1/item', {});
+          const pickdata = await authPost('/api/v1/item', {});
           dispatch(setName(pickdata.item.name));
           dispatch(setTier(pickdata.item.tier));
           dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
@@ -37,7 +37,7 @@ const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
           <Dew>{pickdata.dew_point}Dew</Dew>
           <PickBtn
             onClick={() => {
-              handlePickModal(pickdata);
+              handlePickModal();
             }}
           >
             뽑기
