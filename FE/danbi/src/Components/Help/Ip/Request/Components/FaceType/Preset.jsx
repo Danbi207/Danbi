@@ -14,7 +14,7 @@ const Preset = () => {
     try {
       const data = await authGet("/api/v1/preset");
       if (data){
-        console.log(data);
+        // console.log(data);
         setPresetList(data.presetList); // data를 업데이트
       }
       else {

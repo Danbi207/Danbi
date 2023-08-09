@@ -14,7 +14,6 @@ import { authPost } from '../../../../../../Util/apis/api';
 function FaceType({location}) {
   const dispatch = useDispatch();
   const ip = useSelector(state => state.ip)
-  console.log(ip);
   const meetType = ip.meetType
   const currentDay = ip.currentDay
   const currentTime = ip.currentTime
@@ -50,8 +49,8 @@ function FaceType({location}) {
 
     setEndTime(formatDateTime(currentDay, [endHour, endMinute]));
 
-    console.log(`startTime: ${starttime}`);
-    console.log(`endTime: ${endtime}`);
+    // console.log(`startTime: ${starttime}`);
+    // console.log(`endTime: ${endtime}`);
   },[])
   
   

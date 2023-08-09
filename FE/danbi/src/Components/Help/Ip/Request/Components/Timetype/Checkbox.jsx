@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
@@ -7,10 +7,6 @@ import {setIsChecked} from '../../../../../../store/Slice/ipSlice';
 const Checkbox = () => {
   const dispatch = useDispatch();
   const ischecked = useSelector(state => state.ip.ischecked);
-
-  // useEffect(()=>{
-  //   console.log(ischecked)
-  // }, [ischecked])
 
   return (
     <>    
@@ -42,8 +38,6 @@ const Input = styled.input`
 `
 const Label = styled.label`
   padding-left: 1rem;
-  /* display: inline-block; */
 ` 
-
 
 export default Checkbox;
