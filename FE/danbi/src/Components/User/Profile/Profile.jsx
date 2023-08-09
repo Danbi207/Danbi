@@ -45,18 +45,15 @@ const Profile = () => {
 
   useEffect(() => {
     fetchData();
+    // 현재 프로필과 나의 정보 일치 유무
+    const cur_id = useSelector((state) => state.user.id);
+    if (userId === cur_id) {
+      setDewPoint(data.dewPoint);
+      setMyProfile(true);
+    } else {
+      setDewPoint(data.accumulatePoint);
+    }
   }, []);
-
-  const cur_id = useSelector((state) => state.user.id);
-
-  if (userId === cur_id) {
-    setDewPoint(data.dewPoint);
-    setMyProfile(true);
-  } else {
-    setDewPoint(data.accumulatePoint);
-  }
-
-  console.log(localStorage.getItem('role'));
 
   return (
     <ProfileWrap>
