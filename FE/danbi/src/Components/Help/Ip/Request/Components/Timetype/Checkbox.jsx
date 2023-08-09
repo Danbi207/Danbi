@@ -38,7 +38,7 @@ const InputWrap = styled.form`
 ` 
 
 const Input = styled.input`
-  accent-color: #6161FF;
+  accent-color: ${props => props.theme.colors.buttonbgColor};
 `
 const Label = styled.label`
   padding-left: 1rem;

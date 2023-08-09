@@ -71,8 +71,4 @@ const PresetOption = styled.option`
 
 `
 
-
-
-
-
 export default Preset;

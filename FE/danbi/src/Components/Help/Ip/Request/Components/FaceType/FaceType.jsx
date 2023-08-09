@@ -8,7 +8,32 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { setMeetType } from "../../../../../../store/Slice/ipSlice"
 
+
 function FaceType({location}) {
+  const ipData = {
+    "help_id" : 1,
+    "position" : {
+        "latitude" : null,
+        "longitude" : null,
+        "addr" : null,
+        "destLatitude" : null,
+        "destLongitude" : null,
+        "destAddr" : null,
+        "meetLatitude" : null,
+        "meetLongitude" : null,
+        "meetAddr" : null,
+    },
+    "category" : "ETC",
+    "caution" : "qweqweqwe",
+    "faceFlag": true,
+    "emergencyFlag": false, 
+    "genderFlag" : true,
+    "content": "ㅁㄴㅇ",
+    "start_time" : "2023-01-12 14:40",
+    "end_time" : "2023-01-12 14:50"
+	// start, end 스네이크형식으로 밖에 안받아져서 이걸로 쏴주세요
+  }
+
   const dispatch = useDispatch();
   const ip = useSelector(state => state.ip)
   const meetType = ip.meetType

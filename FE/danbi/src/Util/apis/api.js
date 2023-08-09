@@ -226,7 +226,9 @@ export const authFilePost = async (url,formData)=>{
         method:"post",
         url: process.env.REACT_APP_SERVER+url,
         file:formData,
-        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+        headers:{
+          'Content-Type': 'multipart/form-data',
+          "Authorization" : `Bearer ${token.getAccessToken()}`},
       });
   
       if(data.code === 200){
