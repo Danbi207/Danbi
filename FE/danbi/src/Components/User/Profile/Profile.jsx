@@ -29,9 +29,7 @@ const Profile = () => {
       console.log(err);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  fetchData();
 
   console.log(localStorage.getItem('role'));
 
