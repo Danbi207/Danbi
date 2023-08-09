@@ -24,6 +24,10 @@ const GuestBook = ({ guestBookId, comments }) => {
     }
   };
 
+  const handleChange = (e) => {
+    setTextArea(e.target.value);
+  }
+
   return (
     <GuestBookWrap>
       <ChatWrap>
@@ -33,7 +37,7 @@ const GuestBook = ({ guestBookId, comments }) => {
         </UserDetail>
         <ChatSection>
           <ChatForm onSubmit={handleSubmit}>
-            <Chat value={textArea} />
+            <Chat value={textArea} onChange={handleChange} />
             <SendBtn>
               <ChatImg />
             </SendBtn>
