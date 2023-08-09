@@ -56,7 +56,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/v1/access-token/issue",
                         "/api/v1/logout",
                         "/api/v1/health",
-                        "/api/v1/scheduler/help-post");
+                        "/api/v1/scheduler/help-post",
+                        "/api/v1/scheduler/accuse-stack");
 
         registry.addInterceptor(adminAuthorizationInterceptor)
                 .order(2)

@@ -1,26 +1,27 @@
 package com.danbi.api.scheduler.service;
 
 import com.danbi.api.scheduler.client.SchedulerClient;
-import com.danbi.domain.helppost.service.HelpPostService;
+import com.danbi.domain.accuse.service.AccuseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
-public class SchedulerInfoService {
+@Transactional
+public class AccuseStackInfoService {
 
-    private final HelpPostService helpPostService;
+    private final AccuseService accuseService;
+
     private final SchedulerClient schedulerClient;
 
-    public void HelpPostScheduler() {
-        helpPostService.deleteNotMatchedHelpPost();
+    public void checkAccuseStack() {
+        accuseService.checkAccuseTime();
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void sendEvent() {
-        schedulerClient.requestHelpPostScheduler();
+        schedulerClient.requestAccuseScheduler();
     }
 }

@@ -65,10 +65,10 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 30)
     private State state = State.ACTIVATE;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "member")
     private GuestBook guestBook;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "member")
     private Profile profile;
 
     private int accuseStack = 0;
@@ -111,6 +111,12 @@ public class Member extends BaseEntity {
 
     public void plusStack() {
         this.accuseStack += 1;
+    }
+
+    public void minusStack() {
+        if (this.accuseStack - 1 >= 0) {
+            this.accuseStack -= 1;
+        }
     }
 
     public void updateRole(Role role) {

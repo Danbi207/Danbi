@@ -8,5 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface SchedulerClient {
 
     @GetMapping(value = "/scheduler/help-post")
-    void requestScheduler();
+    void requestHelpPostScheduler();
+
+    @GetMapping(value = "/scheduler/accuse-stack")
+    void requestAccuseScheduler();
 }
