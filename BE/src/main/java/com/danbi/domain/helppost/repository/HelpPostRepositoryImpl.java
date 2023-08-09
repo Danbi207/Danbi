@@ -211,4 +211,14 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
             ).fetch();
 
     }
+
+    @Override
+    public List<HelpPost> findNotMatchedHelpPost(LocalDateTime startTime, LocalDateTime endTime) {
+        return jpaQueryFactory.selectFrom(helpPost)
+                .where(
+                        helpPost.startTime.between(startTime,endTime),
+                        helpPost.state.eq(State.ACTIVATE)
+                ).fetch();
+    }
+
 }

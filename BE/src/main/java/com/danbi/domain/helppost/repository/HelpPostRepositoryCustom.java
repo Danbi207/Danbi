@@ -26,4 +26,6 @@ public interface HelpPostRepositoryCustom {
     Optional<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId);
 
     List<HelpPost> checkIsHelperCanHelp(Long memberId, LocalDateTime startTime, LocalDateTime endTime);
+
+    List<HelpPost> findNotMatchedHelpPost(LocalDateTime startTime, LocalDateTime endTime);
 }

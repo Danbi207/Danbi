@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -136,4 +137,16 @@ public class HelpPostService {
         Optional<HelpPost> helpPostByNowTime = helpPostRepository.findHelpPostByNowTime(time, memberId);
         return helpPostByNowTime.isPresent() ? true : false;
     }
+
+    public void deleteNotMatchedHelpPost() {
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDateTime startOfDay = yesterday.atStartOfDay();
+        LocalDateTime endOfDay = yesterday.atTime(LocalTime.MAX);
+
+        List<HelpPost> notMatchedHelpPost = helpPostRepository.findNotMatchedHelpPost(startOfDay, endOfDay);
+        for (HelpPost helpPost : notMatchedHelpPost) {
+            helpPost.updateState(State.DELETE);
+        }
+    }
+
 }
