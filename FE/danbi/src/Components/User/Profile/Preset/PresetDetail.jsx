@@ -4,7 +4,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { getSpeech } from '../Utils/TTS';
 import { authPost } from '../../../../Util/apis/api';
 
-const PresetDetail = ({ content, PresetId, showDetail, setDeleteActive, setEditActive, sequence }) => {
+const PresetDetail = ({ content, PresetId, showDetail, setEditActive, sequence }) => {
   const [value, setValue] = useState(content);
 
   const {
@@ -31,7 +31,6 @@ const PresetDetail = ({ content, PresetId, showDetail, setDeleteActive, setEditA
 
   const CloseDetail = () => {
     showDetail(-1);
-    setDeleteActive(false);
     setEditActive(false);
   };
 
@@ -46,7 +45,6 @@ const PresetDetail = ({ content, PresetId, showDetail, setDeleteActive, setEditA
       console.log(data);
       showDetail(-1);
       alert('저장되었습니다.');
-      setDeleteActive(false);
       setEditActive(false);
     } catch(err) {
       console.log(err);

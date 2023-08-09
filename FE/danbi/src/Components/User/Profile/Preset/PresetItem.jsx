@@ -1,25 +1,22 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
-import { authDelete } from '../../../../Util/apis/api';
+import { authDelete, authGet } from '../../../../Util/apis/api';
 
-const PresetItem = ({value, index, OpenTitle, showDetail}) => {
+const PresetItem = ({value, index, OpenTitle, showDetail, setPresetList}) => {
     const [EditActive, setEditActive] = useState(false);
-    const [DeleteActive, setDeleteActive] = useState(false);
-    console.log(value.id);
     
     const callConfirm = useCallback(async () => {
         try{
             const deleteUrl = `/api/v1/preset/${value.id}`;
-            console.log(deleteUrl);
             const data = await authDelete(deleteUrl, {});
-            console.log(data);
+            const res = await authGet('api/v1/preset');
+            setPresetList(res);
             alert('삭제됨');
-            setDeleteActive(!DeleteActive); 
         } catch(err) {
             console.log(err);
         }
-    }, [value.id, DeleteActive]);
+    }, [value.id, setPresetList]);
 
 
     return(
@@ -30,17 +27,17 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                         {value.content ? value.content : `프리셋 ${index + 1}`}
                     </ElementContent>
                     <Btns>
-                        <EditBtn onClick={() => {showDetail(value.title); setEditActive(!EditActive)}} $EditActive={EditActive} $DeleteActive={DeleteActive} >
+                        <EditBtn onClick={() => {showDetail(value.title); setEditActive(!EditActive)}} $EditActive={EditActive} >
                             <EditImg />
                         </EditBtn>
-                        <DeleteBtn onClick={callConfirm} $DeleteActive={DeleteActive} $EditActive={EditActive}>
+                        <DeleteBtn onClick={callConfirm} $EditActive={EditActive}>
                             <DeleteImg />
                         </DeleteBtn>
                     </Btns>
                 </PreSetElement>
             </Element>
             {OpenTitle === value.title && (
-            <PresetDetail sequence={value.sequence} content={value.content} PresetId={value.id} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
+            <PresetDetail sequence={value.sequence} content={value.content} PresetId={value.id} showDetail={showDetail} setEditActive={setEditActive} />
             )}
         </>
     );

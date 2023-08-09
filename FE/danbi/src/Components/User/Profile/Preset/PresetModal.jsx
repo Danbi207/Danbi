@@ -27,6 +27,7 @@ const PresetModal = ({ setModalOpen }) => {
 
   useEffect(() => {
     fetchData();
+    console.log(presetList);
   }, [fetchData]);
 
   const handleSave = async () => {
@@ -47,7 +48,7 @@ const PresetModal = ({ setModalOpen }) => {
         </ModalHeader>
         <ModalBody>
           <PresetAddBtn onClick={showTextArea}>추가하기</PresetAddBtn>
-          {OpenTextArea && <PresetTextArea setOpenTextArea={setOpenTextArea} OpenTextArea={OpenTextArea} fetchData={fetchData} length={presetList.length} />}
+          {(OpenTextArea && presetList.length < 3) && <PresetTextArea setOpenTextArea={setOpenTextArea} OpenTextArea={OpenTextArea} fetchData={fetchData} length={presetList.length} />}
         </ModalBody>
         <ModalFooter>
           <Preset preset_list={presetList} setPresetList={setPresetList} />
