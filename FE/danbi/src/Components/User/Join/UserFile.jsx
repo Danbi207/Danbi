@@ -14,9 +14,9 @@ const UserFile = ({ usertype, setUserType}) => {
 
   const PutFileRole = useCallback(async () => {
     try {
-      await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP "});
+      await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP"});
       await reissueAccessToken();
-      localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP ");  
+      localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP");  
     } catch (error) {
         console.error("에러 발생:", error);
     }
