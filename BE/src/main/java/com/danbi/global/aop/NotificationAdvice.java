@@ -10,6 +10,8 @@ import com.danbi.domain.alarm.constant.State;
 import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.alarm.entity.Alarm;
 import com.danbi.domain.alarm.service.AlarmService;
+import com.danbi.domain.fcm.dto.NotificationRequest;
+import com.danbi.domain.fcm.service.FcmService;
 import com.danbi.domain.friend.entity.Friend;
 import com.danbi.domain.help.repository.HelpRepository;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
@@ -29,7 +31,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Component
@@ -42,17 +46,11 @@ public class NotificationAdvice {
     private final HelpPostRepository helpPostRepository;
     private final HelpRepository helpRepository;
     private final AccuseRepository accuseRepository;
+    private final FcmService fcmService;
 
-    @Pointcut("execution(* com.danbi.api.friend.controller.FriendController.requestFriend(..))")
-    public void getRequestFriend() {
-    }
-
-    @Pointcut("@annotation(com.danbi.global.aop.NotificationTrace)")
-    public void notification() {
-    }
 
     @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
-    public void accuseApproveAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) {
+    public void accuseApproveAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
         Object[] args = joinPoint.getArgs();
 
         Member from = null;
@@ -71,16 +69,12 @@ public class NotificationAdvice {
                     to = accuse.getReporter();
                 }
             }
+            alarmSave(from, to, title, content, type);
         }
-
-
-        alarmSave(from, to, title, content, type);
-
     }
 
     @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
-    public void accuseAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) {
-
+    public void accuseAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
@@ -99,18 +93,14 @@ public class NotificationAdvice {
                     to = accuse.getReporter();
                 }
             }
+            alarmSave(from, to, title, content, type);
         }
-
-
-        alarmSave(from, to, title, content, type);
 
     }
 
     @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
-    public void requestFriendAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) {
+    public void requestFriendAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
         Object[] args = joinPoint.getArgs();
-
-
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
@@ -124,24 +114,18 @@ public class NotificationAdvice {
                 if (arg instanceof MemberInfoDto) {
                     MemberInfoDto memberInfoDto = (MemberInfoDto) arg;
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
-                    System.out.println("memberInfoDto.getMemberId():" + memberInfoDto.getMemberId());
                 } else if (arg instanceof RequestFriendDto) {
                     RequestFriendDto friendDto = (RequestFriendDto) arg;
                     to = memberRepository.findById(friendDto.getTargetId()).get();
                 }
             }
+            alarmSave(from, to, title, content, type);
         }
-
-
-        alarmSave(from, to, title, content, type);
-
     }
 
     @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
-    public void permitFriendAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) {
+    public void permitFriendAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
         Object[] args = joinPoint.getArgs();
-
-
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
@@ -155,38 +139,20 @@ public class NotificationAdvice {
                 if (arg instanceof MemberInfoDto) {
                     MemberInfoDto memberInfoDto = (MemberInfoDto) arg;
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
-                    System.out.println("memberInfoDto.getMemberId():" + memberInfoDto.getMemberId());
                 } else if (arg instanceof RequestFriendDto) {
                     RequestFriendDto friendDto = (RequestFriendDto) arg;
                     to = memberRepository.findById(friendDto.getTargetId()).get();
                 }
             }
+            alarmSave(from, to, title, content, type);
         }
-
-
-        alarmSave(from, to, title, content, type);
 
     }
 
 
     @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
-    public void helpMatchingAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        String url = request.getRequestURL().toString();
-        String method = joinPoint.getSignature().getName();
-        String params = Arrays.toString(joinPoint.getArgs());
-
-        System.out.println("URL: " + url);
-        System.out.println("Method: " + method);
+    public void helpMatchingAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
         Object[] args = joinPoint.getArgs();
-//        RequestFriendDto requestFriendDto;
-//        for (Object arg : args) {
-//            if (arg instanceof MemberInfoDto) {
-//                memberInfoDto = (MemberInfoDto) arg;
-//                System.out.println("memberInfoDto.getMemberId():" + memberInfoDto.getMemberId());
-//            }
-//        }
-
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
@@ -200,56 +166,68 @@ public class NotificationAdvice {
                 if (arg instanceof MemberInfoDto) {
                     MemberInfoDto memberInfoDto = (MemberInfoDto) arg;
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
-                    System.out.println("memberInfoDto.getMemberId():" + memberInfoDto.getMemberId());
                 } else if (arg instanceof Long) {
                     Long helpPostId = (Long) arg;
                     to = helpPostRepository.findById(helpPostId).get().getMember();
                 }
             }
-        } else if (notificationTrace.type().equals(Type.HELP_IP_COMPLETE)) {
+            alarmSave(from, to, title, content, type);
+        }
+    }
+
+    @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
+    public void helpIpCompleteAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
+        Object[] args = joinPoint.getArgs();
+        Member from = null;
+        Member to = null;
+        String title = notificationTrace.type().getDescription();
+        String content = notificationTrace.type().getDescription();
+        Type type = notificationTrace.type();
+
+        if (notificationTrace.type().equals(Type.HELP_IP_COMPLETE)) {
             log.info("{}", notificationTrace.type().getDescription());
 
             for (Object arg : args) {
                 if (arg instanceof MemberInfoDto) {
                     MemberInfoDto memberInfoDto = (MemberInfoDto) arg;
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
-                    System.out.println("memberInfoDto.getMemberId():" + memberInfoDto.getMemberId());
                 } else if (arg instanceof Long) {
                     Long helpId = (Long) arg;
                     to = helpRepository.findById(helpId).get().getHelper();
                 }
             }
-        } else if (notificationTrace.type().equals(Type.HELP_HELPER_COMPLETE)) {
+            alarmSave(from, to, title, content, type);
+        }
+    }
+
+    @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
+    public void helpHelperCompleteAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
+        Object[] args = joinPoint.getArgs();
+        Member from = null;
+        Member to = null;
+        String title = notificationTrace.type().getDescription();
+        String content = notificationTrace.type().getDescription();
+        Type type = notificationTrace.type();
+
+        if (notificationTrace.type().equals(Type.HELP_HELPER_COMPLETE)) {
             log.info("{}", notificationTrace.type().getDescription());
 
             for (Object arg : args) {
                 if (arg instanceof MemberInfoDto) {
                     MemberInfoDto memberInfoDto = (MemberInfoDto) arg;
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
-                    System.out.println("memberInfoDto.getMemberId():" + memberInfoDto.getMemberId());
                 } else if (arg instanceof Long) {
                     Long helpId = (Long) arg;
                     to = helpRepository.findById(helpId).get().getIp();
                 }
             }
+            alarmSave(from, to, title, content, type);
         }
-
-
-        System.out.println("Parameters: " + params);
-        System.out.println("Response: " + result);
-
-
-        alarmSave(from, to, title, content, type);
-
     }
 
-
-
     @Before("@annotation(notificationTrace)")
-    public void helpCancelAlarm(JoinPoint joinPoint, NotificationTrace notificationTrace) {
-
+    public void helpCancelAlarm(JoinPoint joinPoint, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
         Object[] args = joinPoint.getArgs();
-
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
@@ -266,13 +244,17 @@ public class NotificationAdvice {
                     from = helpRepository.findById(helpId).get().getHelper();
                 }
             }
+            alarmSave(from, to, title, content, type);
         }
-
-        alarmSave(from, to, title, content, type);
-
     }
 
-    private void alarmSave(Member from, Member to, String title, String content, Type type) {
+    private void alarmSave(Member from, Member to, String title, String content, Type type) throws IOException, ExecutionException, InterruptedException {
+        log.info("to {}", to.getId());
+        log.info("from {}", from.getId());
+
+
+        sendFcmMessage(from, title, content);
+        sendFcmMessage(to, title, content);
         Alarm alarm = Alarm.builder()
                 .from(from)
                 .to(to)
@@ -286,21 +268,15 @@ public class NotificationAdvice {
         alarmService.savaAlarm(alarm);
     }
 
+    private void sendFcmMessage(Member member, String title, String content) throws IOException, ExecutionException, InterruptedException {
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .email(member.getEmail())
+                .title(title)
+                .message(content)
+                .build();
 
-//    @Around("getRequestFriend()")
-//    public Object outputCrudServiceLogging(ProceedingJoinPoint jp) throws Throwable {
-//
-//        Object[] args = jp.getArgs();
-//
-//        for (Object arg : args) {
-//
-//        }
-//
-//        ApiResponse<String> result = (ApiResponse<String>) jp.proceed();
-//
-//
-//        System.out.println("사후처리");
-//
-//        return result;
-//    }
+        fcmService.sendMessageTo(notificationRequest);
+    }
+
+
 }
