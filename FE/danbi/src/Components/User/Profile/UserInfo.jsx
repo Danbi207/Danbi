@@ -8,6 +8,8 @@ const UserInfo = ({ url, name, targetId, myProfile }) => {
     const data = {
       targetId,
     };
+    console.log(data);
+    console.log(myProfile);
     const res = await authPost('/api/v1/friends', data);
     console.log(res);
   };
