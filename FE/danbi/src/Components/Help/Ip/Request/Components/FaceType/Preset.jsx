@@ -8,10 +8,13 @@ const Preset = () => {
 
   const getPresetInfo = useCallback(async () => {
     try {
-      const {data} = await authGet("/api/v1/preset");
+      const data = await authGet("/api/v1/preset");
       if (data){
         console.log(data);
         setPresetList(data.presetList); // data를 업데이트
+      }
+      else {
+        console.log('안되는 중')
       }
     }
     catch(err) {
