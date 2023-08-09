@@ -9,6 +9,7 @@ const GuestBook = ({ guestBookId, comments }) => {
   console.log(comments);
   const [textArea, setTextArea] = useState('');
   const profileUrl = useSelector((state) => state.user.profileUrl);
+  const name = useSelector((state) => state.user.name);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const textJson = {
@@ -28,7 +29,7 @@ const GuestBook = ({ guestBookId, comments }) => {
       <ChatWrap>
         <UserDetail>
           <ProfileImage $profileUrl={profileUrl} alt="img" />
-          <UserName>김민규</UserName>
+          <UserName>{name}</UserName>
         </UserDetail>
         <ChatSection>
           <ChatForm onSubmit={handleSubmit}>

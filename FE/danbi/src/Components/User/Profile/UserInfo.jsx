@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import example from './example-profile.jpg';
 import AccuseButton from './Utils/AccuseButton.jsx';
-import { useSelector } from 'react-redux';
 
 const UserInfo = ({url, name}) => {
   return (
