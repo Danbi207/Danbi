@@ -39,17 +39,17 @@ public class AccuseController {
 
 
     @Operation(summary = "신고 상세 조회 API", description = "신고 상세 조회 API")
-    @GetMapping("/{accuse_id}")
-    public ApiResponse<AccuseDetailResponseDto> detailAccuse(@PathVariable Long accuse_id) {
-        AccuseDetailResponseDto accuseDetailResponseDto = accuseInfoService.detailAccuse(accuse_id);
+    @GetMapping("/{accuseId}")
+    public ApiResponse<AccuseDetailResponseDto> detailAccuse(@PathVariable Long accuseId) {
+        AccuseDetailResponseDto accuseDetailResponseDto = accuseInfoService.detailAccuse(accuseId);
         return ApiResponse.ok(accuseDetailResponseDto);
     }
 
     @NotificationTrace(type = Type.ACCUSE_PERMIT)
     @Operation(summary = "신고 승인 API", description = "신고 승인 API")
-    @GetMapping("/approval/{accuse_id}")
-    public ApiResponse<String> approveAccuse(@PathVariable Long accuse_id) {
-        accuseInfoService.approveAccuse(accuse_id);
+    @GetMapping("/approval/{accuseId}")
+    public ApiResponse<String> approveAccuse(@PathVariable Long accuseId) {
+        accuseInfoService.approveAccuse(accuseId);
         return ApiResponse.ok("승인 되었습니다.");
     }
 
