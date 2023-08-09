@@ -85,7 +85,7 @@ const IpMap = () => {
     <Wrap>
       <Header></Header>
       <MapWrap id="map" ref={mapRef}></MapWrap>
-      <CompleteBTN onClick={()=>{navigate('/iprequest')}}>완료</CompleteBTN>
+      <CompleteBTN onClick={()=>{navigate('/help/ip/request')}}>완료</CompleteBTN>
       <Footer></Footer>
     </Wrap>
   )

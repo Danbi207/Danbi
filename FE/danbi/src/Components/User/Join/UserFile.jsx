@@ -26,6 +26,7 @@ const UserFile = ({ usertype, setUserType}) => {
   const FileSubmit = useCallback(async () => {
     try {
       await authFilePost('/api/v1/submit/ip/certification', imageFiles);
+      console.log(imageFiles)
       // DO : 로그아웃
       await authPost('/api/v1/member/logout', {}) 
       localStorage.removeItem('role');
