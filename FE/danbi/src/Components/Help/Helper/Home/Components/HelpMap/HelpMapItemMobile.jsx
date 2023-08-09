@@ -1,38 +1,38 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled,{keyframes} from 'styled-components';
-const HelpMapItem = (props) => {
+const HelpMapItemMobile = ({visible,setVisible,curHelp}) => {
   const navigate = useNavigate();
 
   return (
     <>
       {
-        props.curHelp?
+        curHelp?
           <>
-            <BackgroundWrap $visible={props.visible} onClick={()=>{props.setVisible(false)}}></BackgroundWrap>
-            <HelpMapItemWrap $visible={props.visible} >
+            <BackgroundWrap $visible={visible==="mobile"} onClick={()=>{setVisible("none")}}></BackgroundWrap>
+            <HelpMapItemWrap $visible={visible==="mobile"} >
               <RowWrap>
                 <UserWrap>
                   <div>
-                    <UserProfile src={props.curHelp.profileUrl}></UserProfile>
+                    <UserProfile src={curHelp.profileUrl}></UserProfile>
                     <UserTitle>
-                      <div>{props.curHelp.name}</div>
+                      <div onClick={()=>navigate(`/user/profile/${curHelp.ipId}`)}>{curHelp.name}</div>
                       {
-                        props.curHelp.accuseStack === 0 ? null:
-                        props.curHelp.accuseStack <= 2 ? <img alt='' src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
+                        curHelp.accuseStack === 0 ? null:
+                        curHelp.accuseStack <= 2 ? <img alt='' src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
                         <img alt='' src={`${process.env.PUBLIC_URL}/assets/red-flag.svg`} />
                       }
                     </UserTitle>
                   </div>
                   <TimeWrap>
-                    날짜 : {props.curHelp.startTime.split(" ")[0]}<br/>
-                    시간 : {props.curHelp.startTime.split(" ")[1]}~{props.curHelp.endTime.split(" ")[1]}<br/>
-                    장소 : {props.curHelp.position.meetAddr}
+                    날짜 : {curHelp.startTime.split(" ")[0]}<br/>
+                    시간 : {curHelp.startTime.split(" ")[1]}~{curHelp.endTime.split(" ")[1]}<br/>
+                    장소 : {curHelp.position.meetAddr}
                   </TimeWrap>
                 </UserWrap>
               </RowWrap>
-              <HelpContent>{props.curHelp.content}</HelpContent>
-              <DetailBtn onClick={()=>{navigate(`/help/helper/detail/${props.curHelp.helpPostId}`)}}>상세보기</DetailBtn>
+              <HelpContent>{curHelp.content}</HelpContent>
+              <DetailBtn onClick={()=>{navigate(`/help/helper/detail/${curHelp.helpPostId}`)}}>상세보기</DetailBtn>
             </HelpMapItemWrap>
           </>
           :null
@@ -46,7 +46,7 @@ const BackgroundWrap = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 3;
+  z-index: 1;
   background-color: rgba(0,0,0,0.4);
   visibility: ${props => props.$visible ? 'visible' : 'hidden'};
 `
@@ -73,6 +73,7 @@ const UserTitle = styled.div`
   width: 5rem;
   &>:first-child{
     font-size: 1.5rem;
+    cursor: pointer;
   }
 `
 const TimeWrap = styled.div`
@@ -142,7 +143,7 @@ const HelpMapItemWrap = styled.div`
   bottom: 0;
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
-  z-index: 4;
+  z-index: 2;
   border-radius: 1rem 1rem 0 0 ;
   padding: 1rem;
 
@@ -150,4 +151,4 @@ const HelpMapItemWrap = styled.div`
   animation: ${props => props.$visible ? slideIn : slideOut} 0.5s linear;
   transition: visibility 0.5s linear;
 `
-export default HelpMapItem
+export default HelpMapItemMobile

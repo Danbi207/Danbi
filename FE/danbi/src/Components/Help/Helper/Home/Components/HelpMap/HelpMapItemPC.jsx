@@ -1,10 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-const HelpListItem = ({help}) => {
+const HelpMapItemPC = ({help,visible,defaultIdx,curIdx}) => {
   const navigate = useNavigate();
   return (
-    <HelpMapItemWrap>
+    <HelpMapItemWrap $visible={visible==="pc" && defaultIdx===curIdx}>
       <RowWrap>
         <UserWrap>
           <div>
@@ -21,7 +21,7 @@ const HelpListItem = ({help}) => {
           <TimeWrap>
             날짜 : {help.startTime.split(" ")[0]}<br/>
             시간 : {help.startTime.split(" ")[1]}~{help.endTime.split(" ")[1]}<br/>
-            {help.position ? `장소 : ${help.position.meetAddr}` : ""}
+            장소 : {help.position.meetAddr}
           </TimeWrap>
         </UserWrap>
       </RowWrap>
@@ -95,12 +95,12 @@ const RowWrap = styled.div`
 `
 
 const HelpMapItemWrap = styled.div`
+  top: 0;
+  left: 20%;
+  position: absolute;
   width: 40%;
   @media screen and (max-width: 1024px) {
     width: 60%;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90%;
   }
   height: 19rem;
   background-color: ${props=>props.theme.colors.bgColor};
@@ -111,5 +111,6 @@ const HelpMapItemWrap = styled.div`
   &>*{
     white-space: nowrap;
   }
+  visibility: ${props=>props.$visible ? "visible" : "hidden"};
 `
-export default HelpListItem
+export default HelpMapItemPC;
