@@ -6,7 +6,7 @@ import { authDelete } from '../../../../Util/apis/api';
 const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
     const [DeleteActive, setDeleteActive] = useState(false);
-    console.log(value);
+    console.log(value.id);
     const callConfirm = async () => {
         if(window.confirm('삭제함?')){
             try{
@@ -44,7 +44,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                 </PreSetElement>
             </Element>
             {OpenTitle === value.title && (
-            <PresetDetail content={value.Content} PresetId={value.id} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
+            <PresetDetail content={value.content} PresetId={value.id} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
             )}
         </>
     );
