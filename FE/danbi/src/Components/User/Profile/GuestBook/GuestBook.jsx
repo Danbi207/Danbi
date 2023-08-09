@@ -6,6 +6,7 @@ import { authPost } from '../../../../Util/apis/api';
 import { useSelector } from 'react-redux';
 
 const GuestBook = ({ guestBookId, comments }) => {
+  console.log(comments);
   const [textArea, setTextArea] = useState('');
   const profileUrl = useSelector((state) => state.user.profileUrl);
   const handleSubmit = async (e) => {

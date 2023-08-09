@@ -10,6 +10,7 @@ import {
 } from '../../../../store/Slice/JandiSlice.js';
 
 const Jandi = ({ help_log, setPickModalOpen, item }) => {
+  console.log(help_log);
   const colCnt = 8;
   const rowCnt = 2;
 
