@@ -4,6 +4,7 @@ import com.danbi.api.ApiResponse;
 import com.danbi.api.friend.dto.request.RequestFriendDto;
 import com.danbi.api.friend.dto.response.ResponseFriendListDto;
 import com.danbi.api.friend.service.FriendInfoService;
+import com.danbi.global.aop.NotificationTrace;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.resolver.memberinfo.MemberInfo;

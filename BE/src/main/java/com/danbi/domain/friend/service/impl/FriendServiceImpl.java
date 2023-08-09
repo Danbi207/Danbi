@@ -6,6 +6,7 @@ import com.danbi.domain.friend.entity.Friend;
 import com.danbi.domain.friend.repository.FriendRepository;
 import com.danbi.domain.friend.service.FriendService;
 import com.danbi.domain.member.entity.Member;
+import com.danbi.global.aop.NotificationTrace;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
 import com.danbi.global.error.exception.notfound.FriendNotFoundException;
@@ -30,6 +31,7 @@ public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
 
 
+    @NotificationTrace
     @Override
     public Friend saveFriend(Friend friend) {
         validateDuplicateFriend(friend);
