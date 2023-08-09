@@ -24,12 +24,17 @@ const PresetTextArea = ({ setOpenTextArea }) => {
     setOpenTextArea(false);
   };
 
+  const handleChange = (e) => {
+    setTextArea(e.target.value)
+  };
+  
   return (
     <TextAreaWrap>
       <TextArea
         placeholder="저는 휠체어를 타고 있습니다.
 조심해서 밀어주세요!"
         value={textArea}
+        onChange={handleChange}
       />
       <Btns>
         <CancleBtn onClick={ClosePreset}>취소</CancleBtn>

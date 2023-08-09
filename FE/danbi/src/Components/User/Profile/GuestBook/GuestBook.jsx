@@ -16,7 +16,7 @@ const GuestBook = ({ guestBookId, comments }) => {
       guestBookId,
     };
     try {
-      const data = await authPost('/api/v1/guestbook', textJson);
+      const data = await authPost('/api/v1/profile/guestbook', textJson);
       console.log(data);
     } catch (err) {
       console.log(err);

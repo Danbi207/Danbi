@@ -21,6 +21,7 @@ const PresetDetail = ({ Content, PresetId, showDetail, setDeleteActive, setEditA
     resetTranscript();
     SpeechRecognition.startListening({ continuous: true });
   };
+  
   // 녹음 종료
   const StopRecord = () => {
     setRecording(false);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import PresetTextArea from './PresetTextArea';
 import Preset from './Preset.jsx';
@@ -12,39 +12,24 @@ const PresetModal = ({ setModalOpen }) => {
   const showTextArea = () => {
     setOpenTextArea(true);
   };
-
-
-  const [presetList, setPresetList] = useState([
-    {
-      preset_id: 1,
-      title: '1asdf',
-      content: '123saf',
-      sequence: 0,
-    },
-    {
-      preset_id: 2,
-      title: '김민규는 쓰레기입니다.',
-      content: '끼잉 낑.',
-      sequence: 1,
-    }
-  ])
   
   // TODO : presetList 조회
-  const [presetList2, setPresetList2] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try{
-      const data = await authGet('/api/v1/preset');
-      setPresetList2(data.presetList);
-      } catch(err) {
-        console.log(err);
-      }
+  const [presetList, setPresetList] = useState([]);
+  
+  const fetchData = useCallback(async () => {
+    try{
+    const data = await authGet('/api/v1/preset');
+    setPresetList(data.presetList);
+    } catch(err) {
+      console.log(err);
     }
+  }, []);
+  useEffect(() => {
     fetchData();
   }, [])
 
-  const handleSave = () => {
-    authPost(`api/v1/preset/sequence`);
+  const handleSave = async () => {
+    await authPost(`api/v1/preset/sequence`);
   }
 
   return (
