@@ -9,10 +9,8 @@ const HelpDetail = () => {
   const dispatch = useDispatch();
   const content = useSelector(state => state.ip.content)
 
-
   useEffect(() => 
     console.log(content),[content]);
-
 
   return (
     <>

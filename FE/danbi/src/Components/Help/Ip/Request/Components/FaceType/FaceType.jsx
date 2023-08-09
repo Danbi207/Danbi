@@ -15,6 +15,7 @@ function FaceType({location}) {
 
   const dispatch = useDispatch();
   const ip = useSelector(state => state.ip)
+  console.log(ip);
   const meetType = ip.meetType
   const currentDay = ip.currentDay
   const currentTime = ip.currentTime
