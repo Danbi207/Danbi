@@ -9,7 +9,9 @@ const Preset = () => {
   const getPresetInfo = useCallback(async () => {
     try {
       const {data} = await authGet("/api/v1/preset");
-      setPresetList(data); // data를 업데이트
+      console.log(data);
+      setPresetList(data.presetList); // data를 업데이트
+      console.log(presetList);
     }
     catch(err) {
       console.log(err.error);
@@ -18,8 +20,7 @@ const Preset = () => {
 
   useEffect(() => {
     getPresetInfo();
-    console.log(presetList)
-  }, [getPresetInfo, presetList]);
+  }, [getPresetInfo]);
 
   const handlePresetSelect = (e) => {
     let idx = parseInt(e.target.value); // 문자열을 숫자로 다시 포매팅
