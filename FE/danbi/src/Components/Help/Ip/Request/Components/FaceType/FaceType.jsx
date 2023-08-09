@@ -12,7 +12,6 @@ import { useCallback } from 'react';
 import { authPost } from '../../../../../../Util/apis/api';
 
 function FaceType({location}) {
-
   const dispatch = useDispatch();
   const ip = useSelector(state => state.ip)
   console.log(ip);
@@ -23,13 +22,14 @@ function FaceType({location}) {
   const [starttime, setStartTime] = useState('');
   const [endtime, setEndTime] = useState('');
 
-  // YYYY-MM-DD HH:mm 포맷으로 변환
-  const formatDateTime = (day, time) => {
-    return `${day[0]}-${String(day[1]).padStart(2, '0')}-${String(day[2]).padStart(2, '0')} ${String(time[0]).padStart(2, '0')}:${String(time[1]).padStart(2, '0')}`;
-  };
-
+  
   // 시작, 끝나는 시간 정하는 로직
   useEffect(()=>{
+    // YYYY-MM-DD HH:mm 포맷으로 변환
+    const formatDateTime = (day, time) => {
+      return `${day[0]}-${String(day[1]).padStart(2, '0')}-${String(day[2]).padStart(2, '0')} ${String(time[0]).padStart(2, '0')}:${String(time[1]).padStart(2, '0')}`;
+    };
+    
     setStartTime(formatDateTime(currentDay, currentTime));
 
     // 끝 시간 계산
@@ -53,6 +53,7 @@ function FaceType({location}) {
     console.log(`startTime: ${starttime}`);
     console.log(`endTime: ${endtime}`);
   },[])
+  
   
   // authPost 보내는 로직
   const IpRequestHelp = useCallback(async()=> {
@@ -78,14 +79,19 @@ function FaceType({location}) {
       "start_time" : starttime,
       "end_time" : endtime
     }
+    if(!ip.caution || !ip.content) {
+      console.log("데이터가 올바르지 않습니다.");
+      return;
+    }
     try{
       await authPost('/api/v1/help/create', ipData)
+      console.log(ip);
       navigator('/help/ip')
     }
     catch (err) {
       console.log(err.error)
     }
-  }, [])
+  }, [ip, starttime, endtime])
 
 
   return (
