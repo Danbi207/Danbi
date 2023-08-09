@@ -44,7 +44,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                 </PreSetElement>
             </Element>
             {OpenTitle === value.title && (
-            <PresetDetail content={value.Content} presetId={value.id} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
+            <PresetDetail content={value.Content} PresetId={value.id} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
             )}
         </>
     );
@@ -52,7 +52,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
 
 const Element = styled.div`
     width: 100%;
-    height: 2rem;
+    height: auto;
     border: 1px solid ${props => props.theme.colors.titleColor};
     border-radius: 5px;
     margin-bottom: 0.25rem;
