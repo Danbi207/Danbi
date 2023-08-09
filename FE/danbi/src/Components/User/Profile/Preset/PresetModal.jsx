@@ -10,7 +10,7 @@ const PresetModal = ({ setModalOpen }) => {
   };
   const [OpenTextArea, setOpenTextArea] = useState(false);
   const showTextArea = () => {
-    setOpenTextArea(true);
+    setOpenTextArea(!OpenTextArea);
   };
   
   // TODO : presetList 조회
@@ -27,7 +27,7 @@ const PresetModal = ({ setModalOpen }) => {
 
   useEffect(() => {
     fetchData();
-  }, [OpenTextArea])
+  }, [fetchData]);
 
   const handleSave = async () => {
     await authPost(`api/v1/preset/sequence`, presetList);
@@ -47,7 +47,7 @@ const PresetModal = ({ setModalOpen }) => {
         </ModalHeader>
         <ModalBody>
           <PresetAddBtn onClick={showTextArea}>추가하기</PresetAddBtn>
-          {OpenTextArea && <PresetTextArea setOpenTextArea={setOpenTextArea} length={presetList.length} />}
+          {OpenTextArea && <PresetTextArea setOpenTextArea={setOpenTextArea} OpenTextArea={OpenTextArea} fetchData={fetchData} length={presetList.length} />}
         </ModalBody>
         <ModalFooter>
           <Preset preset_list={presetList} setPresetList={setPresetList} />
