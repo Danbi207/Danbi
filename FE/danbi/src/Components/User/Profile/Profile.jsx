@@ -11,45 +11,60 @@ import PresetModal from './Preset/PresetModal.jsx';
 import PickModal from './Utils/PickModal.jsx';
 import { authGet } from '../../../Util/apis/api.js';
 import { useParams } from 'react-router-dom';
+import { setDewPoint } from '../../../store/Slice/JandiSlice.js';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
   const [PickModalOpen, setPickModalOpen] = useState(false);
   const [data, setData] = useState({
-    "dewPoint": 0,
-    "profileUrl": "",
-    "helpLog": [],
-    "item": {},
-    "guestBookId": 0,
-    "comments": [],
-    "accusePoint": 0,
-    "profileId": 0,
-    "name": ""
+    dewPoint: 0,
+    profileUrl: '',
+    helpLog: [],
+    item: {},
+    guestBookId: 0,
+    comments: [],
+    accusePoint: 0,
+    profileId: 0,
+    name: '',
+    accumulatePoint: 0,
   });
+  const [myProfile, setMyProfile] = useState(false);
 
   // TODO : userId params 조회
   const { userId } = useParams();
 
   const fetchData = useCallback(async () => {
-      try {
+    try {
       const res = await authGet(`/api/v1/profile/${userId}`);
       setData(res);
-      } catch (err) {
+    } catch (err) {
       console.log(err);
-      }
-    }, [userId]);
+    }
+  }, [userId]);
 
+  const cur_id = useSelector((state) => state.user.id);
   useEffect(() => {
     fetchData();
+    // 현재 프로필과 나의 정보 일치 유무
+    if (userId === cur_id) {
+      setDewPoint(data.dewPoint);
+      setMyProfile(true);
+    } else {
+      setDewPoint(data.accumulatePoint);
+    }
   }, []);
-
-  console.log(localStorage.getItem('role'));
 
   return (
     <ProfileWrap>
       <Header />
       <Wrap>
-        <UserInfo url={data.profileUrl} name={data.name} tragetId={userId} />
+        <UserInfo
+          url={data.profileUrl}
+          name={data.name}
+          targetId={userId}
+          myProfile={myProfile}
+        />
         {localStorage.getItem('role') === 'ip' ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
         ) : null}
@@ -59,6 +74,7 @@ const Profile = () => {
             help_log={data.helpLog}
             setPickModalOpen={setPickModalOpen}
             item={data.item}
+            myProfile={myProfile}
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
