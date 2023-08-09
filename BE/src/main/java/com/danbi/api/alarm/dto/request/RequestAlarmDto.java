@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RequestAlarmDto {
 
-    @JsonProperty("from_id")
+    @JsonProperty("fromId")
     private Long fromId;
 
-    @JsonProperty("to_id")
+    @JsonProperty("toId")
     private Long toId;
 
     @JsonProperty("title")

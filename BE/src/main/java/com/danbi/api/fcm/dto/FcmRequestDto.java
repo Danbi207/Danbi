@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FcmRequestDto {
-    @JsonProperty("fcm_token")
+    @JsonProperty("fcmToken")
     private String fcmToken;
 }
