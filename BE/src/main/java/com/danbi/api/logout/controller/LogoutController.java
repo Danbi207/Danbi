@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/member")
 public class LogoutController {
 
     private final LogoutService logoutService;
