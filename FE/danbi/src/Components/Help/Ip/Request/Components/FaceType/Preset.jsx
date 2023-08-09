@@ -1,6 +1,32 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import Select from 'react-select';
 import { authGet } from '../../../../../../Util/apis/api';
+
+// 달력 커스텀
+const customStyles = {
+  // container: (provided, state) => ({
+  //   ...provided,
+  //   display: 'inline-block',
+  //   marginRight : '1rem',
+  //   marginLeft : '1rem',
+  // }),
+    control : (provided) => ({
+        ...provided,
+        width : '8rem',
+        height : '2rem',
+        borderRadius : '1rem'
+    }),
+    option : (provided, state) => ({
+        ...provided,
+        width : '8rem',
+        height : '2rem',
+    }),
+    indicatorSeparator : (provided) => ({
+      ...provided,
+      // display : 'inline-block'
+    })
+}
 
 const Preset = () => {
   const [presetList, setPresetList] = useState([]);
@@ -20,57 +46,45 @@ const Preset = () => {
     getPresetInfo();
   }, [getPresetInfo]);
 
-  const handlePresetSelect = (e) => {
-    let idx = parseInt(e.target.value); // 문자열을 숫자로 다시 포매팅
-    if (idx !== 0) {
-      console.log(idx)
-      setSelectedContent(presetList[idx-1].content);
-    } else {
-      setSelectedContent('');
-    }
-  };
+  // presetList가 존재하면 변환, 없으면 빈 배열을 반환
+  const options = presetList.length ? presetList.map(item => ({
+    value: item.content,
+    label: item.content
+  })) : [];
 
   return (
-    <>
-      <PresetName>주의사항</PresetName>
+    <SelctWrap>
+      <PresetName>시작 시간</PresetName>
       <Wrap>
-        <PresetSelect onChange={handlePresetSelect}>
-          <PresetOption value={0}>선택해주세요</PresetOption>
-            {presetList && presetList.length > 0 && presetList.map((item, idx) => (
-            <PresetOption key={idx + 1} value={idx + 1}>
-              {item.title}
-            </PresetOption>
-          ))}
-        </PresetSelect>
-        {/* Optionally display the selected content for debugging or other purposes */}
-        {/* <div>{selectedContent}</div> */}
+        <StyledSelect
+          onChange={(selectedOption) => setSelectedContent(selectedOption ? selectedOption.value : '')}
+          placeholder="주의 사항 설정"
+          options={options}
+          styles={customStyles}
+        />
       </Wrap>
-    </>
-  );
-};
+    </SelctWrap>
+  )
+}
 
 
-const Wrap = styled.div `
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 2rem;
-    flex-direction: column;
+const SelctWrap = styled.div`
+  width: 100%;
+  height: 30%;
+  /* background-color: red; */
 `
-const PresetName = styled.div `
-    height: 3rem;
-    padding: 1rem;
+const Wrap = styled.div`
 `
 
-const PresetSelect = styled.select`
-  width: 70%;
+const PresetName = styled.div`
   height: 3rem;
-  border: 1px solid black;
-  /* background-color: #D9D9D9; */
+  padding: 2rem 0;
 `
 
-const PresetOption = styled.option`
-
+const StyledSelect = styled(Select)`
+  width: 8rem;
+  height: 2rem;
+  border-radius: 1rem;
 `
 
 export default Preset;
