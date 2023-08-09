@@ -31,7 +31,7 @@ const Profile = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [userId]);
+  }, []);
 
   console.log(localStorage.getItem('role'));
 
