@@ -31,7 +31,7 @@ public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
 
 
-    @NotificationTrace
+
     @Override
     public Friend saveFriend(Friend friend) {
         validateDuplicateFriend(friend);
