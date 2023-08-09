@@ -50,7 +50,7 @@ public class PresetService {
     }
 
     public List<Preset> findPresetsByProfile(Profile profile) {
-        return presetRepository.findAllByProfile(profile);
+        return presetRepository.findAllByProfileOrderBySequence(profile);
     }
 
     @Transactional
