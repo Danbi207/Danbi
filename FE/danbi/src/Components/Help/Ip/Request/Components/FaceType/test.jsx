@@ -1,9 +1,33 @@
-import React,{ useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
+import { authGet } from '../../../../../../Util/apis/api';
 
+// 달력 커스텀
+const customStyles = {
+  // container: (provided, state) => ({
+  //   ...provided,
+  //   display: 'inline-block',
+  //   marginRight : '1rem',
+  //   marginLeft : '1rem',
+  // }),
+    control : (provided) => ({
+        ...provided,
+        width : '15rem',
+        height : '2rem',
+    }),
+    option : (provided, state) => ({
+        ...provided,
+        width : '15rem',
+        height : '2rem',
+    }),
+    indicatorSeparator : (provided) => ({
+      ...provided,
+      // display : 'inline-block'
+    })
+}
 
-const test = () => {
+const Preset = () => {
   const [presetList, setPresetList] = useState([]);
   const [selectedContent, setSelectedContent] = useState('');
 
@@ -19,28 +43,29 @@ const test = () => {
 
   useEffect(() => {
     getPresetInfo();
-  }, [getPresetInfo]);
+  }, []);
+
+  // presetList가 존재하면 변환, 없으면 빈 배열을 반환
+  const options = presetList.length ? presetList.map(item => ({
+    value: item.content,
+    label: item.content
+  })) : [];
 
   return (
     <SelctWrap>
-    <PresetName>시작 시간</PresetName>
-    <Wrap>
-      <StyledSelect
-        onChange={(selectedOption) => setHourValue(selectedOption ? selectedOption.value : '')}
-        placeholder="시간"
-        options={hours}
-        styles={customStyles}
-      />
-      <StyledSelect
-        onChange={(selectedOption) => setMinuteValue(selectedOption ? selectedOption.value : '')}
-        placeholder="분"
-        options={minutes}
-        styles={customStyles}
-      />
-    </Wrap>
-  </SelctWrap>
+      <PresetName>시작 시간</PresetName>
+      <Wrap>
+        <StyledSelect
+          onChange={(selectedOption) => setSelectedContent(selectedOption ? selectedOption.value : '')}
+          placeholder="주의 사항 설정"
+          options={options}
+          styles={customStyles}
+        />
+      </Wrap>
+    </SelctWrap>
   )
 }
+
 
 const SelctWrap = styled.div`
   width: 100%;
@@ -49,7 +74,7 @@ const SelctWrap = styled.div`
 `
 const Wrap = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 `
 
 const PresetName = styled.div`
@@ -58,9 +83,9 @@ const PresetName = styled.div`
 `
 
 const StyledSelect = styled(Select)`
-  width: 8rem;
+  width: 15rem;
   height: 2rem;
   border-radius: 1rem;
 `
 
-export default test;
+export default Preset;
