@@ -1,15 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
+import { authPost } from '../../../Util/apis/api.js';
 
-const UserInfo = ({url, name}) => {
+const UserInfo = ({url, name, targetId}) => {
+  const handlePlus = async () => {
+    const data = {
+      "targetId": targetId
+    }
+    const res = await authPost('/api/v1/friends', data);
+    console.log(res);
+  }
   return (
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
         <UserName>{name}</UserName>
         <Btns>
-          <PlusButton>친구추가</PlusButton>
+          <PlusButton onClick={handlePlus}>친구추가</PlusButton>
           <AccuseButton />
         </Btns>
       </UserDetail>
