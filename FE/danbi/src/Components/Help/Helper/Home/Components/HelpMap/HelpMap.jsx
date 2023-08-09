@@ -21,7 +21,7 @@ const HelpMap = ({position,helpList}) => {
   const getMarker = useCallback((help,idx)=>{
     if(help.emergencyFlag){
       return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
-        <Marker $haste={true} src={`${process.env.PUBLIC_URL}/assets/haste.svg`} onClick={()=>showDetail(help,idx)} >
+        <Marker alt='' $haste={true} src={`${process.env.PUBLIC_URL}/assets/haste.svg`} onClick={()=>showDetail(help,idx)} >
           <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
           <div onClick={()=>setVisible("none")}>X</div>
         </Marker>;
@@ -30,7 +30,7 @@ const HelpMap = ({position,helpList}) => {
 
     if(help.friendFlag){
       return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
-        <Marker $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
+        <Marker alt='' $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
           <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
           <div onClick={()=>setVisible("none")}>X</div>
         </Marker>;
@@ -38,7 +38,7 @@ const HelpMap = ({position,helpList}) => {
     }
 
     return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
-        <Marker $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
+        <Marker alt='' $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
           <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
           <div onClick={()=>setVisible("none")}>X</div>
         </Marker>;
@@ -52,6 +52,9 @@ const HelpMap = ({position,helpList}) => {
         style={{width:"100%",height:"100%"}}
         level={7}
       >
+        <CustomOverlayMap position={{lat:position.coords.latitude,lng:position.coords.longitude}}>
+          <CurMarker alt='' src={`${process.env.PUBLIC_URL}/curMarker.svg`}></CurMarker>
+        </CustomOverlayMap>
         {
           helpList.map((e,idx)=>getMarker(e,idx))
         }
