@@ -55,7 +55,7 @@ const TimeSelect = () => {
 
   useEffect(()=>{
     dispatch(setCurrentTime([hourvalue, minutevalue]))
-    console.log([hourvalue, minutevalue])
+    // console.log([hourvalue, minutevalue])
   },[hourvalue, minutevalue, dispatch])
 
   return (

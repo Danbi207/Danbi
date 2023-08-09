@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -12,7 +12,6 @@ import Tab from './Components/Tab/Tab';
 const IpRequest = () => {
   const ip = useSelector((state)=>state.ip)
   const location = useLocation();
-  // console.log(location)
 
   return (
     <RequestWrap>

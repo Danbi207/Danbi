@@ -35,9 +35,9 @@ const UseTime = () => {
     dispatch(setUseTimes(newTotalTime));
   };
 
-  useEffect(()=>{
-    console.log(useTimes)
-  },[useTimes])
+  // useEffect(()=>{
+  //   console.log(useTimes)
+  // },[useTimes])
 
   return (
     <>

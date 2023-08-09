@@ -2,13 +2,13 @@ import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { authGet } from '../../../../../../Util/apis/api';
 import { useDispatch } from 'react-redux';
-import { setContent } from '../../../../../../store/Slice/ipSlice'
+import { setCaution } from '../../../../../../store/Slice/ipSlice'
 import { useSelector } from 'react-redux';
 
 const Preset = () => {
   const dispatch = useDispatch();
   const [presetList, setPresetList] = useState([]);
-  const content = useSelector(state => state.ip.content)
+  const caution = useSelector(state => state.ip.caution)
 
   const getPresetInfo = useCallback(async () => {
     try {
@@ -33,10 +33,10 @@ const Preset = () => {
   const handlePresetSelect = (e) => {
     let idx = parseInt(e.target.value); // 문자열을 숫자로 다시 포매팅
     if (idx !== 0) {
-      dispatch(setContent(presetList[idx-1].content));
-      console.log(content)
+      dispatch(setCaution(presetList[idx-1].content));
+      console.log(caution)
     } else {
-      dispatch(setContent(''));
+      dispatch(setCaution(''));
     }
   };
 

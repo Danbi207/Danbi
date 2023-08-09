@@ -7,7 +7,7 @@ export const ipSlice = createSlice({
     position : {
       cur_longitude : null,
       cur_latitude : null,  
-      cur_addr : null,
+      cur_addr : '',
       dest_longitude : null,
       dest_latitude : null,
       dest_addr : null, 
@@ -19,6 +19,7 @@ export const ipSlice = createSlice({
     reservetype : '',
     meetType : '',
     category : 'NONE',
+    caution : '',
     content : '',
     ischecked : false,
     currentDay : [],
@@ -34,6 +35,9 @@ export const ipSlice = createSlice({
     },
     setContent : (state, action) => {
         state.content = action.payload;
+    },
+    setCaution : (state, action) => {
+        state.caution = action.payload;
     },
     setReserveType : (state, action) => {
       state.reservetype = action.payload;
@@ -80,7 +84,7 @@ export const ipSlice = createSlice({
   },
 });
 
-export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setCategory,
+export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setCategory, setCaution,
                setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude,
                setCurrentDay, setUseTimes, setCurrentTime
               } = ipSlice.actions;

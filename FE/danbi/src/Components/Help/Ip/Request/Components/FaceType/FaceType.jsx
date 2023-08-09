@@ -7,32 +7,11 @@ import Positioin from './Positioin';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setMeetType } from "../../../../../../store/Slice/ipSlice"
-
+import { useState } from 'react';
+import { useCallback } from 'react';
+import { authPost } from '../../../../../../Util/apis/api';
 
 function FaceType({location}) {
-  const ipData = {
-    "help_id" : 1,
-    "position" : {
-        "latitude" : null,
-        "longitude" : null,
-        "addr" : null,
-        "destLatitude" : null,
-        "destLongitude" : null,
-        "destAddr" : null,
-        "meetLatitude" : null,
-        "meetLongitude" : null,
-        "meetAddr" : null,
-    },
-    "category" : "ETC",
-    "caution" : "qweqweqwe",
-    "faceFlag": true,
-    "emergencyFlag": false, 
-    "genderFlag" : true,
-    "content": "ㅁㄴㅇ",
-    "start_time" : "2023-01-12 14:40",
-    "end_time" : "2023-01-12 14:50"
-	// start, end 스네이크형식으로 밖에 안받아져서 이걸로 쏴주세요
-  }
 
   const dispatch = useDispatch();
   const ip = useSelector(state => state.ip)
@@ -40,40 +19,74 @@ function FaceType({location}) {
   const currentDay = ip.currentDay
   const currentTime = ip.currentTime
   const useTimes = ip.useTimes
+  const [starttime, setStartTime] = useState('');
+  const [endtime, setEndTime] = useState('');
 
   // YYYY-MM-DD HH:mm 포맷으로 변환
   const formatDateTime = (day, time) => {
     return `${day[0]}-${String(day[1]).padStart(2, '0')}-${String(day[2]).padStart(2, '0')} ${String(time[0]).padStart(2, '0')}:${String(time[1]).padStart(2, '0')}`;
   };
 
-  const startTime = formatDateTime(currentDay, currentTime);
-
-  // 끝 시간 계산
-  let endHour = currentTime[0];
-  let endMinute = currentTime[1] + useTimes;
-
-  // 60분을 넘어가면 시간에 1을 더하고, 분에서 60을 빼줍니다.
-  while (endMinute >= 60) {
-    endHour += 1;
-    endMinute -= 60;
-  }
-
-  // 만약 시간이 24를 넘어가면, 일자에 1을 더해주고 시간에서 24를 빼줍니다.
-  if (endHour >= 24) {
-    endHour -= 24;
-    currentDay[2] += 1; // 일자에 1을 더해줍니다. (단, 월마다의 일자 한계는 고려하지 않았습니다.)
-  }
-
-  const endTime = formatDateTime(currentDay, [endHour, endMinute]);
-
-  console.log(`startTime: ${startTime}`);
-  console.log(`endTime: ${endTime}`);
-
+  // 시작, 끝나는 시간 정하는 로직
   useEffect(()=>{
-    console.log(meetType)
-  }, [meetType])
+    setStartTime(formatDateTime(currentDay, currentTime));
 
+    // 끝 시간 계산
+    let endHour = currentTime[0];
+    let endMinute = currentTime[1] + useTimes;
+
+    // 60분을 넘어가면 시간에 1을 더하고, 분에서 60을 빼줍니다.
+    while (endMinute >= 60) {
+      endHour += 1;
+      endMinute -= 60;
+    }
+
+    // 만약 시간이 24를 넘어가면, 일자에 1을 더해주고 시간에서 24를 빼줍니다.
+    if (endHour >= 24) {
+      endHour -= 24;
+      currentDay[2] += 1; // 일자에 1을 더해줍니다. (단, 월마다의 일자 한계는 고려하지 않았습니다.)
+    }
+
+    setEndTime(formatDateTime(currentDay, [endHour, endMinute]));
+
+    console.log(`startTime: ${starttime}`);
+    console.log(`endTime: ${endtime}`);
+  },[])
   
+  // authPost 보내는 로직
+  const IpRequestHelp = useCallback(async()=> {
+    const ipData = {
+      "help_id" : 1,
+      "position" : {
+          "latitude" : ip.position.cur_latitude,
+          "longitude" : ip.position.cur_longitude,
+          "addr" : ip.position.cur_addr,
+          "destLatitude" : ip.position.dest_latitude,
+          "destLongitude" : ip.position.dest_longitude,
+          "destAddr" : ip.position.dest_addr,
+          "meetLatitude" : ip.position.meet_latitude,
+          "meetLongitude" : ip.position.meet_longitude,
+          "meetAddr" : ip.position.meet_addr,
+      },
+      "category" : ip.category,
+      "caution" : ip.caution,
+      "faceFlag": ip.meetType==='face',
+      "emergencyFlag": false, 
+      "genderFlag" : ip.ischecked,
+      "content": ip.content,
+      "start_time" : starttime,
+      "end_time" : endtime
+    }
+    try{
+      await authPost('/api/v1/help/create', ipData)
+      navigator('/help/ip')
+    }
+    catch (err) {
+      console.log(err.error)
+    }
+  }, [])
+
+
   return (
     <Wrap>
       <Boxes>
@@ -83,7 +96,7 @@ function FaceType({location}) {
       { meetType === 'face' ? <Positioin/> : null}  
       <HelpDetail/>
       <Preset/>
-      {location.state !== null ? <button>수정</button> : <RequestBTN>도움 요청하기</RequestBTN>}
+      {location.state !== null ? <button>수정</button> : <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>}
     </Wrap>
   );
 }
