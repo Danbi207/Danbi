@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { authPost } from '../../../../Util/apis/api';
 
-const PresetTextArea = ({ setOpenTextArea }) => {
+const PresetTextArea = ({ setOpenTextArea, length }) => {
   const [textArea, setTextArea] = useState("");
   
   const SavePreset = async () => {
@@ -10,7 +10,7 @@ const PresetTextArea = ({ setOpenTextArea }) => {
     const textJson = {
       "title": textArea,
       "content": textArea,
-      "sequence": 0
+      "sequence": length + 1
     }
     try{
       const data = await authPost('/api/v1/preset/create', textJson);
