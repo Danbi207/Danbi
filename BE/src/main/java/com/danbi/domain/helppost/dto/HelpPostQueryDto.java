@@ -19,7 +19,7 @@ public class HelpPostQueryDto {
     private Long ipId;
     private String name;
     private String profileUrl;
-    private String caution;
+    private String content;
     private String longitude;
     private String latitude;
     private LocalDateTime startTime;

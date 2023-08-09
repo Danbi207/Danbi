@@ -20,7 +20,7 @@ public class HelperQueryHelpPostDto {
 
     private String profileUrl;
 
-    private String caution;
+    private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
