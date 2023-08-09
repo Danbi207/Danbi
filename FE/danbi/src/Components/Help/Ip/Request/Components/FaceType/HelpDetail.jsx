@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 
@@ -8,9 +8,6 @@ import {setContent} from '../../../../../../store/Slice/ipSlice'
 const HelpDetail = () => {
   const dispatch = useDispatch();
   const content = useSelector(state => state.ip.content)
-
-  useEffect(() => 
-    console.log(content),[content]);
 
   return (
     <>

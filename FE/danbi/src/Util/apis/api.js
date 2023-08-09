@@ -168,7 +168,7 @@ export const authPut = async (url,json)=>{
     const res = await reissueAccessToken();
     if(res === null) return null;
 
-    const {data} = await axios.put({
+    const {data} = await axios({
       method:"put",
       url: process.env.REACT_APP_SERVER+url,
       data:json,
@@ -180,7 +180,7 @@ export const authPut = async (url,json)=>{
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
-      const {data} = await axios.put({
+      const {data} = await axios({
         method:"put",
         url: process.env.REACT_APP_SERVER+url,
         data:json,

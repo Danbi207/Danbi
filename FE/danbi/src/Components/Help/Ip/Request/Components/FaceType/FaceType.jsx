@@ -79,13 +79,8 @@ function FaceType({location}) {
       "start_time" : starttime,
       "end_time" : endtime
     }
-    if(!ip.caution || !ip.content) {
-      console.log("데이터가 올바르지 않습니다.");
-      return;
-    }
     try{
       await authPost('/api/v1/help/create', ipData)
-      console.log(ip);
       navigator('/help/ip')
     }
     catch (err) {
