@@ -19,6 +19,7 @@ public class ProfileResponseDto {
     private String profileUrl;
     private int accusePoint;
     private Long dewPoint;
+    private Long accumulatePoint;
 
     private ProfileItemResponseDto item;
     private List<ProfileHelpResponseDto> helpLog;

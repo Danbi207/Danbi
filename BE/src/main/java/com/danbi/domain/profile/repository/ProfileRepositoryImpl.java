@@ -33,7 +33,8 @@ public class ProfileRepositoryImpl implements ProfileRepositoryCustom{
     public ProfileQueryDto searchProfile(Long memberId) {
         return jpaQueryFactory.select(Projections.constructor(ProfileQueryDto.class,
                     profile.id, guestBook.id ,member.name, member.profileUrl,
-                        member.accuseStack, point.dewPoint, item.ranking, item.color))
+                        member.accuseStack, point.dewPoint, point.accumulateDewPoint,
+                        item.ranking, item.color))
                 .from(profile)
                 .innerJoin(profile.member, member)
                 .leftJoin(item).on(profile.eq(item.profile))

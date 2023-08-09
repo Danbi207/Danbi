@@ -198,4 +198,18 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 ).fetchOne();
         return Optional.ofNullable(helpPost);
     }
+
+    @Override
+    public List<HelpPost> checkIsHelperCanHelp(Long memberId, LocalDateTime startTime, LocalDateTime endTime) {
+
+            return jpaQueryFactory.selectFrom(helpPost)
+            .innerJoin(help).on(helpPost.eq(help.helpPost))
+            .where(
+                    help.helper.id.eq(memberId),
+                    helpPost.state.eq(State.MATCHED),
+                    helpPost.startTime.between(startTime, endTime)
+                            .or(helpPost.endTime.between(startTime, endTime))
+            ).fetch();
+
+    }
 }
