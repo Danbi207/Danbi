@@ -10,7 +10,7 @@ const HelpListItem = (props) => {
           <div>
             <UserProfile src={props.help.profileUrl}></UserProfile>
             <UserTitle>
-              <div>{props.help.name}</div>
+              <div onClick={()=>navigate(`/user/profile/${props.help.ipId}`)}>{props.help.name}</div>
               {
                 props.help.accuseStack === 0 ? null:
                 props.help.accuseStack <= 2 ? <img alt='' src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
@@ -53,6 +53,7 @@ const UserTitle = styled.div`
   width: 5rem;
   &>:first-child{
     font-size: 1.5rem;
+    cursor: pointer;
   }
 `
 const TimeWrap = styled.div`
