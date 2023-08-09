@@ -59,7 +59,6 @@ public class AccuseInfoService {
         Accuse build = Accuse.builder()
                 .targetMember(targetMember)
                 .reporter(reporter)
-                .title(accuseRequestDto.getTitle())
                 .content(accuseRequestDto.getContent())
                 .accuseType(accuseRequestDto.getAccuseType())
                 .state(State.STAND_BY).build();
@@ -73,7 +72,6 @@ public class AccuseInfoService {
                 .memberInfo(AccuseMemberDto.builder()
                         .memberId(accuse.getTargetMember().getId())
                         .name(accuse.getTargetMember().getName()).build())
-                .title(accuse.getTitle())
                 .content(accuse.getContent())
                 .accuseType(accuse.getAccuseType())
                 .state(accuse.getState())
@@ -141,7 +139,6 @@ public class AccuseInfoService {
         Accuse accuse = accuseService.searchAccuse(accuseId);
         return AccuseDetailResponseDto.builder()
                 .accuseId(accuse.getId())
-                .title(accuse.getTitle())
                 .content(accuse.getContent())
                 .accuseType(accuse.getAccuseType())
                 .state(accuse.getState()).build();

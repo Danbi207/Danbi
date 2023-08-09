@@ -22,7 +22,7 @@ public class ProfileQueryDto {
     private String profileUrl;
     private int accusePoint;
     private Long dewPoint;
-
+    private Long accumulatePoint;
     private Ranking ranking;
     private Color color;
 

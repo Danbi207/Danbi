@@ -29,9 +29,6 @@ public class Accuse extends BaseEntity {
     @JoinColumn(name = "reporter_id")
     private Member reporter;
 
-    @Column(nullable = false, length = 20)
-    private String title;
-
     @Lob
     @Column(nullable = false)
     private String content;
@@ -50,10 +47,9 @@ public class Accuse extends BaseEntity {
     }
 
     @Builder
-    public Accuse(Member targetMember, Member reporter,String title, String content, AccuseType accuseType, State state) {
+    public Accuse(Member targetMember, Member reporter, String content, AccuseType accuseType, State state) {
         this.targetMember = targetMember;
         this.reporter = reporter;
-        this.title = title;
         this.content = content;
         this.accuseType = accuseType;
         this.state = state;

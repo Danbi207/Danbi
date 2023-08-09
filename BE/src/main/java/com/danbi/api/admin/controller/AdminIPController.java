@@ -21,11 +21,24 @@ public class AdminIPController {
     private final AdminIPService adminIPService;
 
     @Operation(summary = "IP 회원 인증 서류 조회 API", description = "IP 회원 인증 서류 조회")
-    @GetMapping("/file/{ipId}/{fileId}")
+    @GetMapping("/file/{ipId}")
     public ApiResponse<List<IPCertFileResponseDto>> findIPCertFiles(@PathVariable Long ipId,
-                                                                    @PathVariable Long fileId,
                                                                     @MemberInfo MemberInfoDto memberInfoDto) {
-        List<IPCertFileResponseDto> ipCertFiles = adminIPService.findIPCertFiles(memberInfoDto.getMemberId());
+        List<IPCertFileResponseDto> ipCertFiles = adminIPService.findIPCertFiles(ipId);
         return ApiResponse.ok(ipCertFiles);
+    }
+
+    @Operation(summary = "IP 회원 인증 승인 처리 API", description = "IP 회원 인증 승인 처리")
+    @PostMapping("/permit/{ipId}")
+    public ApiResponse<String> permitIP(@PathVariable Long ipId, @MemberInfo MemberInfoDto memberInfoDto) {
+        adminIPService.permitIp(ipId);
+        return ApiResponse.ok("success");
+    }
+
+    @Operation(summary = "IP 회원 인증 거절 처리 API", description = "IP 회원 인증 거절 처리")
+    @PostMapping("/reject/{ipId}")
+    public ApiResponse<String> rejectIP(@PathVariable Long ipId, @MemberInfo MemberInfoDto memberInfoDto) {
+        adminIPService.rejectIP(ipId);
+        return ApiResponse.ok("success");
     }
 }

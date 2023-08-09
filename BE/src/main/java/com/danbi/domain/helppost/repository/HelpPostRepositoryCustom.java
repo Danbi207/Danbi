@@ -9,6 +9,7 @@ import com.danbi.domain.helppost.entity.HelpPost;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface HelpPostRepositoryCustom {
     List<HelpPostQueryDto> search(String gender);
@@ -21,4 +22,8 @@ public interface HelpPostRepositoryCustom {
     List<HelpPost> findHelpPostsByBetweenTime(LocalDateTime startTime, LocalDateTime endTime, Long memberId);
 
     List<HelpPost> findHelpPostByMonth(LocalDate startTime, Long memberId);
+
+    Optional<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId);
+
+    List<HelpPost> checkIsHelperCanHelp(Long memberId, LocalDateTime startTime, LocalDateTime endTime);
 }

@@ -142,6 +142,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getTo().getId())
                     .build();
             result.add(responseFriendDto);
         }
@@ -154,6 +155,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getFrom().getId())
                     .build();
             result.add(responseFriendDto);
         }
@@ -171,9 +173,12 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                 .type(Type.PERMIT)
                 .state(State.ACTIVATE)
                 .build();
-
         return friendService.isFriend(friend);
 
     }
 
+    @Override
+    public boolean checkFriend(Long fromMemberId, Long toMemberId) {
+        return friendService.checkFriend(fromMemberId, toMemberId);
+    }
 }

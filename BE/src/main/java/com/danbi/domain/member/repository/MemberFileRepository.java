@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface MemberFileRepository extends JpaRepository<MemberFile, Long> {
 
-    @Query(value = "select f from MemberFile f where f.member = :member", nativeQuery = true)
+    @Query(value = "select f from MemberFile f where f.member = :member")
     List<MemberFile> findIPCertFiles(@Param("member") Member member);
 }

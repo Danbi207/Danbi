@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -127,5 +129,11 @@ public class HelpPostService {
     @Transactional(readOnly = true)
     public List<HelpPost> searchByMonth(LocalDate time, Long memberId) {
         return helpPostRepository.findHelpPostByMonth(time, memberId);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkHelperTime(LocalDateTime time, Long memberId) {
+        Optional<HelpPost> helpPostByNowTime = helpPostRepository.findHelpPostByNowTime(time, memberId);
+        return helpPostByNowTime.isPresent() ? true : false;
     }
 }
