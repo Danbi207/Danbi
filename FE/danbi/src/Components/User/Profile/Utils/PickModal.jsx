@@ -41,7 +41,7 @@ const PickModal = ({ setPickModalOpen }) => {
     }, 1500);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [cur_Tier]);
 
   const CloseModal = () => {
     setPickModalOpen(false);

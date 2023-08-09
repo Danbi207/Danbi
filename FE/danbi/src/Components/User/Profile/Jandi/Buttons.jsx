@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     setTier,
     setCheckedRgb,
@@ -12,8 +12,8 @@ import { authPost } from '../../../../Util/apis/api';
 
 const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
     const dispatch = useDispatch();
-
-    const handlePickModal = async (pickdata) => {
+    const cur_dewPoint = useSelector((state) => state.Jandi.dewPoint);
+    const handlePickModal = async () => {
         setPickModalOpen(true);
         try {
           const pickdata = await authPost('/api/v1/item', {});
@@ -34,7 +34,7 @@ const Buttons = ({prevGross, nextGross, pickdata, setPickModalOpen}) => {
           <GrossBtn onClick={nextGross}>다음</GrossBtn>
         </DirectionBtns>
         <Wrap>
-          <Dew>{pickdata.dewPoint}Dew</Dew>
+          <Dew>{cur_dewPoint}Dew</Dew>
           <PickBtn
             onClick={() => {
               handlePickModal();
