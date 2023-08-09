@@ -1,9 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { setMode } from '../../../../store/Slice/ModalSlice';
 
 const AccuseButton = () => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(setMode('accuse'));
+  }
+
   return (
-    <AccuseWrap>
+    <AccuseWrap onClick={handleClick}>
       <AccuseImg />
     </AccuseWrap>
   );

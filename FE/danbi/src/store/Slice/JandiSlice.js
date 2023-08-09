@@ -4,10 +4,10 @@ export const JandiSlice = createSlice({
     name: "Jandi",
     initialState: {
         item : {
-			name : "원래색",
+			name : "잔디색",
 			uncheckedRgb : "#39D353",
 			checkedRgb : "#006D32",
-			tier : "COMMON"
+			tier : "common"
 		},
 		dewPoint : 123456,
     },
