@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components';
-import Footer from '../../../Common/Footer/Footer';
-import Header from '../../../Common/Header/Header';
+import Footer from '../../../../../Common/Footer/Footer'
+import Header from '../../../../../Common/Header/Header'
 
 import "./IpMap.css";
 import { useDispatch, useSelector } from 'react-redux';
 
-import {setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, } from '../../../../store/Slice/ipSlice'; 
+import {setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, } from '../../../../../../store/Slice/ipSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const IpMap = () => {
