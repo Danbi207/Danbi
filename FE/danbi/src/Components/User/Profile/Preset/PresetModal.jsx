@@ -27,7 +27,7 @@ const PresetModal = ({ setModalOpen }) => {
 
   useEffect(() => {
     fetchData();
-  }, [presetList])
+  }, [OpenTextArea])
 
   const handleSave = async () => {
     await authPost(`api/v1/preset/sequence`, presetList);

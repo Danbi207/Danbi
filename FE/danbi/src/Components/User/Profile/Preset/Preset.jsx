@@ -34,7 +34,7 @@ const Preset = ({preset_list, setPresetList}) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       key={index}
-                      isDragging={snapshot.isDragging}
+                      isdragging={snapshot.isDragging}
                     >
                       <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
                     </Wrap>
