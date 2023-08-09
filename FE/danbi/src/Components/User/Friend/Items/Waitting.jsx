@@ -4,6 +4,7 @@ import example from '../example-profile.jpg';
 import { authPost, authDelete } from '../../../../Util/apis/api';
 
 const Waitting = ({ value }) => {
+  console.log(value);
   const handleAccept = async () => {
     const target_id = {
       targetId: value.targetId,
