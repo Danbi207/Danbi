@@ -1,33 +1,35 @@
-import React, {  useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
-import { setOpenIndex } from '../../../../../../store/Slice/ipSlice'
+import { setOpenIndex } from '../../../../../../store/Slice/ipSlice';
+import { authGet } from '../../../../../../Util/apis/api';
 
 const Preset = () => {
   const dispatch = useDispatch();
-  const openIndex = useSelector(state => state.ip.openIndex)
+  const [presetList, setPresetList] = useState([]);
+  const [selectedContent, setSelectedContent] = useState('');
 
-  let preset_list = [
-    {
-      preset_id: 1,
-      title: '1asdf',
-      content: '123saf',
-      sequence: 1,
-    },
-    {
-      preset_id: 2,
-      title: '김민규는 쓰레기입니다.',
-      content: '끼잉 낑.',
-      sequence: 2,
-    },
-    
-  ];
+  const getPresetInfo = useCallback(async () => {
+    try {
+      const { data } = await authGet("/api/v1/preset");
+      setPresetList(data); 
+    }
+    catch(err) {
+      console.log(err.error);
+    }
+  }, []);
 
-  useEffect(()=>console.log(openIndex),[openIndex]);
+  useEffect(() => {
+    getPresetInfo();
+  }, [getPresetInfo]);
 
   const handlePresetSelect = (e) => {
-    let idx = e.target.value; // select에서 value값은 string으로 저장된다.  
+    let idx = parseInt(e.target.value); // convert the string value back to an integer
+    if (idx !== 0) {
+      setSelectedContent(presetList[idx - 1].content);
+    } else {
+      setSelectedContent('');
+    }
     dispatch(setOpenIndex(idx));
   };
 
@@ -37,16 +39,19 @@ const Preset = () => {
       <Wrap>
         <PresetSelect onChange={handlePresetSelect}>
           <PresetOption value={0}>선택해주세요</PresetOption>
-          {preset_list.map((item, idx) => (
-            <PresetOption key={idx+1} value={(idx+1)}>
+          {presetList.map((item, idx) => (
+            <PresetOption key={idx + 1} value={idx + 1}>
               {item.title}
             </PresetOption>
           ))}
         </PresetSelect>
+        {/* Optionally display the selected content for debugging or other purposes */}
+        {/* <div>{selectedContent}</div> */}
       </Wrap>
     </>
   );
 };
+
 
 const Wrap = styled.div `
     display: flex;
