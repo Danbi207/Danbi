@@ -19,7 +19,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
         } catch(err) {
             console.log(err);
         }
-    }, [value.id]);
+    }, [value.id, DeleteActive]);
 
 
     return(
