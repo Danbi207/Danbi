@@ -8,9 +8,9 @@ const Checkbox = () => {
   const dispatch = useDispatch();
   const ischecked = useSelector(state => state.ip.ischecked);
 
-  useEffect(()=>{
-    console.log(ischecked)
-  }, [ischecked])
+  // useEffect(()=>{
+  //   console.log(ischecked)
+  // }, [ischecked])
 
   return (
     <>    
