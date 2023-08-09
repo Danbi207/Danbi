@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { getSpeech } from '../Utils/TTS';
-import { authPut } from '../../../../Util/apis/api';
+import { authPost } from '../../../../Util/apis/api';
 
-const PresetDetail = ({ content, PresetId, showDetail, setDeleteActive, setEditActive }) => {
+const PresetDetail = ({ content, PresetId, showDetail, setDeleteActive, setEditActive, sequence }) => {
   const [value, setValue] = useState(content);
 
   const {
@@ -37,7 +37,12 @@ const PresetDetail = ({ content, PresetId, showDetail, setDeleteActive, setEditA
 
   const SaveDetail = async () => {
     try{
-      const data = await authPut(`/api/v1/preset/update/${PresetId}`, {value});
+      const config = {
+        "title": value,
+        "content": value,
+        "sequence": sequence
+      }
+      const data = await authPost(`/api/v1/preset/update/${PresetId}`, config);
       console.log(data);
       showDetail(-1);
       alert('저장되었습니다.');

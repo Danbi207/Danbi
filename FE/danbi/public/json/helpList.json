@@ -2,69 +2,31 @@
   "code": 200,
   "status": "OK",
   "data": [
-    {
-      "helpPostId": 6,
-      "ipId": 1,
-      "position": {
-          "meetLatitude": "36.109485",
-          "meetLongitude": "128.4444",
-          "meetAddr": "경상북도 구미시 진평동 123-1"
+      {
+        "accuseStack" : 0,
+        "content" : "ㅁㄴㅇ",
+        "emergencyFlag": false,
+        "endTime": "2023-08-09 14:50",
+        "friendFlag": false,
+        "helpPostId": 1,
+        "ipId": 3,
+        "name": "강민석",
+        "position": {"meetLatitude": "36.1071233", "meetLongitude": "128.416481", "meetAddr": "진평동"},
+        "profileUrl": "http://k.kakaocdn.net/dn/bS2wdw/btreVxvFriB/kFFiMJpfHdDtEc6qnuqPQ0/img_110x110.jpg",
+        "startTime": "2023-08-09 14:40"
       },
-      "name": "김민규",
-      "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-      "caution": "qweqweqwe",
-      "startTime": "2023-08-06 12:00",
-      "endTime": "2023-08-06 13:00",
-      "accuseStack": 2,
-      "friendFlag": false
-    },
-    {
-      "helpPostId": 8,
-      "ipId": 1,
-      "position": {
-          "meetLatitude": "36.118485",
-          "meetLongitude": "128.444",
-          "meetAddr": "경상북도 구미시 진평동 123-1"
-      },
-      "name": "김민규",
-      "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-      "caution": "qweqweqwe",
-      "startTime": "2023-08-06 12:00",
-      "endTime": "2023-08-06 13:00",
-      "accuseStack": 3,
-      "friendFlag": true
-    },
-        {
-      "helpPostId": 6,
-      "ipId": 1,
-      "position": {
-          "meetLatitude": "36.127485",
-          "meetLongitude": "128.4444",
-          "meetAddr": "경상북도 구미시 진평동 123-1"
-      },
-      "name": "김민규",
-      "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-      "caution": "qweqweqwe",
-      "startTime": "2023-08-10 14:20",
-      "endTime": "2023-08-10 14:30",
-      "accuseStack": 0,
-      "friendFlag": false
-    },
-    {
-      "helpPostId": 8,
-      "ipId": 1,
-      "position": {
-          "meetLatitude": "36.136485",
-          "meetLongitude": "128.4444",
-          "meetAddr": "경상북도 구미시 진평동 123-1"
-      },
-      "name": "김민규",
-      "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-      "caution": "qweqweqwe",
-      "startTime": "2023-08-10 14:40",
-      "endTime": "2023-08-10 14:50",
-      "accuseStack": 0,
-      "friendFlag": true
-    }
+      {
+        "accuseStack" : 0,
+        "content" : "ㅁㄴㅇ",
+        "emergencyFlag": true,
+        "endTime": "2023-08-09 14:50",
+        "friendFlag": false,
+        "helpPostId": 3,
+        "ipId": 3,
+        "name": "강민석",
+        "position": {"meetLatitude": "36.1071233", "meetLongitude": "128.216481", "meetAddr": "진평동"},
+        "profileUrl": "http://k.kakaocdn.net/dn/bS2wdw/btreVxvFriB/kFFiMJpfHdDtEc6qnuqPQ0/img_110x110.jpg",
+        "startTime": "2023-08-09 14:40"
+      }
   ]
 }
