@@ -1,18 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { setOpenIndex } from '../../../../../../store/Slice/ipSlice';
 import { authGet } from '../../../../../../Util/apis/api';
 
 const Preset = () => {
-  const dispatch = useDispatch();
   const [presetList, setPresetList] = useState([]);
   const [selectedContent, setSelectedContent] = useState('');
 
   const getPresetInfo = useCallback(async () => {
     try {
       const { data } = await authGet("/api/v1/preset");
-      setPresetList(data); 
+      setPresetList(data); // data를 업데이트
     }
     catch(err) {
       console.log(err.error);
@@ -24,13 +21,13 @@ const Preset = () => {
   }, [getPresetInfo]);
 
   const handlePresetSelect = (e) => {
-    let idx = parseInt(e.target.value); // convert the string value back to an integer
+    let idx = parseInt(e.target.value); // 문자열을 숫자로 다시 포매팅
     if (idx !== 0) {
-      setSelectedContent(presetList[idx - 1].content);
+      console.log(idx)
+      setSelectedContent(presetList[idx].content);
     } else {
       setSelectedContent('');
     }
-    dispatch(setOpenIndex(idx));
   };
 
   return (
@@ -39,7 +36,8 @@ const Preset = () => {
       <Wrap>
         <PresetSelect onChange={handlePresetSelect}>
           <PresetOption value={0}>선택해주세요</PresetOption>
-          {presetList.map((item, idx) => (
+
+            {presetList.map((item, idx) => (
             <PresetOption key={idx + 1} value={idx + 1}>
               {item.title}
             </PresetOption>
