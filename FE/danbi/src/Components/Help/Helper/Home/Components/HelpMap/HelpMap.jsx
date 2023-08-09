@@ -31,28 +31,31 @@ const HelpMap = ({position,helpList}) => {
         {
           helpList.map((help,idx)=>{
             if(help.emergencyFlag){
-              return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
-                <Marker alt='' $haste={true} src={`${process.env.PUBLIC_URL}/assets/haste.svg`} onClick={()=>showDetail(help,idx)} >
+              return <CustomOverlayMap key={idx} position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
+                <MarkerWrap>
+                  <Marker alt='' $haste={true} src={`${process.env.PUBLIC_URL}/assets/haste.svg`} onClick={()=>showDetail(help,idx)} ></Marker>
                   <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
                   <div onClick={()=>setVisible("none")}>X</div>
-                </Marker>;
+                </MarkerWrap>
               </CustomOverlayMap>
             }
         
             if(help.friendFlag){
-              return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
-                <Marker alt='' $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
+              return <CustomOverlayMap key={idx} position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
+                <MarkerWrap>
+                  <Marker alt='' $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} ></Marker>
                   <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
                   <div onClick={()=>setVisible("none")}>X</div>
-                </Marker>;
+                </MarkerWrap>
               </CustomOverlayMap>
             }
         
-            return <CustomOverlayMap position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
-                <Marker alt='' $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} >
+            return <CustomOverlayMap key={idx} position={{lat:help.meetLatitude,lng:help.meetLongitude}}>
+                <MarkerWrap>
+                  <Marker alt='' $haste={(new Date() >= new Date(help.startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(help,idx)} ></Marker>
                   <HelpMapItemPC help={help} visible={visible} defaultIdx={idx} curIdx={curIdx} />
                   <div onClick={()=>setVisible("none")}>X</div>
-                </Marker>;
+                </MarkerWrap>
               </CustomOverlayMap>
           })
         }
@@ -79,19 +82,23 @@ const CurMarker = styled.img`
   width: 1rem;
   height: 2rem;
 `
-const Marker = styled.img`
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
-  position: relative;
-  animation: ${props=>props.$haste ? moveY : null} 0.3s linear 0s infinite alternate;
 
+const MarkerWrap = styled.div`
+  position: relative;
   &>:last-child{
     position: absolute;
     top: 0.25rem;
     right: 0.25rem;
     cursor: pointer;
   }
+`
+
+const Marker = styled.img`
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  position: relative;
+  animation: ${props=>props.$haste ? moveY : null} 0.3s linear 0s infinite alternate;
 `
 
 export default HelpMap

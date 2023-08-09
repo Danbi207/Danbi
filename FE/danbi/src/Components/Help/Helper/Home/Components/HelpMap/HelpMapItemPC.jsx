@@ -96,12 +96,9 @@ const RowWrap = styled.div`
 
 const HelpMapItemWrap = styled.div`
   top: 0;
-  left: 20%;
+  left: 15rem;
   position: absolute;
-  width: 40%;
-  @media screen and (max-width: 1024px) {
-    width: 60%;
-  }
+  width: 30rem;
   height: 19rem;
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
