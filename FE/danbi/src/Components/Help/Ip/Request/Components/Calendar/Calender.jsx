@@ -87,7 +87,7 @@ const Calendar = () => {
 
       res.push(<CalenderItem
         className={className}
-        onClick={()=>{dispatch(setCurrentDay([year, month, i]))}} key={"calender"+i}>{i}</CalenderItem>)
+        onClick={()=>{dispatch(setCurrentDay([year, month+1, i]))}} key={"calender"+i}>{i}</CalenderItem>)
     }
     
     for (let i = endDate.getDay(); i < 6; i++) { // 마지막 날 이후 날짜 넣기
