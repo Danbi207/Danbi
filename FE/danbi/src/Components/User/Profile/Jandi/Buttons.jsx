@@ -2,38 +2,40 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    setTier,
-    setCheckedRgb,
-    setUnchedkedRgb,
-    setName,
-    setDewPoint,
-  } from '../../../../store/Slice/JandiSlice';
+  setTier,
+  setCheckedRgb,
+  setUnchedkedRgb,
+  setName,
+  setDewPoint,
+} from '../../../../store/Slice/JandiSlice';
 import { authPost } from '../../../../Util/apis/api';
 
-const Buttons = ({prevGross, nextGross, setPickModalOpen, dewPoint}) => {
-    const dispatch = useDispatch();
-    const handlePickModal = async () => {
-        setPickModalOpen(true);
-        try {
-          const pickdata = await authPost('/api/v1/item', {});
-          dispatch(setName(pickdata.item.name));
-          dispatch(setTier(pickdata.item.ranking));
-          dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
-          dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-          dispatch(setDewPoint(pickdata.dewPoint));
-        } catch(err) {
-          console.log(err);
-        }
-    };
+const Buttons = ({ prevGross, nextGross, setPickModalOpen, myProfile }) => {
+  const dispatch = useDispatch();
+  const handlePickModal = async () => {
+    setPickModalOpen(true);
+    try {
+      const pickdata = await authPost('/api/v1/item', {});
+      dispatch(setName(pickdata.item.name));
+      dispatch(setTier(pickdata.item.ranking));
+      dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+      dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+      dispatch(setDewPoint(pickdata.dewPoint));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const curDewPoint = useSelector((state) => state.Jandi.dewPoint);
 
-    return(
-        <Btns>
-        <DirectionBtns>
-          <GrossBtn onClick={prevGross}>이전</GrossBtn>
-          <GrossBtn onClick={nextGross}>다음</GrossBtn>
-        </DirectionBtns>
-        <Wrap>
-          <Dew>{dewPoint}Dew</Dew>
+  return (
+    <Btns>
+      <DirectionBtns>
+        <GrossBtn onClick={prevGross}>이전</GrossBtn>
+        <GrossBtn onClick={nextGross}>다음</GrossBtn>
+      </DirectionBtns>
+      <Wrap>
+        <Dew>{curDewPoint}Dew</Dew>
+        {myProfile ? (
           <PickBtn
             onClick={() => {
               handlePickModal();
@@ -41,11 +43,11 @@ const Buttons = ({prevGross, nextGross, setPickModalOpen, dewPoint}) => {
           >
             뽑기
           </PickBtn>
-        </Wrap>
-      </Btns>
-    )
-}
-
+        ) : null}
+      </Wrap>
+    </Btns>
+  );
+};
 
 const Btns = styled.div`
   display: flex;
@@ -83,6 +85,5 @@ const GrossBtn = styled.button`
   width: 2rem;
   height: 2rem;
 `;
-
 
 export default Buttons;
