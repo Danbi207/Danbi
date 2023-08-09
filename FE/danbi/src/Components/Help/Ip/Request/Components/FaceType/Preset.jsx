@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { authGet } from '../../../../../../Util/apis/api';
+import { useDispatch } from 'react-redux';
+import { setContent } from '../../../../../../store/Slice/ipSlice'
+import { useSelector } from 'react-redux';
 
 const Preset = () => {
+  const dispatch = useDispatch();
   const [presetList, setPresetList] = useState([]);
-  const [selectedContent, setSelectedContent] = useState('');
+  const content = useSelector(state => state.ip.content)
 
   const getPresetInfo = useCallback(async () => {
     try {
@@ -28,11 +32,11 @@ const Preset = () => {
 
   const handlePresetSelect = (e) => {
     let idx = parseInt(e.target.value); // 문자열을 숫자로 다시 포매팅
-    console.log(idx)
     if (idx !== 0) {
-      setSelectedContent(presetList[idx-1].content);
+      dispatch(setContent(presetList[idx-1].content));
+      console.log(content)
     } else {
-      setSelectedContent('');
+      dispatch(setContent(''));
     }
   };
 
@@ -48,8 +52,6 @@ const Preset = () => {
             </PresetOption>
           ))}
         </PresetSelect>
-        {/* Optionally display the selected content for debugging or other purposes */}
-        {/* <div>{selectedContent}</div> */}
       </Wrap>
     </>
   );
@@ -72,7 +74,6 @@ const PresetSelect = styled.select`
   width: 70%;
   height: 3rem;
   border: 1px solid black;
-  /* background-color: #D9D9D9; */
 `
 
 const PresetOption = styled.option`
