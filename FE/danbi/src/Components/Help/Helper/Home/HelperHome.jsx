@@ -119,7 +119,7 @@ const HelperHome = () => {
       </div>
       <MainWrap>
         {
-          mode === "map" && position ? <HelpMap helpList={helpList} mode={mode} setMode={setMode} position={position} /> : <HelpList helpList={helpList} mode={mode} setMode={setMode} />
+          mode === "map" && position ? <HelpMap helpList={helpList} position={position} /> : <HelpList helpList={helpList}/>
         }
       </MainWrap>
       <Footer></Footer>

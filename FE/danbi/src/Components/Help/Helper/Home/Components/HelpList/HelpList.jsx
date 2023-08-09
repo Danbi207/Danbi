@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import HelpListItem from "./HelpListItem";
 import { useEffect } from 'react';
 import { useState } from 'react';
-const HelpList = (props) => {
+const HelpList = ({helpList}) => {
   const [friends,setFriends] = useState([]);
   const [helps,setHelps] = useState([]);
 
   useEffect(()=>{
     let keyIdx = 0;
-    setFriends(props.helpList.filter(e=>e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
-    setHelps(props.helpList.filter(e=>!e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
-  },[props.helpList]);
+    setFriends(helpList.filter(e=>e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setHelps(helpList.filter(e=>!e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+  },[helpList]);
 
   return (
     <HelpListWrap>
