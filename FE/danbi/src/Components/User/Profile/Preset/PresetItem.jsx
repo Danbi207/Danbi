@@ -7,9 +7,12 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
     const [EditActive, setEditActive] = useState(false);
     const [DeleteActive, setDeleteActive] = useState(false);
     console.log(value.id);
+    
     const callConfirm = async () => {
         try{
-            const data = await authDelete(`/api/v1/preset/${value.id}`, {});
+            const deleteUrl = `/api/v1/preset/${value.id}`;
+            console.log(deleteUrl);
+            const data = await authDelete(deleteUrl, {});
             console.log(data);
             alert('삭제됨');
         } catch(err) {
@@ -40,7 +43,7 @@ const PresetItem = ({value, index, OpenTitle, showDetail}) => {
                 </PreSetElement>
             </Element>
             {OpenTitle === value.title && (
-            <PresetDetail content={value.content} PresetId={value.id} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
+            <PresetDetail sequence={value.sequence} content={value.content} PresetId={value.id} showDetail={showDetail} setDeleteActive={setDeleteActive} setEditActive={setEditActive} />
             )}
         </>
     );
