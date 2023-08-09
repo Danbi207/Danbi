@@ -138,6 +138,7 @@ export const authDelete = async (url,json)=>{
       return data.data;
     }
   }else{//엑세스 토큰이 사용가능한 경우
+    console.log(process.env.REACT_APP_SERVER+url);
     try{
       const {data} = await axios.delete({
         method:"delete",
