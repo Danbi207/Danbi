@@ -26,7 +26,7 @@ const HelpMapItemPC = ({help,visible,defaultIdx,curIdx}) => {
         </UserWrap>
       </RowWrap>
       <HelpContent>{help.content}</HelpContent>
-      <DetailBtn onClick={()=>{navigate(`/help/helper/detail/${help.helpPostId}`)}}>상세보기</DetailBtn>
+      <DetailBtn onClick={()=>{navigate(`/help/helper/detail${help.helpPostId}`)}}>상세보기</DetailBtn>
     </HelpMapItemWrap>
   )
 }
