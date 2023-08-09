@@ -19,7 +19,7 @@ export const Jsconfetti = new JSconfetti();
 
 function App() {
   const dispatch = useDispatch();
-  const [loading,setLoading] = useState(true);
+  const [loading,setLoading] = useState(false);
 
   useEffect(()=>{
     //axios 호출시 인터셉트
