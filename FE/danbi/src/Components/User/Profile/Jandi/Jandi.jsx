@@ -130,6 +130,7 @@ const Jandi = ({ help_log, setPickModalOpen, item }) => {
         prevGross={prevGross}
         nextGross={nextGross}
         setPickModalOpen={setPickModalOpen}
+        dewPoint={item.dewPoint}
       />
       {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
