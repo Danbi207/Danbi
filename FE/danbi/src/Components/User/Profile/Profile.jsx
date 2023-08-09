@@ -43,10 +43,10 @@ const Profile = () => {
     }
   }, [userId]);
 
+  const cur_id = useSelector((state) => state.user.id);
   useEffect(() => {
     fetchData();
     // 현재 프로필과 나의 정보 일치 유무
-    const cur_id = useSelector((state) => state.user.id);
     if (userId === cur_id) {
       setDewPoint(data.dewPoint);
       setMyProfile(true);
