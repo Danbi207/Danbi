@@ -1,5 +1,5 @@
-import React, { useState,useCallback,useEffect, useRef } from 'react'
-import styled  from 'styled-components';
+import React, { useState,useCallback} from 'react'
+import styled, { keyframes }  from 'styled-components';
 import HelpMapItemMobile from "./HelpMapItemMobile.jsx";
 import {Map,CustomOverlayMap} from "react-kakao-maps-sdk";
 import HelpMapItemPC from './HelpMapItemPC.jsx';
@@ -75,7 +75,10 @@ const moveY = keyframes`
     transform: translateY(10px);
   }
 `
-
+const CurMarker = styled.img`
+  width: 1rem;
+  height: 2rem;
+`
 const Marker = styled.img`
   width: 1rem;
   height: 1rem;
