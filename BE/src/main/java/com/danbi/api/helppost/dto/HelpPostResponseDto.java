@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class HelpPostResponseDto {
 
-    private Long helpId;
+    private Long helpPostId;
 
     private Position position;
 
@@ -74,7 +74,7 @@ public class HelpPostResponseDto {
                 .build();
 
         return HelpPostResponseDto.builder()
-                .helpId(helpPost.getId())
+                .helpPostId(helpPost.getId())
                 .position(position)
                 .faceFlag(helpPost.isFaceFlag())
                 .emergencyFlag(helpPost.isEmergencyFlag())
