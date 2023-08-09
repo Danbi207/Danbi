@@ -4,6 +4,7 @@ import example from '../example-profile.jpg';
 import { authDelete } from '../../../../Util/apis/api';
 
 const MyFriend = ({ value }) => {
+  console.log(value);
   const handleDelete = async () => {
     try {
       const res = await authDelete(`/api/v1/friends/delete/${value.targetId}`, {});
