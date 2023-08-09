@@ -5,13 +5,11 @@ import PresetItem from './PresetItem.jsx';
 
 const Preset = ({preset_list, setPresetList}) => {
   console.log(preset_list);
-  const sortedPresetList = preset_list.sort((a, b) => {
-    return a.sequence - b.sequence
-  });
   const [OpenTitle, setOpenTitle] = useState(-1);
   const showDetail = (title) => {
     setOpenTitle(title);
   };
+  
   const handleChange = (result) => {
     if (!result.destination) return;
     const items = [...preset_list];
@@ -36,7 +34,7 @@ const Preset = ({preset_list, setPresetList}) => {
                       key={index}
                       $isDragging={snapshot.isDragging}
                     >
-                      <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
+                      <PresetItem setPresetList={setPresetList} value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
                     </Wrap>
                   )}
                 </Draggable>
