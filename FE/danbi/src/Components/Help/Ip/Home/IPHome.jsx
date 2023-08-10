@@ -7,10 +7,13 @@ import Footer from "../../../Common/Footer/Footer";
 import Calender from "./Components/Calender";
 import {setUserId,setProfileId,setName,setProfileUrl,setGender}  from "../../../../store/Slice/userSlice";
 import { useDispatch } from "react-redux";
-import {authGet} from "../../../../Util/apis/api";
+import {authGet, authPost} from "../../../../Util/apis/api";
+import { useRef } from "react";
 const IPHome = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {kakao} = window;
+  const geocoder = useRef(new kakao.maps.services.Geocoder());
 
   const getUserInfo = useCallback(async()=>{
     try{
@@ -29,12 +32,79 @@ const IPHome = (props) => {
 
   useEffect(()=>{getUserInfo()},[getUserInfo]);
 
+  const emergencyReqeust = useCallback(async(position,address)=>{
+    try{
+      let curTime = new Date();
+        let year = curTime.getFullYear();
+        let month = curTime.getMonth()+1;
+        let day = curTime.getDay();
+        let hour = curTime.getHours();
+        let minute = curTime.getMinutes();
+        const start_time  = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour}:${minute}`;
+
+        curTime.setMinutes(curTime.getMinutes()+15);
+        year = curTime.getFullYear();
+        month = curTime.getMonth()+1;
+        day = curTime.getDay();
+        hour = curTime.getHours();
+        minute = curTime.getMinutes();
+        const end_time = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour}:${minute}`;
+
+        await authPost("/api/v1/help/create",{
+          "position" : {
+              "latitude" : position.coords.latitude,
+              "longitude" : position.coords.longitude,
+              "addr" : address,
+              "destLatitude" : position.coords.latitude,
+              "destLongitude" : position.coords.longitude,
+              "destAddr" : address,
+              "meetLatitude" : position.coords.latitude,
+              "meetLongitude" : position.coords.longitude,
+              "meetAddr" : address
+          },
+          "category" : "ETC",
+          "caution" : "긴급요청입니다!주의해주세요.",
+          "faceFlag": true,
+          "emergencyFlag": true, 
+          "genderFlag" : false,
+          "content": "긴급도움 요청입니다. 근처에 계신분들은 도와주세요!",
+          start_time,
+          end_time
+        });
+    }catch(err){
+      console.log(err);
+    }
+  },[]);
+
+  const coord2Address = useCallback((position,mode)=>{
+    const coord = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    geocoder.current.coord2Address(coord.getLng(), coord.getLat(), (result,status)=>{
+      if (status === kakao.maps.services.Status.OK) {
+        if(mode === "emergency")emergencyReqeust(position,result[0].address.address_name ? result[0].address.address_name : result[0].road_address);
+      }
+    });
+  },[geocoder,kakao,emergencyReqeust])
+  
+
+  const setCurPosition = useCallback((mode)=>{
+    //DO : gps 현재 위치 얻기
+    if (navigator.geolocation) { // GPS를 지원하면
+      navigator.geolocation.getCurrentPosition((e)=>{
+        if(mode==="emergency") coord2Address(e,mode)
+      });
+    } else {
+      alert("GPS를 차단하셨습니다. 허용해주세요!");
+    }
+  },[coord2Address]);
+
+
+
   return (
     <IpHomeWrap>
       <Header/>
         <Wrap>
           <Calender/>
-          <EmergencyBTN>긴급도움 요청하기</EmergencyBTN>
+          <EmergencyBTN onClick={()=>setCurPosition("emergency")}>긴급도움 요청하기</EmergencyBTN>
           <RequestBTN onClick={()=>{navigate('/help/ip/request')}}>도움 요청하기</RequestBTN>
         </Wrap>
       <Footer/>
