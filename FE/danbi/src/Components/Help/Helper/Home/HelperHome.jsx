@@ -75,7 +75,7 @@ const HelperHome = () => {
     }catch(err){
       console.log(err.response);
     }
-  },[setCurPosition,setMode,gender]);
+  },[setMode,gender]);
 
   const setCurPosition = useCallback((mode)=>{
     //DO : gps 현재 위치 얻기
