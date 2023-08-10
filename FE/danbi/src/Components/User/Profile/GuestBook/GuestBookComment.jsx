@@ -8,11 +8,11 @@ const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId
   const userName = useSelector((state) => state.user.name);
   const handleDelete = async (comment) => {
     try {
-      const data = authDelete(
+      const data = await authDelete(
         `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`
       );
       console.log(data);
-      const res = authGet(`/api/v1/profile/guestbook/${userId}`);
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
     } catch (err) {
       console.log(err);
