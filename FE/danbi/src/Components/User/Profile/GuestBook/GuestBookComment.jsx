@@ -70,7 +70,7 @@ const GuestBookComment = ({
       </ContentWrap>
       {writerName === userName ? (
         <Buttons>
-          <EditBtn>수정</EditBtn>
+          {editMode ? null : <EditBtn>수정</EditBtn>}
           <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
       ) : Number(userId) === cur_id ? (
@@ -125,4 +125,9 @@ const Buttons = styled.div`
 
 const EditBtn = styled.button``;
 const DeleteBtn = styled.button``;
+
+const EditSection = styled.div``;
+const EditTextArea = styled.textarea``;
+const SaveBtn = styled.button``;
+
 export default GuestBookComment;
