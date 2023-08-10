@@ -12,15 +12,15 @@ const PresetModal = ({ setModalOpen }) => {
   const showTextArea = () => {
     setOpenTextArea(!OpenTextArea);
   };
-  
+
   // TODO : presetList 조회
   const [presetList, setPresetList] = useState([]);
-  
+
   const fetchData = useCallback(async () => {
-    try{
-    const data = await authGet('/api/v1/preset');
-    setPresetList(data.presetList);
-    } catch(err) {
+    try {
+      const data = await authGet('/api/v1/preset');
+      setPresetList(data.presetList);
+    } catch (err) {
       console.log(err);
     }
   }, []);
@@ -31,9 +31,17 @@ const PresetModal = ({ setModalOpen }) => {
   }, [fetchData]);
 
   const handleSave = async () => {
-    const config = {"presets" : [...presetList.map((e, idx) => {return {"id": e.id, "sequence": idx}})]};
+    const config = {
+      presets: [
+        ...presetList.map((e, idx) => {
+          return { id: e.id, sequence: idx };
+        }),
+      ],
+    };
     await authPost(`/api/v1/preset/sequence`, config);
-  }
+    alert('저장완료');
+    setModalOpen(false);
+  };
 
   return (
     <PresetModalWrap>
@@ -49,7 +57,14 @@ const PresetModal = ({ setModalOpen }) => {
         </ModalHeader>
         <ModalBody>
           <PresetAddBtn onClick={showTextArea}>추가하기</PresetAddBtn>
-          {(OpenTextArea && presetList.length < 3) && <PresetTextArea setOpenTextArea={setOpenTextArea} OpenTextArea={OpenTextArea} fetchData={fetchData} length={presetList.length} />}
+          {OpenTextArea && presetList.length < 3 && (
+            <PresetTextArea
+              setOpenTextArea={setOpenTextArea}
+              OpenTextArea={OpenTextArea}
+              fetchData={fetchData}
+              length={presetList.length}
+            />
+          )}
         </ModalBody>
         <ModalFooter>
           <Preset preset_list={presetList} setPresetList={setPresetList} />
@@ -73,7 +88,7 @@ const PresetModalWrap = styled.div`
 const Modal = styled.div`
   width: 92%;
   height: 21rem;
-  background-color: ${props => props.theme.colors.bgColor};
+  background-color: ${(props) => props.theme.colors.bgColor};
   position: absolute;
   top: 25%;
   margin: 0 4%;
@@ -93,8 +108,8 @@ const CloseModalBtn = styled.button`
   height: 40px;
 `;
 
-const CloseImg = styled.img.attrs(props => ({
-  src: props.theme.images.close
+const CloseImg = styled.img.attrs((props) => ({
+  src: props.theme.images.close,
 }))``;
 
 const ModalName = styled.div`
@@ -105,8 +120,8 @@ const SaveBtn = styled.button`
   width: 48px;
   height: 40px;
 `;
-const SaveImg = styled.img.attrs(props => ({
-  src: props.theme.images.save
+const SaveImg = styled.img.attrs((props) => ({
+  src: props.theme.images.save,
 }))``;
 
 const ModalBody = styled.div`

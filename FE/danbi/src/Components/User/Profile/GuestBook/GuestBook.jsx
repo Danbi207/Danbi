@@ -113,12 +113,17 @@ const UserName = styled.div`
 `;
 
 const ChatSection = styled.div`
-  width: 85%;
   display: flex;
   border-bottom: 2px solid ${(props) => props.theme.colors.titleColor};
   align-items: center;
   justify-content: center;
   padding-left: 0.5rem;
+  @media (min-width: 360px) {
+    width: 85%;
+  }
+  @media (max-width: 360px) {
+    width: 14rem;
+  }
 `;
 const ChatForm = styled.form`
   width: 100%;
