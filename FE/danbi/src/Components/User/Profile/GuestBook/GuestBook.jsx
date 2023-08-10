@@ -18,6 +18,7 @@ const GuestBook = ({ guestBookId, userId }) => {
     try {
       const data = await authPost(`/api/v1/profile/guestbook/${guestBookId}`, textJson);
       console.log(data);
+      setTextArea('');
     } catch (err) {
       console.log(err);
     }
@@ -35,11 +36,11 @@ const GuestBook = ({ guestBookId, userId }) => {
     } catch (err) {
       console.log(err);
     }
-  },[userId]);
+  }, [userId]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [comments]);
 
   return (
     <GuestBookWrap>
@@ -62,7 +63,7 @@ const GuestBook = ({ guestBookId, userId }) => {
           key={index}
           comment={comment}
           writerName={comment.name}
-          guestBookId={guestBookId}
+          userId={userId}
           setComment={setComment}
         />
       ))}
@@ -103,7 +104,7 @@ const UserName = styled.div`
 `;
 
 const ChatSection = styled.div`
-  width: 14rem;
+  width: 85%;
   display: flex;
   border-bottom: 2px solid ${(props) => props.theme.colors.titleColor};
   align-items: center;
