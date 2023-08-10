@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import example from '../example-profile.jpg';
 import { authPost, authDelete, authGet } from '../../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
 const Waitting = ({ value, setWaittingFriends, setMyFriends }) => {
   console.log(value);
@@ -33,12 +33,15 @@ const Waitting = ({ value, setWaittingFriends, setMyFriends }) => {
       console.log(err);
     }
   };
+  const navigate = useNavigate();
 
   return (
     <WaittingWrap>
       <InfoWrap>
         <ImgWrap $url={value.profileUrl} />
-        <Name>{value.name}</Name>
+        <Name onClick={() => navigate(`/user/profile/${value.targetId}`)}>
+          {value.name}
+        </Name>
       </InfoWrap>
       <Btns>
         <AcceptBtn onClick={handleAccept}>수락</AcceptBtn>
