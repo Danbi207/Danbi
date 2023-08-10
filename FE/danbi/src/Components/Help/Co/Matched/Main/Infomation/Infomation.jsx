@@ -35,8 +35,22 @@ const Infomation = ({help}) => {
               info?
               <>
                 <Title>상대방 정보</Title>
+                <UserInfoWrap>
+                  <UserImg></UserImg>
+                  <div>
+                    <UserTitle>
+                      <div onClick={()=>navigate(`/user/profile/${localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}`)}>{info.name}</div>
+                      {
+                        help.accuseStack === 0 ? null:
+                        help.accuseStack <= 2 ? <img alt='' src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
+                        <img alt='' src={`${process.env.PUBLIC_URL}/assets/red-flag.svg`} />
+                      }
+                    </UserTitle>
+                    <div>{info.accumulatePoint}Dew</div>
+                  </div>
+                </UserInfoWrap>
                 <Jandi
-                  help_log={info.helPLog}
+                  help_log={info.helpLog}
                   setPickModalOpen={()=>{}}
                   item={help.item}
                   userId={localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}
@@ -74,39 +88,31 @@ const HelpContent = styled.textarea`
       display: none;
   }
 `
-
-const ProfileName = styled.div`
-  font-size: 1.5rem;
-  
+const UserInfoWrap = styled.div`
+  width: 100%;
+  display: flex;
+  &>:last-child{
+    display: flex;
+    flex-direction: column;
+  }
 `
-const ProfileImg = styled.img`
-  margin-top: 0.5rem;
-  height: 5rem;
+
+const UserImg = styled.img`
+  margin: auto 0;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+`
+
+const UserTitle = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
   width: 5rem;
-  border-radius: 5rem;
-`
-
-const FlexColCenter = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`
-const FlexCol = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`
-
-const FlexRowCenter = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-`
-const FlexRow = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 1rem;
+  &>:first-child{
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 `
 
 const Title = styled.div`
