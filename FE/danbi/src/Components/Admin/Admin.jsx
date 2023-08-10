@@ -3,85 +3,63 @@ import {authGet, authPost, reissueAccessToken} from "../../Util/apis/api";
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useMemo } from 'react';
+
+const pagingCount = 5;
+
 const Admin = () => {
   const navigate = useNavigate();
   const [mode,setMode] = useState("all");
   const [size,setSize] = useState(10);
   const [direction,setDirection] = useState("DESC");
-  const [users,setUsers] = useState([
-    {
-        "id": 6,
-        "oauthType": "KAKAO",
-        "email": "jyj1143@gmail.com",
-        "name": "조영재",
-        "nickname": "조영재",
-        "profileUrl": "http://k.kakaocdn.net/dn/bgLq4P/btrWcLGVpZz/YCMKcFHYdLvTdI1FGIndn1/img_110x110.jpg",
-        "role": "ROLE_HELPER",
-        "gender": "male",
-        "state": "ACTIVATE",
-        "accuseStack": 0
-    },
-    {
-        "id": 5,
-        "oauthType": "KAKAO",
-        "email": "hm03048@naver.com",
-        "name": "김윤욱",
-        "nickname": "김윤욱",
-        "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-        "role": "ROLE_HELPER",
-        "gender": "male",
-        "state": "ACTIVATE",
-        "accuseStack": 0
-    },
-    {
-        "id": 4,
-        "oauthType": "KAKAO",
-        "email": "vkflek1232@naver.com",
-        "name": "한승현",
-        "nickname": "한승현",
-        "profileUrl": "http://k.kakaocdn.net/dn/bfaaoP/btsa6GJU1Bv/Wri9wb6ZJGuL5t9VGnKrrk/img_110x110.jpg",
-        "role": "ROLE_ADMIN",
-        "gender": "male",
-        "state": "ACTIVATE",
-        "accuseStack": 0
-    },
-    {
-        "id": 3,
-        "oauthType": "KAKAO",
-        "email": "wwwttt123@naver.com",
-        "name": "강민석",
-        "nickname": "강민석",
-        "profileUrl": "http://k.kakaocdn.net/dn/bS2wdw/btreVxvFriB/kFFiMJpfHdDtEc6qnuqPQ0/img_110x110.jpg",
-        "role": "ROLE_IP",
-        "gender": "male",
-        "state": "ACTIVATE",
-        "accuseStack": 0
-    },
-    {
-        "id": 2,
-        "oauthType": "KAKAO",
-        "email": "melon212@naver.com",
-        "name": "김민규",
-        "nickname": "김민규",
-        "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-        "role": "ROLE_HELPER",
-        "gender": "male",
-        "state": "ACTIVATE",
-        "accuseStack": 0
-    },
-    {
-        "id": 1,
-        "oauthType": "KAKAO",
-        "email": "omygog@naver.com",
-        "name": "윤태웅",
-        "nickname": "윤태웅",
-        "profileUrl": "http://k.kakaocdn.net/dn/JqjzO/btrG3p5w1IG/hIKGwYLKCdhUh12Cx3qQk1/img_110x110.jpg",
-        "role": "ROLE_IP",
-        "gender": "male",
-        "state": "ACTIVATE",
-        "accuseStack": 0
+  const [total,setTotal] = useState(0);
+  const [curPage,setCurPage] = useState(1);
+  const [totalPage,setTotalPage] = useState(0);
+  const [startPage,setStartPage] = useState(0);
+  const [endPage,setEndPage] = useState(0);
+
+  const [users,setUsers] = useState([]);
+
+  useEffect(()=>{
+    let _totalPage=totalPage;
+    let _startPage=startPage;
+    let _endPage=endPage;
+    if(total===0){
+      _totalPage=0;
+      _startPage=0;
+      _endPage=0;
+    }else{
+      // 전체 페이지 개수 구하기(전체 글의 수 / 한 화면에 보여질 행의 수)
+			// 정수와 정수의 나눗셈의 결과는 정수이므로 13 / 7 = 1
+			_totalPage=Math.floor(total / size);
+			// 보정해줘야 할 경우는? 나머지가 0보다 클 때
+			if(total % size > 0) {
+				// 전체페이지수를 1증가 처리
+				_totalPage=(_totalPage+1);
+			}
+			
+			// startPage : '이전 [1] [2] [3] [4] [5] 다음' 일때 1을 의미
+			// 공식 : 현재페이지 / 페이징의 개수 * 페이징의 개수 + 1;
+			_startPage=(Math.floor(curPage / pagingCount) * pagingCount + 1);
+			// 보정해줘야 할 경우는? 5 / 5 * 5 + 1 => 6 경우처럼
+			// 					현재페이지 % 5 === 0 일 때 
+			if(curPage % pagingCount === 0) {
+				// startPage = startPage - 5(페이징의 개수)
+				_startPage=(_startPage-pagingCount);
+			}
+			
+			// endPage   : '이전 [1] [2] [3] [4] [5] 다음' 일때 5을 의미
+			_endPage=(_startPage + pagingCount - 1);
+			// 보정해줘야 할 경우는? endPage > totalPage 일때
+			//					endPage를 totalPage로 바꿔줘야 함 
+			if(_endPage > _totalPage) {
+				_endPage=(_totalPage);
+			}
     }
-]);
+    setTotalPage(_totalPage);
+    setStartPage(_startPage);
+    setEndPage(_endPage);
+  },[total,size,curPage]);
+
   const checkRole = useCallback(async()=>{
     //DO : 관리자인지 체크
     try{
@@ -101,28 +79,50 @@ const Admin = () => {
     }
   },[navigate]);
 
+  const pageItems = useMemo(()=>{
+    const res = [];
+    for(let i = startPage; i <= endPage; i++){
+      res.push(<PageItem $curPage={i===curPage} key={i} onClick={()=>setCurPage(i)}>{i}</PageItem>)
+    }
+    return res;
+  },[startPage,endPage,curPage])
+ 
   useEffect(()=>{
     //DO : 관리자체크함수 호출
     checkRole();
   },[checkRole]);
 
-  // useEffect(()=>{
-  //   //DO : 멤버수를 조회 및 저장
-  //   const getMember = async() =>{
-  //     try{
-  //       const data = await authGet("/api/v1/admin/member"); 
-  //       setUsers(data);
-  //     }catch(err){
-  //       console.log(err);
-  //     }
-  //   }
-  //   getMember();
-    
-  // },[mode]);
-
   useEffect(()=>{
-    console.log(users);
-  },[users])
+    //DO : 멤버수를 조회 및 저장
+    const getMember = async() =>{
+      try{
+        if(mode==="ALL"){
+          const _total = await authGet();
+          const data = await authGet(`/api/v1/admin/member?page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
+          if(data){
+            setUsers(data);
+          }
+          if(_total){
+            setTotal(_total);
+          }
+        }else{
+          const _total = await authGet();
+          const data = await authGet(`/api/v1/admin/member/role?memberRole=${mode}&page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
+          if(data){
+            setUsers(data);
+          }
+          if(_total){
+            setTotal(_total);
+          }
+        }
+        setCurPage(1);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    getMember();
+    
+  },[mode,curPage,pagingCount,direction]);
 
   const tableItems = useMemo(()=>{
     const res = [];
@@ -204,10 +204,22 @@ const Admin = () => {
           }
         </tbody>
       </MainWrap>
-
+      <PageWrap>
+        <button onClick={()=>setCurPage(1)}>처음</button>
+        <button onClick={()=>{if(startPage-pagingCount > 0)setCurPage(startPage-pagingCount)}}>이전</button>
+        {
+          pageItems
+        }
+        <button onClick={()=>{if(endPage!==totalPage) setCurPage(endPage+1)}}>다음</button>
+        <button onClick={()=>setCurPage(totalPage)}>끝</button>
+      </PageWrap>
     </Wrap>
   )
 }
+
+const PageItem = styled.button`
+  font-size: ${props=>props.$curPage? "1.5rem" : "1rem"};
+`
 
 const SearchWrap = styled.div`
   display: flex;
@@ -225,7 +237,11 @@ const Wrap = styled.div`
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
 `
-
+const PageWrap = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+`
 const MainWrap = styled.table`
   width: 100%;
   border-collapse: collapse;
