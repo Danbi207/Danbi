@@ -4,14 +4,15 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState: {
     mode : null,
-    accuse:{
-      targetMemberId:null,
-    }
+    targetMemberId:0,
   },
   reducers: {
     setMode : (state,action)=>{
       state.mode = action.payload;
     },
+    setTargetMemberId : (state,action)=>{
+      state.targetMemberId = action.payload;
+    }
   },
 });
 
