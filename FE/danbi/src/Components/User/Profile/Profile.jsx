@@ -67,6 +67,8 @@ const Profile = () => {
             setPickModalOpen={setPickModalOpen}
             item={data.item}
             userId={userId}
+            dewPoint={data.dewPoint}
+            accumulatePoint={data.accumulatePoint}
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
