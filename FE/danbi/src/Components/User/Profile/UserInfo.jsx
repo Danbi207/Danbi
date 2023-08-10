@@ -16,16 +16,13 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
   };
 
   const cur_id = useSelector((state) => state.user.userId);
-  console.log('targetid' + targetId + typeof targetId);
-  console.log('userId' + cur_id + typeof cur_id);
-  console.log('hi');
   return (
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
         <UserName>{name}</UserName>
         {friendFlag ? <FriendBadge /> : null}
-        {cur_id === targetId ? null : (
+        {cur_id === Number(targetId) ? null : (
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
             <AccuseButton
