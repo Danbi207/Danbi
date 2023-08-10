@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import ex from '../example-profile.jpg';
 import { useSelector } from 'react-redux';
-import { authDelete } from '../../../../Util/apis/api';
+import { authDelete, authGet } from '../../../../Util/apis/api';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
-const GuestBookComment = ({ comment, writerName, guestBookId }) => {
+const GuestBookComment = ({ comment, writerName, guestBookId, setComment }) => {
   const userName = useSelector((state) => state.user.name);
   const handleDelete = async () => {
     try {
@@ -13,6 +13,8 @@ const GuestBookComment = ({ comment, writerName, guestBookId }) => {
         `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`
       );
       console.log(data);
+      const res = authGet(`/api/v1/profile/guestbook/${guestBookId}`);
+      setComment(res.guestBookDto.commentDtos);
     } catch (err) {
       console.log(err);
     }
