@@ -68,24 +68,18 @@ const GuestBookComment = ({
           <Content>{comment.content}</Content>
         )}
       </ContentWrap>
-      {writerName === userName ? (
+      {writerName === userName && !editMode && (
         <Buttons>
-          {editMode ? null : (
-            <EditBtn
-              onClick={() => {
-                setEditMode(true);
-              }}
-            >
-              수정
-            </EditBtn>
-          )}
+          <EditBtn onClick={() => setEditMode(true)}>수정</EditBtn>
           <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
-      ) : Number(userId) === cur_id ? (
+      )}
+
+      {writerName !== userName && Number(userId) === cur_id && (
         <Buttons>
           <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
-      ) : null}
+      )}
     </CommentWrap>
   );
 };
@@ -135,7 +129,19 @@ const EditBtn = styled.button``;
 const DeleteBtn = styled.button``;
 
 const EditSection = styled.div``;
-const EditTextArea = styled.textarea``;
+const EditTextArea = styled.textarea`
+  border: 1px solid ${(props) => props.theme.colors.titleColor};
+  border-radius: 10px;
+  resize: none;
+  background-color: transparent;
+  text-align: start;
+  outline: none;
+  word-break: break-word;
+  padding: 0.5rem 0 0.5rem 5px;
+  width: 100%;
+  height: 6rem;
+  color: ${(props) => props.theme.colors.titleColor};
+`;
 const SaveBtn = styled.button``;
 
 export default GuestBookComment;
