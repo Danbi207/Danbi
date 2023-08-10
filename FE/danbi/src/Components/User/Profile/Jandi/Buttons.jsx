@@ -42,7 +42,7 @@ const Buttons = ({
         <GrossBtn onClick={nextGross}>다음</GrossBtn>
       </DirectionBtns>
       <Wrap>
-        <Dew>{cur_id === Number(targetId) ? dewPoint : accumulatePoint}Dew</Dew>
+        <Dew>{cur_id === Number(targetId) ? curDewPoint : accumulatePoint}Dew</Dew>
         {cur_id === Number(targetId) ? (
           <PickBtn
             onClick={() => {
