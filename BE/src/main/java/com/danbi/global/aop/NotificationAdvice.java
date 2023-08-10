@@ -56,7 +56,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
         if (notificationTrace.type().equals(Type.ACCUSE_PERMIT)) {
             log.info("{}", notificationTrace.type().getDescription());
@@ -69,6 +68,7 @@ public class NotificationAdvice {
                     to = accuse.getReporter();
                 }
             }
+            String content = from.getName()+ "님의 신고가 승인 되었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -79,6 +79,7 @@ public class NotificationAdvice {
         Member to = null;
         String title = notificationTrace.type().getDescription();
         String content = notificationTrace.type().getDescription();
+
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.ACCUSE_SENT)) {
@@ -105,6 +106,7 @@ public class NotificationAdvice {
         Member to = null;
         String title = notificationTrace.type().getDescription();
         String content = notificationTrace.type().getDescription();
+
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.FRIEND_REQUEST)) {
@@ -119,6 +121,7 @@ public class NotificationAdvice {
                     to = memberRepository.findById(friendDto.getTargetId()).get();
                 }
             }
+
             alarmSave(from, to, title, content, type);
         }
     }
@@ -252,9 +255,9 @@ public class NotificationAdvice {
         log.info("to {}", to.getId());
         log.info("from {}", from.getId());
 
-
-        sendFcmMessage(from, title, content);
-        sendFcmMessage(to, title, content);
+//
+//        sendFcmMessage(from, title, content);
+//        sendFcmMessage(to, title, content);
         Alarm alarm = Alarm.builder()
                 .from(from)
                 .to(to)
