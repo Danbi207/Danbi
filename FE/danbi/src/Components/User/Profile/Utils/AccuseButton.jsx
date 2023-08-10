@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { setMode } from '../../../../store/Slice/ModalSlice';
+import { setMode,setTargetMemberId } from '../../../../store/Slice/ModalSlice';
 
 const AccuseButton = () => {
   const dispatch = useDispatch();
   const handleClick = () => {
+    dispatch(setTargetMemberId(targetId));
     dispatch(setMode('accuse'));
   }
 

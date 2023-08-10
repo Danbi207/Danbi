@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMode, setTargetMemberId } from '../../../store/Slice/ModalSlice.js';
 const UserInfo = ({ url, name, targetId, friendFlag }) => {
   const dispatch = useDispatch();
   const handlePlus = async () => {
@@ -25,13 +24,7 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
         {cur_id === Number(targetId) ? null : (
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
-            <AccuseButton
-              onClick={() => {
-                console.log(targetId);
-                dispatch(setTargetMemberId(targetId));
-                dispatch(setMode('accuse'));
-              }}
-            />
+            <AccuseButton/>
           </Btns>
         )}
       </UserDetail>
