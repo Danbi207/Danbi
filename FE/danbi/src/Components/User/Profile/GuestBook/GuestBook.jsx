@@ -58,6 +58,10 @@ const GuestBook = ({ guestBookId, userId }) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log(comments);
+  }, [comments]);
+
   return (
     <GuestBookWrap>
       <ChatWrap>
