@@ -12,7 +12,7 @@ const PresetItem = ({ value, index, OpenTitle, showDetail, setPresetList }) => {
         const deleteUrl = `/api/v1/preset/${value.id}`;
         const data = await authDelete(deleteUrl, {});
         const res = await authGet('/api/v1/preset');
-        setPresetList(res);
+        setPresetList(res.presetList);
         alert('삭제됨');
       } else {
         alert('취소함');
