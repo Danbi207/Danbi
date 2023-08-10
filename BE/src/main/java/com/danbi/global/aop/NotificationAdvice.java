@@ -1,6 +1,7 @@
 package com.danbi.global.aop;
 
 import com.danbi.api.ApiResponse;
+import com.danbi.api.accuse.dto.accuse.AccuseRequestDto;
 import com.danbi.api.accuse.dto.accuse.AccuseResponseDto;
 import com.danbi.api.friend.dto.request.RequestFriendDto;
 import com.danbi.api.help.dto.assign.HelpAssignDto;
@@ -31,6 +32,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
@@ -48,7 +50,6 @@ public class NotificationAdvice {
     private final AccuseRepository accuseRepository;
     private final FcmService fcmService;
 
-
     @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
     public void accuseApproveAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
         Object[] args = joinPoint.getArgs();
@@ -64,10 +65,13 @@ public class NotificationAdvice {
                 if (arg instanceof Long) {
                     Long accuseId = (Long) arg;
                     Accuse accuse = accuseRepository.findById(accuseId).get();
-                    from = accuse.getReporter();
-                    to = accuse.getReporter();
+
+                    from =  memberRepository.findById(accuse.getReporter().getId()).get();
+                    to = memberRepository.findById(accuse.getTargetMember().getId()).get();
                 }
             }
+
+
             String content = from.getName()+ "님의 신고가 승인 되었습니다.";
             alarmSave(from, to, title, content, type);
         }
@@ -75,25 +79,27 @@ public class NotificationAdvice {
 
     @AfterReturning(pointcut = "@annotation(notificationTrace)", returning = "result")
     public void accuseAlarm(JoinPoint joinPoint, Object result, NotificationTrace notificationTrace) throws IOException, ExecutionException, InterruptedException {
+        Object[] args = joinPoint.getArgs();
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
 
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.ACCUSE_SENT)) {
             log.info("{}", notificationTrace.type().getDescription());
 
-            if (result instanceof ApiResponse) {
-                ApiResponse apiResponse = (ApiResponse) result;
-                if (apiResponse.getData() instanceof AccuseResponseDto) {
-                    AccuseResponseDto data = (AccuseResponseDto) apiResponse.getData();
-                    Accuse accuse = accuseRepository.findById(data.getAccuseId()).get();
-                    from = accuse.getReporter();
-                    to = accuse.getReporter();
+            for (Object arg : args) {
+                if (arg instanceof MemberInfoDto) {
+                    MemberInfoDto memberInfoDto = (MemberInfoDto) arg;
+                    from = memberRepository.findById(memberInfoDto.getMemberId()).get();
+                } else if (arg instanceof AccuseRequestDto) {
+                    AccuseRequestDto accuseRequestDto = (AccuseRequestDto) arg;
+                    to = memberRepository.findById(accuseRequestDto.getTargetMemberId()).get();
                 }
             }
+
+            String content = from.getName() + "님의 신고가 접수되었습니다.";
             alarmSave(from, to, title, content, type);
         }
 
@@ -105,7 +111,7 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
+
 
         Type type = notificationTrace.type();
 
@@ -121,7 +127,7 @@ public class NotificationAdvice {
                     to = memberRepository.findById(friendDto.getTargetId()).get();
                 }
             }
-
+            String content = from.getName() +"님께서 " +to.getName()+"님에게 친구 요청하였습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -132,7 +138,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.FRIEND_PERMIT)) {
@@ -147,6 +152,8 @@ public class NotificationAdvice {
                     to = memberRepository.findById(friendDto.getTargetId()).get();
                 }
             }
+
+            String content = from.getName() +"님께서 " +to.getName()+"님의 친구요청을 승인하였습니다.";
             alarmSave(from, to, title, content, type);
         }
 
@@ -159,7 +166,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_MATCHING)) {
@@ -171,9 +177,10 @@ public class NotificationAdvice {
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
                 } else if (arg instanceof Long) {
                     Long helpPostId = (Long) arg;
-                    to = helpPostRepository.findById(helpPostId).get().getMember();
+                    to = memberRepository.findById(helpPostRepository.findById(helpPostId).get().getMember().getId()).get();
                 }
             }
+            String content = from.getName() +"과 " +to.getName()+"님의 도움이 매칭되었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -184,7 +191,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_IP_COMPLETE)) {
@@ -196,9 +202,10 @@ public class NotificationAdvice {
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
                 } else if (arg instanceof Long) {
                     Long helpId = (Long) arg;
-                    to = helpRepository.findById(helpId).get().getHelper();
+                    to = memberRepository.findById(helpRepository.findById(helpId).get().getHelper().getId()).get();
                 }
             }
+            String content = from.getName() +"님이 IP도움 완료하였습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -209,7 +216,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_HELPER_COMPLETE)) {
@@ -221,9 +227,10 @@ public class NotificationAdvice {
                     from = memberRepository.findById(memberInfoDto.getMemberId()).get();
                 } else if (arg instanceof Long) {
                     Long helpId = (Long) arg;
-                    to = helpRepository.findById(helpId).get().getIp();
+                    to = memberRepository.findById(helpRepository.findById(helpId).get().getIp().getId()).get();
                 }
             }
+            String content = from.getName() +"님이 HELPER도움 완료하였습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -234,7 +241,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_CANCEL)) {
@@ -243,10 +249,11 @@ public class NotificationAdvice {
             for (Object arg : args) {
                 if (arg instanceof Long) {
                     Long helpId = (Long) arg;
-                    to = helpRepository.findById(helpId).get().getIp();
-                    from = helpRepository.findById(helpId).get().getHelper();
+                    to = memberRepository.findById(helpRepository.findById(helpId).get().getIp().getId()).get();
+                    from = memberRepository.findById(helpRepository.findById(helpId).get().getHelper().getId()).get();
                 }
             }
+            String content = from.getName() +"과 " +to.getName()+"님의 도움이 취소되었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -255,9 +262,9 @@ public class NotificationAdvice {
         log.info("to {}", to.getId());
         log.info("from {}", from.getId());
 
-//
-//        sendFcmMessage(from, title, content);
-//        sendFcmMessage(to, title, content);
+
+        sendFcmMessage(from, title, content);
+        sendFcmMessage(to, title, content);
         Alarm alarm = Alarm.builder()
                 .from(from)
                 .to(to)
