@@ -1,30 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
-import ex from '../example-profile.jpg';
 import { useSelector } from 'react-redux';
 import { authDelete, authGet } from '../../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
 const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId }) => {
   const userName = useSelector((state) => state.user.name);
-  const handleDelete = async () => {
+  const handleDelete = async (comment) => {
     try {
-      const data = authDelete(
+      const data = await authDelete(
         `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`
       );
       console.log(data);
-      const res = authGet(`/api/v1/profile/guestbook/${userId}`);
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
     } catch (err) {
       console.log(err);
     }
   };
+  const navigate = useNavigate();
+
   return (
     <CommentWrap>
       <GuestImg $url={comment.profileUrl} alt="프로필 사진" />
       <ContentWrap>
         <ContentHeader>
-          <GuestName>{comment.name}</GuestName>
+          <GuestName onClick={() => navigate('/')}>{comment.name}</GuestName>
           <CreatedTime>{comment.createdTime}</CreatedTime>
         </ContentHeader>
         <Content>{comment.content}</Content>
@@ -32,7 +34,7 @@ const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId
       {writerName === userName ? (
         <Buttons>
           <EditBtn>수정</EditBtn>
-          <DeleteBtn onClick={handleDelete}>삭제</DeleteBtn>
+          <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
       ) : null}
     </CommentWrap>
