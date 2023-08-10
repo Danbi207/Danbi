@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
-import { useMemo } from 'react';
 
 
 const Calendar = () => {
@@ -28,7 +27,7 @@ const Calendar = () => {
     return Math.ceil((endDay + startDay) / 7);
   };
 
-  const getHelpData = useMemo((year,month,day) =>{
+  const getHelpData = (year,month,day) =>{
     month+=1;
     if(month < 10){ //달력포맷팅 1 -> 01
       month = "0"+month;
@@ -50,7 +49,7 @@ const Calendar = () => {
     }
 
     return help[year][month][day];
-  },[help])
+  }
 
   // 캘린더에서 달마다 목록을 가져오게 만들기
   const GetMonth = useCallback(async () => {
@@ -89,6 +88,10 @@ const Calendar = () => {
       console.error("에러 발생", error);
     }
   },[year, month])
+
+  // useEffect(()=>{
+  //   GetMonth();
+  // }, [GetMonth]);
   
   const nextMonth = ()=> {
     let temp = month+1;
