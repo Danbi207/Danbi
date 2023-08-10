@@ -16,10 +16,16 @@ export const modalSlice = createSlice({
     },
     setTargetMemberId: (state, action) => {
       state.targetMemberId = action.payload;
-    }
+    },
+    // 항목 삭제 리덕스 적용
+    deleteIpRequest: (state, action) => {
+      state.ipRequestList = state.ipRequestList.filter(
+        item => item.helpPostId !== action.payload
+      );
+    },
   },
 });
 
-export const { setMode, setIpRequestList, setTargetMemberId } = modalSlice.actions;
+export const { setMode, setIpRequestList, setTargetMemberId, deleteIpRequest } = modalSlice.actions;
 
 export default modalSlice.reducer;

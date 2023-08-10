@@ -1,10 +1,14 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components';
 import { authDelete } from '../../../../Util/apis/api';
+import { useDispatch } from 'react-redux';
+import { deleteIpRequest } from '../../../../store/Slice/ModalSlice';
 
 
 
 const IpDetailItem = ({data}) => {
+  const dispatch = useDispatch();
+
   const stateMessages = (state) => {
     const message = {
       "ACTIVATE" : "매치 전",
@@ -17,11 +21,12 @@ const IpDetailItem = ({data}) => {
   const handleDelete =  useCallback(async ()=>{
     try{
       await authDelete(`/api/v1/help/${data.helpPostId}`, {});
+      dispatch(deleteIpRequest(data.helpPostId));
     }
     catch(err) {
       console.log(err)
     }
-  },[data]) 
+  },[data, dispatch]) 
 
   return (
     <HelpItemWrap>

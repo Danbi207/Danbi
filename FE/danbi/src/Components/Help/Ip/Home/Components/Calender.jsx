@@ -7,10 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
+import { useSelector } from 'react-redux';
 
 
 const Calendar = () => {
   const dispatch = useDispatch();
+  const ipRequestList = useSelector(state => state.modal.ipRequestList)
 
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
@@ -89,10 +91,6 @@ const Calendar = () => {
     }
   },[year, month])
 
-  // useEffect(()=>{
-  //   GetMonth();
-  // }, [GetMonth]);
-  
   const nextMonth = ()=> {
     let temp = month+1;
     if(temp === 12){
