@@ -39,7 +39,7 @@ const GuestBook = ({ guestBookId, userId }) => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   return (
     <GuestBookWrap>
@@ -63,6 +63,7 @@ const GuestBook = ({ guestBookId, userId }) => {
           comment={comment}
           writerName={comment.name}
           guestBookId={guestBookId}
+          setComment={setComment}
         />
       ))}
     </GuestBookWrap>
