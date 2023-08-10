@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GuestBookComment from './GuestBookComment';
-import { authPost } from '../../../../Util/apis/api';
+import { authPost, authGet } from '../../../../Util/apis/api';
 import { useSelector } from 'react-redux';
 
-const GuestBook = ({ guestBookId, comments }) => {
-  console.log(comments);
+const GuestBook = ({ guestBookId, userId }) => {
   const [textArea, setTextArea] = useState('');
   const profileUrl = useSelector((state) => state.user.profileUrl);
   const name = useSelector((state) => state.user.name);
+  const [comments, setComment] = useState([]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const textJson = {
@@ -25,6 +25,20 @@ const GuestBook = ({ guestBookId, comments }) => {
   const handleChange = (e) => {
     setTextArea(e.target.value);
   };
+
+  const fetchData = async () => {
+    try {
+      const res = await authGet(`/api/v1/profile/guestbook${userId}`);
+      setComment(res.guestBook.comments);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <GuestBookWrap>

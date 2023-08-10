@@ -16,7 +16,7 @@ const MyFriend = ({ value }) => {
   return (
     <MyFriendWrap>
       <InfoWrap>
-        <ImgWrap src={example} />
+        <ImgWrap $url={value.profileUrl} />
         <Name>{value.name}</Name>
       </InfoWrap>
       <Btn>
@@ -41,7 +41,9 @@ const InfoWrap = styled.div`
   align-items: center;
 `;
 
-const ImgWrap = styled.img`
+const ImgWrap = styled.img.attrs((props) => ({
+  src: props.$url,
+}))`
   width: 3rem;
   height: 3rem;
   border-radius: 50%;

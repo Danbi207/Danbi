@@ -2,18 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import ex from '../example-profile.jpg';
 import { useSelector } from 'react-redux';
+import { authDelete } from '../../../../Util/apis/api';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
 const GuestBookComment = ({ comment, writerName }) => {
   const userName = useSelector((state) => state.user.name);
-
+  const handleDelete = async () => {
+    try {
+      const data = authDelete(
+        `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`
+      );
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <CommentWrap>
-      <GuestImg src={ex} alt="프로필 사진" />
+      <GuestImg $url={comment.profileUrl} alt="프로필 사진" />
       <ContentWrap>
         <ContentHeader>
           <GuestName>{comment.name}</GuestName>
-          <CreatedTime>{comment.created_time}</CreatedTime>
+          <CreatedTime>{comment.createdTime}</CreatedTime>
         </ContentHeader>
         <Content>{comment.content}</Content>
       </ContentWrap>
@@ -36,7 +46,9 @@ const CommentWrap = styled.div`
   margin-top: 0.5rem;
 `;
 
-const GuestImg = styled.img`
+const GuestImg = styled.img.attrs((props) => ({
+  src: props.$url,
+}))`
   width: 2rem;
   height: 2rem;
   border-radius: 50%;

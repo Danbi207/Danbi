@@ -78,7 +78,7 @@ const Profile = () => {
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
-        <GuestBook guestBookId={data.guestBookId} comments={data.comments} />
+        <GuestBook guestBookId={data.guestBookId} userId={userId} />
         {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
       </Wrap>
       <Footer />
