@@ -35,11 +35,11 @@ const Accuse = () => {
     }
 
     //DO : 신고
-    const data = {file,accuseRequestDto:{
+    const data = {file,accuseRequestDto:JSON.stringify({
       targetMemberId,
       content,
       accuseType
-    }}
+    })}
 
     data["file"] = file;
 
