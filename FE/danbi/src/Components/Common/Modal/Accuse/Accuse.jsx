@@ -39,13 +39,14 @@ const Accuse = () => {
     const json = {
       targetMemberId,
       content,
-      accuseType      
+      accuseType
     }
+    console.log(json);
     json["files"] = file;
     for (let key in json ) {
       formData.append(key, json[key]);
     }
-    
+
     try{
       const res = await authFilePost("/api/v1/accuse",formData);
       console.log(res);
