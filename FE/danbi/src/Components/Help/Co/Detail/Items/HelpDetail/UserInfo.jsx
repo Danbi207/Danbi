@@ -17,7 +17,7 @@ const UserInfo = ({ data }) => {
         <BackImg />
       </BackButton>
       <Wrap>
-        <ProfileImg src={data.ip.profileUrl} />
+        <ProfileImg alt='' src={data.ip.profileUrl} />
         <Body>
           <BottomWrap>
             <Name>{data.ip.name}</Name>
