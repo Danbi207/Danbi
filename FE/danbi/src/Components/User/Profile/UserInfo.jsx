@@ -11,24 +11,18 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
       targetId,
     };
     console.log(data);
-    console.log(myProfile);
     const res = await authPost('/api/v1/friends', data);
     console.log(res);
   };
 
-  const [myProfile, setMyProfile] = useState(false);
   const cur_id = useSelector((state) => state.user.userId);
-  if (targetId === cur_id) {
-    setMyProfile(true);
-  }
-
   return (
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
         <UserName>{name}</UserName>
         {friendFlag ? <FriendBadge /> : null}
-        {myProfile ? null : (
+        {cur_id === targetId ? null : (
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
             <AccuseButton

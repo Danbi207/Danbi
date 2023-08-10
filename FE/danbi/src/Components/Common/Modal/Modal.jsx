@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components';
 import Accuse from './Accuse/Accuse';
 import { useSelector } from 'react-redux';
+import IpDetail from './Detail/IpDetail';
+
 const Modal = () => {
   const mode = useSelector((state) => state.modal.mode);
   return (
@@ -10,6 +12,12 @@ const Modal = () => {
         mode === "accuse" ? <>
           <BackgroundWrap></BackgroundWrap>
           <Accuse></Accuse>
+        </> : null
+      }
+      {
+        mode === "ipdetail" ? <>
+          <BackgroundWrap></BackgroundWrap>
+          <IpDetail></IpDetail>
         </> : null
       }
     </>
