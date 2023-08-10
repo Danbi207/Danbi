@@ -16,6 +16,8 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
   };
 
   const cur_id = useSelector((state) => state.user.userId);
+  console.log('targetid' + targetId + typeof targetId);
+  console.log('userId' + cur_id + typeof cur_id);
   return (
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
