@@ -30,7 +30,6 @@ const Profile = () => {
     accumulatePoint: 0,
     friendFlag: false,
   });
-  const [myProfile, setMyProfile] = useState(false);
 
   // TODO : userId params 조회
   const { userId } = useParams();

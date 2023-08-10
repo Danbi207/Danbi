@@ -11,12 +11,14 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
       targetId,
     };
     console.log(data);
-    console.log(myProfile);
     const res = await authPost('/api/v1/friends', data);
     console.log(res);
   };
 
   const cur_id = useSelector((state) => state.user.userId);
+  console.log('targetid' + targetId + typeof targetId);
+  console.log('userId' + cur_id + typeof cur_id);
+  console.log('hi');
   return (
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />

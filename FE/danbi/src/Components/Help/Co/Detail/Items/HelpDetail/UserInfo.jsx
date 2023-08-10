@@ -17,13 +17,13 @@ const UserInfo = ({ data }) => {
         <BackImg />
       </BackButton>
       <Wrap>
-        <ProfileImg src={data.ip.profile_url} />
+        <ProfileImg alt='' src={data.ip.profileUrl} />
         <Body>
           <BottomWrap>
             <Name>{data.ip.name}</Name>
             <BadgeWrap>
               {data.friendFlag ? <FriendBadge /> : null}
-              {data.ip.accuse_point < 0 ? null : data.ip.accuse_point > 1 ? (
+              {data.ip.accusePoint < 0 ? null : data.ip.accusePoint > 1 ? (
                 <AccuseBadge $state={'yellowcard'} />
               ) : (
                 <AccuseBadge $state={'redcard'} />
@@ -52,6 +52,7 @@ const UserInfo = ({ data }) => {
 
 const UserInfoWrap = styled.div`
   width: 100%;
+  color: ${props=>props.theme.colors.titleColor};
 `;
 
 const Wrap = styled.div`
