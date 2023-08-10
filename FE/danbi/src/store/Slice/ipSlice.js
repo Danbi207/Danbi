@@ -1,30 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  position : {
-    cur_longitude : '',
-    cur_latitude : '',  
-    cur_addr : '',
-    dest_longitude : '',
-    dest_latitude : '',
-    dest_addr : '', 
-    meet_longitude : '',
-    meet_latitude : '',
-    meet_addr : '',
-  },
-  tabmode : 'time',
-  reservetype : '',
-  meetType : '',
-  category : 'NONE',
-  caution : '',
-  content : '',
-  ischecked : false,
-  currentDay : [],
-  currentTime : [],
-  useTimes : 0,
-};
-
 export const ipSlice = createSlice({
+  name: "ip",
   initialState: {
     position : {
       cur_longitude : '',
@@ -103,14 +80,12 @@ export const ipSlice = createSlice({
     setUseTimes : (state, action) => {
       state.useTimes = action.payload;
     },
-    ResetIpState : () => initialState
   },
 });
 
 export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setCategory, setCaution,
                setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude,
                setCurrentDay, setUseTimes, setCurrentTime,
-               ResetIpState 
               } = ipSlice.actions;
 
 export default ipSlice.reducer;

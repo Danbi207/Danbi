@@ -6,7 +6,7 @@ import Preset from './Preset.jsx';
 import Positioin from './Positioin';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ResetIpState, setMeetType } from "../../../../../../store/Slice/ipSlice"
+import { setMeetType } from "../../../../../../store/Slice/ipSlice"
 import { useState } from 'react';
 import { useCallback } from 'react';
 import { authPost } from '../../../../../../Util/apis/api';
@@ -82,7 +82,6 @@ function FaceType({location}) {
     }
     try{
       await authPost('/api/v1/help/create', ipData)
-      dispatch(ResetIpState())
       navigate('/help/ip')
     }
     catch (err) {
