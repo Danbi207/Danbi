@@ -27,7 +27,7 @@ const GuestBookComment = ({
     }
   };
   const navigate = useNavigate();
-
+  const cur_id = useSelector((state) => state.user.userId);
   return (
     <CommentWrap>
       <GuestImg $url={comment.profileUrl} alt="프로필 사진" />
@@ -45,7 +45,7 @@ const GuestBookComment = ({
           <EditBtn>수정</EditBtn>
           <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
-      ) : Number(userId) === memberId ? (
+      ) : Number(userId) === cur_id ? (
         <Buttons>
           <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
