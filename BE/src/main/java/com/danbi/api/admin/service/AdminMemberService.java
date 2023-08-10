@@ -1,6 +1,7 @@
 package com.danbi.api.admin.service;
 
 import com.danbi.api.admin.dto.AdminMemberResponseDto;
+import com.danbi.api.admin.dto.AdminMembersCountResponseDto;
 import com.danbi.api.admin.dto.IPCertFileResponseDto;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.entity.Member;
@@ -21,16 +22,24 @@ public class AdminMemberService {
 
     private final MemberService memberService;
 
-    public List<AdminMemberResponseDto> findMembers(Pageable pageable) {
+    public AdminMembersCountResponseDto findMembers(Pageable pageable) {
         Page<Member> members = memberService.findAll(pageable);
+        List<AdminMemberResponseDto> dtos = membersToDto(members);
 
-        return membersToDto(members);
+        return AdminMembersCountResponseDto.builder()
+                .count(dtos.size())
+                .data(dtos)
+                .build();
     }
 
-    public List<AdminMemberResponseDto> findMembersByRole(String role, Pageable pageable) {
+    public AdminMembersCountResponseDto findMembersByRole(String role, Pageable pageable) {
         Page<Member> members = memberService.findAllByRole(Role.from(role), pageable);
+        List<AdminMemberResponseDto> dtos = membersToDto(members);
 
-        return membersToDto(members);
+        return AdminMembersCountResponseDto.builder()
+                .count(dtos.size())
+                .data(dtos)
+                .build();
     }
 
     private List<AdminMemberResponseDto> membersToDto(Page<Member> members) {

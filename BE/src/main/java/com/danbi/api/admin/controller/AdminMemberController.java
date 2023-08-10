@@ -2,6 +2,7 @@ package com.danbi.api.admin.controller;
 
 import com.danbi.api.ApiResponse;
 import com.danbi.api.admin.dto.AdminMemberResponseDto;
+import com.danbi.api.admin.dto.AdminMembersCountResponseDto;
 import com.danbi.api.admin.service.AdminMemberService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
@@ -31,21 +32,21 @@ public class AdminMemberController {
     @Operation(summary = "ADMIN으로 모든 회원 조회 API", description = "ADMIN으로 모든 회원 조회 API")
     @GetMapping
     @LimitedSizePagination
-    public ApiResponse<List<AdminMemberResponseDto>> findMembers(@PageableDefault(size = 10,
+    public ApiResponse<AdminMembersCountResponseDto> findMembers(@PageableDefault(size = 10,
                                                                 sort = "createTime",
                                                                 direction = Sort.Direction.DESC) Pageable pageable) {
-        List<AdminMemberResponseDto> response = adminMemberService.findMembers(pageable);
+        AdminMembersCountResponseDto response = adminMemberService.findMembers(pageable);
         return ApiResponse.ok(response);
     }
 
     @Operation(summary = "ADMIN으로 Role별 회원 조회 API", description = "ADMIN으로 Role별 회원 조회 API")
     @GetMapping("/role")
     @LimitedSizePagination
-    public ApiResponse<List<AdminMemberResponseDto>> findMembersByRole(@RequestParam("memberRole") String memberRole,
+    public ApiResponse<AdminMembersCountResponseDto> findMembersByRole(@RequestParam("memberRole") String memberRole,
                                                                 @PageableDefault(size = 10,
                                                                 sort = "createTime",
                                                                 direction = Sort.Direction.DESC) Pageable pageable) {
-        List<AdminMemberResponseDto> response = adminMemberService.findMembersByRole("ROLE_" + memberRole, pageable);
+        AdminMembersCountResponseDto response = adminMemberService.findMembersByRole("ROLE_" + memberRole, pageable);
         return ApiResponse.ok(response);
     }
 }
