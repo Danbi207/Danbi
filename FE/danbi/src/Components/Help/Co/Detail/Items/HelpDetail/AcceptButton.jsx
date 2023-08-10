@@ -5,8 +5,7 @@ import { authPost } from '../../../../../../Util/apis/api';
 const AcceptButton = ({ helpPostId }) => {
   const fetchData = useCallback(async () => {
     try {
-      const data = authPost(`api/v1/help/${helpPostId}`, {});
-      console.log(data);
+      const data = authPost(`/api/v1/help/${helpPostId}`, {});
     } catch (err) {
       console.log(err);
     }
