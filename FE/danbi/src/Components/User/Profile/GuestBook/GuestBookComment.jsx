@@ -70,7 +70,15 @@ const GuestBookComment = ({
       </ContentWrap>
       {writerName === userName ? (
         <Buttons>
-          {editMode ? null : <EditBtn>수정</EditBtn>}
+          {editMode ? null : (
+            <EditBtn
+              onClick={() => {
+                setEditMode(true);
+              }}
+            >
+              수정
+            </EditBtn>
+          )}
           <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
       ) : Number(userId) === cur_id ? (
