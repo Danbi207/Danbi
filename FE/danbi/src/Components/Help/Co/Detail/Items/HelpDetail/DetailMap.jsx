@@ -42,14 +42,14 @@ const DetailMap = ({ position }) => {
 
   return (
     <>
-      <MapWrap ref={mapRef}></MapWrap>;
+      <MapWrap ref={mapRef}></MapWrap>
     </>
   );
 };
 
 const MapWrap = styled.div`
   width: 100%;
-  height: 8rem;
+  height: 100%;
 `;
 
 export default DetailMap;

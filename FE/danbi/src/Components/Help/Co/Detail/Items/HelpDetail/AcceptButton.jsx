@@ -18,9 +18,9 @@ const AcceptButton = ({ helpPostId }) => {
 const AcceptButtonWrap = styled.button`
   font-size: 24px;
   background-color: #ffea7e;
-  width: 15.5rem;
-  height: 2rem;
-  border-radius: 10px;
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.5rem;
 `;
 
 export default AcceptButton;
