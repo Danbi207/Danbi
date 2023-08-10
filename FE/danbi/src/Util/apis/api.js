@@ -34,7 +34,7 @@ export const reissueAccessToken = async ()=>{
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
     token.clear();
-    return null;
+    throw err;
   }
 }
 
@@ -70,8 +70,7 @@ export const authGet = async (url)=>{
         return data.data;
       }
     }catch(err){
-      console.log(err.response);
-      return null;
+      throw err;
     }
   }
 }
@@ -110,8 +109,7 @@ export const authPost = async (url,json)=>{
         return data.data;
       }
     }catch(err){
-      console.log(err.response);
-      return null;
+      throw err;
     }
   }
 }
@@ -151,8 +149,7 @@ export const authDelete = async (url,json)=>{
         return data.data;
       }
     }catch(err){
-      console.log(err.response);
-      return null;
+      throw err;
     }
   }
 }
@@ -191,8 +188,7 @@ export const authPut = async (url,json)=>{
         return data.data;
       }
     }catch(err){
-      console.log(err.response);
-      return null;
+      throw err;
     }
   }
 }
@@ -236,8 +232,7 @@ export const authFilePost = async (url,formData)=>{
         return data.data;
       }
     }catch(err){
-      console.log(err.response);
-      return null;
+      throw err;
     }
   }
 }
