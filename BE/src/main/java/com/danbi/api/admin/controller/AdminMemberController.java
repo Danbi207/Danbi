@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -34,6 +35,17 @@ public class AdminMemberController {
                                                                 sort = "createTime",
                                                                 direction = Sort.Direction.DESC) Pageable pageable) {
         List<AdminMemberResponseDto> response = adminMemberService.findMembers(pageable);
+        return ApiResponse.ok(response);
+    }
+
+    @Operation(summary = "ADMIN으로 Role별 회원 조회 API", description = "ADMIN으로 Role별 회원 조회 API")
+    @GetMapping("/role")
+    @LimitedSizePagination
+    public ApiResponse<List<AdminMemberResponseDto>> findMembersByRole(@RequestParam("memberRole") String memberRole,
+                                                                @PageableDefault(size = 10,
+                                                                sort = "createTime",
+                                                                direction = Sort.Direction.DESC) Pageable pageable) {
+        List<AdminMemberResponseDto> response = adminMemberService.findMembersByRole(memberRole, pageable);
         return ApiResponse.ok(response);
     }
 }

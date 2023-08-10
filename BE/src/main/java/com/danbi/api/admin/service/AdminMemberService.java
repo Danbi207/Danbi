@@ -2,6 +2,7 @@ package com.danbi.api.admin.service;
 
 import com.danbi.api.admin.dto.AdminMemberResponseDto;
 import com.danbi.api.admin.dto.IPCertFileResponseDto;
+import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,17 @@ public class AdminMemberService {
     public List<AdminMemberResponseDto> findMembers(Pageable pageable) {
         Page<Member> members = memberService.findAll(pageable);
 
-        List<AdminMemberResponseDto> adminMemberResponseDtos = members.stream()
+        return membersToDto(members);
+    }
+
+    public List<AdminMemberResponseDto> findMembersByRole(String role, Pageable pageable) {
+        Page<Member> members = memberService.findAllByRole(Role.from(role), pageable);
+
+        return membersToDto(members);
+    }
+
+    private List<AdminMemberResponseDto> membersToDto(Page<Member> members) {
+        return members.stream()
                 .map(member -> AdminMemberResponseDto.builder()
                         .id(member.getId())
                         .oauthType(member.getOauthType())
@@ -37,6 +48,5 @@ public class AdminMemberService {
                         .accuseStack(member.getAccuseStack())
                         .build())
                 .collect(Collectors.toList());
-        return adminMemberResponseDtos;
     }
 }
