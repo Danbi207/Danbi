@@ -26,7 +26,16 @@ self.addEventListener("push", function (e) {
 
 self.addEventListener("notificationclick", function (event) {
   console.log("notification click");
-  const url = "/";
+  // role에 따라 url 수정
+  let role = localStorage.getItem('role'); 
+  let url;
+  if (role === 'ip') {
+    url = '/help/ip';
+  } else if (role === 'helper') {
+    url = '/help/helper';
+  } else {
+    url = '/'; // 만약 role 값이 위의 두 경우가 아닐 경우, 기본 URL로 이동
+  }
   event.notification.close();
   event.waitUntil(clients.openWindow(url));
 });
