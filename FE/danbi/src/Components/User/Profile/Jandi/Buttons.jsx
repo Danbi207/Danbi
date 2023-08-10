@@ -41,7 +41,7 @@ const Buttons = ({ prevGross, nextGross, setPickModalOpen, targetId }) => {
       </DirectionBtns>
       <Wrap>
         <Dew>{curDewPoint}Dew</Dew>
-        {myProfile ? (
+        {cur_id === targetId ? (
           <PickBtn
             onClick={() => {
               handlePickModal();
