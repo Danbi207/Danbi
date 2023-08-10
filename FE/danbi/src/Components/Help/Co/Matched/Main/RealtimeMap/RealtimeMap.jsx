@@ -23,7 +23,7 @@ const RealtimeMap = (props) => {
 
   useEffect(()=>{
     //DO : 카카오 맵 초기설정
-    const meetPosition = new kakao.maps.LatLng(props.position.meet_latitude,props.position.meet_longitude);
+    const meetPosition = new kakao.maps.LatLng(props.position.meetLatitude,props.position.meetLongitude);
     const mapOption = { 
       center: meetPosition, //만나는장소 위치
       level: 7 // 지도의 확대 레벨
@@ -37,17 +37,17 @@ const RealtimeMap = (props) => {
       position: meetPosition
     });
     meetMarker.setMap(map);
-    coordinates.push([props.position.meet_longitude,props.position.meet_latitude]);
+    coordinates.push([props.position.meetLongitude,props.position.meetLatitude]);
 
     //목적지 장소마커 생성
     let destMarker = null;
-    if(props.position.dest_latitude){
-      const destPosition = new kakao.maps.LatLng(props.position.dest_latitude,props.position.dest_longitude)
+    if(props.position.destLatitude){
+      const destPosition = new kakao.maps.LatLng(props.position.destLatitude,props.position.destLongitude)
       destMarker = new kakao.maps.Marker({
         position: destPosition
       });
       destMarker.setMap(map);
-      coordinates.push([props.position.dest_longitude,props.position.dest_latitude]);
+      coordinates.push([props.position.destLongitude,props.position.destLatitude]);
 
       //DO : 경로찾기 및 지도에 표시
       axios({

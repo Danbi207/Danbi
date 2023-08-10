@@ -9,7 +9,7 @@ const Infomation = (props) => {
           <Title>도움요청 정보</Title>
             <Container>
               <SubTitle>날짜 및 장소</SubTitle>
-              <HelpContent readOnly={true} value={`${props.help.face_flag ? "대면\n" : "비대면\n"}날짜 : ${props.help.start_time.split(" ")[0]}\n시간 : ${props.help.start_time.split(" ")[1]}~${props.help.end_time.split(" ")[1]}`}></HelpContent>
+              <HelpContent readOnly={true} value={`${props.help.faceFlag ? "대면\n" : "비대면\n"}날짜 : ${props.help.startTime.split(" ")[0]}\n시간 : ${props.help.startTime.split(" ")[1]}~${props.help.endTime.split(" ")[1]}`}></HelpContent>
               <SubTitle>상세내용</SubTitle>
               <HelpContent readOnly={true} value={props.help.content}></HelpContent>
               <SubTitle>주의사항</SubTitle>
