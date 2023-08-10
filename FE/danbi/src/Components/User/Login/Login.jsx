@@ -23,18 +23,24 @@ const Login = () => {
         return;
       }
 
+      if(role === "admin"){//역할이 관리자인 경우
+        localStorage.setItem("role","admin");
+        navigate("/admin",{replace:true});
+      }
+
       // FCM 토큰 함수 호출
       requestFcmToken()
 
-      if(role === "ROLE_IP"){//역할이 IP인 경우
+      if(role === "ip"){//역할이 IP인 경우
         localStorage.setItem("role","ip");
         navigate("/help/ip", { replace: true });
       }
 
-      if(role === "ROLE_HELPER"){//역할이 Helper인경우
+      if(role === "helper"){//역할이 Helper인경우
         localStorage.setItem("role","helper");
         navigate("/help/helper", { replace: true });
       }
+
     }
   },[navigate,requestFcmToken]);
 

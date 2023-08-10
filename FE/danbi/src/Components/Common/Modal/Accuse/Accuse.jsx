@@ -4,7 +4,7 @@ import { setMode } from '../../../../store/Slice/ModalSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { authFilePost } from '../../../../Util/apis/api';
-// import {setMode} from "../../../../Util/apis/api"
+
 const Accuse = () => {
   const dispatch = useDispatch();
   const targetMemberId = useSelector((state) => state.modal.targetMemberId);
