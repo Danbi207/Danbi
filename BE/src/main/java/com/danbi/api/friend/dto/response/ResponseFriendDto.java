@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseFriendDto {
 
+    @JsonProperty("friendId")
+    private Long friendId;
+
     @JsonProperty("profileUrl")
     private String profileUrl;
 

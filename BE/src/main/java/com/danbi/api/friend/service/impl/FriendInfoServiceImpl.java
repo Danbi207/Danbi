@@ -96,6 +96,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getTo().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .friendId(friend.getId())
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
                     .dewPoint(point.getAccumulateDewPoint())
@@ -117,6 +118,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .friendId(friend.getId())
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
                     .dewPoint(point.getAccumulateDewPoint())
@@ -139,6 +141,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getTo().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .friendId(friend.getId())
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
                     .dewPoint(point.getAccumulateDewPoint())
@@ -152,6 +155,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .friendId(friend.getId())
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
                     .dewPoint(point.getAccumulateDewPoint())
