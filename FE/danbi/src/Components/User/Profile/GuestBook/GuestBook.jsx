@@ -39,7 +39,7 @@ const GuestBook = ({ guestBookId, userId }) => {
         userId={userId}
         setComment={setComment}
         guestBookId={guestBookId}
-        memberId={memberId}
+        memberId={comment.memberId}
       />
     ));
     return res;
