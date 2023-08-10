@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { authDelete, authGet } from '../../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
 const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId }) => {
@@ -18,6 +19,8 @@ const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId
       console.log(err);
     }
   };
+  const navigate = useNavigate();
+
   return (
     <CommentWrap>
       <GuestImg $url={comment.profileUrl} alt="프로필 사진" />
