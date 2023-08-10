@@ -6,6 +6,8 @@ export const dark ={
     jandibgColor: '#FFFFFF',
     buttonbgColor: '#FFFFFF',
     buttontextColor: '#19191B',
+    redBtnColor : "#E85151",
+    whiteColor : "#FFFFFF"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-black.svg`,
@@ -65,6 +67,8 @@ export const light ={
     buttonbgColor: '#FFEA7E',
     buttontextColor: '#000000',
     whiteBgColor : '#FFFFFF',
+    redBtnColor : "#E85151",
+    whiteColor : "#FFFFFF"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,
