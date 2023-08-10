@@ -31,7 +31,10 @@ const UserInfo = ({ data }) => {
       </Body>
       <More onClick={() => setIsOpen(!isOpen)}>
         <MoreImg />
-        {isOpen && <DropDownMenu>신고</DropDownMenu>}
+        {isOpen && <DropDownMenu onClick={()=>{()=>{
+          setTargetMemberId(data.ip.ipId);
+          setMode("accuse");
+        }}}>신고</DropDownMenu>}
       </More>
       </Wrap>
     </UserInfoWrap>
