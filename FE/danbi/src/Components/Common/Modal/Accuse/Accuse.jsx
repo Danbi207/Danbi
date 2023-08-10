@@ -41,7 +41,9 @@ const Accuse = () => {
       formData.append("targetMemberId",targetMemberId);
       formData.append("content",content);
       formData.append("accuseType",accuseType);
-      console.log(formData);
+      for(const pair of formData.entries()){
+        console.log(pair);
+      }
       const res = await authFilePost("/api/v1/accuse",formData);
       console.log(res);
     }catch(err){

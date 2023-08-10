@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setMode,setTargetMemberId } from '../../../../store/Slice/ModalSlice';
 
-const AccuseButton = () => {
+const AccuseButton = ({targetId}) => {
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch(setTargetMemberId(targetId));

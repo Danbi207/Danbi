@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 const UserInfo = ({ url, name, targetId, friendFlag }) => {
-  const dispatch = useDispatch();
   const handlePlus = async () => {
     const data = {
       targetId,
@@ -24,7 +23,7 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
         {cur_id === Number(targetId) ? null : (
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
-            <AccuseButton/>
+            <AccuseButton targetId={targetId}/>
           </Btns>
         )}
       </UserDetail>
