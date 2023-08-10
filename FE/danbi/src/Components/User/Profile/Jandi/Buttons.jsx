@@ -10,7 +10,7 @@ import {
 } from '../../../../store/Slice/JandiSlice';
 import { authPost } from '../../../../Util/apis/api';
 
-const Buttons = ({ prevGross, nextGross, setPickModalOpen }) => {
+const Buttons = ({ prevGross, nextGross, setPickModalOpen, targetId }) => {
   const dispatch = useDispatch();
   const handlePickModal = async () => {
     setPickModalOpen(true);
