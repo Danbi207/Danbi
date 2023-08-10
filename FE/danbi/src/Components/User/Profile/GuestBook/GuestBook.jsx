@@ -19,6 +19,8 @@ const GuestBook = ({ guestBookId, userId }) => {
       const data = await authPost(`/api/v1/profile/guestbook/${guestBookId}`, textJson);
       console.log(data);
       setTextArea('');
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
+      setComment(res.guestBookDto.commentDtos);
     } catch (err) {
       console.log(err);
     }
@@ -40,7 +42,7 @@ const GuestBook = ({ guestBookId, userId }) => {
 
   useEffect(() => {
     fetchData();
-  }, [comments]);
+  }, []);
 
   return (
     <GuestBookWrap>

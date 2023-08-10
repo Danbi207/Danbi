@@ -44,16 +44,8 @@ const Profile = () => {
     }
   }, [userId]);
 
-  const cur_id = useSelector((state) => state.user.id);
   useEffect(() => {
     fetchData();
-    // 현재 프로필과 나의 정보 일치 유무
-    if (userId === cur_id) {
-      setDewPoint(data.dewPoint);
-      setMyProfile(true);
-    } else {
-      setDewPoint(data.accumulatePoint);
-    }
   }, []);
 
   return (
@@ -64,7 +56,6 @@ const Profile = () => {
           url={data.profileUrl}
           name={data.name}
           targetId={userId}
-          myProfile={myProfile}
           friendFalg={data.friendFlag}
         />
         {localStorage.getItem('role') === 'ip' ? (
@@ -76,7 +67,6 @@ const Profile = () => {
             help_log={data.helpLog}
             setPickModalOpen={setPickModalOpen}
             item={data.item}
-            myProfile={myProfile}
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
