@@ -88,7 +88,6 @@ const BottomWrap = styled.div`
 
 const DewPoint = styled.div`
   font-size: 20px;
-  color: white;
 `;
 
 const Body = styled.div`
