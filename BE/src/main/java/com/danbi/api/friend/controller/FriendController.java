@@ -27,6 +27,9 @@ public class FriendController {
     @Operation(summary = "친구 요청 보내기 API", description = "친구 요청 보내기 API")
     @PostMapping
     public ApiResponse<String> requestFriend(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody RequestFriendDto requestFriendDto) {
+        if (memberInfoDto.getMemberId() == requestFriendDto.getTargetId()) {
+            throw new BusinessException(ErrorCode.NOT_MYSELF_FRIEND_REQUEST);
+        }
         friendInfoService.requestFriend(memberInfoDto.getMemberId(), requestFriendDto.getTargetId());
         return ApiResponse.ok("친구요청에 성공했습니다.");
     }

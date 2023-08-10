@@ -56,7 +56,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
         if (notificationTrace.type().equals(Type.ACCUSE_PERMIT)) {
             log.info("{}", notificationTrace.type().getDescription());
@@ -69,6 +68,7 @@ public class NotificationAdvice {
                     to = accuse.getReporter();
                 }
             }
+            String content = from.getName()+ "님의 신고가 승인되었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -78,7 +78,7 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
+
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.ACCUSE_SENT)) {
@@ -93,6 +93,7 @@ public class NotificationAdvice {
                     to = accuse.getReporter();
                 }
             }
+            String content = from.getName()+ "님의 신고가 신고 접수되었습니다.";
             alarmSave(from, to, title, content, type);
         }
 
@@ -104,7 +105,7 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
+
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.FRIEND_REQUEST)) {
@@ -119,6 +120,7 @@ public class NotificationAdvice {
                     to = memberRepository.findById(friendDto.getTargetId()).get();
                 }
             }
+            String content = from.getName() + "님께서 "+to.getName()+"님에게 친구 요청하였습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -129,7 +131,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.FRIEND_PERMIT)) {
@@ -144,6 +145,7 @@ public class NotificationAdvice {
                     to = memberRepository.findById(friendDto.getTargetId()).get();
                 }
             }
+            String content = from.getName() + "님께서 "+to.getName()+"님의 친구 요청을 승인하였습니다.";
             alarmSave(from, to, title, content, type);
         }
 
@@ -156,7 +158,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_MATCHING)) {
@@ -171,6 +172,7 @@ public class NotificationAdvice {
                     to = helpPostRepository.findById(helpPostId).get().getMember();
                 }
             }
+            String content = from.getName() + "님과 "+to.getName()+"님이 도움 매칭되었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -181,7 +183,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_IP_COMPLETE)) {
@@ -196,6 +197,7 @@ public class NotificationAdvice {
                     to = helpRepository.findById(helpId).get().getHelper();
                 }
             }
+            String content = from.getName() +"님이 IP 도움 완료하었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -206,7 +208,6 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_HELPER_COMPLETE)) {
@@ -221,6 +222,7 @@ public class NotificationAdvice {
                     to = helpRepository.findById(helpId).get().getIp();
                 }
             }
+            String content = from.getName() +"님이 HELPER 도움 완료하었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
@@ -231,7 +233,7 @@ public class NotificationAdvice {
         Member from = null;
         Member to = null;
         String title = notificationTrace.type().getDescription();
-        String content = notificationTrace.type().getDescription();
+
         Type type = notificationTrace.type();
 
         if (notificationTrace.type().equals(Type.HELP_CANCEL)) {
@@ -244,6 +246,7 @@ public class NotificationAdvice {
                     from = helpRepository.findById(helpId).get().getHelper();
                 }
             }
+            String content = from.getName() + "님과 "+to.getName()+"님이 도움 매칭 취소되었습니다.";
             alarmSave(from, to, title, content, type);
         }
     }
