@@ -10,7 +10,7 @@ const IpDetail = (props) => {
   const [iplist, setIpList] = useState([]);
   const dispatch = useDispatch();
 
-useEffect(() => {
+  useEffect(() => {
     if (ipRequestList) {
       setIpList(ipRequestList.map((item, index) => <IpDetailItem key={index} data={item}/>));
       console.log(ipRequestList);
@@ -27,8 +27,8 @@ useEffect(() => {
         {iplist}
       </DetailWrap>
     </ModalWrap>
-  )
-}
+    )
+  }
 
 const ModalWrap = styled.div`
   position: fixed;

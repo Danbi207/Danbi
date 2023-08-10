@@ -2,7 +2,17 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components';
 import { authDelete } from '../../../../Util/apis/api';
 
+
+
 const IpDetailItem = ({data}) => {
+  const stateMessages = (state) => {
+    const message = {
+      "ACTIVATE" : "매치 전",
+      "MATCHED" : "도움매칭 완료",
+      "COMPLETED" : "도움 완료"
+    };
+    return message[state]
+  } 
 
   const handleDelete =  useCallback(async ()=>{
     try{
@@ -17,7 +27,7 @@ const IpDetailItem = ({data}) => {
     <HelpItemWrap>
       <TitleWrap>도움 정보</TitleWrap>
       <ItemWrap>
-        <Item>매칭 여부: {data.state}</Item>
+        <Item>매칭 여부: {stateMessages(data.state)}</Item>
         <Item>시작 시간: {data.startTime}</Item>
         <Item>끝나는 시간: {data.endTime}</Item>    
       </ItemWrap>
@@ -28,7 +38,6 @@ const IpDetailItem = ({data}) => {
       <DetailBTN onClick={()=>{navigator('/help/ip/request')}}>상세보기</DetailBTN>
       <DeleteBTN onClick={()=>{handleDelete()}}>삭제</DeleteBTN>
     </HelpItemWrap>
-    
   )
 }
 
