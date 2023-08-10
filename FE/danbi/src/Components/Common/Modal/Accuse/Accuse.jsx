@@ -42,7 +42,12 @@ const Accuse = () => {
       content,
       accuseType
     })],{type:"application/json"}));
-
+    
+    console.log({
+      targetMemberId,
+      content,
+      accuseType
+    });
     try{
       const res = await authFilePost("/api/v1/accuse",formData);
       console.log(res);

@@ -1,21 +1,50 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components';
-const Infomation = (props) => {
+import Jandi from "../../../../../User/Profile/Jandi/Jandi";
+import { authGet } from '../../../../../../Util/apis/api';
+const Infomation = ({help}) => {
+  const [info,setInfo] = useState();
+  const getInfo = useCallback(async()=>{
+    try{
+      const data = await authGet(`/api/v1/profile/${localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}`);
+      if(data){
+        setInfo(data);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  },[help]);
+  useEffect(()=>{
+    getInfo();
+  },[getInfo]);
   return (
     <>
       {
-        props.help?
+        help?
         <InfomationWrap>
           <Title>도움요청 정보</Title>
             <Container>
               <SubTitle>날짜 및 장소</SubTitle>
-              <HelpContent readOnly={true} value={`${props.help.faceFlag ? "대면\n" : "비대면\n"}날짜 : ${props.help.startTime.split(" ")[0]}\n시간 : ${props.help.startTime.split(" ")[1]}~${props.help.endTime.split(" ")[1]}`}></HelpContent>
+              <HelpContent readOnly={true} value={`${help.faceFlag ? "대면\n" : "비대면\n"}날짜 : ${help.startTime.split(" ")[0]}\n시간 : ${help.startTime.split(" ")[1]}~${help.endTime.split(" ")[1]}`}></HelpContent>
               <SubTitle>상세내용</SubTitle>
-              <HelpContent readOnly={true} value={props.help.content}></HelpContent>
+              <HelpContent readOnly={true} value={help.content}></HelpContent>
               <SubTitle>주의사항</SubTitle>
-              <HelpContent readOnly={true} value={props.help.caution}></HelpContent>
+              <HelpContent readOnly={true} value={help.caution}></HelpContent>
             </Container>
-          <Title>상대방 정보</Title>
+            {
+              info?
+              <>
+                <Title>상대방 정보</Title>
+                <Jandi
+                  help_log={info.helPLog}
+                  setPickModalOpen={()=>{}}
+                  item={help.item}
+                  userId={localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}
+                  dewPoint={info.dewPoint}
+                  accumulatePoint={info.accumulatePoint}></Jandi>
+              </>
+              :null
+            }
       </InfomationWrap>
       :null
       }
