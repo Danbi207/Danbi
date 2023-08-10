@@ -321,7 +321,6 @@ const CalenderItem = styled.div`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: #ff4242;
-  display: block;
   margin-top: 0.5rem;
 `
 
