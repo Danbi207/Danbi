@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
+import {setMode,setTargetMemberId} from "../../../../../../store/Slice/ModalSlice.js"
 const UserInfo = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -31,10 +31,10 @@ const UserInfo = ({ data }) => {
       </Body>
       <More onClick={() => setIsOpen(!isOpen)}>
         <MoreImg />
-        {isOpen && <DropDownMenu onClick={()=>{()=>{
+        {isOpen && <DropDownMenu onClick={()=>{
           setTargetMemberId(data.ip.ipId);
           setMode("accuse");
-        }}}>신고</DropDownMenu>}
+        }}>신고</DropDownMenu>}
       </More>
       </Wrap>
     </UserInfoWrap>

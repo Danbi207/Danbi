@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import GuestBookComment from './GuestBookComment';
 import { authPost, authGet } from '../../../../Util/apis/api';
 import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
 
 const GuestBook = ({ guestBookId, userId }) => {
   const [textArea, setTextArea] = useState('');
@@ -26,7 +27,7 @@ const GuestBook = ({ guestBookId, userId }) => {
     setTextArea(e.target.value);
   };
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
@@ -34,7 +35,7 @@ const GuestBook = ({ guestBookId, userId }) => {
     } catch (err) {
       console.log(err);
     }
-  };
+  },[userId]);
 
   useEffect(() => {
     fetchData();
