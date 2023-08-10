@@ -11,7 +11,6 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
       targetId,
     };
     console.log(data);
-    console.log(myProfile);
     const res = await authPost('/api/v1/friends', data);
     console.log(res);
   };
