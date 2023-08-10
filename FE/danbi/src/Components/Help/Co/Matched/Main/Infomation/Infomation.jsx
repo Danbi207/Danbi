@@ -54,7 +54,7 @@ const Infomation = ({help}) => {
                 <Jandi
                   help_log={info.helpLog}
                   setPickModalOpen={()=>{}}
-                  item={help.item}
+                  item={info.item}
                   userId={localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}
                   dewPoint={info.dewPoint}
                   accumulatePoint={info.accumulatePoint}></Jandi>
