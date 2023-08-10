@@ -111,6 +111,10 @@ const Calendar = () => {
     }
   };
 
+  useEffect(()=>{
+    GetMonth();
+  },[ipRequestList])
+
   useEffect((year, month) => {
     //DO : 달이 바뀔때마다 주차 수를 자동으로 계산
     setWeekCnt(getWeek(year, month));
