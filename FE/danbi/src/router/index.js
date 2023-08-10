@@ -10,6 +10,7 @@ import IPHome from "../Components/Help/Ip/Home/IPHome";
 import HelperHome from "../Components/Help/Helper/Home/HelperHome";
 import Test from "../Components/TEST/TEST"
 import IpMap from '../Components/Help/Ip/Request/Components/Map/IpMap'
+import Admin from "../Components/Admin/admin";
 
 const routes = [
   {
@@ -57,8 +58,12 @@ const routes = [
     Component:Friend
   },
   {
+    path:"/admin",
+    Component:Admin
+  },
+  {
     path:"/test",
     Component:Test
-  }
+  },
 ];
 export default routes;

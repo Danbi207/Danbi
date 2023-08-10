@@ -67,6 +67,10 @@ const KaKaoOauth = () => {
         navigate("/help/helper", { replace: true });
       }
 
+      if(data.role === "ROLE_ADMIN"){//역할이 관리자인 경우
+        localStorage.setItem("role","admin");
+        navigate("/admin",{replace:true});
+      }
 
     }).catch((err)=>{
       console.log(err);
