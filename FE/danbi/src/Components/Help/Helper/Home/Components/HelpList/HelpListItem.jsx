@@ -109,8 +109,5 @@ const HelpMapItemWrap = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 1rem;
   padding: 1rem;
-  &>*{
-    white-space: nowrap;
-  }
 `
 export default HelpListItem
