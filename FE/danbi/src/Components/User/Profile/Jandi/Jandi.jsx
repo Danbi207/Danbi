@@ -7,9 +7,17 @@ import {
   setUnchedkedRgb,
   setTier,
   setName,
+  setDewPoint,
 } from '../../../../store/Slice/JandiSlice.js';
 
-const Jandi = ({ help_log, setPickModalOpen, item, userId }) => {
+const Jandi = ({
+  help_log,
+  setPickModalOpen,
+  item,
+  userId,
+  dewPoint,
+  accumulatePoint,
+}) => {
   console.log(help_log);
   const colCnt = 8;
   const rowCnt = 2;
@@ -41,6 +49,7 @@ const Jandi = ({ help_log, setPickModalOpen, item, userId }) => {
     dispatch(setUnchedkedRgb(item.uncheckedRgb));
     dispatch(setName(item.name));
     dispatch(setTier(item.ranking));
+    dispatch(setDewPoint(dewPoint));
   }, [item]);
 
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
@@ -130,8 +139,8 @@ const Jandi = ({ help_log, setPickModalOpen, item, userId }) => {
         prevGross={prevGross}
         nextGross={nextGross}
         setPickModalOpen={setPickModalOpen}
-        dewPoint={item.dewPoint}
         targetId={userId}
+        accumulatePoint={accumulatePoint}
       />
       {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
