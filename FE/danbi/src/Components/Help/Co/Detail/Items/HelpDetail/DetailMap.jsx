@@ -1,55 +1,50 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
+import { Map,CustomOverlayMap   } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 
 const DetailMap = ({ position }) => {
-  console.log(position);
-  const { kakao } = window;
-  const mapRef = useRef();
-  const [map, setMap] = useState(null);
+  const markers = useMemo(()=>{
+    const res = [];
 
-  // 카카오 맵 생성
-  useEffect(() => {
-    const mapOption = {
-      center: new kakao.maps.LatLng(position.latitude, position.longitude),
-      level: 5,
-    };
-    setMap(new kakao.maps.Map(mapRef.current, mapOption));
-  }, [mapRef, kakao, position]);
-
-  // 맵 위에 목적지 및 만나는 곳 마커 찍기
-  useEffect(() => {
-    const positions = [
-      {
-        latitude: position.dest_latitude,
-        longitude: position.dest_longitude,
-      },
-      {
-        latitude: position.meet_latitude,
-        longitude: position.meet_longitude,
-      },
-    ];
-    for (let i = 0; i < positions.length; i++) {
-      const markerPosition = new kakao.maps.LatLng(
-        positions[i].latitude,
-        positions[i].longitude
+    if(position.meetLatitude && position.meetLongitude!==""){
+      res.push(
+        <CustomOverlayMap key={1} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
+          <div>목적지</div>
+          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
+        </CustomOverlayMap>
       );
-      const marker = new kakao.maps.Marker({
-        position: markerPosition,
-      });
-      marker.setMap(map);
     }
-  }, [map, position, kakao]);
+
+
+    if(position.destLatitude && position.destLatitude!==""){
+      res.push(
+        <CustomOverlayMap key={1} position={{lat:position.destLatitude,lng:position.destLongitude}}>
+          <div>만나는 장소</div>
+          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
+        </CustomOverlayMap>
+      );
+    }
+    
+
+    return res;
+  },[position])
 
   return (
-    <>
-      <MapWrap ref={mapRef}></MapWrap>;
-    </>
+    <Map 
+      center={{lat:position.meetLatitude,lng:position.meetLongitude}}
+      style={{width:"100%",height:"100%"}}
+      level={7}
+    >
+      {
+        markers
+      }
+    </Map>
   );
 };
-
-const MapWrap = styled.div`
-  width: 100%;
-  height: 8rem;
-`;
+const Marker = styled.img`
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+`
 
 export default DetailMap;

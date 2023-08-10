@@ -101,6 +101,7 @@ const HelperDetailWrap = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const HR = styled.div`
@@ -110,12 +111,11 @@ const HR = styled.div`
   }
   height: 1px;
   background-color: #d5cece;
-  margin-top: 1rem;
 `;
 
 const ButtonWrap = styled.div`
-  position: absolute;
-  bottom: 3.2rem;
+  width: 100%;
+  padding: 0 1rem;
 `;
 
 export default HelperDetail;
