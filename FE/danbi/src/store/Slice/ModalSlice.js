@@ -7,9 +7,7 @@ export const modalSlice = createSlice({
     accuse: {
       targetMemberId: null,
     },
-    ipdetail: {
-      ipRequestList: [],
-    },
+    ipRequestList: [],
     targetMemberId: 0,
   },
   reducers: {
@@ -17,7 +15,7 @@ export const modalSlice = createSlice({
       state.mode = action.payload;
     },
     setIpRequestList: (state, action) => {
-      state.ipdetail.ipRequestList = action.payload;
+      state.ipRequestList = action.payload;
     },
     setTargetMemberId: (state, action) => {
       state.targetMemberId = action.payload;

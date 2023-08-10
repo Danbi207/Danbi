@@ -27,11 +27,7 @@ const Buttons = ({ prevGross, nextGross, setPickModalOpen, targetId }) => {
   };
   const curDewPoint = useSelector((state) => state.Jandi.dewPoint);
 
-  const [myProfile, setMyProfile] = useState(false);
   const cur_id = useSelector((state) => state.user.userId);
-  if (targetId === cur_id) {
-    setMyProfile(true);
-  }
 
   return (
     <Btns>
@@ -41,7 +37,7 @@ const Buttons = ({ prevGross, nextGross, setPickModalOpen, targetId }) => {
       </DirectionBtns>
       <Wrap>
         <Dew>{curDewPoint}Dew</Dew>
-        {cur_id === targetId ? (
+        {cur_id === Number(targetId) ? (
           <PickBtn
             onClick={() => {
               handlePickModal();

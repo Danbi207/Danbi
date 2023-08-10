@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import IpDetailItem from './IpDetailItem';
 
 const IpDetail = (props) => {
-  const ipRequestList = useSelector(state=>state.modal.Ipdetail.ipRequestList)
+  const ipRequestList = useSelector((state)=>state.modal.ipRequestList)
   const [iplist, setIpList] = useState([]);
 
 useEffect(() => {
