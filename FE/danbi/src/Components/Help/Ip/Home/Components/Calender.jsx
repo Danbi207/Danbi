@@ -161,8 +161,8 @@ const Calendar = () => {
         console.log(getHelpData(year ,month, i));
         }} key={"calender"+i}>
           {i}
-          {/* { getHelpData(year ,month, i).length > 0 && <FontAwesomeIcon icon={faCircle} style={{color: "#ff4242"}}/> } */}
-          <StyledIcon icon={faCircle} />
+          { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
+          {/* <StyledIcon icon={faCircle} /> */}
         </CalenderItem>)
     }
     
