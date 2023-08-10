@@ -36,10 +36,15 @@ const Accuse = () => {
 
     //DO : 신고
     const formData = new FormData();
-    formData.append("files",file);
-    formData.append("targetMemberId",targetMemberId);
-    formData.append("content",content);
-    formData.append("accuseType",accuseType);
+    const json = {
+      targetMemberId,
+      content,
+      accuseType      
+    }
+    json["files"] = file;
+    for (let key in json ) {
+      formData.append(key, json[key]);
+    }
     
     try{
       const res = await authFilePost("/api/v1/accuse",formData);
