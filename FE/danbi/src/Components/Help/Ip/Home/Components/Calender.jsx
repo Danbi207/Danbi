@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react';
 import { useCallback } from 'react';
 import { authPost } from '../../../../../Util/apis/api';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 const Calendar = () => {
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
@@ -153,11 +156,12 @@ const Calendar = () => {
       res.push(<CalenderItem
         className={className}
         onClick={()=>{
+        setSelectedDate(new Date(year, month, i));
         getHelpData(year ,month, i);
         console.log(getHelpData(year ,month, i));
         }} key={"calender"+i}>
           {i}
-          {/* <FontAwesomeIcon icon={faCircle} style={{color: "#ff4242",}} /> */}
+          { getHelpData(year ,month, i).length > 0 && <FontAwesomeIcon icon={faCircle} style={{color: "#ff4242"}} /> }
         </CalenderItem>)
     }
     
@@ -301,7 +305,7 @@ const CalenderItem = styled.div`
       transform: scale(1.01);
       box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
       border: none;
-      background-color: #c4c4c4;
+      background-color: #f3c5b6;
     }
   }
 

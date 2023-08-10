@@ -9,6 +9,7 @@ const Calendar = () => {
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
   const [weekCnt, setWeekCnt] = useState(6);
 
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const dispatch = useDispatch();
 
@@ -87,7 +88,10 @@ const Calendar = () => {
 
       res.push(<CalenderItem
         className={className}
-        onClick={()=>{dispatch(setCurrentDay([year, month+1, i]))}} key={"calender"+i}>{i}</CalenderItem>)
+        onClick={()=>{
+          setSelectedDate(new Date(year, month, i));
+          dispatch(setCurrentDay([year, month+1, i]))}} 
+          key={"calender"+i}>{i}</CalenderItem>)
     }
     
     for (let i = endDate.getDay(); i < 6; i++) { // 마지막 날 이후 날짜 넣기
