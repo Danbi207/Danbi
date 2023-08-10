@@ -29,11 +29,13 @@ public class AccuseController {
 
     @NotificationTrace(type = Type.ACCUSE_SENT)
     @Operation(summary = "회원 신고 API", description = "회원 신고 API")
-    @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "")
     public ApiResponse<AccuseResponseDto> accuse(@MemberInfo MemberInfoDto memberInfoDto,
-                                                 @RequestPart("accuseRequestDto") AccuseRequestDto accuseRequestDto,
-                                                 @RequestPart("file") List<MultipartFile> uploadFiles) {
-        AccuseResponseDto accuse = accuseInfoService.accuse(accuseRequestDto, memberInfoDto.getMemberId(), uploadFiles);
+                                                 @ModelAttribute AccuseRequestDto accuseRequestDto) {
+
+        System.out.println("userID " + accuseRequestDto.getTargetMemberId());
+        AccuseResponseDto accuse = accuseInfoService.accuse(accuseRequestDto, memberInfoDto.getMemberId()
+                , accuseRequestDto.getFiles());
         return ApiResponse.ok(accuse);
     }
 
