@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
 import { authDelete, authGet } from '../../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
 const MyFriend = ({ value, setMyFriends, setWaittingFriends }) => {
   console.log(value);
@@ -17,11 +18,18 @@ const MyFriend = ({ value, setMyFriends, setWaittingFriends }) => {
       console.log(err);
     }
   };
+  const navigate = useNavigate();
   return (
     <MyFriendWrap>
       <InfoWrap>
         <ImgWrap $url={value.profileUrl} />
-        <Name>{value.name}</Name>
+        <Name
+          onClick={() => {
+            navigate(`/user/profile/${value.targetId}`);
+          }}
+        >
+          {value.name}
+        </Name>
       </InfoWrap>
       <Btn>
         <DeleteBtn onClick={handleDelete}>삭제</DeleteBtn>
