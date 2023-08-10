@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { getSpeech } from '../Utils/TTS';
-import { authPost } from '../../../../Util/apis/api';
+import { authPost, authGet } from '../../../../Util/apis/api';
 
-const PresetDetail = ({ content, PresetId, showDetail, setEditActive, sequence }) => {
+const PresetDetail = ({
+  content,
+  PresetId,
+  showDetail,
+  setEditActive,
+  sequence,
+  setPresetList,
+}) => {
   const [value, setValue] = useState(content);
 
   const {
@@ -21,7 +28,7 @@ const PresetDetail = ({ content, PresetId, showDetail, setEditActive, sequence }
     resetTranscript();
     SpeechRecognition.startListening({ continuous: true });
   };
-  
+
   // 녹음 종료
   const StopRecord = () => {
     setRecording(false);
@@ -35,18 +42,20 @@ const PresetDetail = ({ content, PresetId, showDetail, setEditActive, sequence }
   };
 
   const SaveDetail = async () => {
-    try{
+    try {
       const config = {
-        "title": value,
-        "content": value,
-        "sequence": sequence
-      }
+        title: value,
+        content: value,
+        sequence: sequence,
+      };
       const data = await authPost(`/api/v1/preset/update/${PresetId}`, config);
       console.log(data);
+      const res = await authGet(`/api/v1/preset`);
+      setPresetList(res.presetList);
       showDetail(-1);
       alert('저장되었습니다.');
       setEditActive(false);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -63,13 +72,15 @@ const PresetDetail = ({ content, PresetId, showDetail, setEditActive, sequence }
       />
       <Btns>
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
-        <RecordingBtns>
+          <RecordingBtns>
             <RecordBtn onClick={() => (Recording ? StopRecord() : StartRecord())}>
               {Recording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
             </RecordBtn>
-            <TTSBtn onClick={handleBtn}><TTSImg /></TTSBtn>
-        </RecordingBtns>
-          ) : null}
+            <TTSBtn onClick={handleBtn}>
+              <TTSImg />
+            </TTSBtn>
+          </RecordingBtns>
+        ) : null}
         <ConfirmBtns>
           <CancleBtn onClick={CloseDetail}>취소</CancleBtn>
           <SaveBtn onClick={SaveDetail}>수정</SaveBtn>
@@ -123,26 +134,20 @@ const CancleBtn = styled.button`
   margin-right: 2.5px;
 `;
 
-const RecordBtn = styled.button`
-`;
+const RecordBtn = styled.button``;
 
-const TTSBtn = styled.button`
-`;
+const TTSBtn = styled.button``;
 
-const RecordingBtns = styled.div`
-`
+const RecordingBtns = styled.div``;
 
-const ConfirmBtns = styled.div` 
-`
+const ConfirmBtns = styled.div``;
 
-const RecordImg = styled.img.attrs(props => ({
-  src: props.$state === 'stop' ? props.theme.images.stop : props.theme.images.record
-}))`
-`
+const RecordImg = styled.img.attrs((props) => ({
+  src: props.$state === 'stop' ? props.theme.images.stop : props.theme.images.record,
+}))``;
 
-const TTSImg = styled.img.attrs(props => ({
-  src: props.theme.images.play
-}))`
-`
+const TTSImg = styled.img.attrs((props) => ({
+  src: props.theme.images.play,
+}))``;
 
 export default PresetDetail;
