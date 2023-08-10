@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import PresetItem from './PresetItem.jsx';
 
-const Preset = ({preset_list, setPresetList}) => {
+const Preset = ({ preset_list, setPresetList }) => {
   console.log(preset_list);
   const [OpenTitle, setOpenTitle] = useState(-1);
   const showDetail = (title) => {
@@ -33,7 +33,14 @@ const Preset = ({preset_list, setPresetList}) => {
                       key={index}
                       $isDragging={snapshot.isDragging}
                     >
-                      <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
+                      <PresetItem
+                        value={value}
+                        index={index}
+                        OpenTitle={OpenTitle}
+                        key={value.title}
+                        showDetail={showDetail}
+                        setPresetList={setPresetList}
+                      />
                     </Wrap>
                   )}
                 </Draggable>
@@ -45,7 +52,7 @@ const Preset = ({preset_list, setPresetList}) => {
       </PresetWrap>
     </DragDropContext>
   );
-}
+};
 
 const PresetWrap = styled.div`
   width: 19rem;
@@ -53,13 +60,13 @@ const PresetWrap = styled.div`
 `;
 
 const Wrap = styled.div`
-width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: end;
   height: auto;
   margin-bottom: 0.5rem;
-  transform: ${props => props.$isDragging ? 'scale(1.1)' : 'scale(1)'};
+  transform: ${(props) => (props.$isDragging ? 'scale(1.1)' : 'scale(1)')};
 `;
 
 export default Preset;
