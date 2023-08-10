@@ -9,7 +9,7 @@ import {
   setName,
 } from '../../../../store/Slice/JandiSlice.js';
 
-const Jandi = ({ help_log, setPickModalOpen, item, myProfile }) => {
+const Jandi = ({ help_log, setPickModalOpen, item }) => {
   console.log(help_log);
   const colCnt = 8;
   const rowCnt = 2;
@@ -131,7 +131,6 @@ const Jandi = ({ help_log, setPickModalOpen, item, myProfile }) => {
         nextGross={nextGross}
         setPickModalOpen={setPickModalOpen}
         dewPoint={item.dewPoint}
-        myProfile={myProfile}
       />
       {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>

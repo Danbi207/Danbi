@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
-import { useDispatch } from 'react-redux';
-import {setMode,setTargetMemberId} from "../../../store/Slice/ModalSlice.js"
-const UserInfo = ({ url, name, targetId, myProfile, friendFlag }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode, setTargetMemberId } from '../../../store/Slice/ModalSlice.js';
+const UserInfo = ({ url, name, targetId, friendFlag }) => {
   const dispatch = useDispatch();
   const handlePlus = async () => {
     const data = {
@@ -15,6 +15,13 @@ const UserInfo = ({ url, name, targetId, myProfile, friendFlag }) => {
     const res = await authPost('/api/v1/friends', data);
     console.log(res);
   };
+
+  const [myProfile, setMyProfile] = useState(false);
+  const cur_id = useSelector((state) => state.user.userId);
+  if (targetId === cur_id) {
+    setMyProfile(true);
+  }
+
   return (
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
@@ -24,10 +31,12 @@ const UserInfo = ({ url, name, targetId, myProfile, friendFlag }) => {
         {myProfile ? null : (
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
-            <AccuseButton onClick={()=>{
-              dispatch(setTargetMemberId(targetId));
-              dispatch(setMode("accuse"));
-            }} />
+            <AccuseButton
+              onClick={() => {
+                dispatch(setTargetMemberId(targetId));
+                dispatch(setMode('accuse'));
+              }}
+            />
           </Btns>
         )}
       </UserDetail>
