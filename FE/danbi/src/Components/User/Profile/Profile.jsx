@@ -11,6 +11,7 @@ import PresetModal from './Preset/PresetModal.jsx';
 import PickModal from './Utils/PickModal.jsx';
 import { authGet } from '../../../Util/apis/api.js';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
@@ -45,6 +46,8 @@ const Profile = () => {
     fetchData();
   }, [userId]);
 
+  const cur_id = useSelector((state) => state.user.userId);
+
   return (
     <ProfileWrap>
       <Header />
@@ -55,7 +58,7 @@ const Profile = () => {
           targetId={userId}
           friendFalg={data.friendFlag}
         />
-        {localStorage.getItem('role') === 'ip' ? (
+        {localStorage.getItem('role') === 'ip' && Number(userId) === cur_id ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
         ) : null}
         <JandiWrap>
