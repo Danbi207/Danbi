@@ -1,5 +1,6 @@
 package com.danbi.api.profile.service;
 
+import com.danbi.api.friend.service.FriendInfoService;
 import com.danbi.api.profile.dto.ProfileCommentsResponseDto;
 import com.danbi.api.profile.dto.ProfileHelpResponseDto;
 import com.danbi.api.profile.dto.ProfileItemResponseDto;
@@ -21,8 +22,11 @@ import java.util.List;
 public class ProfileInfoService {
 
     private final ProfileService profileService;
+    private final FriendInfoService friendInfoService;
 
-    public ProfileResponseDto searchProfile(Long memberId) {
+    public ProfileResponseDto searchProfile(Long myMemberId,Long memberId) {
+        boolean isFriend = friendInfoService.checkFriend(myMemberId, memberId);
+
         ProfileQueryDto profileInfo = profileService.getProfileInfo(memberId);
         List<ProfileHelpDto> profileHelpInfo = profileService.getProfileHelpInfo(memberId);
         List<ProfileCommentsDto> profileCommentInfo = profileService.getProfileCommentInfo(memberId);
@@ -46,6 +50,7 @@ public class ProfileInfoService {
         }
 
         return ProfileResponseDto.builder()
+                .friendFlag(isFriend)
                 .profileId(profileInfo.getProfileId())
                 .guestBookId(profileInfo.getGuestBookId())
                 .name(profileInfo.getName())
