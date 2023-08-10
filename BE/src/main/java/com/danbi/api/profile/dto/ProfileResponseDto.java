@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProfileResponseDto {
 
+    private boolean friendFlag;
     private Long profileId;
     private Long guestBookId;
     private String name;
