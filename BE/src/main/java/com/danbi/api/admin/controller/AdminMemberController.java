@@ -45,7 +45,7 @@ public class AdminMemberController {
                                                                 @PageableDefault(size = 10,
                                                                 sort = "createTime",
                                                                 direction = Sort.Direction.DESC) Pageable pageable) {
-        List<AdminMemberResponseDto> response = adminMemberService.findMembersByRole(memberRole, pageable);
+        List<AdminMemberResponseDto> response = adminMemberService.findMembersByRole("ROLE_" + memberRole, pageable);
         return ApiResponse.ok(response);
     }
 }
