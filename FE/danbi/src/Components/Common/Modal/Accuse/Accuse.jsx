@@ -38,7 +38,7 @@ const Accuse = () => {
     try{
       const formData = new FormData();
       formData.append("files", file);
-      formData.append("targetMemberId",targetMemberId);
+      formData.append("targetMemberId",parseInt(targetMemberId));
       formData.append("content",content);
       formData.append("accuseType",accuseType);
       for(const pair of formData.entries()){
