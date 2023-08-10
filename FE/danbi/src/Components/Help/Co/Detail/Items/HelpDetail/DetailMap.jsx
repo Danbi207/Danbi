@@ -5,10 +5,10 @@ import styled from 'styled-components';
 const DetailMap = ({ position }) => {
   const markers = useMemo(()=>{
     const res = [];
-
+    let key = 0;
     if(position.meetLatitude && position.meetLongitude!==""){
       res.push(
-        <CustomOverlayMap key={1} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
+        <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
           <div>목적지</div>
           <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
         </CustomOverlayMap>
@@ -18,7 +18,7 @@ const DetailMap = ({ position }) => {
 
     if(position.destLatitude && position.destLatitude!==""){
       res.push(
-        <CustomOverlayMap key={1} position={{lat:position.destLatitude,lng:position.destLongitude}}>
+        <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
           <div>만나는 장소</div>
           <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
         </CustomOverlayMap>
