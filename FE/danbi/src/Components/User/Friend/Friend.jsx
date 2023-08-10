@@ -21,7 +21,7 @@ const Friend = () => {
       }
     };
     fetchData();
-  }, [waittingResponse, myFriendResponse]);
+  }, []);
 
   return (
     <Wrap>

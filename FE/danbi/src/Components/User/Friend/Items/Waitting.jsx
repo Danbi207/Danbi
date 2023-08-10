@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
-import { authPost, authDelete } from '../../../../Util/apis/api';
+import { authPost, authDelete, authGet } from '../../../../Util/apis/api';
 
-const Waitting = ({ value, setWaittingFriends }) => {
+const Waitting = ({ value, setWaittingFriends, setMyFriends }) => {
   console.log(value);
   const handleAccept = async () => {
     const target_id = {
