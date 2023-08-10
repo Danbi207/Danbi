@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
-import { authDelete } from '../../../../Util/apis/api';
+import { authDelete, authGet } from '../../../../Util/apis/api';
 
-const MyFriend = ({ value }) => {
+const MyFriend = ({ value, setMyFriends, setWaittingFriends }) => {
   console.log(value);
   const handleDelete = async () => {
     try {
       const res = await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
       console.log(res);
+      const waittingResponse = await authGet('/api/v1/friends/responses');
+      const myFriendResponse = await authGet('/api/v1/friends');
+      setWaittingFriends(waittingResponse.result);
+      setMyFriends(myFriendResponse.result);
     } catch (err) {
       console.log(err);
     }
@@ -16,7 +20,7 @@ const MyFriend = ({ value }) => {
   return (
     <MyFriendWrap>
       <InfoWrap>
-        <ImgWrap src={example} />
+        <ImgWrap $url={value.profileUrl} />
         <Name>{value.name}</Name>
       </InfoWrap>
       <Btn>
@@ -41,7 +45,9 @@ const InfoWrap = styled.div`
   align-items: center;
 `;
 
-const ImgWrap = styled.img`
+const ImgWrap = styled.img.attrs((props) => ({
+  src: props.$url,
+}))`
   width: 3rem;
   height: 3rem;
   border-radius: 50%;

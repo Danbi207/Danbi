@@ -105,6 +105,7 @@ const HelpContent = styled.div`
   border-radius: 1rem;
   background-color: #fff;
   border: 1px solid ${props=>props.theme.colors.titleColor};
+  white-space: pre-wrap;
 `
 
 const RowWrap = styled.div`

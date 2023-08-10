@@ -28,6 +28,7 @@ const Profile = () => {
     profileId: 0,
     name: '',
     accumulatePoint: 0,
+    friendFlag: false,
   });
   const [myProfile, setMyProfile] = useState(false);
 
@@ -43,16 +44,8 @@ const Profile = () => {
     }
   }, [userId]);
 
-  const cur_id = useSelector((state) => state.user.id);
   useEffect(() => {
     fetchData();
-    // 현재 프로필과 나의 정보 일치 유무
-    if (userId === cur_id) {
-      setDewPoint(data.dewPoint);
-      setMyProfile(true);
-    } else {
-      setDewPoint(data.accumulatePoint);
-    }
   }, []);
 
   return (
@@ -63,7 +56,7 @@ const Profile = () => {
           url={data.profileUrl}
           name={data.name}
           targetId={userId}
-          myProfile={myProfile}
+          friendFalg={data.friendFlag}
         />
         {localStorage.getItem('role') === 'ip' ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
@@ -74,11 +67,11 @@ const Profile = () => {
             help_log={data.helpLog}
             setPickModalOpen={setPickModalOpen}
             item={data.item}
-            myProfile={myProfile}
+            userId={userId}
           />
         </JandiWrap>
         {PickModalOpen && <PickModal setPickModalOpen={setPickModalOpen} />}
-        <GuestBook guestBookId={data.guestBookId} comments={data.comments} />
+        <GuestBook guestBookId={data.guestBookId} userId={userId} />
         {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
       </Wrap>
       <Footer />

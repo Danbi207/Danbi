@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import example from '../example-profile.jpg';
-import { authPost, authDelete } from '../../../../Util/apis/api';
+import { authPost, authDelete, authGet } from '../../../../Util/apis/api';
 
-const Waitting = ({ value }) => {
+const Waitting = ({ value, setWaittingFriends, setMyFriends }) => {
   console.log(value);
   const handleAccept = async () => {
     const target_id = {
       targetId: value.targetId,
     };
-
     try {
       const res = await authPost('/api/v1/friends/permit', target_id);
       console.log(res);
+      const waittingResponse = await authGet('/api/v1/friends/responses');
+      const myFriendResponse = await authGet('/api/v1/friends');
+      setWaittingFriends(waittingResponse.result);
+      setMyFriends(myFriendResponse.result);
     } catch (err) {
       console.log(err);
     }
@@ -22,6 +25,10 @@ const Waitting = ({ value }) => {
     try {
       const res = await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
       console.log(res);
+      const waittingResponse = await authGet('/api/v1/friends/responses');
+      const myFriendResponse = await authGet('/api/v1/friends');
+      setWaittingFriends(waittingResponse.result);
+      setMyFriends(myFriendResponse.result);
     } catch (err) {
       console.log(err);
     }
@@ -30,7 +37,7 @@ const Waitting = ({ value }) => {
   return (
     <WaittingWrap>
       <InfoWrap>
-        <ImgWrap src={example} />
+        <ImgWrap $url={value.profileUrl} />
         <Name>{value.name}</Name>
       </InfoWrap>
       <Btns>
@@ -49,7 +56,9 @@ const WaittingWrap = styled.div`
   width: 100%;
   height: auto;
 `;
-const ImgWrap = styled.img`
+const ImgWrap = styled.img.attrs((props) => ({
+  src: props.$url,
+}))`
   width: 3rem;
   height: 3rem;
   border-radius: 50%;

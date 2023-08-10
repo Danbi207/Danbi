@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
-
-const UserInfo = ({ url, name, targetId, myProfile }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode, setTargetMemberId } from '../../../store/Slice/ModalSlice.js';
+const UserInfo = ({ url, name, targetId, friendFlag }) => {
+  const dispatch = useDispatch();
   const handlePlus = async () => {
     const data = {
       targetId,
@@ -13,15 +15,23 @@ const UserInfo = ({ url, name, targetId, myProfile }) => {
     const res = await authPost('/api/v1/friends', data);
     console.log(res);
   };
+
+  const cur_id = useSelector((state) => state.user.userId);
   return (
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
         <UserName>{name}</UserName>
-        {myProfile ? null : (
+        {friendFlag ? <FriendBadge /> : null}
+        {cur_id === targetId ? null : (
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
-            <AccuseButton />
+            <AccuseButton
+              onClick={() => {
+                dispatch(setTargetMemberId(targetId));
+                dispatch(setMode('accuse'));
+              }}
+            />
           </Btns>
         )}
       </UserDetail>
@@ -74,5 +84,9 @@ const Btns = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
+const FriendBadge = styled.img.attrs((props) => ({
+  src: props.theme.images.friendBadge,
+}))``;
 
 export default UserInfo;

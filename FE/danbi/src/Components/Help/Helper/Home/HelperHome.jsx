@@ -11,8 +11,8 @@ import {useSelector, useDispatch } from "react-redux";
 
 const HelperHome = () => {
   const [mode,setMode] = useState("untact");
-  const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
+  const [position,setPosition] = useState();
   const gender = useSelector(state=>state.user.gender);
   const dispatch = useDispatch();
   
@@ -43,70 +43,67 @@ const HelperHome = () => {
     }
   },[setHelpList,setMode,gender]);
 
-  const setCurPosition = useCallback(()=>{
+  
+  const setContact = useCallback(async(position) => {
+    try{
+      const data = await authPost(`/api/v1/help/contact`,{
+        longitude:position.coords.longitude+"",
+        latitude:position.coords.latitude+"",
+        gender
+      });
+      if(data){
+        setHelpList(data);
+        setMode("contact");
+      }
+    }catch(err){
+      console.log(err.response);
+    }
+  },[setHelpList,setMode,gender]);
+  
+  
+  const setMap = useCallback(async (position)=>{
+    try{
+      const data = await authPost(`/api/v1/help/contact`,{
+        longitude:position.coords.longitude+"",
+        latitude:position.coords.latitude+"",
+        gender
+      });
+      if(data){
+        setHelpList(data);
+        setMode("map");
+      }
+    }catch(err){
+      console.log(err.response);
+    }
+  },[setMode,gender]);
+
+  const setCurPosition = useCallback((mode)=>{
     //DO : gps 현재 위치 얻기
     if (navigator.geolocation) { // GPS를 지원하면
-      navigator.geolocation.getCurrentPosition(function(e) {
+      navigator.geolocation.getCurrentPosition((e)=>{
         setPosition(e);
-      }, function(error) {
-        console.error(error);
-      }, {
-        enableHighAccuracy: false,
-        maximumAge: 0,
-        timeout: Infinity
+        if(mode==="contact"){
+          setContact(e);
+        }
+
+        if(mode === "map"){
+          setMap(e);
+        }
       });
-    } else {
-      alert('GPS를 허용하지 않아 도움목록을 조회할 수 없습니다. GPS를 허용해주세요!');
-      setUntact();
-      return false;
+    }else{
+      alert("GPS를 차단하셨습니다. 허용해주세요!");
     }
-    return true;
-  },[setUntact]);
-
-  const setContact = useCallback(async() => {
-    if(setCurPosition()){
-      try{
-        const data = await authPost(`/api/v1/help/contact`,{
-          longitude:position.coords.longitude+"",
-          latitude:position.coords.latitude+"",
-          gender
-        });
-        if(data){
-          setHelpList(data);
-          setMode("contact");
-        }
-      }catch(err){
-        console.log(err.response);
-      }
-    }
-  },[setHelpList,setMode,gender,setCurPosition,position]);
-
-
-  const setMap = useCallback(async ()=>{
-    if(setCurPosition()){
-      try{
-        const data = await authPost(`/api/v1/help/contact`,{
-          longitude:position.coords.longitude+"",
-          latitude:position.coords.latitude+"",
-          gender
-        });
-        if(data){
-          setHelpList(data);
-          setMode("map");
-        }
-      }catch(err){
-        console.log(err.response);
-      }
-    }
-  },[setCurPosition,setMode,gender,position]);
+  },[setContact,setMap]);
 
   useEffect(()=>{
+    //로딩시 유저정보를 불러와 redux에 저장
     if(!gender || gender===""){
       getUserInfo();
     }
   },[getUserInfo,gender]);
 
   useEffect(()=>{
+    //DO : 로딩시 비대면목록을 불러옴
     if(gender&&gender!=="")
       setUntact();
   },[gender,setUntact]);
@@ -115,11 +112,11 @@ const HelperHome = () => {
     <HelperHomeWrap>
       <div>
         <Header></Header>
-        <Tap setContact={setContact} setMap={setMap} setUntact={setUntact} mode={mode}></Tap>
+        <Tap setContact={()=>setCurPosition("contact")} setMap={()=>setCurPosition("map")} setUntact={setUntact} mode={mode}></Tap>
       </div>
       <MainWrap>
         {
-          mode === "map" && position ? <HelpMap helpList={helpList} position={position} /> : <HelpList helpList={helpList}/>
+          mode === "map" ? <HelpMap helpList={helpList} position={position} /> : <HelpList helpList={helpList}/>
         }
       </MainWrap>
       <Footer></Footer>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -10,7 +10,7 @@ import {
 } from '../../../../store/Slice/JandiSlice';
 import { authPost } from '../../../../Util/apis/api';
 
-const Buttons = ({ prevGross, nextGross, setPickModalOpen, myProfile }) => {
+const Buttons = ({ prevGross, nextGross, setPickModalOpen, targetId }) => {
   const dispatch = useDispatch();
   const handlePickModal = async () => {
     setPickModalOpen(true);
@@ -27,6 +27,12 @@ const Buttons = ({ prevGross, nextGross, setPickModalOpen, myProfile }) => {
   };
   const curDewPoint = useSelector((state) => state.Jandi.dewPoint);
 
+  const [myProfile, setMyProfile] = useState(false);
+  const cur_id = useSelector((state) => state.user.userId);
+  if (targetId === cur_id) {
+    setMyProfile(true);
+  }
+
   return (
     <Btns>
       <DirectionBtns>
@@ -35,7 +41,7 @@ const Buttons = ({ prevGross, nextGross, setPickModalOpen, myProfile }) => {
       </DirectionBtns>
       <Wrap>
         <Dew>{curDewPoint}Dew</Dew>
-        {myProfile ? (
+        {cur_id === targetId ? (
           <PickBtn
             onClick={() => {
               handlePickModal();

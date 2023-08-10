@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GuestBookComment from './GuestBookComment';
-import { authPost } from '../../../../Util/apis/api';
+import { authPost, authGet } from '../../../../Util/apis/api';
 import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
 
-const GuestBook = ({ guestBookId, comments }) => {
-  console.log(comments);
+const GuestBook = ({ guestBookId, userId }) => {
   const [textArea, setTextArea] = useState('');
   const profileUrl = useSelector((state) => state.user.profileUrl);
   const name = useSelector((state) => state.user.name);
+  const [comments, setComment] = useState([]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const textJson = {
@@ -17,6 +18,9 @@ const GuestBook = ({ guestBookId, comments }) => {
     try {
       const data = await authPost(`/api/v1/profile/guestbook/${guestBookId}`, textJson);
       console.log(data);
+      setTextArea('');
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
+      setComment(res.guestBookDto.commentDtos);
     } catch (err) {
       console.log(err);
     }
@@ -25,6 +29,20 @@ const GuestBook = ({ guestBookId, comments }) => {
   const handleChange = (e) => {
     setTextArea(e.target.value);
   };
+
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
+      setComment(res.guestBookDto.commentDtos);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <GuestBookWrap>
@@ -43,7 +61,14 @@ const GuestBook = ({ guestBookId, comments }) => {
         </ChatSection>
       </ChatWrap>
       {comments.map((comment, index) => (
-        <GuestBookComment key={index} comment={comment} writerName={comment.name} />
+        <GuestBookComment
+          key={index}
+          comment={comment}
+          writerName={comment.name}
+          userId={userId}
+          setComment={setComment}
+          guestBookId={guestBookId}
+        />
       ))}
     </GuestBookWrap>
   );
@@ -82,7 +107,7 @@ const UserName = styled.div`
 `;
 
 const ChatSection = styled.div`
-  width: 14rem;
+  width: 85%;
   display: flex;
   border-bottom: 2px solid ${(props) => props.theme.colors.titleColor};
   align-items: center;

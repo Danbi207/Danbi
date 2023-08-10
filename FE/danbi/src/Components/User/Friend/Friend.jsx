@@ -30,13 +30,23 @@ const Friend = () => {
         <WaitingWrap>
           <WaittingHeader>수락 대기 중</WaittingHeader>
           {waittingFriends.map((value, index) => (
-            <Waitting value={value} key={index} />
+            <Waitting
+              value={value}
+              key={index}
+              setWaittingFriends={setWaittingFriends}
+              setMyFriends={setMyFriends}
+            />
           ))}
         </WaitingWrap>
         <ListWrap>
           <ListHeader>친구 목록</ListHeader>
           {myFriends.map((value, index) => (
-            <MyFriend value={value} key={index} />
+            <MyFriend
+              value={value}
+              key={index}
+              setMyFriends={setMyFriends}
+              setWaittingFriends={setWaittingFriends}
+            />
           ))}
         </ListWrap>
       </FriendWrap>

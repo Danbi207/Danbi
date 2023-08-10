@@ -37,14 +37,17 @@ const HelpDetailInfo = ({ data }) => {
 };
 
 const DetailWrap = styled.div`
+  display: flex;
+  flex-direction:column;
   width: 100%;
   height: 100%;
+  gap:0.5rem;
+  padding: 0 1rem;
 `;
 const BasicInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
 `;
 const BasicHeader = styled.div`
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 `;
 const BasicBody = styled.div`
   border: 1px solid ${(props) => props.theme.colors.titleColor};
@@ -60,7 +63,6 @@ const TimeTag = styled.div``;
 const Destination = styled.div``;
 const Meet = styled.div``;
 const HelpInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
 `;
 const HelpHeader = styled.div`
   margin-bottom: 0.5rem;
@@ -74,10 +76,9 @@ const HelpBody = styled.div`
   padding: 0.5rem 0 0.5rem 0.5rem;
 `;
 const CautionInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
 `;
 const CautionHeader = styled.div`
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 `;
 const CautionBody = styled.div`
   border: 1px solid ${(props) => props.theme.colors.titleColor};
@@ -89,10 +90,16 @@ const CautionBody = styled.div`
 `;
 
 const MapInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  height: 20rem;
+  @media screen and (max-width: 768px) {
+    height: 8rem;
+  }
 `;
 
-const MapHeader = styled.span``;
+const MapHeader = styled.span`
+  margin: 0.5rem 0;
+`;
 
 export default HelpDetailInfo;

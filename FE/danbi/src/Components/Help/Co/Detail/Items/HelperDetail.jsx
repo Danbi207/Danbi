@@ -39,12 +39,12 @@ import { authGet } from '../../../../../Util/apis/api.js';
 // };
 
 const HelperDetail = ({ helpPostId }) => {
-  const [data,setData] = useState({
+  const [data, setData] = useState({
     helpPostId: 1,
     ip: {
       ipId: 1,
       name: '',
-      profileUrl: "",
+      profileUrl: '',
       accumulateDewPoint: 0,
       accusePoint: 0,
     },
@@ -73,16 +73,16 @@ const HelperDetail = ({ helpPostId }) => {
     const fetchData = async () => {
       try {
         const data1 = await authGet(`/api/v1/help/detail/${helpPostId}`);
-        if(data1){
-          console.log(data1)
+        if (data1) {
+          console.log(data1);
           setData(data1);
         }
-      } catch(err) {
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
-    }
+    };
     fetchData();
-  },[helpPostId])
+  }, [helpPostId]);
 
   return (
     <HelperDetailWrap>
@@ -90,7 +90,7 @@ const HelperDetail = ({ helpPostId }) => {
       <HR />
       <HelpDetailInfo data={data} />
       <ButtonWrap>
-        <AcceptButton />
+        <AcceptButton helpPostId={helpPostId} />
       </ButtonWrap>
     </HelperDetailWrap>
   );
@@ -101,6 +101,7 @@ const HelperDetailWrap = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const HR = styled.div`
@@ -110,12 +111,11 @@ const HR = styled.div`
   }
   height: 1px;
   background-color: #d5cece;
-  margin-top: 1rem;
 `;
 
 const ButtonWrap = styled.div`
-  position: absolute;
-  bottom: 3.2rem;
+  width: 100%;
+  padding: 0 1rem;
 `;
 
 export default HelperDetail;

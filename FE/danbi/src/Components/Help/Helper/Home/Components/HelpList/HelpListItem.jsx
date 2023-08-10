@@ -80,6 +80,7 @@ const DetailBtn = styled.button`
   border-radius: 1rem;
 `
 const HelpContent = styled.div`
+  white-space: pre-wrap;
   width: 100%;
   height: 7rem;
   margin: 1rem 0;
@@ -108,8 +109,5 @@ const HelpMapItemWrap = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 1rem;
   padding: 1rem;
-  &>*{
-    white-space: nowrap;
-  }
 `
 export default HelpListItem
