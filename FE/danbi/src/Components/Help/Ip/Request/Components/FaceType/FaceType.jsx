@@ -6,13 +6,16 @@ import Preset from './Preset.jsx';
 import Positioin from './Positioin';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setMeetType } from "../../../../../../store/Slice/ipSlice"
+import { ResetIpState, setMeetType } from "../../../../../../store/Slice/ipSlice"
 import { useState } from 'react';
 import { useCallback } from 'react';
 import { authPost } from '../../../../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
 function FaceType({location}) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const ip = useSelector(state => state.ip)
   const meetType = ip.meetType
   const currentDay = ip.currentDay
@@ -20,7 +23,6 @@ function FaceType({location}) {
   const useTimes = ip.useTimes
   const [starttime, setStartTime] = useState('');
   const [endtime, setEndTime] = useState('');
-
   
   // 시작, 끝나는 시간 정하는 로직
   useEffect(()=>{
@@ -80,12 +82,13 @@ function FaceType({location}) {
     }
     try{
       await authPost('/api/v1/help/create', ipData)
-      navigator('/help/ip')
+      dispatch(ResetIpState())
+      navigate('/help/ip')
     }
     catch (err) {
       console.log(err.error)
     }
-  }, [ip, starttime, endtime])
+  }, [ip, starttime, endtime, navigate])
 
 
   return (
