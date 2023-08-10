@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { authDelete, authGet } from '../../../../Util/apis/api';
+import { authDelete, authGet, authPost } from '../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
@@ -14,6 +14,9 @@ const GuestBookComment = ({
   memberId,
 }) => {
   const userName = useSelector((state) => state.user.name);
+  const [editMode, setEditMode] = useState(false);
+  const [editedContent, setEditedContent] = useState(comment.content);
+
   const handleDelete = async (comment) => {
     try {
       const data = await authDelete(
@@ -26,6 +29,21 @@ const GuestBookComment = ({
       console.log(err);
     }
   };
+  const handleEdit = async () => {
+    try {
+      const data = await authPost(
+        `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`,
+        { content: editedContent }
+      );
+      console.log(data);
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
+      setComment(res.guestBookDto.commentDtos);
+      setEditMode(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const navigate = useNavigate();
   const cur_id = useSelector((state) => state.user.userId);
   return (
@@ -38,7 +56,17 @@ const GuestBookComment = ({
           </GuestName>
           <CreatedTime>{comment.createdTime}</CreatedTime>
         </ContentHeader>
-        <Content>{comment.content}</Content>
+        {editMode ? (
+          <EditSection>
+            <EditTextArea
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+            />
+            <SaveBtn onClick={handleEdit}>저장</SaveBtn>
+          </EditSection>
+        ) : (
+          <Content>{comment.content}</Content>
+        )}
       </ContentWrap>
       {writerName === userName ? (
         <Buttons>
