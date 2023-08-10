@@ -9,7 +9,7 @@ const IpDetail = (props) => {
 
 useEffect(() => {
     if (ipRequestList) {
-      setIpList(ipRequestList.map((item, index) => <IpDetailItem key={index} data={item} />));
+      setIpList(ipRequestList.map((item, index) => <IpDetailItem key={index} data={item}/>));
       console.log(ipRequestList);
     }
     else {

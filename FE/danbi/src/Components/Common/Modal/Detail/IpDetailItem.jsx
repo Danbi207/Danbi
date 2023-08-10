@@ -7,6 +7,7 @@ const IpDetailItem = ({data}) => {
     console.log(data)
   },[data])
 
+
   return (
     <HelpItemWrap>
       <TitleWrap>도움 정보</TitleWrap>
@@ -19,8 +20,8 @@ const IpDetailItem = ({data}) => {
       <DetailItemWrap>
         <Item>{data.content}</Item>
       </DetailItemWrap>
-      <DetailBTN>상세보기</DetailBTN>
-      <DeleteBTN>삭제</DeleteBTN>
+      <DetailBTN onClick={()=>{navigator('/help/ip/request')}}>상세보기</DetailBTN>
+      <DeleteBTN onClick={()=>{}}>삭제</DeleteBTN>
     </HelpItemWrap>
     
   )
