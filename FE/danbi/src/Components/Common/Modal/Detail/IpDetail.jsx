@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import IpDetailItem from './IpDetailItem';
+import { useDispatch } from 'react-redux';
+import {setMode} from '../../../../store/Slice/ModalSlice'
 
 const IpDetail = (props) => {
   const ipRequestList = useSelector((state)=>state.modal.ipRequestList)
   const [iplist, setIpList] = useState([]);
+  const dispatch = useDispatch();
 
 useEffect(() => {
     if (ipRequestList) {
@@ -20,6 +23,7 @@ useEffect(() => {
   return (
     <ModalWrap>
       <DetailWrap>
+        <CloseBtn onClick={()=>dispatch(setMode(""))}>X</CloseBtn>
         {iplist}
       </DetailWrap>
     </ModalWrap>
@@ -48,6 +52,12 @@ const DetailWrap = styled.div`
   width : 100%;
   height : 100%;
   padding : 1rem 0;
+`
+
+const CloseBtn = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
 `
 
 

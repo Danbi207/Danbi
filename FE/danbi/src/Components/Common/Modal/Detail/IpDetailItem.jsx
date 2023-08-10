@@ -1,12 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components';
+import { authDelete } from '../../../../Util/apis/api';
 
 const IpDetailItem = ({data}) => {
 
-  useEffect(()=>{
-    console.log(data)
-  },[data])
-
+  const handleDelete =  useCallback(async ()=>{
+    try{
+      await authDelete(`/api/v1/help/${data.helpPostId}`, {});
+    }
+    catch(err) {
+      console.log(err)
+    }
+  },[data]) 
 
   return (
     <HelpItemWrap>
@@ -21,7 +26,7 @@ const IpDetailItem = ({data}) => {
         <Item>{data.content}</Item>
       </DetailItemWrap>
       <DetailBTN onClick={()=>{navigator('/help/ip/request')}}>상세보기</DetailBTN>
-      <DeleteBTN onClick={()=>{}}>삭제</DeleteBTN>
+      <DeleteBTN onClick={()=>{handleDelete()}}>삭제</DeleteBTN>
     </HelpItemWrap>
     
   )
