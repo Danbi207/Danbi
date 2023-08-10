@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
 
-const UserInfo = ({ url, name, targetId, myProfile }) => {
+const UserInfo = ({ url, name, targetId, myProfile, friendFlag }) => {
   const handlePlus = async () => {
     const data = {
       targetId,
@@ -18,6 +18,7 @@ const UserInfo = ({ url, name, targetId, myProfile }) => {
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
         <UserName>{name}</UserName>
+        {friendFlag ? <FriendBadge /> : null}
         {myProfile ? null : (
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
@@ -74,5 +75,9 @@ const Btns = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
+const FriendBadge = styled.img.attrs((props) => ({
+  src: props.theme.images.friendBadge,
+}))``;
 
 export default UserInfo;

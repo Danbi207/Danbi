@@ -29,7 +29,7 @@ const GuestBook = ({ guestBookId, userId }) => {
   const fetchData = async () => {
     try {
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
-      setComment(res.guestBook.comments);
+      setComment(res.guestBookDto.commentDtos);
       console.log(res);
     } catch (err) {
       console.log(err);

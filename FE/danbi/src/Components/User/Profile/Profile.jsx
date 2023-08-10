@@ -28,6 +28,7 @@ const Profile = () => {
     profileId: 0,
     name: '',
     accumulatePoint: 0,
+    friendFlag: false,
   });
   const [myProfile, setMyProfile] = useState(false);
 
@@ -64,6 +65,7 @@ const Profile = () => {
           name={data.name}
           targetId={userId}
           myProfile={myProfile}
+          friendFalg={data.friendFlag}
         />
         {localStorage.getItem('role') === 'ip' ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
