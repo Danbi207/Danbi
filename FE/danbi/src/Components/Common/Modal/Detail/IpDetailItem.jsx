@@ -3,11 +3,17 @@ import styled from 'styled-components';
 import { authDelete } from '../../../../Util/apis/api';
 import { useDispatch } from 'react-redux';
 import { deleteIpRequest } from '../../../../store/Slice/ModalSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const IpDetailItem = ({data}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const goToDetail = () => {
+    navigate('/help/ip/request', {state : { helpPostId : data.helpPostId }})
+  }
 
   const stateMessages = (state) => {
     const message = {
@@ -32,17 +38,17 @@ const IpDetailItem = ({data}) => {
     <HelpItemWrap>
       <TitleWrap>도움 정보</TitleWrap>
       <ItemWrap>
-        <Item>매칭 여부: {stateMessages(data.state)}</Item>
-        <Item>시작 시간: {data.startTime}</Item>
-        <Item>끝나는 시간: {data.endTime}</Item>    
+        <Item>매칭 여부 : {stateMessages(data.state)}</Item>
+        <Item>시작 시간 : {data.startTime}</Item>
+        <Item>끝나는 시간 : {data.endTime}</Item>    
       </ItemWrap>
       <TitleWrap>상세 내용</TitleWrap>
       <DetailItemWrap>
         <Item>{data.content}</Item>
       </DetailItemWrap>
       <BTNWrap>
-        <DetailBTN onClick={()=>{navigator('/help/ip/request')}}>상세보기</DetailBTN>
-        <DeleteBTN DeleteBTN onClick={()=>{handleDelete()}}>삭제</DeleteBTN>
+        <DetailBTN onClick={goToDetail}>상세보기</DetailBTN>
+        <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN>
       </BTNWrap>
     </HelpItemWrap>
   )
@@ -85,17 +91,18 @@ const BTNWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
+  margin: 0.5rem 0;
 `
 
 const DetailBTN = styled.button`
-  width: 40%;
+  width: 45%;
   height: 2rem;
   background-color: ${props=>props.theme.colors.buttonbgColor};
   border-radius: 10px;
 `
 
 const DeleteBTN = styled.button`
-  width: 40%;
+  width: 45%;
   height: 2rem;
   background-color: #E85151;
   color: #fff;

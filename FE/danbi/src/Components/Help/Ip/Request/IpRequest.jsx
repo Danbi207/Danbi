@@ -8,18 +8,25 @@ import Footer from '../../../Common/Footer/Footer';
 import FaceType from './Components/FaceType/FaceType';
 import TimeTpye from './Components/Timetype/TimeTpye';
 import Tab from './Components/Tab/Tab';
+import { useEffect } from 'react';
 
 const IpRequest = () => {
-  const ip = useSelector((state)=>state.ip)
   const location = useLocation();
+  const helpPostId = location.state?.helpPostId;
+
+  const ip = useSelector((state)=>state.ip)
   console.log(location)
+
+  useEffect(()=>{
+    
+  },[helpPostId])
 
   return (
     <RequestWrap>
       <Header></Header>
       <Tab></Tab>
       <Wrap>
-        { ip.tabmode === 'meet' ? <FaceType location={location}/> : <TimeTpye/>}        
+        { ip.tabmode === 'meet' ? <FaceType helpPostId={helpPostId}/> : <TimeTpye helpPostId={helpPostId}/>}        
       </Wrap> 
       <Footer></Footer>
     </RequestWrap>

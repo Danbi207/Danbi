@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ResetIpState, setMeetType } from "../../../../../../store/Slice/ipSlice"
 import { useState } from 'react';
 import { useCallback } from 'react';
-import { authPost } from '../../../../../../Util/apis/api';
+import { authGet, authPost } from '../../../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
-function FaceType({location}) {
+function FaceType({helpPostId}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,9 +21,26 @@ function FaceType({location}) {
   const currentDay = ip.currentDay
   const currentTime = ip.currentTime
   const useTimes = ip.useTimes
+
+  const [helpDetailData, setHelpDetailData] = useState(null);
   const [starttime, setStartTime] = useState('');
   const [endtime, setEndTime] = useState('');
   
+  useEffect(()=>{
+    if (helpPostId) {
+      const fetchHelpDetail = async () => {
+          try {
+            const response = await authGet(`/api/v1/help/detail/${helpPostId}`);
+              setHelpDetailData(response.data);
+          } catch (error) {
+            console.error("helpDetail 데이터 못 가져옴", error);
+          }};
+          fetchHelpDetail();
+          console.log(helpDetailData)
+      }
+    }, [helpPostId, helpDetailData]);
+
+
   // 시작, 끝나는 시간 정하는 로직
   useEffect(()=>{
     // YYYY-MM-DD HH:mm 포맷으로 변환
@@ -100,7 +117,8 @@ function FaceType({location}) {
       { meetType === 'face' ? <Positioin/> : null}  
       <HelpDetail/>
       <Preset/>
-      {location.state !== null ? <button>수정</button> : <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>}
+      {helpPostId !== null ? <><ChangeBTN>수정</ChangeBTN><DeleteBTN>삭제</DeleteBTN></> : 
+      <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>}
     </Wrap>
   );
 }
@@ -146,6 +164,39 @@ const SelectBTN = styled.button`
       color: ${props=> props.theme.colors.buttontextColor};
       transform: scale(1.1);
       transition: 0.5s;
+  }
+`
+
+const ChangeBTN = styled.div`
+  position: absolute;
+  left : calc(( 100% - 30rem )/2);
+  bottom: 15rem;
+  width: 30rem;
+  height: 3rem;
+  border-radius: 2rem;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=>props.theme.colors.buttontextColor};
+  font-size : 2rem;
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    height: 2.5rem;
+    left : calc(( 100% - 20rem )/2);
+  }
+`
+const DeleteBTN = styled.div`
+  position: absolute;
+  left : calc(( 100% - 30rem )/2);
+  bottom: 5rem;
+  width: 30rem;
+  height: 3rem;
+  border-radius: 2rem;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  color: ${props=>props.theme.colors.buttontextColor};
+  font-size : 2rem;
+  @media screen and (max-width: 500px) {
+    width: 20rem;
+    height: 2.5rem;
+    left : calc(( 100% - 20rem )/2);
   }
 `
 
