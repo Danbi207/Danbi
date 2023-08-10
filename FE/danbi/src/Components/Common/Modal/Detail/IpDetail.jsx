@@ -1,6 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import IpDetailItem from './IpDetailItem';
@@ -9,10 +7,13 @@ const IpDetail = (props) => {
   const ipRequestList = useSelector(state=>state.modal.Ipdetail.ipRequestList)
   const [iplist, setIpList] = useState([]);
 
-  useEffect(() => {
+useEffect(() => {
     if (ipRequestList) {
       setIpList(ipRequestList.map((item, index) => <IpDetailItem key={index} data={item} />));
       console.log(ipRequestList);
+    }
+    else {
+      console.log('iprequest 없음')
     }
   }, [ipRequestList]);
 

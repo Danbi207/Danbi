@@ -10,7 +10,7 @@ import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice
 
 
 const Calendar = () => {
-  const dispathch = useDispatch();
+  const dispatch = useDispatch();
 
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
@@ -162,8 +162,8 @@ const Calendar = () => {
         onClick={()=>{
         setSelectedDate(new Date(year, month, i));
         getHelpData(year ,month, i);
-        dispathch(setIpRequestList(getHelpData(year ,month, i)));
-        dispathch(setMode('ipdetail'));
+        dispatch(setIpRequestList(getHelpData(year ,month, i)));
+        dispatch(setMode('ipdetail'));
         }} key={"calender"+i}>
           {i}
           { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
