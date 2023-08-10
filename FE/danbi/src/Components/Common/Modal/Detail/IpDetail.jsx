@@ -52,6 +52,12 @@ const DetailWrap = styled.div`
   width : 100%;
   height : 100%;
   padding : 1rem 0;
+  overflow-y: auto; 
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar { 
+    display: none;
+	  }
 `
 
 const CloseBtn = styled.button`

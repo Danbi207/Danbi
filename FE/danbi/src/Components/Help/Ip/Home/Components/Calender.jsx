@@ -111,6 +111,7 @@ const Calendar = () => {
     }
   };
 
+  // 모달창에서 삭제를 실행할 때 달력에 재랜더링을 위해서
   useEffect(()=>{
     GetMonth();
   },[ipRequestList])
@@ -216,6 +217,7 @@ const Calendar = () => {
 const CalenderWrap = styled.div `
   width: 100%;
   height: 100%;
+  padding : 1rem;
 `
 
 const HeaderWrap = styled.div `

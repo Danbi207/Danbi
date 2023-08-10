@@ -11,7 +11,7 @@ const IpDetailItem = ({data}) => {
 
   const stateMessages = (state) => {
     const message = {
-      "ACTIVATE" : "매치 전",
+      "ACTIVATE" : "매칭 전",
       "MATCHED" : "도움매칭 완료",
       "COMPLETED" : "도움 완료"
     };
@@ -40,21 +40,28 @@ const IpDetailItem = ({data}) => {
       <DetailItemWrap>
         <Item>{data.content}</Item>
       </DetailItemWrap>
-      <DetailBTN onClick={()=>{navigator('/help/ip/request')}}>상세보기</DetailBTN>
-      <DeleteBTN onClick={()=>{handleDelete()}}>삭제</DeleteBTN>
+      <BTNWrap>
+        <DetailBTN onClick={()=>{navigator('/help/ip/request')}}>상세보기</DetailBTN>
+        <DeleteBTN DeleteBTN onClick={()=>{handleDelete()}}>삭제</DeleteBTN>
+      </BTNWrap>
     </HelpItemWrap>
   )
 }
 
 const HelpItemWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   border: 1px solid #000;
   border-radius: 10px;
+  margin-bottom: 0.5rem;
 ` 
 
 const TitleWrap = styled.div`
   font-size : 1rem;
-  margin : 0.5rem
+  margin : 0.5rem;
+  align-self : flex-start;
 ` 
 
 const ItemWrap = styled.div`
@@ -74,6 +81,12 @@ const DetailItemWrap = styled.div`
   width: 90%;
 `
 
+const BTNWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`
+
 const DetailBTN = styled.button`
   width: 40%;
   height: 2rem;
@@ -88,5 +101,7 @@ const DeleteBTN = styled.button`
   color: #fff;
   border-radius: 10px
 `
+
+
 
 export default IpDetailItem
