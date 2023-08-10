@@ -36,18 +36,11 @@ const Accuse = () => {
 
     //DO : 신고
     const formData = new FormData();
-    formData.append("file",file);
-    formData.append("accuseRequestDto",new Blob([JSON.stringify({
-      targetMemberId,
-      content,
-      accuseType
-    })],{type:"application/json"}));
+    formData.append("files",file);
+    formData.append("targetMemberId",targetMemberId);
+    formData.append("content",content);
+    formData.append("accuseType",accuseType);
     
-    console.log({
-      targetMemberId,
-      content,
-      accuseType
-    });
     try{
       const res = await authFilePost("/api/v1/accuse",formData);
       console.log(res);
