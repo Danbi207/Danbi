@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Jandi from "../../../../../User/Profile/Jandi/Jandi";
 import { authGet } from '../../../../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 const Infomation = ({help}) => {
   const [info,setInfo] = useState();
+  const navigate = useNavigate();
   const getInfo = useCallback(async()=>{
     try{
       const data = await authGet(`/api/v1/profile/${localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}`);
