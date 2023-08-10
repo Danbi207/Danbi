@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import example from '../example-profile.jpg';
 import { authDelete, authGet } from '../../../../Util/apis/api';
 
-const MyFriend = ({ value, setMyFriends }) => {
+const MyFriend = ({ value, setMyFriends, setWaittingFriends }) => {
   console.log(value);
   const handleDelete = async () => {
     try {
