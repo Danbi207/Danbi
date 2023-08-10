@@ -57,7 +57,7 @@ const GuestBook = ({ guestBookId, userId }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [userId]);
 
   return (
     <GuestBookWrap>
