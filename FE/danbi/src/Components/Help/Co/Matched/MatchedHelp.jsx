@@ -13,7 +13,7 @@ import axios from 'axios';
 const MatchedHelp = () => {
   const [mode,setMode] = useState("Infomation");
   const [help, setHelp] = useState();
-  const { helpPostId } = useParams();
+  const { helpId } = useParams();
   const [curposition,setCurPosition] = useState(null);
   const [watchID,setWatchID] = useState(null);
   const [myProfile,setMyProfile] = useState(null);
@@ -36,7 +36,7 @@ const MatchedHelp = () => {
 
   const getHelp = useCallback(async () => {
     try{
-      const data = await authGet(`/api/v1/help/matched/${helpPostId}`);
+      const data = await authGet(`/api/v1/help/matched/${helpId}`);
       setHelp(data);
     }catch(err){
       console.log(err.response);
@@ -64,7 +64,7 @@ const MatchedHelp = () => {
 
   const checkRoomId = useCallback(() => {
     axios({
-      url: `/room/check/${helpPostId}`,
+      url: `/room/check/${helpId}`,
       method:"get"
     }).then(({data})=>{
       if(data === 2){
@@ -74,7 +74,7 @@ const MatchedHelp = () => {
         setMode("Chat");
       }
     });
-  },[helpPostId]);
+  },[helpId]);
 
   return (
     <MatchedHelpWrap>
@@ -83,7 +83,7 @@ const MatchedHelp = () => {
       <MainWrap>
         {
           mode === "Infomation" ? <Infomation help={help}/>:
-          mode === "Chat" ? <Chat mode={mode} roomId={helpPostId} myProfile = {myProfile}/> :
+          mode === "Chat" ? <Chat mode={mode} roomId={helpId} myProfile = {myProfile}/> :
           mode === "RealtimeMap" ? <RealtimeMap position={help.position}  curposition = {curposition}/>
           : null
         }

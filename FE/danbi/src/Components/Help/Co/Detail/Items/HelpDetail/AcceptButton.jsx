@@ -1,11 +1,16 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { authPost } from '../../../../../../Util/apis/api';
+import { useNavigate } from 'react-router';
 
 const AcceptButton = ({ helpPostId }) => {
+  const navigate = useNavigate();
   const fetchData = useCallback(async () => {
     try {
       const data = authPost(`/api/v1/help/${helpPostId}`, {});
+      if(data){
+        navigate(`/help/helper/matched/${data.helpId}`);
+      }
     } catch (err) {
       console.log(err);
     }
