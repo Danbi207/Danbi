@@ -1,11 +1,10 @@
-import React from 'react'
+import React,{ useRef,useState }  from 'react'
 import styled from 'styled-components';
 import {setMode} from '../../../../store/Slice/ModalSlice';
 import { useDispatch } from 'react-redux';
-import { useRef } from 'react';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {authFilePost} from "../../../../Util/apis/api";
+import {setMode} from "../../../../Util/apis/api"
 const Accuse = () => {
   const dispatch = useDispatch();
   const targetMemberId = useSelector(state=>state.modal.targetMemberId);
@@ -38,18 +37,20 @@ const Accuse = () => {
     try{
       const formData = new FormData();
       formData.append("files", file);
-      const json = JSON.parse(`{
-        "targetMemberId" : ${targetMemberId},
-        "content" : "${content}",
-        "accuseType" : "${accuseType}"
-      }`);
+      const json = {
+        targetMemberId,
+        content,
+        accuseType
+      };
       json["files"] = file;
       for (let key in json ) {
         formData.append(key, json[key]);
       }
       const url = "/api/v1/accuse";
       const res = await authFilePost(url,formData);
-      console.log(res);
+      if(res){
+        dispatch(setMode(null));
+      }
     }catch(err){
       console.log(err.response);
     }
