@@ -155,7 +155,10 @@ const Calendar = () => {
         onClick={()=>{
         getHelpData(year ,month, i);
         console.log(getHelpData(year ,month, i));
-        }} key={"calender"+i}>{i}</CalenderItem>)
+        }} key={"calender"+i}>
+          {i}
+          {/* <FontAwesomeIcon icon={faCircle} style={{color: "#ff4242",}} /> */}
+        </CalenderItem>)
     }
     
     for (let i = endDate.getDay(); i < 6; i++) { // 마지막 날 이후 날짜 넣기
