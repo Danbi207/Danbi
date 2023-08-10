@@ -118,4 +118,8 @@ public class MemberService {
     public Page<Member> findAll(Pageable pageable) {
         return memberRepository.findAll(pageable);
     }
+
+    public Page<Member> findAllByRole(Role role, Pageable pageable) {
+        return memberRepository.findAllByRole(role, pageable);
+    }
 }
