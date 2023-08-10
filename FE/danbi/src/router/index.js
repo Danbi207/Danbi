@@ -10,7 +10,7 @@ import IPHome from "../Components/Help/Ip/Home/IPHome";
 import HelperHome from "../Components/Help/Helper/Home/HelperHome";
 import Test from "../Components/TEST/TEST"
 import IpMap from '../Components/Help/Ip/Request/Components/Map/IpMap'
-import Admin from "../Components/Admin/admin";
+import Admin from "../Components/Admin/Admin";
 
 const routes = [
   {
