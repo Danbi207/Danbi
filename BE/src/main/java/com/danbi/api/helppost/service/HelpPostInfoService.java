@@ -26,6 +26,9 @@ import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.helppost.service.PositionService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
+import com.danbi.domain.preset.entity.Preset;
+import com.danbi.domain.preset.service.PresetService;
+import com.danbi.domain.profile.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +48,7 @@ public class HelpPostInfoService {
     private final MemberService memberService;
     private final FriendInfoService friendInfoService;
     private final PositionService positionService;
+    private final PresetService presetService;
 
     // 도움 요청 게시글, 도움 생성
     public HelpPostResponseDto getHelpPostInfo(Long memberId, HelpPostRequestDto helpPostRequestDto) {
@@ -53,6 +57,15 @@ public class HelpPostInfoService {
 
         Positions positions = HelpPostRequestDto.fromPositions(helpPostRequestDto);
         Positions savedPositions = positionService.create(positions);
+
+        if (helpPostRequestDto.getCaution().equals("긴급요청입니다!주의해주세요.")) {
+            Profile profile = member.getProfile();
+            List<Preset> presets = presetService.findPresetsByProfile(profile);
+
+            if (!presets.isEmpty()) {
+                helpPostRequestDto.setCaution(presets.get(0).getContent());
+            }
+        }
 
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member, savedPositions);
         HelpPost newHelpPost = helpPostService.create(helpPost, memberId);
