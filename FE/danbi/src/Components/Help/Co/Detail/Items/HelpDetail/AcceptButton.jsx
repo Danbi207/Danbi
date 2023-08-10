@@ -9,7 +9,7 @@ const AcceptButton = ({ helpPostId }) => {
     try {
       const data = authPost(`/api/v1/help/${helpPostId}`, {});
       if(data){
-        navigate(`/help/helper/matched/${data.helpId}`);
+        navigate(`/help/helper/matched/${helpPostId}`);
       }
     } catch (err) {
       console.log(err);
