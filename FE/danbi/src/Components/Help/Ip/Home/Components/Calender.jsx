@@ -5,9 +5,13 @@ import { useCallback } from 'react';
 import { authPost } from '../../../../../Util/apis/api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
 
 
 const Calendar = () => {
+  const dispathch = useDispatch();
+
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
   const [help,setHelpData] = useState({});  // help 정보 저장
@@ -158,7 +162,8 @@ const Calendar = () => {
         onClick={()=>{
         setSelectedDate(new Date(year, month, i));
         getHelpData(year ,month, i);
-        console.log(getHelpData(year ,month, i));
+        dispathch(setIpRequestList(getHelpData(year ,month, i)));
+        dispathch(setMode('ipdetail'));
         }} key={"calender"+i}>
           {i}
           { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
@@ -321,7 +326,7 @@ const CalenderItem = styled.div`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: #ff4242;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
 `
 
 

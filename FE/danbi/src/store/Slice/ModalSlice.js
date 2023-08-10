@@ -6,15 +6,21 @@ export const modalSlice = createSlice({
     mode : null,
     accuse:{
       targetMemberId:null,
-    }
+    },
+    ipdetail : {
+      ipRequestList : [],
+    },
   },
   reducers: {
     setMode : (state,action)=>{
       state.mode = action.payload;
     },
+    setIpRequestList : (state, action) => {
+      state.mode = action.payload;
+    }
   },
 });
 
-export const { setMode } = modalSlice.actions;
+export const { setMode, setIpRequestList } = modalSlice.actions;
 
 export default modalSlice.reducer;
