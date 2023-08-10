@@ -57,7 +57,12 @@ const GuestBook = ({ guestBookId, userId }) => {
         </ChatSection>
       </ChatWrap>
       {comments.map((comment, index) => (
-        <GuestBookComment key={index} comment={comment} writerName={comment.name} />
+        <GuestBookComment
+          key={index}
+          comment={comment}
+          writerName={comment.name}
+          guestBookId={guestBookId}
+        />
       ))}
     </GuestBookWrap>
   );

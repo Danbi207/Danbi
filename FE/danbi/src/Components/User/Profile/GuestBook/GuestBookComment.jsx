@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { authDelete } from '../../../../Util/apis/api';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
-const GuestBookComment = ({ comment, writerName }) => {
+const GuestBookComment = ({ comment, writerName, guestBookId }) => {
   const userName = useSelector((state) => state.user.name);
   const handleDelete = async () => {
     try {
@@ -30,7 +30,7 @@ const GuestBookComment = ({ comment, writerName }) => {
       {writerName === userName ? (
         <Buttons>
           <EditBtn>수정</EditBtn>
-          <DeleteBtn>삭제</DeleteBtn>
+          <DeleteBtn onClick={handleDelete}>삭제</DeleteBtn>
         </Buttons>
       ) : null}
     </CommentWrap>
