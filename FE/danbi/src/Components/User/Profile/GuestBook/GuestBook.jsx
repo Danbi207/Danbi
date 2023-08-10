@@ -65,6 +65,7 @@ const GuestBook = ({ guestBookId, userId }) => {
           writerName={comment.name}
           userId={userId}
           setComment={setComment}
+          guestBookId={guestBookId}
         />
       ))}
     </GuestBookWrap>

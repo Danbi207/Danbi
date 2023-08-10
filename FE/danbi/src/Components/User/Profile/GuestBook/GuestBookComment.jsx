@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { authDelete, authGet } from '../../../../Util/apis/api';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
-const GuestBookComment = ({ comment, writerName, userId, setComment }) => {
+const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId }) => {
   const userName = useSelector((state) => state.user.name);
   const handleDelete = async () => {
     try {
