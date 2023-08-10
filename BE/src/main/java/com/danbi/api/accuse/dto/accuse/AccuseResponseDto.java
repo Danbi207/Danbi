@@ -6,12 +6,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "회원 신고")
 public class AccuseResponseDto {
 
