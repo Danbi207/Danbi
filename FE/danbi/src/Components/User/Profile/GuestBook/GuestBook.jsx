@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import GuestBookComment from './GuestBookComment';
 import { authPost, authGet } from '../../../../Util/apis/api';
@@ -30,6 +30,22 @@ const GuestBook = ({ guestBookId, userId }) => {
     setTextArea(e.target.value);
   };
 
+  const guestsbookcomments = useMemo(() => {
+    const res = [];
+    res.push(
+      comments.map((comment, index) => (
+        <GuestBookComment
+          key={index}
+          comment={comment}
+          writerName={comment.name}
+          userId={userId}
+          setComment={setComment}
+          guestBookId={guestBookId}
+        />
+      ))
+    );
+  }, [comments]);
+
   const fetchData = useCallback(async () => {
     try {
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
@@ -60,16 +76,7 @@ const GuestBook = ({ guestBookId, userId }) => {
           </ChatForm>
         </ChatSection>
       </ChatWrap>
-      {comments.map((comment, index) => (
-        <GuestBookComment
-          key={index}
-          comment={comment}
-          writerName={comment.name}
-          userId={userId}
-          setComment={setComment}
-          guestBookId={guestBookId}
-        />
-      ))}
+      {guestsbookcomments}
     </GuestBookWrap>
   );
 };
