@@ -45,39 +45,35 @@ const HelperHome = () => {
 
   
   const setContact = useCallback(async(position) => {
-    if(setCurPosition()){
-      try{
-        const data = await authPost(`/api/v1/help/contact`,{
-          longitude:position.coords.longitude+"",
-          latitude:position.coords.latitude+"",
-          gender
-        });
-        if(data){
-          setHelpList(data);
-          setMode("contact");
-        }
-      }catch(err){
-        console.log(err.response);
+    try{
+      const data = await authPost(`/api/v1/help/contact`,{
+        longitude:position.coords.longitude+"",
+        latitude:position.coords.latitude+"",
+        gender
+      });
+      if(data){
+        setHelpList(data);
+        setMode("contact");
       }
+    }catch(err){
+      console.log(err.response);
     }
-  },[setHelpList,setMode,gender,setCurPosition]);
+  },[setHelpList,setMode,gender]);
   
   
   const setMap = useCallback(async (position)=>{
-    if(setCurPosition()){
-      try{
-        const data = await authPost(`/api/v1/help/contact`,{
-          longitude:position.coords.longitude+"",
-          latitude:position.coords.latitude+"",
-          gender
-        });
-        if(data){
-          setHelpList(data);
-          setMode("map");
-        }
-      }catch(err){
-        console.log(err.response);
+    try{
+      const data = await authPost(`/api/v1/help/contact`,{
+        longitude:position.coords.longitude+"",
+        latitude:position.coords.latitude+"",
+        gender
+      });
+      if(data){
+        setHelpList(data);
+        setMode("map");
       }
+    }catch(err){
+      console.log(err.response);
     }
   },[setCurPosition,setMode,gender]);
 
