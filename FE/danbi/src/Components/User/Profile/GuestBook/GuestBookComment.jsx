@@ -5,7 +5,14 @@ import { authDelete, authGet } from '../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
-const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId }) => {
+const GuestBookComment = ({
+  comment,
+  writerName,
+  userId,
+  setComment,
+  guestBookId,
+  memberId,
+}) => {
   const userName = useSelector((state) => state.user.name);
   const handleDelete = async (comment) => {
     try {
@@ -26,7 +33,9 @@ const GuestBookComment = ({ comment, writerName, userId, setComment, guestBookId
       <GuestImg $url={comment.profileUrl} alt="프로필 사진" />
       <ContentWrap>
         <ContentHeader>
-          <GuestName onClick={() => navigate('/')}>{comment.name}</GuestName>
+          <GuestName onClick={() => navigate(`/user/profile/${memberId}`)}>
+            {comment.name}
+          </GuestName>
           <CreatedTime>{comment.createdTime}</CreatedTime>
         </ContentHeader>
         <Content>{comment.content}</Content>
