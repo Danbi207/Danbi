@@ -30,8 +30,11 @@ public class CommentDto {
     @Builder
     public static class Response {
 
+        @Schema(description = "작성한 멤버 id")
+        private Long memberId;
+
         @Schema(description = "작성된 댓글 id")
-        private Long id;
+        private Long commentId;
 
         @Schema(description = "작성된 댓글 내용")
         private String content;

@@ -37,7 +37,8 @@ public class GuestBookCommentService {
 
         Comment savedComment = commentService.saveComment(comment);
         return CommentDto.Response.builder()
-                .id(savedComment.getId())
+                .memberId(member.getId())
+                .commentId(savedComment.getId())
                 .content(savedComment.getContent())
                 .name(member.getName())
                 .createTime(savedComment.getCreateTime())
