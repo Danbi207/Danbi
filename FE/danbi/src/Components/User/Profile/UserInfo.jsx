@@ -27,6 +27,7 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
             <AccuseButton
               onClick={() => {
+                console.log(targetId);
                 dispatch(setTargetMemberId(targetId));
                 dispatch(setMode('accuse'));
               }}

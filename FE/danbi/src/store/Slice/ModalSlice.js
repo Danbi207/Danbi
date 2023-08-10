@@ -4,9 +4,6 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState: {
     mode: null,
-    accuse: {
-      targetMemberId: null,
-    },
     ipRequestList: [],
     targetMemberId: 0,
   },
