@@ -11,8 +11,8 @@ import {useSelector, useDispatch } from "react-redux";
 
 const HelperHome = () => {
   const [mode,setMode] = useState("untact");
-  const [position,setPosition] = useState(null);
   const [helpList,setHelpList] = useState([]);
+  const [position,setPosition] = useState();
   const gender = useSelector(state=>state.user.gender);
   const dispatch = useDispatch();
   
@@ -43,27 +43,8 @@ const HelperHome = () => {
     }
   },[setHelpList,setMode,gender]);
 
-  const setCurPosition = useCallback(()=>{
-    //DO : gps 현재 위치 얻기
-    if (navigator.geolocation) { // GPS를 지원하면
-      navigator.geolocation.getCurrentPosition(function(e) {
-        setPosition(e);
-      }, function(error) {
-        console.error(error);
-      }, {
-        enableHighAccuracy: false,
-        maximumAge: 0,
-        timeout: Infinity
-      });
-    } else {
-      alert('GPS를 허용하지 않아 도움목록을 조회할 수 없습니다. GPS를 허용해주세요!');
-      setUntact();
-      return false;
-    }
-    return true;
-  },[setUntact]);
-
-  const setContact = useCallback(async() => {
+  
+  const setContact = useCallback(async(position) => {
     if(setCurPosition()){
       try{
         const data = await authPost(`/api/v1/help/contact`,{
@@ -79,10 +60,10 @@ const HelperHome = () => {
         console.log(err.response);
       }
     }
-  },[setHelpList,setMode,gender,setCurPosition,position]);
-
-
-  const setMap = useCallback(async ()=>{
+  },[setHelpList,setMode,gender,setCurPosition]);
+  
+  
+  const setMap = useCallback(async (position)=>{
     if(setCurPosition()){
       try{
         const data = await authPost(`/api/v1/help/contact`,{
@@ -98,15 +79,35 @@ const HelperHome = () => {
         console.log(err.response);
       }
     }
-  },[setCurPosition,setMode,gender,position]);
+  },[setCurPosition,setMode,gender]);
+
+  const setCurPosition = useCallback((mode)=>{
+    //DO : gps 현재 위치 얻기
+    if (navigator.geolocation) { // GPS를 지원하면
+      navigator.geolocation.getCurrentPosition((e)=>{
+        setPosition(e);
+        if(mode==="contact"){
+          setContact(e);
+        }
+
+        if(mode === "map"){
+          setMap(e);
+        }
+      });
+    }else{
+      alert("GPS를 차단하셨습니다. 허용해주세요!");
+    }
+  },[setContact,setMap]);
 
   useEffect(()=>{
+    //로딩시 유저정보를 불러와 redux에 저장
     if(!gender || gender===""){
       getUserInfo();
     }
   },[getUserInfo,gender]);
 
   useEffect(()=>{
+    //DO : 로딩시 비대면목록을 불러옴
     if(gender&&gender!=="")
       setUntact();
   },[gender,setUntact]);
@@ -115,11 +116,11 @@ const HelperHome = () => {
     <HelperHomeWrap>
       <div>
         <Header></Header>
-        <Tap setContact={setContact} setMap={setMap} setUntact={setUntact} mode={mode}></Tap>
+        <Tap setContact={()=>setCurPosition("contact")} setMap={()=>setCurPosition("map")} setUntact={setUntact} mode={mode}></Tap>
       </div>
       <MainWrap>
         {
-          mode === "map" && position ? <HelpMap helpList={helpList} position={position} /> : <HelpList helpList={helpList}/>
+          mode === "map" ? <HelpMap helpList={helpList} position={position} /> : <HelpList helpList={helpList}/>
         }
       </MainWrap>
       <Footer></Footer>
