@@ -15,5 +15,5 @@ public class AdminMembersCountResponseDto {
 
     private int count;
 
-    private List<AdminMemberResponseDto> data;
+    private List<AdminMemberResponseDto> members;
 }
