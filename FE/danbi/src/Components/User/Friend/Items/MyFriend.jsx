@@ -7,7 +7,7 @@ const MyFriend = ({ value }) => {
   console.log(value);
   const handleDelete = async () => {
     try {
-      const res = await authDelete(`/api/v1/friends/delete/${value.targetId}`, {});
+      const res = await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
       console.log(res);
     } catch (err) {
       console.log(err);

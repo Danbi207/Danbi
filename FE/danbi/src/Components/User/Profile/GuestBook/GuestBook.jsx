@@ -13,10 +13,9 @@ const GuestBook = ({ guestBookId, comments }) => {
     e.preventDefault();
     const textJson = {
       content: textArea,
-      guestBookId,
     };
     try {
-      const data = await authPost('/api/v1/profile/guestbook', textJson);
+      const data = await authPost(`/api/v1/profile/guestbook${guestBookId}`, textJson);
       console.log(data);
     } catch (err) {
       console.log(err);
@@ -25,7 +24,7 @@ const GuestBook = ({ guestBookId, comments }) => {
 
   const handleChange = (e) => {
     setTextArea(e.target.value);
-  }
+  };
 
   return (
     <GuestBookWrap>
