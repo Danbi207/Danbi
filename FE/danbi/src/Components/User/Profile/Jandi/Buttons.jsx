@@ -10,7 +10,13 @@ import {
 } from '../../../../store/Slice/JandiSlice';
 import { authPost } from '../../../../Util/apis/api';
 
-const Buttons = ({ prevGross, nextGross, setPickModalOpen, targetId }) => {
+const Buttons = ({
+  prevGross,
+  nextGross,
+  setPickModalOpen,
+  targetId,
+  accumulatePoint,
+}) => {
   const dispatch = useDispatch();
   const handlePickModal = async () => {
     setPickModalOpen(true);
@@ -36,7 +42,7 @@ const Buttons = ({ prevGross, nextGross, setPickModalOpen, targetId }) => {
         <GrossBtn onClick={nextGross}>다음</GrossBtn>
       </DirectionBtns>
       <Wrap>
-        <Dew>{curDewPoint}Dew</Dew>
+        <Dew>{cur_id === Number(targetId) ? dewPoint : accumulatePoint}Dew</Dew>
         {cur_id === Number(targetId) ? (
           <PickBtn
             onClick={() => {
