@@ -31,19 +31,17 @@ const GuestBook = ({ guestBookId, userId }) => {
   };
 
   const guestsbookcomments = useMemo(() => {
-    const res = [];
-    res.push(
-      comments.map((comment, index) => (
-        <GuestBookComment
-          key={index}
-          comment={comment}
-          writerName={comment.name}
-          userId={userId}
-          setComment={setComment}
-          guestBookId={guestBookId}
-        />
-      ))
-    );
+    const res = comments.map((comment, index) => (
+      <GuestBookComment
+        key={index}
+        comment={comment}
+        writerName={comment.name}
+        userId={userId}
+        setComment={setComment}
+        guestBookId={guestBookId}
+      />
+    ));
+    return res;
   }, [comments]);
 
   const fetchData = useCallback(async () => {
