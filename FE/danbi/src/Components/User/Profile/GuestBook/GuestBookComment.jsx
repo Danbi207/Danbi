@@ -45,6 +45,10 @@ const GuestBookComment = ({
           <EditBtn>수정</EditBtn>
           <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
         </Buttons>
+      ) : Number(userId) === memberId ? (
+        <Buttons>
+          <DeleteBtn onClick={() => handleDelete(comment)}>삭제</DeleteBtn>
+        </Buttons>
       ) : null}
     </CommentWrap>
   );
@@ -52,7 +56,7 @@ const GuestBookComment = ({
 
 const CommentWrap = styled.div`
   width: 100%;
-  height: 2.5rem;
+  height: auto;
   display: flex;
   flex-direction: row;
   padding: 0 1rem;
