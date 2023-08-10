@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { authDelete } from '../../../../Util/apis/api';
 import { useDispatch } from 'react-redux';
 import { deleteIpRequest } from '../../../../store/Slice/ModalSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Route } from 'react-router-dom';
 
 
 
@@ -35,6 +35,7 @@ const IpDetailItem = ({data}) => {
   },[data, dispatch]) 
 
   return (
+    <Route>
     <HelpItemWrap>
       <TitleWrap>도움 정보</TitleWrap>
       <ItemWrap>
@@ -51,6 +52,7 @@ const IpDetailItem = ({data}) => {
         <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN>
       </BTNWrap>
     </HelpItemWrap>
+    </Route>
   )
 }
 
