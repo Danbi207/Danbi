@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import {setMode,setTargetMemberId} from "../../../../../../store/Slice/ModalSlice.js"
+import { useDispatch } from 'react-redux';
 const UserInfo = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   return (
     <UserInfoWrap>
       <BackButton onClick={() => {
@@ -32,8 +33,8 @@ const UserInfo = ({ data }) => {
       <More onClick={() => setIsOpen(!isOpen)}>
         <MoreImg />
         {isOpen && <DropDownMenu onClick={()=>{
-          setTargetMemberId(data.ip.ipId);
-          setMode("accuse");
+          dispatch(setTargetMemberId(data.ip.ipId));
+          dispatch(setMode("accuse"));
         }}>신고</DropDownMenu>}
       </More>
       </Wrap>

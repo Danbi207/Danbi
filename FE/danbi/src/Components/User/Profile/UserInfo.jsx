@@ -25,8 +25,8 @@ const UserInfo = ({ url, name, targetId, myProfile, friendFlag }) => {
           <Btns>
             <PlusButton onClick={handlePlus}>친구추가</PlusButton>
             <AccuseButton onClick={()=>{
-              setTargetMemberId(targetId);
-              setMode("accuse");
+              dispatch(setTargetMemberId(targetId));
+              dispatch(setMode("accuse"));
             }} />
           </Btns>
         )}
