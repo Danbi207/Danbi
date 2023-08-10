@@ -30,7 +30,7 @@ const Waitting = ({ value }) => {
   return (
     <WaittingWrap>
       <InfoWrap>
-        <ImgWrap src={example} />
+        <ImgWrap $url={value.profileUrl} />
         <Name>{value.name}</Name>
       </InfoWrap>
       <Btns>
@@ -49,7 +49,9 @@ const WaittingWrap = styled.div`
   width: 100%;
   height: auto;
 `;
-const ImgWrap = styled.img`
+const ImgWrap = styled.img.attrs((props) => ({
+  src: props.$url,
+}))`
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
