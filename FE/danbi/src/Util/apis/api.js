@@ -48,15 +48,19 @@ export const authGet = async (url)=>{
   if(token.check()){//엑세스 토큰이 없거나 사용불가능한 경우
     const res = await reissueAccessToken();
     if(res === null) return null;
-    console.log("GET요청 : ",token.getAccessToken());
-    const {data} = await axios({
-      method:"get",
-      url: process.env.REACT_APP_SERVER+url,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    });
-
-    if(data.code === 200){
-      return data.data;
+    
+    try{
+      const {data} = await axios({
+        method:"get",
+        url: process.env.REACT_APP_SERVER+url,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      throw err;
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
@@ -85,16 +89,19 @@ export const authPost = async (url,json)=>{
   if(token.check()){//엑세스 토큰이 없거나 사용불가능한 경우
     const res = await reissueAccessToken();
     if(res === null) return null;
-
-    const {data} = await axios({
-      method:"post",
-      url: process.env.REACT_APP_SERVER+url,
-      data:json,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    });
-
-    if(data.code === 200){
-      return data.data;
+    try{
+      const {data} = await axios({
+        method:"post",
+        url: process.env.REACT_APP_SERVER+url,
+        data:json,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      throw err;
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
@@ -124,16 +131,19 @@ export const authDelete = async (url,json)=>{
   if(token.check()){//엑세스 토큰이 없거나 사용불가능한 경우
     const res = await reissueAccessToken();
     if(res === null) return null;
-
-    const {data} = await axios({
-      method:"delete",
-      url: process.env.REACT_APP_SERVER+url,
-      data:json,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    });
-
-    if(data.code === 200){
-      return data.data;
+    try{
+      const {data} = await axios({
+        method:"delete",
+        url: process.env.REACT_APP_SERVER+url,
+        data:json,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      throw err;
     }
   }else{//엑세스 토큰이 사용가능한 경우
     console.log(process.env.REACT_APP_SERVER+url);
@@ -164,16 +174,19 @@ export const authPut = async (url,json)=>{
   if(token.check()){//엑세스 토큰이 없거나 사용불가능한 경우
     const res = await reissueAccessToken();
     if(res === null) return null;
-
-    const {data} = await axios({
-      method:"put",
-      url: process.env.REACT_APP_SERVER+url,
-      data:json,
-      headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
-    });
-
-    if(data.code === 200){
-      return data.data;
+    try{
+      const {data} = await axios({
+        method:"put",
+        url: process.env.REACT_APP_SERVER+url,
+        data:json,
+        headers:{"Authorization" : `Bearer ${token.getAccessToken()}`},
+      });
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      throw err;
     }
   }else{//엑세스 토큰이 사용가능한 경우
     try{
@@ -203,26 +216,38 @@ export const authFilePost = async (url,formData)=>{
   if(token.check()){//엑세스 토큰이 없거나 사용불가능한 경우
     const res = await reissueAccessToken();
     if(res === null) return null;
-
-    const {data} = await axios({
-      method:"post",
-      url: process.env.REACT_APP_SERVER+url,
-      data:formData,
-      headers:{
-        'Content-Type': 'multipart/form-data',
-        "Authorization" : `Bearer ${token.getAccessToken()}`
-      },
-    });
-
-    if(data.code === 200){
-      return data.data;
+    try{
+      for(const pair of formData){
+        console.log(pair);
+      }
+      console.log(process.env.REACT_APP_SERVER+url)
+  
+      const {data} = await axios({
+        method:"post",
+        url: process.env.REACT_APP_SERVER+url,
+        data:formData,
+        headers:{
+          'Content-Type': 'multipart/form-data',
+          "Authorization" : `Bearer ${token.getAccessToken()}`
+        },
+      });
+  
+      if(data.code === 200){
+        return data.data;
+      }
+    }catch(err){
+      throw err;
     }
   }else{//엑세스 토큰이 사용가능한 경우
+    for(const pair of formData){
+      console.log(pair);
+    }
+    console.log(process.env.REACT_APP_SERVER+url)
     try{
       const {data} = await axios({
         method:"post",
         url: process.env.REACT_APP_SERVER+url,
-        file:formData,
+        data:formData,
         headers:{
           'Content-Type': 'multipart/form-data',
           "Authorization" : `Bearer ${token.getAccessToken()}`},
