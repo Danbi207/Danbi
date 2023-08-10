@@ -11,8 +11,6 @@ import PresetModal from './Preset/PresetModal.jsx';
 import PickModal from './Utils/PickModal.jsx';
 import { authGet } from '../../../Util/apis/api.js';
 import { useParams } from 'react-router-dom';
-import { setDewPoint } from '../../../store/Slice/JandiSlice.js';
-import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
@@ -45,7 +43,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [userId]);
 
   return (
     <ProfileWrap>
