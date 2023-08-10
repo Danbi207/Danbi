@@ -38,13 +38,17 @@ const Accuse = () => {
     try{
       const formData = new FormData();
       formData.append("files", file);
-      formData.append("targetMemberId",parseInt(targetMemberId));
-      formData.append("content",content);
-      formData.append("accuseType",accuseType);
-      for(const pair of formData.entries()){
-        console.log(pair);
+      const json = JSON.parse(`{
+        "targetMemberId" : ${targetMemberId},
+        "content" : "${content}",
+        "accuseType" : "${accuseType}"
+      }`);
+      json["files"] = file;
+      for (let key in json ) {
+        formData.append(key, json[key]);
       }
-      const res = await authFilePost("/api/v1/accuse",formData);
+      const url = "/api/v1/accuse";
+      const res = await authFilePost(url,formData);
       console.log(res);
     }catch(err){
       console.log(err.response);
