@@ -161,7 +161,8 @@ const Calendar = () => {
         console.log(getHelpData(year ,month, i));
         }} key={"calender"+i}>
           {i}
-          { getHelpData(year ,month, i).length > 0 && <FontAwesomeIcon icon={faCircle} style={{color: "#ff4242"}} /> }
+          {/* { getHelpData(year ,month, i).length > 0 && <FontAwesomeIcon icon={faCircle} style={{color: "#ff4242"}}/> } */}
+          <StyledIcon icon={faCircle} />
         </CalenderItem>)
     }
     
@@ -316,6 +317,12 @@ const CalenderItem = styled.div`
     background-color: #f3c5b6;
     font-weight: 600;
   }
+`
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: #ff4242;
+  display: block;
+  margin-top: 0.5rem;
 `
 
 
