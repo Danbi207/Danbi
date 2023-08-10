@@ -44,10 +44,10 @@ const IpMap = () => {
       
       // eslint-disable-next-line no-unused-expressions
       mode === '0'
-      ? (dispatch(setMeetLongitude(latlng.getLat())),
-        dispatch(setMeetLatitude(latlng.getLng())))
-      : (dispatch(setDestLongitude(latlng.getLat())),
-        dispatch(setDestLatitude(latlng.getLng())));
+      ? (dispatch(setMeetLatitude(latlng.getLat())),
+        dispatch(setMeetLongitude(latlng.getLng())))
+      : (dispatch(setDestLatitude(latlng.getLat())),
+        dispatch(setDestLongitude(latlng.getLng())));
       console.log(latlng.getLat())
       console.log(latlng.getLng())
 
