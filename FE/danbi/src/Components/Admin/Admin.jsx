@@ -6,6 +6,8 @@ import { useMemo } from 'react';
 const Admin = () => {
   const navigate = useNavigate();
   const [mode,setMode] = useState("all");
+  const [size,setSize] = useState(10);
+  const [direction,setDirection] = useState("DESC");
   const [users,setUsers] = useState([
     {
         "id": 6,
@@ -142,13 +144,35 @@ const Admin = () => {
 
   return (
     <Wrap>
-      <TapWrap>
-        <TapItem $mode={mode==="all"} onClick={()=>setMode("all")}>전체</TapItem>
-        <TapItem $mode={mode==="helper"} onClick={()=>setMode("helper")}>Helper</TapItem>
-        <TapItem $mode={mode==="ip"} onClick={()=>setMode("ip")}>Ip</TapItem>
-        <TapItem $mode={mode==="uncertificated"} onClick={()=>setMode("uncertificated")}>서류승인 대기</TapItem>
-        <TapItem $mode={mode==="unsubmit"} onClick={()=>setMode("unsubmit")}>서류 미제출</TapItem>
-      </TapWrap>
+      <SearchWrap>
+        <div>
+          <div>역할</div>
+          <select onChange={e=>setMode(e.target.value)}>
+            <option value={"ALL"}>전체</option>
+            <option value={"HELPER"}>Helper</option>
+            <option value={"IP"}>Ip</option>
+            <option value={"UNCERTIFICATED"}>서류승인 대기</option>
+            <option value={"UNSUBMIT"}>서류 미제출</option>
+          </select>
+        </div>
+        <div>
+          <div>개수</div>
+          <select onChange={e=>setSize(e.target.value)}>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+            <option value={40}>40</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
+        <div>
+          <div>정렬</div>
+          <select onChange={e=>setDirection(e.target.value)}>
+            <option value={"DESC"}>DESC</option>
+            <option value={"ASC"}>ASC</option>
+          </select>
+        </div>
+      </SearchWrap>
       <MainWrap>
         <colgroup>
           <col width="5%" />
@@ -180,31 +204,26 @@ const Admin = () => {
           }
         </tbody>
       </MainWrap>
+
     </Wrap>
   )
 }
 
+const SearchWrap = styled.div`
+  display: flex;
+  margin: 1rem 0;
+  gap: 2rem;
+  & > div{
+    display: flex;
+    gap: 1rem;
+  }
+`
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
   padding: 1rem;
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
-`
-
-const TapWrap = styled.div`
-  display: flex;
-  align-items: end;
-`
-
-const TapItem = styled.div`
-  cursor: pointer;
-  border: 1px solid ${props=>props.theme.colors.titleColor};
-  border-bottom: none;
-  width: 8rem;
-  text-align: center;
-  height : ${props=>props.$mode ? "2rem" : "1.5rem"};
-  line-height: ${props=>props.$mode ? "2rem" : "1.5rem"};
 `
 
 const MainWrap = styled.table`
