@@ -45,7 +45,7 @@ const routes = [
     Component : Detail
   },
   {
-    path : "/help/:role/matched/:helpId",
+    path : "/help/:role/matched/:helpPostId",
     Component : MatchedHelp
   },
   {
