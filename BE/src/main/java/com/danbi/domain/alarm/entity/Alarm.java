@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "alarm")
 public class Alarm extends BaseEntity {
 
     @Id
