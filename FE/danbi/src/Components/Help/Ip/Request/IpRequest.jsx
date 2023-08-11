@@ -24,6 +24,7 @@ const IpRequest = () => {
           try {
             const response = await authGet(`/api/v1/help/detail/${helpPostId}`);
               setHelpDetailData(response.data);
+              
           } catch (error) {
             console.error("helpDetail 데이터 못 가져옴", error);
           }};

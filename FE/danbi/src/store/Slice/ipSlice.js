@@ -83,6 +83,9 @@ export const ipSlice = createSlice({
       state.useTimes = action.payload;
     },
     ResetIpState: () => initialState,
+    // SetHelpDetailData : (state, action) => {
+    //   state.
+    // }
   },
 });
 

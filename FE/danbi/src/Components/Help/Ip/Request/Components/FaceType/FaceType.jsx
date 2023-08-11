@@ -6,7 +6,7 @@ import Preset from './Preset.jsx';
 import Positioin from './Positioin';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ResetIpState, setMeetType } from "../../../../../../store/Slice/ipSlice"
+import { ResetIpState, setMeetType, setTabMode } from "../../../../../../store/Slice/ipSlice"
 import { useState } from 'react';
 import { useCallback } from 'react';
 import { authPost } from '../../../../../../Util/apis/api';
@@ -83,8 +83,9 @@ function FaceType({helpPostId}) {
     }
     try{
       await authPost('/api/v1/help/create', ipData);
-      dispatch(ResetIpState());
       navigate('/help/ip');
+      dispatch(ResetIpState());
+      dispatch(setTabMode('time'))
     }
     catch (err) {
       console.log(err.error)
@@ -101,8 +102,8 @@ function FaceType({helpPostId}) {
       { meetType === 'face' ? <Positioin/> : null}  
       <HelpDetail/>
       <Preset/>
-      {helpPostId !== null ? <><ChangeBTN>수정</ChangeBTN><DeleteBTN>삭제</DeleteBTN></> : 
-      <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>}
+      {/* {helpPostId !== null ? <><ChangeBTN>수정</ChangeBTN><DeleteBTN>삭제</DeleteBTN></> :  */}
+      <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>
     </Wrap>
   );
 }
