@@ -29,8 +29,9 @@ const Header = () => {
   }, [alramlist]);
 
   useEffect(()=>{
+    console.log(alramlist);
     Alrams();
-  },[Alrams])
+  },[alramlist, Alrams])
 
   return (
     <>
