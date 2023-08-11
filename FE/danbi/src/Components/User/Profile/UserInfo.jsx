@@ -19,7 +19,6 @@ const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
         <UserName>{name}</UserName>
-        {friendFlag ? <FriendBadge /> : null}
         {accusePoint < 0 ? null : accusePoint > 1 ? (
           <AccuseBadge $state={'yellowcard'} />
           ) : (
