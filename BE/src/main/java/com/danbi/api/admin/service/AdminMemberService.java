@@ -1,9 +1,14 @@
 package com.danbi.api.admin.service;
 
 import com.danbi.api.admin.dto.*;
+import com.danbi.api.admin.dto.besthelp.AdminBestHelpMemberDto;
+import com.danbi.api.admin.dto.besthelp.AdminBestHelpResponseDto;
+import com.danbi.api.admin.dto.totalbest.TotalBestDto;
+import com.danbi.api.admin.dto.totalbest.TotalBestResponseDto;
 import com.danbi.domain.helppost.dto.BestHelpMemberDto;
 import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.member.constant.Role;
+import com.danbi.domain.member.dto.TotalBestMemberDto;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -75,5 +80,23 @@ public class AdminMemberService {
         }
         return AdminBestHelpResponseDto.builder()
                 .memberList(bestMembers).build();
+    }
+
+    public TotalBestResponseDto searchTotalBestMembers() {
+        List<TotalBestMemberDto> totalBestMemberDtos = memberService.searchTotalBestMembers();
+        List<TotalBestDto> bests = new ArrayList<>();
+
+        for (TotalBestMemberDto member : totalBestMemberDtos) {
+            TotalBestDto build = TotalBestDto.builder()
+                    .memberId(member.getMemberId())
+                    .profileId(member.getProfileId())
+                    .name(member.getName())
+                    .profileUrl(member.getProfileUrl())
+                    .accumulateDewPoint(member.getAccumulateDewPoint()).build();
+            bests.add(build);
+        }
+
+        return TotalBestResponseDto.builder()
+                .bestMemberList(bests).build();
     }
 }

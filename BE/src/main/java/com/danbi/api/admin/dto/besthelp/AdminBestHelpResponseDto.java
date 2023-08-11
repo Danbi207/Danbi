@@ -1,5 +1,6 @@
-package com.danbi.api.admin.dto;
+package com.danbi.api.admin.dto.besthelp;
 
+import com.danbi.api.admin.dto.besthelp.AdminBestHelpMemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

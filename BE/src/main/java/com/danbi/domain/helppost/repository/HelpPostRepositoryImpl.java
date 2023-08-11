@@ -238,6 +238,5 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .orderBy(helpPost.count().desc())
                 .limit(3)
                 .fetch();
-
     }
 }

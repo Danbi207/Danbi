@@ -1,4 +1,4 @@
-package com.danbi.api.admin.dto;
+package com.danbi.api.admin.dto.totalbest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AdminBestHelpMemberDto {
+public class TotalBestDto {
 
     private Long memberId;
     private Long profileId;
     private String name;
     private String profileUrl;
-    private Long helpCount;
+    private Long accumulateDewPoint;
 }
