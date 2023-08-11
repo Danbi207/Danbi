@@ -102,7 +102,7 @@ function FaceType({helpPostId}) {
       { meetType === 'face' ? <Positioin/> : null}  
       <HelpDetail/>
       <Preset/>
-      {/* {helpPostId !== null ? <><ChangeBTN>수정</ChangeBTN><DeleteBTN>삭제</DeleteBTN></> :  */}
+      {/* {helpPostId ? <><ChangeBTN>수정</ChangeBTN><DeleteBTN>삭제</DeleteBTN></> :  */}
       <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>
     </Wrap>
   );

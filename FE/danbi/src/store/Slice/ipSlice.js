@@ -83,9 +83,20 @@ export const ipSlice = createSlice({
       state.useTimes = action.payload;
     },
     ResetIpState: () => initialState,
-    // SetHelpDetailData : (state, action) => {
-    //   state.
-    // }
+    // 상세보기 관련 데이터
+    SetHelpDetailData : (state, action) => {
+      const [data, time] = action.payload.startTime.aplit(' ');
+      const [year, month, day] = data.split('-');
+      const [hour, minute] = time.split(':')
+
+      state.category = action.payload.category;
+      state.caution = action.payload.caution;
+      state.content = action.payload.content;
+      state.meetType = action.payload.faceFlag;
+      state.currentDay = [year, month, day];
+      state.currentTime = [hour, minute];
+      
+    }
   },
 });
 
