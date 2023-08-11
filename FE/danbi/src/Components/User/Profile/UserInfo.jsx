@@ -4,6 +4,7 @@ import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
 import { useSelector } from 'react-redux';
 const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
+  console.log(friendFlag);
   const handlePlus = async () => {
     const data = {
       targetId,
