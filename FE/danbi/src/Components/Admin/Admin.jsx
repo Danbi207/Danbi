@@ -76,7 +76,7 @@ const Admin = () => {
         "name": "김윤욱",
         "nickname": "김윤욱",
         "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
-        "role": "ROLE_HELPER",
+        "role": "ROLE_UNCERTIFICATED_IP",
         "gender": "male",
         "state": "ACTIVATE",
         "accuseStack": 0
