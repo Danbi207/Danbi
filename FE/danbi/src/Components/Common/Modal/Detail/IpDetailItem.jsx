@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components';
 import { authDelete } from '../../../../Util/apis/api';
 import { useDispatch } from 'react-redux';
-import { deleteIpRequest } from '../../../../store/Slice/ModalSlice';
+import { deleteIpRequest, setMode } from '../../../../store/Slice/ModalSlice';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -10,8 +10,9 @@ import { useNavigate } from 'react-router-dom';
 const IpDetailItem = ({data}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const goToDetail = () => {
+    dispatch(setMode(""))
     navigate('/help/ip/request', {state : { helpPostId : data.helpPostId }})
   }
 
