@@ -74,6 +74,7 @@ public enum ErrorCode {
     // Alarm
     ALARM_NOT_EXISTS(HttpStatus.BAD_REQUEST,"AL-001","해당 알림은 존재하지 않습니다."),
     FORBIDDEN_ALARM(HttpStatus.BAD_REQUEST,"AL-002","해당 계정의 알림이 아닙니다."),
+    ALARM_TYPE_NOT_EXIST(HttpStatus.BAD_REQUEST, "AL-003", "해당 타입은 존재하지 않습니다."),
 
     // Accuse
     ACCUSE_MISMATCH_TARGET(HttpStatus.BAD_REQUEST,"AC-001","본인을 신고할 수는 없습니다."),
