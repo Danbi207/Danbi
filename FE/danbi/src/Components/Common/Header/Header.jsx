@@ -45,66 +45,13 @@ const Header = () => {
               <DeleteBTN>알림 모두 삭제</DeleteBTN>
             </BTNWrap>
             <HR/>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
+            {alramlist.map((item, idx) => 
+            <AlramsWrap key={idx}>
+              <TitleWrap>{item.title}</TitleWrap>
+              <ContetnWrap>{item.content}</ContetnWrap>
+              <TimeWrap>{item.creatTime}</TimeWrap>
               <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
-            <AlramsWrap>
-              <TitleWrap>친구 요청</TitleWrap>
-              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
-              <TimeWrap>2023-08-11일</TimeWrap>
-              <HR/>
-            </AlramsWrap>
+            </AlramsWrap>)}
         </AlramWrap>
       </HeaderWrap>
       <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
@@ -253,7 +200,6 @@ const DeleteBTN = styled.button`
 
 const AlramsWrap = styled.div`
   /* display: flex; */
-
 `
 
 const TitleWrap = styled.div`
