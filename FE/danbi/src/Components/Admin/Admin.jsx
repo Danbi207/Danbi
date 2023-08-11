@@ -99,26 +99,15 @@ const Admin = () => {
           const data = await authGet(`/api/v1/admin/member?page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
           if(data){
             console.log(data);
-            setUsers(data);
-            setTotal(data.length);//FIXME : 회원수 받기 서버에서 완료되면 지우기
+            setUsers(data.members);
+            if(total !== data.count) setTotal(data.count);//FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
-          //FIXME : 회원 총 수를 서버에서 받기
-          // const _total = await authGet();
-          // if(_total){
-          //   setTotal(_total);
-          // }
         }else{
           const data = await authGet(`/api/v1/admin/member/role?memberRole=${mode}&page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
           if(data){
-            console.log(data);
-            setUsers(data);
-            setTotal(data.length); //FIXME : 회원수 받기 서버에서 완료되면 지우기
+            setUsers(data.members);
+            if(total !== data.count) setTotal(data.count);
           }
-          //FIXME : 회원 총 수를 서버에서 받기
-          // const _total = await authGet();
-          // if(_total){
-          //   setTotal(_total);
-          // }
         }
       }catch(err){
         console.log(err);
