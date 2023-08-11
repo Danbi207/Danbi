@@ -9,7 +9,6 @@ spring:
     password:
 
 
-
   redis:
     pool:
       min-idle: 0 # pool에서 관리하는 idle 최소 커넥션  수

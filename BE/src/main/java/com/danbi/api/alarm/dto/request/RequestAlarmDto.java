@@ -33,7 +33,7 @@ public class RequestAlarmDto {
     private String content;
 
     @JsonProperty("type")
-    private Type type;
+    private String type;
 
 //    @JsonProperty("created_time")
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")

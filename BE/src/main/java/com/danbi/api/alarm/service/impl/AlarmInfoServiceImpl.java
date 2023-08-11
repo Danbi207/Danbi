@@ -5,11 +5,13 @@ import com.danbi.api.alarm.dto.response.ResponseAlarmDto;
 import com.danbi.api.alarm.dto.response.ResponseAlarmListDto;
 import com.danbi.api.alarm.service.AlarmInfoService;
 import com.danbi.domain.alarm.constant.State;
+import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.alarm.entity.Alarm;
 import com.danbi.domain.alarm.service.AlarmService;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
+import com.danbi.global.error.exception.MisMatchException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -131,7 +133,7 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
                 .readFlag(false)
                 .state(State.ACTIVATE)
                 .content(requestAlarmDto.getContent())
-                .type(requestAlarmDto.getType())
+                .type(Type.from(requestAlarmDto.getType()))
                 .build();
 
         Alarm saveAlarm = alarmService.savaAlarm(alarm);

@@ -1,6 +1,12 @@
 package com.danbi.domain.alarm.constant;
 
+import com.danbi.global.error.ErrorCode;
+import com.danbi.global.error.exception.BusinessException;
 import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public enum Type {
@@ -21,6 +27,25 @@ public enum Type {
     private String description;
 
     Type(String description) {
-        this.description = description;
+        this.description = description.toUpperCase();
     }
+
+    public static Type from(String type) {
+        validateType(type);
+        return Type.valueOf(type.toUpperCase());
+    }
+
+    public static boolean isAlarmType(String type) {
+        List<Type> typeList = Arrays.stream(Type.values())
+                .filter(alarmtype -> alarmtype.name().equals(type))
+                .collect(Collectors.toList());
+        return typeList.size() != 0;
+    }
+
+    public static void validateType(String type) {
+        if (!Type.isAlarmType(type.toUpperCase())) {
+            throw new BusinessException(ErrorCode.ALARM_TYPE_NOT_EXIST);
+        }
+    }
+
 }
