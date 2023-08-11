@@ -1,10 +1,8 @@
 package com.danbi.domain.helppost.repository;
 
-import com.danbi.domain.helppost.dto.HelpPostDetailQeuryDto;
-import com.danbi.domain.helppost.dto.HelpPostFaceDto;
-import com.danbi.domain.helppost.dto.HelpPostMatchedDto;
-import com.danbi.domain.helppost.dto.HelpPostQueryDto;
+import com.danbi.domain.helppost.dto.*;
 import com.danbi.domain.helppost.entity.HelpPost;
+import com.danbi.domain.member.dto.TotalBestMemberDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,4 +26,6 @@ public interface HelpPostRepositoryCustom {
     List<HelpPost> checkIsHelperCanHelp(Long memberId, LocalDateTime startTime, LocalDateTime endTime);
 
     List<HelpPost> findNotMatchedHelpPost(LocalDateTime startTime, LocalDateTime endTime);
+
+    List<BestHelpMemberDto> searchBestMember(LocalDateTime startTime, LocalDateTime endTime);
 }

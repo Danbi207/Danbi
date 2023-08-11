@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DetailMatchedHelpPostDto {
 
+    private Long helpId;
     private Long helpPostId;
     private IpMatchedDto ip;
     private HelperMatchedDto helper;
