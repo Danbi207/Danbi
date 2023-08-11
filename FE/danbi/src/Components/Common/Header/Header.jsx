@@ -1,15 +1,37 @@
 import React, { useState } from 'react'
 import styled, { keyframes } from 'styled-components';
 import NavBar from '../NavBar/NavBar';
+import { useCallback } from 'react';
+import { authGet } from '../../../Util/apis/api';
+import { useEffect } from 'react';
 const Header = () => {
   const [navFlag,setNavFlag] = useState(false);
   const [alramFlag,setAlramFlag] = useState(false);
+  const [alramlist, setAlramList] = useState([]);
+
   const mvHome = ()=>{
     //FIXME : 유저정보를 읽어서 ip홈 or helper홈 라우팅
   }
+
   const toggleAlram = ()=>{
     setAlramFlag(!alramFlag);
   }
+
+  // 알람 전체 데이터를 가져온다.
+  const Alrams = useCallback(async() => {
+    try {
+      const response = await authGet('/api/v1/pofile/alarm');
+      setAlramList(response.data.alarm_list); 
+      console.log(alramlist);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [alramlist]);
+
+  useEffect(()=>{
+    Alrams();
+  },[Alrams])
+
   return (
     <>
       <HeaderWrap>
@@ -18,7 +40,15 @@ const Header = () => {
           <AlramBtn onClick={toggleAlram}></AlramBtn>
           <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
         </IconWrap>
-        <AlramWrap $out={alramFlag}></AlramWrap>
+        <AlramWrap $out={alramFlag}>
+          {alramlist.map((item, idx) => 
+            <AlramsWrap key={idx}>
+              <TitleWrap>{item.title}</TitleWrap>
+              <ContetnWrap>{item.content}</ContetnWrap>
+              <TimeWrap>{item.creatTime}</TimeWrap>
+              <HR/>
+            </AlramsWrap>)}
+        </AlramWrap>
       </HeaderWrap>
       <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
     </>
@@ -107,7 +137,7 @@ const AlramWrap = styled.div`
   height: 30rem;
   bottom: -30rem;
   right: 0;
-  background-color: red;
+  background-color: aquamarine;
 
   z-index: 3;
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
@@ -141,4 +171,31 @@ const HeaderWrap = styled.div`
   border-bottom:solid #19191B 1px;
   background-color: ${props=>props.theme.colors.whiteBgColor};
 `
+
+const AlramsWrap = styled.div`
+  /* display: flex; */
+  
+`
+
+const TitleWrap = styled.div`
+  font-size: 1rem;
+  font-weight: bold;
+`
+
+const ContetnWrap = styled.div`
+  font-size: 0.7rem;
+  color: #000;
+`
+
+const TimeWrap = styled.div`
+  font-size: 0.3rem ;
+  color: gray;
+`
+
+const HR = styled.hr`
+  width: 100%;
+  border-color: #000000;
+`
+
+
 export default Header
