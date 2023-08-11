@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
 import { useSelector } from 'react-redux';
-const UserInfo = ({ url, name, targetId, friendFlag }) => {
+const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
   const handlePlus = async () => {
     const data = {
       targetId,
@@ -20,9 +20,14 @@ const UserInfo = ({ url, name, targetId, friendFlag }) => {
       <UserDetail>
         <UserName>{name}</UserName>
         {friendFlag ? <FriendBadge /> : null}
+        {accusePoint < 0 ? null : accusePoint > 1 ? (
+          <AccuseBadge $state={'yellowcard'} />
+          ) : (
+          <AccuseBadge $state={'redcard'} />
+        )}
         {cur_id === Number(targetId) ? null : (
           <Btns>
-            <PlusButton onClick={handlePlus}>친구추가</PlusButton>
+            {friendFlag ? null :<PlusButton onClick={handlePlus}>친구추가</PlusButton>}
             <AccuseButton targetId={targetId}/>
           </Btns>
         )}
@@ -80,5 +85,11 @@ const Btns = styled.div`
 const FriendBadge = styled.img.attrs((props) => ({
   src: props.theme.images.friendBadge,
 }))``;
+
+const AccuseBadge = styled.img.attrs((props) => ({
+  src: props.$state === 'yellow'
+  ? props.theme.images.yellowcard
+  : props.theme.images.redcard,
+}))
 
 export default UserInfo;
