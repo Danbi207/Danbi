@@ -27,6 +27,7 @@ public class DetailHelpPostDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
     private boolean friendFlag;
+    private boolean genderFlag;
 
     private String caution;
     private Category category;
