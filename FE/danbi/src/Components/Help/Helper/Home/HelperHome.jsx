@@ -8,6 +8,7 @@ import Tap from "./Components/Tap/Tap.jsx"
 import { authGet, authPost} from "../../../../Util/apis/api.js"
 import {setUserId,setProfileId,setName,setProfileUrl,setGender} from "../../../../store/Slice/userSlice.js"
 import {useSelector, useDispatch } from "react-redux";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const HelperHome = () => {
   const [mode,setMode] = useState("untact");
@@ -15,7 +16,22 @@ const HelperHome = () => {
   const [position,setPosition] = useState();
   const gender = useSelector(state=>state.user.gender);
   const dispatch = useDispatch();
-  
+  const navigate = useNavigate();
+  const getMatched = useCallback(async()=>{
+    try{
+      const data = await authGet("/api/v1/help/time");
+      if(data && data.helperMatched){
+        navigate(`/help/helper/matched/${data.helpPostId}`);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  },[]);
+
+  useEffect(()=>{
+    getMatched();
+  },[]);
+
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
