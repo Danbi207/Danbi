@@ -1,8 +1,8 @@
 package com.danbi.api.admin.service;
 
-import com.danbi.api.admin.dto.AdminMemberResponseDto;
-import com.danbi.api.admin.dto.AdminMembersCountResponseDto;
-import com.danbi.api.admin.dto.IPCertFileResponseDto;
+import com.danbi.api.admin.dto.*;
+import com.danbi.domain.helppost.dto.BestHelpMemberDto;
+import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class AdminMemberService {
 
     private final MemberService memberService;
+    private final HelpPostService helpPostService;
 
     public AdminMembersCountResponseDto findMembers(Pageable pageable) {
         Page<Member> members = memberService.findAll(pageable);
@@ -57,5 +59,21 @@ public class AdminMemberService {
                         .accuseStack(member.getAccuseStack())
                         .build())
                 .collect(Collectors.toList());
+    }
+    
+    public AdminBestHelpResponseDto searchBestHelpMembers() {
+        List<BestHelpMemberDto> bestHelpMemberDtos = helpPostService.searchBestHelpMembers();
+        List<AdminBestHelpMemberDto> bestMembers = new ArrayList<>();
+        for (BestHelpMemberDto member : bestHelpMemberDtos) {
+            AdminBestHelpMemberDto newMember = AdminBestHelpMemberDto.builder()
+                    .memberId(member.getMemberId())
+                    .profileId(member.getProfileId())
+                    .name(member.getName())
+                    .profileUrl(member.getProfileUrl())
+                    .helpCount(member.getHelpCount()).build();
+            bestMembers.add(newMember);
+        }
+        return AdminBestHelpResponseDto.builder()
+                .memberList(bestMembers).build();
     }
 }

@@ -1,6 +1,7 @@
 package com.danbi.api.admin.controller;
 
 import com.danbi.api.ApiResponse;
+import com.danbi.api.admin.dto.AdminBestHelpResponseDto;
 import com.danbi.api.admin.dto.AdminMemberResponseDto;
 import com.danbi.api.admin.dto.AdminMembersCountResponseDto;
 import com.danbi.api.admin.service.AdminMemberService;
@@ -48,5 +49,12 @@ public class AdminMemberController {
                                                                 direction = Sort.Direction.DESC) Pageable pageable) {
         AdminMembersCountResponseDto response = adminMemberService.findMembersByRole("ROLE_" + memberRole, pageable);
         return ApiResponse.ok(response);
+    }
+
+    @Operation(summary = "이번달의 도움왕 3명 조회 API", description = "이번달의 도움왕 3명 조회 API")
+    @GetMapping("/best")
+    public ApiResponse<AdminBestHelpResponseDto> findBestHelpMembers() {
+        AdminBestHelpResponseDto adminBestHelpResponseDto = adminMemberService.searchBestHelpMembers();
+        return ApiResponse.ok(adminBestHelpResponseDto);
     }
 }
