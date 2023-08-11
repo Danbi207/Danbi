@@ -54,13 +54,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <AppWrap className="App">
         <BrowserRouter>
+          <Modal/>
           <Routes>
             {routes.map((e) => {
               return (
                 <Route
                   key={e.path}
                   path={e.path}
-                  element={<><e.Component /><Modal/></>}
+                  element={<e.Component></e.Component>}
                 />  
               );
             })}

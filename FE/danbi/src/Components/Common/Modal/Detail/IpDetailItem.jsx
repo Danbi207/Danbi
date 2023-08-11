@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components';
 import { authDelete } from '../../../../Util/apis/api';
 import { useDispatch } from 'react-redux';
@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const IpDetailItem = ({data}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const goToDetail = () => {
     dispatch(setMode(""))
     navigate('/help/ip/request', {state : { helpPostId : data.helpPostId }})
