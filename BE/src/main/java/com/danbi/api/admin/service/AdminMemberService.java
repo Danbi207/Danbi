@@ -28,7 +28,7 @@ public class AdminMemberService {
 
         return AdminMembersCountResponseDto.builder()
                 .count(dtos.size())
-                .data(dtos)
+                .members(dtos)
                 .build();
     }
 
@@ -38,7 +38,7 @@ public class AdminMemberService {
 
         return AdminMembersCountResponseDto.builder()
                 .count(dtos.size())
-                .data(dtos)
+                .members(dtos)
                 .build();
     }
 
