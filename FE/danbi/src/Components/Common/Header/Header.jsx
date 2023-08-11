@@ -41,13 +41,70 @@ const Header = () => {
           <NavBarBtn onClick={()=>{setNavFlag(true)}}></NavBarBtn>
         </IconWrap>
         <AlramWrap $out={alramFlag}>
-          {alramlist.map((item, idx) => 
-            <AlramsWrap key={idx}>
-              <TitleWrap>{item.title}</TitleWrap>
-              <ContetnWrap>{item.content}</ContetnWrap>
-              <TimeWrap>{item.creatTime}</TimeWrap>
+            <BTNWrap>
+              <DeleteBTN>알림 모두 삭제</DeleteBTN>
+            </BTNWrap>
+            <HR/>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
               <HR/>
-            </AlramsWrap>)}
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
+            <AlramsWrap>
+              <TitleWrap>친구 요청</TitleWrap>
+              <ContetnWrap>강민석님이 윤태웅님에게 친구를 요청하였습니다.</ContetnWrap>
+              <TimeWrap>2023-08-11일</TimeWrap>
+              <HR/>
+            </AlramsWrap>
         </AlramWrap>
       </HeaderWrap>
       <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
@@ -143,7 +200,14 @@ const AlramWrap = styled.div`
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
   animation: ${props => props.$out ? slideIn : slideOut} 0.5s linear;
   transition: visibility 0.5s linear;
-  transform-origin : 100% 0 0
+  transform-origin : 100% 0 0;
+
+  overflow-y: auto; 
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar { 
+    display: none;
+	  }
 `
 
 const NavBarBtn = styled.div`
@@ -172,29 +236,47 @@ const HeaderWrap = styled.div`
   background-color: ${props=>props.theme.colors.whiteBgColor};
 `
 
+const BTNWrap = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const DeleteBTN = styled.button`
+  width: 50%;
+  height: 2rem;
+  background-color: red;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  text-align: center;
+  margin : 0.5rem 0 1rem 0; 
+`
+
 const AlramsWrap = styled.div`
   /* display: flex; */
-  
+
 `
 
 const TitleWrap = styled.div`
   font-size: 1rem;
   font-weight: bold;
+  padding-bottom: 0.2rem;
 `
 
 const ContetnWrap = styled.div`
   font-size: 0.7rem;
   color: #000;
+  padding-bottom: 0.2rem;
 `
 
 const TimeWrap = styled.div`
   font-size: 0.3rem ;
   color: gray;
+  padding-bottom: 0.2rem;
 `
 
 const HR = styled.hr`
   width: 100%;
-  border-color: #000000;
+  border-color: #888;
 `
 
 
