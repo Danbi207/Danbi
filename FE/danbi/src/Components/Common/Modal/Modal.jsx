@@ -3,6 +3,12 @@ import styled from 'styled-components';
 import Accuse from './Accuse/Accuse';
 import { useSelector } from 'react-redux';
 import IpDetail from './Detail/IpDetail';
+<<<<<<< Updated upstream
+=======
+import { BrowserRouter } from 'react-router-dom';
+import UserModal from "./Admin/UserModal";
+import UCModal from "./Admin/UCModal";
+>>>>>>> Stashed changes
 
 const Modal = () => {
   const mode = useSelector((state) => state.modal.mode);
@@ -19,6 +25,18 @@ const Modal = () => {
           <BackgroundWrap></BackgroundWrap>
           <IpDetail></IpDetail>
         </> : null
+      }
+      {
+        mode === "admin/user" ? <>
+          <BackgroundWrap></BackgroundWrap>
+          <UserModal></UserModal>
+        </>:null
+      }
+      {
+        mode === "admin/uncertificate" ? <>
+          <BackgroundWrap></BackgroundWrap>
+          <UCModal></UCModal>
+        </>:null
       }
     </>
   )

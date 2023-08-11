@@ -3,12 +3,16 @@ import {authGet, authPost, reissueAccessToken} from "../../Util/apis/api";
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import {setUser} from "../../store/Slice/adminSlice";
+import { setMode } from '../../store/Slice/ModalSlice';
 
 const pagingCount = 5;
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [mode,setMode] = useState("all");
+  const dispatch = useDispatch();
+  const [userRole,setUserRole] = useState("ALL");
   const [size,setSize] = useState(10);
   const [direction,setDirection] = useState("DESC");
   const [total,setTotal] = useState(0);
@@ -16,7 +20,80 @@ const Admin = () => {
   const [totalPage,setTotalPage] = useState(0);
   const [startPage,setStartPage] = useState(0);
   const [endPage,setEndPage] = useState(0);
-  const [users,setUsers] = useState([]);
+  const [users,setUsers] = useState([
+    {
+        "id": 1,
+        "oauthType": "KAKAO",
+        "email": "omygog@naver.com",
+        "name": "윤태웅",
+        "nickname": "윤태웅",
+        "profileUrl": "http://k.kakaocdn.net/dn/JqjzO/btrG3p5w1IG/hIKGwYLKCdhUh12Cx3qQk1/img_110x110.jpg",
+        "role": "ROLE_HELPER",
+        "gender": "male",
+        "state": "ACTIVATE",
+        "accuseStack": 0
+    },
+    {
+        "id": 2,
+        "oauthType": "KAKAO",
+        "email": "melon212@naver.com",
+        "name": "김민규",
+        "nickname": "김민규",
+        "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
+        "role": "ROLE_HELPER",
+        "gender": "male",
+        "state": "ACTIVATE",
+        "accuseStack": 0
+    },
+    {
+        "id": 3,
+        "oauthType": "KAKAO",
+        "email": "wwwttt123@naver.com",
+        "name": "강민석",
+        "nickname": "강민석",
+        "profileUrl": "http://k.kakaocdn.net/dn/bS2wdw/btreVxvFriB/kFFiMJpfHdDtEc6qnuqPQ0/img_110x110.jpg",
+        "role": "ROLE_IP",
+        "gender": "male",
+        "state": "ACTIVATE",
+        "accuseStack": 0
+    },
+    {
+        "id": 4,
+        "oauthType": "KAKAO",
+        "email": "vkflek1232@naver.com",
+        "name": "한승현",
+        "nickname": "한승현",
+        "profileUrl": "http://k.kakaocdn.net/dn/bfaaoP/btsa6GJU1Bv/Wri9wb6ZJGuL5t9VGnKrrk/img_110x110.jpg",
+        "role": "ROLE_ADMIN",
+        "gender": "male",
+        "state": "ACTIVATE",
+        "accuseStack": 0
+    },
+    {
+        "id": 5,
+        "oauthType": "KAKAO",
+        "email": "hm03048@naver.com",
+        "name": "김윤욱",
+        "nickname": "김윤욱",
+        "profileUrl": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
+        "role": "ROLE_HELPER",
+        "gender": "male",
+        "state": "ACTIVATE",
+        "accuseStack": 0
+    },
+    {
+        "id": 6,
+        "oauthType": "KAKAO",
+        "email": "jyj1143@gmail.com",
+        "name": "조영재",
+        "nickname": "조영재",
+        "profileUrl": "http://k.kakaocdn.net/dn/bgLq4P/btrWcLGVpZz/YCMKcFHYdLvTdI1FGIndn1/img_110x110.jpg",
+        "role": "ROLE_HELPER",
+        "gender": "male",
+        "state": "ACTIVATE",
+        "accuseStack": 0
+    }
+]);
 
   useEffect(()=>{
     let _totalPage=totalPage;
@@ -95,11 +172,11 @@ const Admin = () => {
     //DO : 멤버수를 조회 및 저장
     const getMember = async() =>{
       try{
-        if(mode==="ALL"){
-          const data = await authGet(`/api/v1/admin/member?page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
+        if(userRole==="ALL"){
+          const data = await authGet(`/api/v1/admin/member?page=${curPage-1}&size=${size}&sort=id&direction=${direction}`); 
           if(data){
-            setUsers(data);
-            setTotal(data.length);//FIXME : 회원수 받기 서버에서 완료되면 지우기
+            setUsers(data.members);
+            setTotal(data.count);//FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
           //FIXME : 회원 총 수를 서버에서 받기
           // const _total = await authGet();
@@ -107,10 +184,10 @@ const Admin = () => {
           //   setTotal(_total);
           // }
         }else{
-          const data = await authGet(`/api/v1/admin/member/role?memberRole=${mode}&page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
+          const data = await authGet(`/api/v1/admin/member/role?memberRole=${userRole}&page=${curPage-1}&size=${size}&sort=id&direction=${direction}`); 
           if(data){
-            setUsers(data);
-            setTotal(data.length); //FIXME : 회원수 받기 서버에서 완료되면 지우기
+            setUsers(data.members);
+            setTotal(data.count); //FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
           //FIXME : 회원 총 수를 서버에서 받기
           // const _total = await authGet();
@@ -124,12 +201,21 @@ const Admin = () => {
     }
     getMember();
     
-  },[mode,curPage,pagingCount,direction,size]);
+  },[userRole,curPage,pagingCount,direction,size]);
 
   const tableItems = useMemo(()=>{
     const res = [];
     users.forEach((e,idx)=>{
-      res.push(<tr key={idx}>
+      res.push(<tr key={idx} onClick={()=>{
+        dispatch(setUser(e));
+
+        if(e.role==="ROLE_UNCERTIFICATED_IP"){
+          dispatch(setMode('admin/uncertificate'));
+        }
+        else{
+          dispatch(setMode("admin/user"));
+        }
+      }}>
         <td>{e.id}</td>
         <td>{e.oauthType}</td>
         <td>{e.email}</td>
@@ -150,14 +236,14 @@ const Admin = () => {
         <div>
           <div>역할</div>
           <select onChange={e=>{
-            setMode(e.target.value);
+            setUserRole(e.target.value);
             setCurPage(1);
           }}>
             <option value={"ALL"}>전체</option>
             <option value={"HELPER"}>Helper</option>
             <option value={"IP"}>Ip</option>
-            <option value={"UNCERTIFICATED"}>서류승인 대기</option>
-            <option value={"UNSUBMIT"}>서류 미제출</option>
+            <option value={"UNCERTIFICATED_IP"}>서류승인 대기</option>
+            <option value={"UNSUBMIT_IP"}>서류 미제출</option>
           </select>
         </div>
         <div>
