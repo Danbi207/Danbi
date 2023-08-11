@@ -77,7 +77,7 @@ const SubTitle = styled.div`
 
 const HelpContent = styled.textarea`
   width: 100%;
-  height: 5rem;
+  height: 5.5rem;
   border: none;
   resize: none;
   background-color: #FFEA7E;
