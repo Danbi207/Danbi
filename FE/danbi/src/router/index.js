@@ -11,6 +11,7 @@ import HelperHome from "../Components/Help/Helper/Home/HelperHome";
 import Test from "../Components/TEST/TEST"
 import IpMap from '../Components/Help/Ip/Request/Components/Map/IpMap'
 import Admin from "../Components/Admin/Admin";
+import Request from "../Components/Help/Ip/Request/Request";
 
 const routes = [
   {
@@ -65,5 +66,10 @@ const routes = [
     path:"/test",
     Component:Test
   },
+  {
+    path:"/Request",
+    Component:Request
+
+  }
 ];
 export default routes;
