@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -9,17 +9,28 @@ import FaceType from './Components/FaceType/FaceType';
 import TimeTpye from './Components/Timetype/TimeTpye';
 import Tab from './Components/Tab/Tab';
 import { useEffect } from 'react';
+import { authGet } from '../../../../Util/apis/api';
 
 const IpRequest = () => {
   const location = useLocation();
   const helpPostId = location.state?.helpPostId;
+  const [helpDetailData, setHelpDetailData] = useState(null);
 
   const ip = useSelector((state)=>state.ip)
-  console.log(location)
 
   useEffect(()=>{
-    
-  },[helpPostId])
+    if (helpPostId) {
+      const fetchHelpDetail = async () => {
+          try {
+            const response = await authGet(`/api/v1/help/detail/${helpPostId}`);
+              setHelpDetailData(response.data);
+          } catch (error) {
+            console.error("helpDetail 데이터 못 가져옴", error);
+          }};
+          fetchHelpDetail();
+          console.log(helpDetailData)
+      }
+    }, [helpPostId, helpDetailData]);
 
   return (
     <RequestWrap>
