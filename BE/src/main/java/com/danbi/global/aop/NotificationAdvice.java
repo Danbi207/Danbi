@@ -74,6 +74,7 @@ public class NotificationAdvice {
 
 
             String content = from.getName()+ "님의 신고가 승인 되었습니다.";
+            sendFcmMessage(from, title, content);
             alarmSave(from, to, title, content, type);
         }
     }
@@ -101,6 +102,7 @@ public class NotificationAdvice {
             }
 
             String content = from.getName() + "님의 신고가 접수되었습니다.";
+            sendFcmMessage(from, title, content);
             alarmSave(from, to, title, content, type);
         }
 
@@ -129,6 +131,8 @@ public class NotificationAdvice {
                 }
             }
             String content = from.getName() +"님께서 " +to.getName()+"님에게 친구 요청하였습니다.";
+            sendFcmMessage(from, title, content);
+            sendFcmMessage(to, title, content);
             alarmSave(from, to, title, content, type);
         }
     }
@@ -155,6 +159,8 @@ public class NotificationAdvice {
             }
 
             String content = from.getName() +"님께서 " +to.getName()+"님의 친구요청을 승인하였습니다.";
+            sendFcmMessage(from, title, content);
+            sendFcmMessage(to, title, content);
             alarmSave(from, to, title, content, type);
         }
 
@@ -182,6 +188,8 @@ public class NotificationAdvice {
                 }
             }
             String content = from.getName() +"과 " +to.getName()+"님의 도움이 매칭되었습니다.";
+            sendFcmMessage(from, title, content);
+            sendFcmMessage(to, title, content);
             alarmSave(from, to, title, content, type);
         }
     }
@@ -207,6 +215,8 @@ public class NotificationAdvice {
                 }
             }
             String content = from.getName() +"님이 IP도움 완료하였습니다.";
+            sendFcmMessage(from, title, content);
+            sendFcmMessage(to, title, content);
             alarmSave(from, to, title, content, type);
         }
     }
@@ -232,6 +242,8 @@ public class NotificationAdvice {
                 }
             }
             String content = from.getName() +"님이 HELPER도움 완료하였습니다.";
+            sendFcmMessage(from, title, content);
+            sendFcmMessage(to, title, content);
             alarmSave(from, to, title, content, type);
         }
     }
@@ -255,6 +267,8 @@ public class NotificationAdvice {
                 }
             }
             String content = from.getName() +"과 " +to.getName()+"님의 도움이 취소되었습니다.";
+            sendFcmMessage(from, title, content);
+            sendFcmMessage(to, title, content);
             alarmSave(from, to, title, content, type);
         }
     }
@@ -264,8 +278,6 @@ public class NotificationAdvice {
         log.info("from {}", from.getId());
 
 
-        sendFcmMessage(from, title, content);
-        sendFcmMessage(to, title, content);
         Alarm alarm = Alarm.builder()
                 .from(from)
                 .to(to)

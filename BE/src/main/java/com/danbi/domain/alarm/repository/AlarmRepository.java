@@ -21,8 +21,8 @@ public interface AlarmRepository extends JpaRepository<Alarm, Long> {
     @Query(nativeQuery = true,
             value =
             "SELECT * FROM (" +
-                    "select * from Alarm a1 where a1.from_member_id = :member  AND a1.state = 'ACTIVATE' AND a1.state <> 'SENDER_DESTROY' "+
-            " union select * from Alarm a2 where a2.to_member_id = :member AND a2.state = 'ACTIVATE' AND a2.state <> 'RECEIVER_DESTROY')e order by e.alarm_id DESC ; ; "
+                    "select * from alarm a1 where a1.from_member_id = :member  AND a1.state = 'ACTIVATE' AND a1.state <> 'SENDER_DESTROY' "+
+            " union select * from alarm a2 where a2.to_member_id = :member AND a2.state = 'ACTIVATE' AND a2.state <> 'RECEIVER_DESTROY')e order by e.alarm_id DESC ; ; "
             )
     List<Alarm> findALLByFromOrTo(@Param("member") Member member);
 
