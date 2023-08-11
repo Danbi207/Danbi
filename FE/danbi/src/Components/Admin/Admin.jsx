@@ -100,13 +100,13 @@ const Admin = () => {
     const getMember = async() =>{
       try{
         if(userRole==="ALL"){
-          const data = await authGet(`/api/v1/admin/member?page=${curPage}&size=${size}&sort=id&direction=${direction}`); 
+          const data = await authGet(`/api/v1/admin/member?page=${curPage-1}&size=${size}&sort=id&direction=${direction}`); 
           if(data){
             setUsers(data.members);
             setTotal(data.count);//FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
         }else{
-          const data = await authGet(`/api/v1/admin/member/role?memberRole=${userRole}&page=${curPage}&size=${size}&sort=id&direction=${direction}`); 
+          const data = await authGet(`/api/v1/admin/member/role?memberRole=${userRole}&page=${curPage-1}&size=${size}&sort=id&direction=${direction}`); 
           if(data){
             setUsers(data.members);
             setTotal(data.count); //FIXME : 회원수 받기 서버에서 완료되면 지우기
