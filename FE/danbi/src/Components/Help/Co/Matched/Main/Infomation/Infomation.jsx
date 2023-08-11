@@ -38,7 +38,7 @@ const Infomation = ({help}) => {
               <>
                 <Title>상대방 정보</Title>
                 <UserInfoWrap>
-                  <UserImg></UserImg>
+                  <UserImg $url={info.profileUrl}></UserImg>
                   <div>
                     <UserTitle>
                       <div onClick={()=>navigate(`/user/profile/${localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}`)}>{info.name}</div>
@@ -58,6 +58,9 @@ const Infomation = ({help}) => {
                   userId={localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}
                   dewPoint={info.dewPoint}
                   accumulatePoint={info.accumulatePoint}></Jandi>
+                <AcceptBtn>
+                  도움완료
+                </AcceptBtn>
               </>
               :null
             }
@@ -90,7 +93,9 @@ const HelpContent = styled.textarea`
       display: none;
   }
 `
-const UserInfoWrap = styled.div`
+const UserInfoWrap = styled.div.attrs(props => ({
+  src: props.$url,
+}))`
   width: 100%;
   display: flex;
   &>:last-child{
@@ -147,5 +152,11 @@ const InfomationWrap = styled.div`
   &>*{
     flex: 0 0 auto;
   }
+`;
+
+const AcceptBtn = styled.button`
+  background-color: #FFEA7E;
+  width: 20rem;
+  height: 2rem;
 `
 export default Infomation
