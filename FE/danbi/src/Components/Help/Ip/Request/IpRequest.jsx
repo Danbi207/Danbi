@@ -14,7 +14,6 @@ import { authGet } from '../../../../Util/apis/api';
 const IpRequest = () => {
   const location = useLocation();
   const helpPostId = location.state?.helpPostId;
-  console.log(helpPostId)
   const [helpDetailData, setHelpDetailData] = useState(null);
 
   const ip = useSelector((state)=>state.ip)
@@ -25,7 +24,7 @@ const IpRequest = () => {
           try {
             const response = await authGet(`/api/v1/help/detail/${helpPostId}`);
               setHelpDetailData(response.data);
-
+              
           } catch (error) {
             console.error("helpDetail 데이터 못 가져옴", error);
           }};
