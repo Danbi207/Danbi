@@ -95,10 +95,9 @@ const PresetDetailWrap = styled.div``;
 const DetailTextArea = styled.textarea`
   width: 100%;
   height: 6rem;
-  border: 1px solid white;
+  border: 1px solid ${(props) => props.theme.colors.titleColor};
   border-radius: 5px;
   background-color: transparent;
-  color: white;
   text-align: start;
   padding: 0.5rem 0 0.5rem 5px;
   outline: none;
