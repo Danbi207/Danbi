@@ -60,13 +60,12 @@ function App() {
                 <Route
                   key={e.path}
                   path={e.path}
-                  element={<e.Component />}
-                />
+                  element={<><e.Component /><Modal/></>}
+                />  
               );
             })}
           </Routes>
         </BrowserRouter>
-        <Modal/>
       </AppWrap>
       <Loading loading={loading}/>
     </ThemeProvider>
