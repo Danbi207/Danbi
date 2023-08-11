@@ -56,7 +56,7 @@ const Profile = () => {
           url={data.profileUrl}
           name={data.name}
           targetId={userId}
-          friendFalg={data.friendFlag}
+          friendFlag={data.friendFlag}
           accusePoint={data.accusePoint}
         />
         {localStorage.getItem('role') === 'ip' && Number(userId) === cur_id ? (
