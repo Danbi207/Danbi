@@ -1,7 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { styled } from 'styled-components'
 
 const UCModal = () => {
+  const user = useSelector(state=>state.admin.user);
+  
   return (
     <Wrap>UCModal</Wrap>
   )
