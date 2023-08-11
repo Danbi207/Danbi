@@ -3,12 +3,16 @@ import {authGet, authPost, reissueAccessToken} from "../../Util/apis/api";
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import {setUser} from "../../store/Slice/adminSlice";
+import { setMode } from '../../store/Slice/ModalSlice';
 
 const pagingCount = 5;
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [mode,setMode] = useState("ALL");
+  const dispatch = useDispatch();
+  const [userRole,setUserRole] = useState("ALL");
   const [size,setSize] = useState(10);
   const [direction,setDirection] = useState("DESC");
   const [total,setTotal] = useState(0);
@@ -95,18 +99,17 @@ const Admin = () => {
     //DO : 멤버수를 조회 및 저장
     const getMember = async() =>{
       try{
-        if(mode==="ALL"){
+        if(userRole==="ALL"){
           const data = await authGet(`/api/v1/admin/member?page=${curPage-1}&size=${size}&sort=id&direction=${direction}`); 
           if(data){
-            console.log(data);
             setUsers(data.members);
-            if(total !== data.count) setTotal(data.count);//FIXME : 회원수 받기 서버에서 완료되면 지우기
+            setTotal(data.count);//FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
         }else{
-          const data = await authGet(`/api/v1/admin/member/role?memberRole=${mode}&page=${curPage-1}&size=${size}&sort=id&direction=${direction}`); 
+          const data = await authGet(`/api/v1/admin/member/role?memberRole=${userRole}&page=${curPage-1}&size=${size}&sort=id&direction=${direction}`); 
           if(data){
             setUsers(data.members);
-            if(total !== data.count) setTotal(data.count);
+            setTotal(data.count); //FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
         }
       }catch(err){
@@ -115,13 +118,22 @@ const Admin = () => {
     }
     getMember();
     
-  },[mode,curPage,pagingCount,direction,size]);
+  },[userRole,curPage,pagingCount,direction,size]);
 
   const tableItems = useMemo(()=>{
     if(!users){return [];}
     const res = [];
     users.forEach((e,idx)=>{
-      res.push(<tr key={idx}>
+      res.push(<tr key={idx} onClick={()=>{
+        dispatch(setUser(e));
+
+        if(e.role==="ROLE_UNCERTIFICATED_IP"){
+          dispatch(setMode('admin/uncertificate'));
+        }
+        else{
+          dispatch(setMode("admin/user"));
+        }
+      }}>
         <td>{e.id}</td>
         <td>{e.oauthType}</td>
         <td>{e.email}</td>
@@ -142,14 +154,14 @@ const Admin = () => {
         <div>
           <div>역할</div>
           <select onChange={e=>{
-            setMode(e.target.value);
+            setUserRole(e.target.value);
             setCurPage(1);
           }}>
             <option value={"ALL"}>전체</option>
             <option value={"HELPER"}>Helper</option>
             <option value={"IP"}>Ip</option>
-            <option value={"UNCERTIFICATED"}>서류승인 대기</option>
-            <option value={"UNSUBMIT"}>서류 미제출</option>
+            <option value={"UNCERTIFICATED_IP"}>서류승인 대기</option>
+            <option value={"UNSUBMIT_IP"}>서류 미제출</option>
           </select>
         </div>
         <div>

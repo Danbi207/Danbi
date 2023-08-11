@@ -1,11 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Jandi from "../../../../../User/Profile/Jandi/Jandi";
-import { authGet } from '../../../../../../Util/apis/api';
+import { authGet, authPost } from '../../../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 const Infomation = ({help}) => {
   const [info,setInfo] = useState();
   const navigate = useNavigate();
+
+  const accept = useCallback(async()=>{
+    try{
+      const role = localStorage.getItem("role");
+      await authPost(`/api/v1/help/success/${role}/${help.helpId}`);
+    }catch(err){
+      console.log(err);
+    }
+  })
+
   const getInfo = useCallback(async()=>{
     try{
       const data = await authGet(`/api/v1/profile/${localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}`);
@@ -58,7 +68,7 @@ const Infomation = ({help}) => {
                   userId={localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}
                   dewPoint={info.dewPoint}
                   accumulatePoint={info.accumulatePoint}></Jandi>
-                <AcceptBtn>
+                <AcceptBtn onClick={accept}>
                   도움완료
                 </AcceptBtn>
               </>
