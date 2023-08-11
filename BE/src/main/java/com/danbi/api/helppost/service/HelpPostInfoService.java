@@ -37,6 +37,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -195,6 +196,7 @@ public class HelpPostInfoService {
         HelpPostMatchedDto helpPost = helpPostService.searchMatchedDetail(helpPostId);
 
         return DetailMatchedHelpPostDto.builder()
+                .helpId(helpPost.getHelpId())
                 .helpPostId(helpPostId)
                 .ip(IpMatchedDto.builder()
                         .ipId(helpPost.getIpId())
@@ -247,7 +249,9 @@ public class HelpPostInfoService {
 
     public HelperTimeResponseDto checkHelperMatchedTime(Long memberId) {
         LocalDateTime time = LocalDateTime.now();
+        Optional<HelpPost> helpPost = helpPostService.checkHelperTime(time, memberId);
         return HelperTimeResponseDto.builder()
-                .helperMatched(helpPostService.checkHelperTime(time, memberId)).build();
+                .helperMatched(helpPost.isPresent() ? true : false)
+                .helpPostId(helpPost.isPresent() ? helpPost.get().getId() : null).build();
     }
 }

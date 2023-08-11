@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class HelperTimeResponseDto {
 
     private boolean helperMatched;
+    private Long helpPostId;
 }

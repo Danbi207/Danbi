@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class HelpPostMatchedDto {
 
+    private Long helpId;
     private Long helpPostId;
     private State state;
 

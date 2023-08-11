@@ -3,10 +3,7 @@ package com.danbi.domain.helppost.repository;
 
 import com.danbi.domain.help.entity.QHelp;
 import com.danbi.domain.helppost.constant.State;
-import com.danbi.domain.helppost.dto.HelpPostDetailQeuryDto;
-import com.danbi.domain.helppost.dto.HelpPostFaceDto;
-import com.danbi.domain.helppost.dto.HelpPostMatchedDto;
-import com.danbi.domain.helppost.dto.HelpPostQueryDto;
+import com.danbi.domain.helppost.dto.*;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.entity.QHelpPost;
 import com.danbi.domain.helppost.entity.QPositions;
@@ -16,6 +13,7 @@ import com.danbi.domain.point.entity.QPoint;
 import com.danbi.domain.profile.entity.QProfile;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -128,7 +126,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
         QPoint helperPoint = new QPoint("helperPoint");
 
         return jpaQueryFactory.select(Projections.constructor(HelpPostMatchedDto.class,
-                        helpPost.id, helpPost.state,
+                        help.id, helpPost.id, helpPost.state,
                         ipMember.id, ipMember.name, ipMember.profileUrl,
                         ipPoint.accumulateDewPoint, ipMember.accuseStack,
 
@@ -221,4 +219,24 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 ).fetch();
     }
 
+    @Override
+    public List<BestHelpMemberDto> searchBestMember(LocalDateTime startTime, LocalDateTime endTime) {
+        NumberExpression<Long> helpPostCount = helpPost.count();
+
+        return jpaQueryFactory.select(Projections.constructor(BestHelpMemberDto.class,
+                member.id, profile.id, member.name, member.profileUrl, helpPostCount
+                ))
+                .from(helpPost)
+                .innerJoin(help).on(helpPost.eq(help.helpPost))
+                .leftJoin(help.helper, member)
+                .leftJoin(member.profile, profile)
+                .where(
+                        helpPost.state.eq(State.COMPLETED),
+                        helpPost.startTime.between(startTime,endTime)
+                        )
+                .groupBy(member)
+                .orderBy(helpPost.count().desc())
+                .limit(3)
+                .fetch();
+    }
 }
