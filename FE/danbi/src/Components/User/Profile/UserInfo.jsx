@@ -5,7 +5,9 @@ import { authPost } from '../../../Util/apis/api.js';
 import { useSelector } from 'react-redux';
 const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
   console.log(friendFlag);
-  console.log(accusePoint)
+  console.log(accusePoint);
+  console.log(accusePoint);
+
   const handlePlus = async () => {
     const data = {
       targetId,
