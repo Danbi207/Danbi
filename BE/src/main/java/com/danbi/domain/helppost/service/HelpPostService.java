@@ -133,9 +133,8 @@ public class HelpPostService {
     }
 
     @Transactional(readOnly = true)
-    public boolean checkHelperTime(LocalDateTime time, Long memberId) {
-        Optional<HelpPost> helpPostByNowTime = helpPostRepository.findHelpPostByNowTime(time, memberId);
-        return helpPostByNowTime.isPresent() ? true : false;
+    public Optional<HelpPost> checkHelperTime(LocalDateTime time, Long memberId) {
+        return helpPostRepository.findHelpPostByNowTime(time, memberId);
     }
 
     public void deleteNotMatchedHelpPost() {
