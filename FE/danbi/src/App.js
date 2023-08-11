@@ -65,8 +65,8 @@ function App() {
               );
             })}
           </Routes>
-        </BrowserRouter>
         <Modal/>
+        </BrowserRouter>
       </AppWrap>
       <Loading loading={loading}/>
     </ThemeProvider>
