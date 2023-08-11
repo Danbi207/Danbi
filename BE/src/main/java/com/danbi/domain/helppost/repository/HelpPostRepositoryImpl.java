@@ -103,7 +103,7 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         member.accuseStack, positions.latitude, positions.longitude, positions.addr,
                         positions.destLatitude, positions.destLongitude, positions.destAddr,
                         positions.meetLatitude, positions.destLongitude, positions.meetAddr,
-                        helpPost.faceFlag, helpPost.emergencyFlag, helpPost.content,
+                        helpPost.genderFlag, helpPost.faceFlag, helpPost.emergencyFlag, helpPost.content,
                         helpPost.startTime, helpPost.endTime, helpPost.caution, helpPost.category))
                 .from(helpPost)
                 .innerJoin(helpPost.positions, positions)

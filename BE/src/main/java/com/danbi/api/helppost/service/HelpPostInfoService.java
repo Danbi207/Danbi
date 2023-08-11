@@ -175,6 +175,7 @@ public class HelpPostInfoService {
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
+                .genderFlag(helpPost.isGenderFlag())
                 .friendFlag(isFriend)
                 .caution(helpPost.getCaution())
                 .category(helpPost.getCategory())
