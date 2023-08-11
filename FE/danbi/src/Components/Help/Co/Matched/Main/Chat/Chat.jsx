@@ -218,17 +218,26 @@ const Chat = (props) => {
         </ChatItems>
         <div>
           <ChatInput value={chatValue} onKeyDown={(e)=>{if(e.key==="Enter"){sendMessage();}}} onChange={(e)=>setChatValue(e.target.value)}></ChatInput>
-          <ChatBtn onClick={sendMessage}></ChatBtn>
+          <ChatBtn onClick={sendMessage}>
+            <ChatImg />
+          </ChatBtn>
         </div>
       </ChatWrap>
     </Wrap>
   )
 }
 const ChatBtn = styled.button`
-  background-image: url(${props=>props.theme.images.send});
   width: 1rem;
   height: 1rem;
 `
+
+const ChatImg = styled.img.attrs(props => ({
+  src: props => props.theme.images.send
+}))`
+  width: 20px;
+  height: 20px;
+`
+
 const ChatInput = styled.input`
   width: calc(100% - 1.5rem);
   margin-right: 1rem;
