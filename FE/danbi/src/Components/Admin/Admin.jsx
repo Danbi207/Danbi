@@ -16,7 +16,6 @@ const Admin = () => {
   const [totalPage,setTotalPage] = useState(0);
   const [startPage,setStartPage] = useState(0);
   const [endPage,setEndPage] = useState(0);
-
   const [users,setUsers] = useState([]);
 
   useEffect(()=>{
@@ -97,32 +96,35 @@ const Admin = () => {
     const getMember = async() =>{
       try{
         if(mode==="ALL"){
-          const _total = await authGet();
           const data = await authGet(`/api/v1/admin/member?page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
           if(data){
             setUsers(data);
+            setTotal(data.length);//FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
-          if(_total){
-            setTotal(_total);
-          }
+          //FIXME : 회원 총 수를 서버에서 받기
+          // const _total = await authGet();
+          // if(_total){
+          //   setTotal(_total);
+          // }
         }else{
-          const _total = await authGet();
           const data = await authGet(`/api/v1/admin/member/role?memberRole=${mode}&page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
           if(data){
             setUsers(data);
+            setTotal(data.length); //FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
-          if(_total){
-            setTotal(_total);
-          }
+          //FIXME : 회원 총 수를 서버에서 받기
+          // const _total = await authGet();
+          // if(_total){
+          //   setTotal(_total);
+          // }
         }
-        setCurPage(1);
       }catch(err){
         console.log(err);
       }
     }
     getMember();
     
-  },[mode,curPage,pagingCount,direction]);
+  },[mode,curPage,pagingCount,direction,size]);
 
   const tableItems = useMemo(()=>{
     const res = [];
@@ -147,7 +149,10 @@ const Admin = () => {
       <SearchWrap>
         <div>
           <div>역할</div>
-          <select onChange={e=>setMode(e.target.value)}>
+          <select onChange={e=>{
+            setMode(e.target.value);
+            setCurPage(1);
+          }}>
             <option value={"ALL"}>전체</option>
             <option value={"HELPER"}>Helper</option>
             <option value={"IP"}>Ip</option>
@@ -157,7 +162,10 @@ const Admin = () => {
         </div>
         <div>
           <div>개수</div>
-          <select onChange={e=>setSize(e.target.value)}>
+          <select onChange={e=>{
+            setSize(e.target.value);
+            setCurPage(1);
+          }}>
             <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={30}>30</option>
@@ -167,7 +175,10 @@ const Admin = () => {
         </div>
         <div>
           <div>정렬</div>
-          <select onChange={e=>setDirection(e.target.value)}>
+          <select onChange={e=>{
+            setDirection(e.target.value);
+            setCurPage(1);
+          }}>
             <option value={"DESC"}>DESC</option>
             <option value={"ASC"}>ASC</option>
           </select>
@@ -246,7 +257,7 @@ const MainWrap = styled.table`
   width: 100%;
   border-collapse: collapse;
   & thead,tbody,td,th,tr{
-    border: 1px solid #000;
+    border: 1px solid ${props=>props.theme.colors.titleColor};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
