@@ -19,11 +19,7 @@ const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
         <UserName>{name}</UserName>
-        {accusePoint < 0 ? null : accusePoint > 1 ? (
-          <AccuseBadge $state={'yellowcard'} />
-          ) : (
-          <AccuseBadge $state={'redcard'} />
-        )}
+        {friendFlag ? <FriendBadge /> : null}
         {cur_id === Number(targetId) ? null : (
           <Btns>
             {friendFlag ? null :<PlusButton onClick={handlePlus}>친구추가</PlusButton>}
