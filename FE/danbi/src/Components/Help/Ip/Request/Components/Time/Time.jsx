@@ -137,7 +137,10 @@ const Wrap = styled.div`
 
 const CalendarWrap = styled.div`
   width: 100%;
-  height: 20rem;
+  height: 30rem;
+  @media screen and (max-width: 768) {
+    height: 20rem;
+  }
 `
 
 const Title = styled.div`
