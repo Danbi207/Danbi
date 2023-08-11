@@ -8,7 +8,7 @@ const pagingCount = 5;
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [mode,setMode] = useState("all");
+  const [mode,setMode] = useState("ALL");
   const [size,setSize] = useState(10);
   const [direction,setDirection] = useState("DESC");
   const [total,setTotal] = useState(0);
@@ -98,6 +98,7 @@ const Admin = () => {
         if(mode==="ALL"){
           const data = await authGet(`/api/v1/admin/member?page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
           if(data){
+            console.log(data);
             setUsers(data);
             setTotal(data.length);//FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
@@ -109,6 +110,7 @@ const Admin = () => {
         }else{
           const data = await authGet(`/api/v1/admin/member/role?memberRole=${mode}&page=${curPage}&size=${pagingCount}&sort=id&direction=${direction}`); 
           if(data){
+            console.log(data);
             setUsers(data);
             setTotal(data.length); //FIXME : 회원수 받기 서버에서 완료되면 지우기
           }
@@ -127,6 +129,7 @@ const Admin = () => {
   },[mode,curPage,pagingCount,direction,size]);
 
   const tableItems = useMemo(()=>{
+    if(!users){return [];}
     const res = [];
     users.forEach((e,idx)=>{
       res.push(<tr key={idx}>
