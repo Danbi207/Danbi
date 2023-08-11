@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Accuse from './Accuse/Accuse';
 import { useSelector } from 'react-redux';
 import IpDetail from './Detail/IpDetail';
-import { BrowserRouter } from 'react-router-dom';
 
 const Modal = () => {
   const mode = useSelector((state) => state.modal.mode);
@@ -18,9 +17,7 @@ const Modal = () => {
       {
         mode === "ipdetail" ? <>
           <BackgroundWrap></BackgroundWrap>
-          <BrowserRouter>
             <IpDetail/>
-          </BrowserRouter>
         </> : null
       }
     </>
