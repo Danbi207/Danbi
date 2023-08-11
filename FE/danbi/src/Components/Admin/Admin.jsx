@@ -128,10 +128,10 @@ const Admin = () => {
         dispatch(setUser(e));
 
         if(e.role==="ROLE_UNCERTIFICATED_IP"){
-          dispatch(setuserRole('admin/uncertificate'));
+          dispatch(setMode('admin/uncertificate'));
         }
         else{
-          dispatch(setuserRole("admin/user"));
+          dispatch(setMode("admin/user"));
         }
       }}>
         <td>{e.id}</td>
