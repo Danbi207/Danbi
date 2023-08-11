@@ -15,7 +15,7 @@ const initialState = {
   tabmode : 'time',
   reservetype : '',
   meetType : '',
-  category : 'NONE',
+  category : 'ETC',
   caution : '',
   content : '',
   ischecked : false,
