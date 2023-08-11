@@ -6,10 +6,10 @@ import Preset from './Preset.jsx';
 import Positioin from './Positioin';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ResetIpState, setMeetType } from "../../../../../../store/Slice/ipSlice"
+import { ResetIpState, setMeetType, setTabMode } from "../../../../../../store/Slice/ipSlice"
 import { useState } from 'react';
 import { useCallback } from 'react';
-import { authGet, authPost } from '../../../../../../Util/apis/api';
+import { authPost } from '../../../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
 function FaceType({helpPostId}) {
@@ -22,24 +22,8 @@ function FaceType({helpPostId}) {
   const currentTime = ip.currentTime
   const useTimes = ip.useTimes
 
-  const [helpDetailData, setHelpDetailData] = useState(null);
   const [starttime, setStartTime] = useState('');
   const [endtime, setEndTime] = useState('');
-  
-  useEffect(()=>{
-    if (helpPostId) {
-      const fetchHelpDetail = async () => {
-          try {
-            const response = await authGet(`/api/v1/help/detail/${helpPostId}`);
-              setHelpDetailData(response.data);
-          } catch (error) {
-            console.error("helpDetail 데이터 못 가져옴", error);
-          }};
-          fetchHelpDetail();
-          console.log(helpDetailData)
-      }
-    }, [helpPostId, helpDetailData]);
-
 
   // 시작, 끝나는 시간 정하는 로직
   useEffect(()=>{
@@ -99,8 +83,9 @@ function FaceType({helpPostId}) {
     }
     try{
       await authPost('/api/v1/help/create', ipData);
-      dispatch(ResetIpState());
       navigate('/help/ip');
+      dispatch(ResetIpState());
+      dispatch(setTabMode('time'))
     }
     catch (err) {
       console.log(err.error)
@@ -117,8 +102,8 @@ function FaceType({helpPostId}) {
       { meetType === 'face' ? <Positioin/> : null}  
       <HelpDetail/>
       <Preset/>
-      {helpPostId !== null ? <><ChangeBTN>수정</ChangeBTN><DeleteBTN>삭제</DeleteBTN></> : 
-      <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>}
+      {/* {helpPostId !== null ? <><ChangeBTN>수정</ChangeBTN><DeleteBTN>삭제</DeleteBTN></> :  */}
+      <RequestBTN onClick={()=>{IpRequestHelp()}}>도움 요청하기</RequestBTN>
     </Wrap>
   );
 }
@@ -174,6 +159,7 @@ const ChangeBTN = styled.div`
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
+  text-align: center;
   background-color: ${props=>props.theme.colors.buttonbgColor};
   color: ${props=>props.theme.colors.buttontextColor};
   font-size : 2rem;
@@ -190,8 +176,9 @@ const DeleteBTN = styled.div`
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
-  background-color: ${props=>props.theme.colors.buttonbgColor};
-  color: ${props=>props.theme.colors.buttontextColor};
+  text-align: center;
+  background-color: #E85151;
+  color: #fff;
   font-size : 2rem;
   @media screen and (max-width: 500px) {
     width: 20rem;

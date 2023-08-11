@@ -15,7 +15,7 @@ const initialState = {
   tabmode : 'time',
   reservetype : '',
   meetType : '',
-  category : 'NONE',
+  category : 'ETC',
   caution : '',
   content : '',
   ischecked : false,
@@ -83,6 +83,9 @@ export const ipSlice = createSlice({
       state.useTimes = action.payload;
     },
     ResetIpState: () => initialState,
+    // SetHelpDetailData : (state, action) => {
+    //   state.
+    // }
   },
 });
 
