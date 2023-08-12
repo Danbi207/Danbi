@@ -19,10 +19,9 @@ const GuestBookComment = ({
 
   const handleDelete = async (comment) => {
     try {
-      const data = await authDelete(
+      await authDelete(
         `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`
       );
-      console.log(data);
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
     } catch (err) {
@@ -31,11 +30,10 @@ const GuestBookComment = ({
   };
   const handleEdit = async () => {
     try {
-      const data = await authPost(
+      await authPost(
         `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`,
         { content: editedContent }
       );
-      console.log(data);
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
       setEditMode(false);

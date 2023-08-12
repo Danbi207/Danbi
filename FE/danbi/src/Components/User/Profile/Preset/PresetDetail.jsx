@@ -48,8 +48,7 @@ const PresetDetail = ({
         content: value,
         sequence: sequence,
       };
-      const data = await authPost(`/api/v1/preset/update/${PresetId}`, config);
-      console.log(data);
+      await authPost(`/api/v1/preset/update/${PresetId}`, config);
       const res = await authGet(`/api/v1/preset`);
       setPresetList(res.presetList);
       showDetail(-1);

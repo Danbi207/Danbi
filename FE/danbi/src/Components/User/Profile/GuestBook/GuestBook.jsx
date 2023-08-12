@@ -16,8 +16,7 @@ const GuestBook = ({ guestBookId, userId }) => {
       content: textArea,
     };
     try {
-      const data = await authPost(`/api/v1/profile/guestbook/${guestBookId}`, textJson);
-      console.log(data);
+      await authPost(`/api/v1/profile/guestbook/${guestBookId}`, textJson);
       setTextArea('');
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);

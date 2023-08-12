@@ -12,9 +12,7 @@ const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
     const data = {
       targetId,
     };
-    console.log(data);
-    const res = await authPost('/api/v1/friends', data);
-    console.log(res);
+    await authPost('/api/v1/friends', data);
   };
 
   const cur_id = useSelector((state) => state.user.userId);

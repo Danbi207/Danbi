@@ -13,9 +13,8 @@ const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) =>
       "sequence": length + 1
     }
     try{
-      const data = await authPost('/api/v1/preset/create', textJson);
+      await authPost('/api/v1/preset/create', textJson);
       fetchData();
-      console.log(data);
     } catch(err) {
       console.log(err);
     }
