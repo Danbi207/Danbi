@@ -23,8 +23,7 @@ const Waitting = ({ value, setWaittingFriends, setMyFriends }) => {
 
   const handleDelete = async () => {
     try {
-      const res = await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
-      console.log(res);
+      await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
       const waittingResponse = await authGet('/api/v1/friends/responses');
       const myFriendResponse = await authGet('/api/v1/friends');
       setWaittingFriends(waittingResponse.result);

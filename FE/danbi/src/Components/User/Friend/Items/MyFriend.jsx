@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import example from '../example-profile.jpg';
 import { authDelete, authGet } from '../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,8 +7,7 @@ const MyFriend = ({ value, setMyFriends, setWaittingFriends }) => {
   console.log(value);
   const handleDelete = async () => {
     try {
-      const res = await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
-      console.log(res);
+      await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
       const waittingResponse = await authGet('/api/v1/friends/responses');
       const myFriendResponse = await authGet('/api/v1/friends');
       setWaittingFriends(waittingResponse.result);
