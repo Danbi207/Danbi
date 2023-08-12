@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-const Setting = ({presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
+const Setting = ({SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
   const [cautionSelect,setCautionSelect] = useState(false);
   const [cautionWrite,setCautionWrite] = useState(true);
   const setCurPosition = useCallback(()=>{
@@ -26,15 +26,15 @@ const Setting = ({presets,caution,setCaution,cautionTitle,setCautionTitle,setCon
         <>
         <Title>도움 유형</Title>
         <div>
-          <FaceTypeBtn $on={helpType==="move"} onClick={()=>setHelpType("move")}>이동</FaceTypeBtn>
+          <FaceTypeBtn $on={helpType==="MOBILE"} onClick={()=>setHelpType("MOBILE")}>이동</FaceTypeBtn>
           <FaceTypeBtn $on={helpType==="ETC"} onClick={()=>setHelpType("ETC")}>기타</FaceTypeBtn>
         </div></> : null
       }
       {
         faceType==="contact" ? <>
         <Title>만나는 장소</Title>
-        <Input onClick={()=>{setCurPosition();setTap("meet");}}>{meet?meet.meetAddress:"만나는 곳을 입력해 주세요"}</Input>
-        {helpType === "move" ? <><Title>목적지</Title><Input onClick={()=>{setCurPosition();setTap("dest");}}>{dest?dest.destAddress:"목적지를 입력해 주세요"}</Input></> : null}
+        <Input onClick={()=>{setCurPosition();setTap("meet");}}>{meet?meet.meetAddr:"만나는 곳을 입력해 주세요"}</Input>
+        {helpType === "MOBILE" ? <><Title>목적지</Title><Input onClick={()=>{setCurPosition();setTap("dest");}}>{dest?dest.destAddr:"목적지를 입력해 주세요"}</Input></> : null}
         </>:null
       }
       <Title>도움 상세정보</Title>
@@ -63,7 +63,7 @@ const Setting = ({presets,caution,setCaution,cautionTitle,setCautionTitle,setCon
         </Options>
       </Select>
       <Content placeholder='상대방이 도움을 줄 때 조심해야할 점을 적어주세요!' readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
-      <RequestBtn>저장하기</RequestBtn>
+      <RequestBtn onClick={SendRequest}>저장하기</RequestBtn>
     </Wrap>
   )
 }

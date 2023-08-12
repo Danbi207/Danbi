@@ -12,9 +12,9 @@ const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
   );
   const [addr,setAddr] = useState(
     tap==="meet"?
-      meet ? meet.meetAddress:null
+      meet ? meet.meetAddr:null
     :tap==="dest"?
-      dest ? dest.destAddress:null
+      dest ? dest.destAddr:null
     :null
   );
   const {kakao} = window;
@@ -30,12 +30,12 @@ const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
             if (status === window.kakao.maps.services.Status.OK) {
               setAddr(result[0].address.address_name ? result[0].address.address_name:result[0].road_address);
               if(tap === "meet"){
-                setMeet({meetAddress:result[0].address.address_name ? result[0].address.address_name:result[0].road_address,meetLatitude:e.latLng.getLat(),meetLongitude:e.latLng.getLng()});
+                setMeet({meetAddr:result[0].address.address_name ? result[0].address.address_name:result[0].road_address,meetLatitude:e.latLng.getLat(),meetLongitude:e.latLng.getLng()});
                 setMarkerPosition({lat:e.latLng.getLat(),lng:e.latLng.getLng()});
               }
     
               if(tap === "dest"){
-                setDest({destAddress:result[0].address.address_name ? result[0].address.address_name:result[0].road_address,destLatitude:e.latLng.getLat(),destLongitude:e.latLng.getLng()});
+                setDest({destAddr:result[0].address.address_name ? result[0].address.address_name:result[0].road_address,destLatitude:e.latLng.getLat(),destLongitude:e.latLng.getLng()});
                 setMarkerPosition({lat:e.latLng.getLat(),lng:e.latLng.getLng()});
               }
             }
