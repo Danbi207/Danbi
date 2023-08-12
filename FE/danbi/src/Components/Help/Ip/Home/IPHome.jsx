@@ -45,7 +45,7 @@ const IPHome = (props) => {
         curTime.setMinutes(curTime.getMinutes()+15);
         year = curTime.getFullYear();
         month = curTime.getMonth()+1;
-        day = curTime.getDay();
+        day = curTime.getDate();
         hour = curTime.getHours();
         minute = curTime.getMinutes();
         const end_time = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour}:${minute}`;
