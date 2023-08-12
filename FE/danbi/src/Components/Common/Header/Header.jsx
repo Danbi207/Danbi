@@ -22,17 +22,27 @@ const Header = () => {
     try {
       const response = await authGet('/api/v1/pofile/alarm');
       console.log(response)
-      setAlramList(response.data); 
-      console.log(alramlist);
+      setAlramList(response.data.alarm_list); 
+      console.log(response.data.alarm_list);
     } catch (err) {
       console.log(err);
     }
-  }, [alramlist]);
+  }, []);
+
+  // 알람 데이터 일괄 삭제
+  // const DeleteAlrams = useCallback(async()=>{
+  //   try {
+
+  //   }
+  //   catch {
+
+  //   }
+  // })
+
 
   useEffect(()=>{
-    console.log(alramlist);
     Alrams();
-  },[alramlist, Alrams])
+  },[Alrams])
 
   return (
     <>
