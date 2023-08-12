@@ -48,12 +48,13 @@ const Request = () => {
     //DO : 상세정보보기일 경우 기존의 요청내용을 동기화
     const data = await authGet(`/api/v1/help/detail/${helpPostId}`);
     if(data){
+      console.log(data);
       let temp = data.startTime.split(" ");
       let _day = temp[0].split("-");
       let _time = temp[1].split(":");
-      setYear(parseInt(_day)[0]);
-      setMonth(parseInt(_day)[1]-1);
-      setDay(parseInt(_day)[2]);
+      setYear(parseInt(_day[0]));
+      setMonth(parseInt(_day[1])-1);
+      setDay(parseInt(_day[2]));
       setHour(parseInt(_time[0]));
       setMinute(parseInt(_time[1]));
       const useDate = new Date(data.endTime);
