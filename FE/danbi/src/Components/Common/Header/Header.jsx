@@ -22,8 +22,8 @@ const Header = () => {
     try {
       const response = await authGet('/api/v1/pofile/alarm');
       console.log(response)
-      setAlramList(response.data.alarm_list); 
-      console.log(response.data.alarm_list);
+      setAlramList(response.alarm_list); 
+      console.log(response.alarm_list);
     } catch (err) {
       console.log(err);
     }
