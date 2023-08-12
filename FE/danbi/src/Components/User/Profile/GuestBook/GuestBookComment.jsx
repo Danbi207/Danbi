@@ -44,6 +44,7 @@ const GuestBookComment = ({
 
   const navigate = useNavigate();
   const cur_id = useSelector((state) => state.user.userId);
+  const createdTime = comment.createdTime.slice(0, 10);
   return (
     <CommentWrap>
       <GuestImg $url={comment.profileUrl} alt="프로필 사진" />
@@ -52,7 +53,7 @@ const GuestBookComment = ({
           <GuestName onClick={() => navigate(`/user/profile/${memberId}`)}>
             {comment.name}
           </GuestName>
-          <CreatedTime>{comment.createdTime}</CreatedTime>
+          <CreatedTime>{createdTime}</CreatedTime>
         </ContentHeader>
         {editMode ? (
           <EditSection>
