@@ -21,11 +21,15 @@ const Setting = ({presets,caution,setCaution,cautionTitle,setCautionTitle,setCon
         <FaceTypeBtn $on={faceType==="contact"} onClick={()=>setFaceType("contact")}>대면</FaceTypeBtn>
         <FaceTypeBtn $on={faceType==="untact"} onClick={()=>setFaceType("untact")}>비대면</FaceTypeBtn>
       </div>
-      <Title>도움 유형</Title>
-      <div>
-        <FaceTypeBtn $on={helpType==="move"} onClick={()=>setHelpType("move")}>이동</FaceTypeBtn>
-        <FaceTypeBtn $on={helpType==="ETC"} onClick={()=>setHelpType("ETC")}>기타</FaceTypeBtn>
-      </div>
+      {
+        faceType==="contact" ?
+        <>
+        <Title>도움 유형</Title>
+        <div>
+          <FaceTypeBtn $on={helpType==="move"} onClick={()=>setHelpType("move")}>이동</FaceTypeBtn>
+          <FaceTypeBtn $on={helpType==="ETC"} onClick={()=>setHelpType("ETC")}>기타</FaceTypeBtn>
+        </div></> : null
+      }
       {
         faceType==="contact" ? <>
         <Title>만나는 장소</Title>
@@ -34,12 +38,12 @@ const Setting = ({presets,caution,setCaution,cautionTitle,setCautionTitle,setCon
         </>:null
       }
       <Title>도움 상세정보</Title>
-      <Content onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해 주세요.
+      <Content onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
 1. 어떤 도움이 필요한지 적어주세요!
 2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
       <Title>주의사항</Title>
       <Select>
-        <div onClick={()=>{setCautionSelect(!cautionSelect);console.log(cautionSelect)}}>{cautionTitle}<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
+        <div onClick={()=>{setCautionSelect(!cautionSelect);}}>{cautionTitle}<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
         <Options $open={cautionSelect}>
           <Option onClick={()=>{
             setCaution("");
@@ -58,7 +62,7 @@ const Setting = ({presets,caution,setCaution,cautionTitle,setCautionTitle,setCon
           }
         </Options>
       </Select>
-      <Content readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
+      <Content placeholder='상대방이 도움을 줄 때 조심해야할 점을 적어주세요!' readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
       <RequestBtn>저장하기</RequestBtn>
     </Wrap>
   )
@@ -77,13 +81,13 @@ const Wrap = styled.div`
   &>*{
     flex: 0 0 auto;
   }
-  &>:nth-child(2){
+  &>div:nth-child(2){
     display: flex;
     justify-content: space-evenly;
     height: 10rem;
     padding: 0.5rem 0;
   }
-  &>:nth-child(4){
+  &>div:nth-child(4){
     display: flex;
     justify-content: space-evenly;
     height: 10rem;
@@ -101,6 +105,7 @@ const RequestBtn = styled.button`
 `
 
 const Select = styled.ul`
+  margin-top: 0.5rem;
   border-radius: 1rem;
   border: 1px solid #b0b0b0;
   width: 100%;

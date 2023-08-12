@@ -1,10 +1,11 @@
-import React,{ useEffect, useState } from 'react';
+import React,{ useEffect, useState, useCallback } from 'react';
 import { styled } from 'styled-components';
 import Footer from "../../../Common/Footer/Footer";
 import Header from "../../../Common/Header/Header";
 import Time from './Components/Time/Time';
 import Setting from "./Components/Setting/Setting";
 import RequestMap from "./Components/RequestMap/RequestMap";
+import { authGet } from '../../../../Util/apis/api';
 const Request = () => {
   const [tap,setTap] = useState("time");
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
@@ -20,35 +21,24 @@ const Request = () => {
   const [dest,setDest] = useState(null);
   const [position,setPosition] = useState({coords:{latitude:36.1071233,longitude:128.216481}});//지도 Position
   const [content,setContent] = useState('');
-  const [presets,setPresets] = useState([
-    {
-      "preset_id" : 1,
-      "title" : "1",
-      "content" : "1",
-      "sequence" : 0,
-    },
-    {
-      "preset_id" : 2,
-      "title" : "2",
-      "content" : "2",
-      "sequence" : 0,
-    },
-    {
-      "preset_id" : 3,
-      "title" : "3",
-      "content" : "3",
-      "sequence" : 0,
-    },
-    {
-      "preset_id" : 4,
-      "title" : "4",
-      "content" : "4",
-      "sequence" : 0,
-    },
-  ]);
+  const [presets,setPresets] = useState([]);
   const [cautionTitle,setCautionTitle] = useState("직접입력");
   const [caution,setCaution] = useState('');
-  useEffect(()=>{console.log(day)},[day]);
+  
+  const getPreset = useCallback(async()=>{
+    try{
+      const data = await authGet("/api/v1/preset");
+      if(data){
+        setPresets(data.preset_list);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  },[setPresets]);
+
+  useEffect(()=>{
+    getPreset();
+  },[getPreset]);
 
   return (
     <Wrap>
