@@ -77,7 +77,8 @@ const Calendar = ({year,setYear,month,setMonth,day,setDay}) => {
       // 지난 날짜이면
       if (currentLoopDate.getTime() < curDay.getTime()) {
         className = 'not-valid';
-    }
+      }
+
       // 선택된 날이 오늘이면
       if (curDay.getFullYear() === year && curDay.getMonth() === month && day === i) {
         className = 'selected';
@@ -225,6 +226,7 @@ const CalenderItem = styled.div`
 
   &.not-valid{
     color : #c4c4c4;
+    pointer-events: none;
   }
 
   &.valid{

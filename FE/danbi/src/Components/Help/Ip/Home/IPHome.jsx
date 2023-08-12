@@ -37,10 +37,10 @@ const IPHome = (props) => {
       let curTime = new Date();
         let year = curTime.getFullYear();
         let month = curTime.getMonth()+1;
-        let day = curTime.getDay();
+        let day = curTime.getDate();
         let hour = curTime.getHours();
         let minute = curTime.getMinutes();
-        const start_time  = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour}:${minute}`;
+        const start_time  = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour < 10 ? "0"+hour : hour}:${minute < 10 ? "0"+minute : minute}`;
 
         curTime.setMinutes(curTime.getMinutes()+15);
         year = curTime.getFullYear();
@@ -48,7 +48,7 @@ const IPHome = (props) => {
         day = curTime.getDate();
         hour = curTime.getHours();
         minute = curTime.getMinutes();
-        const end_time = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour}:${minute}`;
+        const end_time = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour < 10 ? "0"+hour : hour}:${minute < 10 ? "0"+minute : minute}`;
 
         await authPost("/api/v1/help/create",{
           "position" : {
