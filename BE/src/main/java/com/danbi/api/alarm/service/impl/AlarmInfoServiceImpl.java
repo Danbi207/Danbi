@@ -149,4 +149,11 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
                 .readFlag(saveAlarm.getReadFlag())
                 .build();
     }
+
+    @Override
+    public Integer deleteAllAlarm(Long memberId) {
+        return alarmService.deleteAllAlarm(memberId);
+    }
+
+
 }
