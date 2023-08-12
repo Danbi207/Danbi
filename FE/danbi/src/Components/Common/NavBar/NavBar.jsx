@@ -1,9 +1,14 @@
 import React,{useState} from 'react'
 import styled from 'styled-components';
 import Setting from '../Setting/Setting';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 const NavBar = (props) => {
   const [settingFlag,setSettingFlag] = useState(false);
-  
+  const navigate = useNavigate();
+  const role = localStorage.getItem('role');
+  const userId = useSelector((state) => state.user.userId);
   return (
     <>
       {
@@ -11,8 +16,8 @@ const NavBar = (props) => {
         <Setting setSettingFlag={setSettingFlag} ></Setting>:
         <NavBarWrap>
           <CloseBtn onClick={()=>props.setNavFlag(false)}>{"<"}닫기</CloseBtn>
-          <NavBarItem><HomeImg/>홈</NavBarItem>
-          <NavBarItem><ProfileImg/>프로필</NavBarItem>
+          <NavBarItem onClick={role === 'ip' ? navigate('/help/ip') : navigate('/help/helper')}><HomeImg/>홈</NavBarItem>
+          <NavBarItem onClick={navigate(`/user/profile/${userId}`)}><ProfileImg/>프로필</NavBarItem>
           <NavBarItem onClick={()=>setSettingFlag(true)}><SettingImg/>세팅</NavBarItem>
           <NavBarItem><LogoutImg/>로그아웃</NavBarItem>
         </NavBarWrap>
