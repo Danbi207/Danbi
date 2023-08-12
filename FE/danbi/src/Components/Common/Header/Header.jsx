@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled, { keyframes } from 'styled-components';
 import NavBar from '../NavBar/NavBar';
 import { useCallback } from 'react';
-import { authGet } from '../../../Util/apis/api';
+import { authDelete, authGet } from '../../../Util/apis/api';
 import { useEffect } from 'react';
 const Header = () => {
   const [navFlag,setNavFlag] = useState(false);
@@ -23,7 +23,6 @@ const Header = () => {
       const response = await authGet('/api/v1/pofile/alarm');
       console.log(response)
       setAlramList(response.alarm_list); 
-      console.log(response.alarm_list);
     } catch (err) {
       console.log(err);
     }
@@ -31,14 +30,14 @@ const Header = () => {
 
   // 알람 데이터 일괄 삭제
   // const DeleteAlrams = useCallback(async()=>{
-  //   try {
-
+  //   try { 
+  //     await authDelete('/api/v1/pofile/alarm', {});
+  //     Alrams(); 
   //   }
-  //   catch {
-
+  //   catch(err) {
+  //     console.log(err)
   //   }
-  // })
-
+  // },[Alrams])
 
   useEffect(()=>{
     Alrams();
@@ -54,7 +53,7 @@ const Header = () => {
         </IconWrap>
         <AlramWrap $out={alramFlag}>
             <BTNWrap>
-              <DeleteBTN>알림 모두 삭제</DeleteBTN>
+              <DeleteBTN onClick={()=>{}}>알림 모두 삭제</DeleteBTN>
             </BTNWrap>
             <HR/>
             {alramlist.map((item, idx) => 
@@ -153,7 +152,7 @@ const AlramWrap = styled.div`
   height: 30rem;
   bottom: -30rem;
   right: 0;
-  background-color: aquamarine;
+  background-color: #fff;
 
   z-index: 3;
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
@@ -204,6 +203,7 @@ const DeleteBTN = styled.button`
   width: 50%;
   height: 2rem;
   background-color: red;
+  color : #fff;
   border-radius: 10px;
   font-size: 0.8rem;
   text-align: center;
@@ -211,7 +211,7 @@ const DeleteBTN = styled.button`
 `
 
 const AlramsWrap = styled.div`
-  /* display: flex; */
+  margin : 0.5rem 0;
 `
 
 const TitleWrap = styled.div`
