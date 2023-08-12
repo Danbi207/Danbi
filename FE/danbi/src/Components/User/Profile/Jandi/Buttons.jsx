@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -71,6 +71,7 @@ const PickBtn = styled.button`
   height: 2rem;
   font-size: 20px;
   text-align: center;
+  color: #19191B;
 `;
 
 const Dew = styled.div`

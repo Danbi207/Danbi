@@ -148,6 +148,7 @@ const Chat = styled.textarea`
   -ms-overflow-style: none;
   min-height: 24px;
   max-height: 200px;
+  color: ${(props) => props.theme.colors.titleColor};
 `;
 
 const SendBtn = styled.button`
