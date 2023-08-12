@@ -21,7 +21,8 @@ const Header = () => {
   const Alrams = useCallback(async() => {
     try {
       const response = await authGet('/api/v1/pofile/alarm');
-      setAlramList(response.data.alarm_list); 
+      console.log(response)
+      setAlramList(response.data); 
       console.log(alramlist);
     } catch (err) {
       console.log(err);
@@ -196,7 +197,7 @@ const DeleteBTN = styled.button`
   border-radius: 10px;
   font-size: 0.8rem;
   text-align: center;
-  margin : 0.5rem 0 1rem 0; 
+  margin : 0.5rem 0 0.5rem 0; 
 `
 
 const AlramsWrap = styled.div`
