@@ -50,7 +50,7 @@ const HelpMap = ({position,helpList}) => {
       res.push(
       <CustomOverlayMap key={helpList[i].helpPostId} position={{lat:helpList[i].position.meetLatitude,lng:helpList[i].position.meetLongitude}}>
         <MarkerWrap>
-          <Marker alt='' $haste={(new Date() >= new Date(helpList[i].startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(helpList[i],i)} ></Marker>
+          <Marker alt='' $haste={(new Date() >= new Date(helpList[i].startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`} onClick={()=>showDetail(helpList[i],i)} ></Marker>
           <HelpMapItemPC help={helpList[i]} visible={visible} defaultIdx={i} curIdx={curIdx} setCurIdx={setCurIdx}></HelpMapItemPC>
         </MarkerWrap>
       </CustomOverlayMap>);

@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
-import {setCurrentDay} from '../../../../../../store/Slice/ipSlice';
-import { useDispatch } from 'react-redux';
 
-const Calendar = () => {
-  const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
-  const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
+const Calendar = ({year,setYear,month,setMonth,day,setDay}) => {
   const [weekCnt, setWeekCnt] = useState(6);
-
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const dispatch = useDispatch();
 
   const getWeek = (year, month) => {
     //DO : 해당 달의 주차 수를 계산
@@ -47,7 +39,7 @@ const Calendar = () => {
   }, [year, month]);
 
   // 요일을 가져오는 로직
-  const getWeekItems = () => {
+  const getWeekItems = useMemo(() => {
     const days = [];
     const week = ["일","월","화","수","목","금","토"];
     for(let i = 0; i < 7; i++){//한 주 가져오기
@@ -58,16 +50,16 @@ const Calendar = () => {
       );
     }
     return days;
-  }
+  },[])
 
   // 날짜를 가져오는 로직
-  const getCalenderItems = ()=>{
+  const getCalenderItems = useMemo(()=>{
     const res = [];
     const startDate = new Date(year,month,1); //현재달 1일
     const endDate = new Date(year,(month+1),0); //현재달 마지막날
     const lastEndDate = new Date(year, month, 0) // 전달의 마지막 날
     const nextStartDate = new Date(year, (month +2), 1) // 다음 달의 1일d
-    
+    const curDay = new Date();
 
     for (let i = startDate.getDay()-1; i >= 0; i--){ // 첫째 날 전일에 날짜 넣기
       res.unshift(
@@ -80,18 +72,17 @@ const Calendar = () => {
       let className = 'valid'
       
       // 선택된 날이 오늘이면
-      if (selectedDate.getFullYear() === year 
-            && selectedDate.getMonth() === month
-            && selectedDate.getDate() === i) {
-          className = 'selected';
+      if (curDay.getFullYear() === year && curDay.getMonth() === month && day === i) {
+        className = 'selected';
       }
 
       res.push(<CalenderItem
         className={className}
         onClick={()=>{
-          setSelectedDate(new Date(year, month, i));
-          dispatch(setCurrentDay([year, month+1, i]))}} 
-          key={"calender"+i}>{i}</CalenderItem>)
+          setDay(i);
+          // dispatch(setCurrentDay([year, month+1, i]))
+        }} 
+        key={"calender"+i}>{i}</CalenderItem>)
     }
     
     for (let i = endDate.getDay(); i < 6; i++) { // 마지막 날 이후 날짜 넣기
@@ -104,7 +95,7 @@ const Calendar = () => {
       nextStartDate.setDate(nextStartDate.getDate() + 1);
     }
     return res;
-  }
+  },[year,month,day,setDay]);
 
   return (
     <CalenderWrap>
@@ -122,12 +113,12 @@ const Calendar = () => {
       </HeaderWrap>
       <DaysWrap>
         {
-          getWeekItems()
+          getWeekItems
         }
       </DaysWrap>
       <Body $weekCnt={weekCnt}>
         {
-          getCalenderItems()
+          getCalenderItems
         }
       </Body>
     </CalenderWrap>
