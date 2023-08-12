@@ -42,8 +42,8 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
       }
       <Title>도움 상세정보</Title>
       <Content value={content} onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
-        1. 어떤 도움이 필요한지 적어주세요!
-        2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
+        \n1. 어떤 도움이 필요한지 적어주세요!
+        \n2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
       <Title>주의사항</Title>
       <Select>
         <div onClick={()=>{setCautionSelect(!cautionSelect);}}>{cautionTitle}<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>

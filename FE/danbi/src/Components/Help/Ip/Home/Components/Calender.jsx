@@ -114,7 +114,7 @@ const Calendar = () => {
   // 모달창에서 삭제를 실행할 때 달력에 재랜더링을 위해서
   useEffect(()=>{
     GetMonth();
-  },[ipRequestList])
+  },[GetMonth])
 
   useEffect((year, month) => {
     //DO : 달이 바뀔때마다 주차 수를 자동으로 계산
@@ -168,9 +168,8 @@ const Calendar = () => {
         dispatch(setIpRequestList(getHelpData(year ,month, i)));
         dispatch(setMode('ipdetail'));
         }} key={"calender"+i}>
-          {i}
+          <div>{i}</div>
           { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
-          {/* <StyledIcon icon={faCircle} /> */}
         </CalenderItem>)
     }
     
