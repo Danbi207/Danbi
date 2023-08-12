@@ -5,7 +5,7 @@ import Header from "../../../Common/Header/Header";
 import Time from './Components/Time/Time';
 import Setting from "./Components/Setting/Setting";
 import RequestMap from "./Components/RequestMap/RequestMap";
-import { authGet, authPost } from '../../../../Util/apis/api';
+import { authGet, authPost, authPut } from '../../../../Util/apis/api';
 import { useLocation, useNavigate } from 'react-router-dom';
 const Request = () => {
   const [tap,setTap] = useState("time");
@@ -125,7 +125,7 @@ const Request = () => {
         data["emergencyFlag"]=true;
         data["genderFlag"]=genderOption;
         try{
-          const res = await authPost(`/api/v1/help/${helpPostId}`,data);
+          const res = await authPut(`/api/v1/help/${helpPostId}`,data);
           if(res){
             console.log(res);
           }
