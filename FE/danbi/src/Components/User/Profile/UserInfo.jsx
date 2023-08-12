@@ -96,6 +96,6 @@ const AccuseBadge = styled.img.attrs((props) => ({
   src: props.$state === 'yellow'
   ? props.theme.images.yellowcard
   : props.theme.images.redcard,
-}))
+}))``;
 
 export default UserInfo;
