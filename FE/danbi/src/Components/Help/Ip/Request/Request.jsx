@@ -20,6 +20,34 @@ const Request = () => {
   const [dest,setDest] = useState(null);
   const [position,setPosition] = useState({coords:{latitude:36.1071233,longitude:128.216481}});//지도 Position
   const [content,setContent] = useState('');
+  const [presets,setPresets] = useState([
+    {
+      "preset_id" : 1,
+      "title" : "1",
+      "content" : "1",
+      "sequence" : 0,
+    },
+    {
+      "preset_id" : 2,
+      "title" : "2",
+      "content" : "2",
+      "sequence" : 0,
+    },
+    {
+      "preset_id" : 3,
+      "title" : "3",
+      "content" : "3",
+      "sequence" : 0,
+    },
+    {
+      "preset_id" : 4,
+      "title" : "4",
+      "content" : "4",
+      "sequence" : 0,
+    },
+  ]);
+  const [cautionTitle,setCautionTitle] = useState("직접입력");
+  const [caution,setCaution] = useState('');
   useEffect(()=>{console.log(day)},[day]);
 
   return (
@@ -36,7 +64,7 @@ const Request = () => {
             tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear}></Time>:null
           }
           {
-            tap==="setting" ? <Setting setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
+            tap==="setting" ? <Setting presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
           }
         </MainWrap>
       </>

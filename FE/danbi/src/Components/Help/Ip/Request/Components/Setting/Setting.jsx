@@ -1,7 +1,10 @@
 import React from 'react'
+import { useState } from 'react';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-const Setting = ({setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
+const Setting = ({presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
+  const [cautionSelect,setCautionSelect] = useState(false);
+  const [cautionWrite,setCautionWrite] = useState(true);
   const setCurPosition = useCallback(()=>{
     if (navigator.geolocation) { // GPS를 지원하면
       navigator.geolocation.getCurrentPosition((e)=>{
@@ -23,17 +26,40 @@ const Setting = ({setContent,setPosition,setTap,dest,meet,setHelpType,helpType,s
         <FaceTypeBtn $on={helpType==="move"} onClick={()=>setHelpType("move")}>이동</FaceTypeBtn>
         <FaceTypeBtn $on={helpType==="ETC"} onClick={()=>setHelpType("ETC")}>기타</FaceTypeBtn>
       </div>
-      <Title>만나는 장소</Title>
-      <Input onClick={()=>{setCurPosition();setTap("meet");}}>{meet?meet.meetAddress:"만나는 곳을 입력해 주세요"}</Input>
       {
-        helpType === "move" ? <><Title>목적지</Title>
-        <Input onClick={()=>{setCurPosition();setTap("dest");}}>{dest?dest.destAddress:"목적지를 입력해 주세요"}</Input></> : null
+        faceType==="contact" ? <>
+        <Title>만나는 장소</Title>
+        <Input onClick={()=>{setCurPosition();setTap("meet");}}>{meet?meet.meetAddress:"만나는 곳을 입력해 주세요"}</Input>
+        {helpType === "move" ? <><Title>목적지</Title><Input onClick={()=>{setCurPosition();setTap("dest");}}>{dest?dest.destAddress:"목적지를 입력해 주세요"}</Input></> : null}
+        </>:null
       }
       <Title>도움 상세정보</Title>
       <Content onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해 주세요.
 1. 어떤 도움이 필요한지 적어주세요!
 2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
       <Title>주의사항</Title>
+      <Select>
+        <div onClick={()=>{setCautionSelect(!cautionSelect);console.log(cautionSelect)}}>{cautionTitle}<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
+        <Options $open={cautionSelect}>
+          <Option onClick={()=>{
+            setCaution("");
+            setCautionWrite(true);
+            setCautionTitle("직접입력")
+            setCautionSelect(false);}}>직접 입력</Option>
+          {
+            presets.map((e,idx)=><Option
+              onClick={()=>{
+                setCaution(e.content);
+                setCautionWrite(false);
+                setCautionTitle(e.title);
+                setCautionSelect(false);
+              }}
+              key={idx}>{e.title}</Option>)
+          }
+        </Options>
+      </Select>
+      <Content readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
+      <RequestBtn>저장하기</RequestBtn>
     </Wrap>
   )
 }
@@ -64,6 +90,63 @@ const Wrap = styled.div`
     padding: 0.5rem 0;
   }
 `
+
+const RequestBtn = styled.button`
+  margin-left: calc((100% - 20rem)/2);
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  width: 20rem;
+  height: 3rem;
+  background-color: #FFEA7E;
+`
+
+const Select = styled.ul`
+  border-radius: 1rem;
+  border: 1px solid #b0b0b0;
+  width: 100%;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  background-color: #fff;
+  cursor: pointer;
+  & > :first-child{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 2rem;
+  }
+`
+const Option = styled.li`
+  flex: 0 0 auto;
+  border-bottom: 1px solid #b0b0b0;
+  z-index: 1;
+`
+const Options = styled.div`
+  width: 100%;
+  position: relative;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  max-height: 10rem;
+  overflow: hidden;
+  overflow-y: auto;
+  flex-wrap: nowrap;
+  background-color: #fff;
+  border: 1px solid #b0b0b0;
+  visibility:${props=>props.$open ? "visible" : "hidden"};
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+`
+const SelectImg = styled.img`
+  position : absolute;
+  right: 0;
+  width: 2rem;
+  height: 2rem;
+`
+
 const Content = styled.textarea`
   border-radius: 0.5rem;
   border: 1px solid #E3E3E3;
