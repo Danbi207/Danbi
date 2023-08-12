@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-const Setting = ({SendRequestEdit,helpPostId,SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
+const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
   const [cautionSelect,setCautionSelect] = useState(false);
   const [cautionWrite,setCautionWrite] = useState(true);
   const setCurPosition = useCallback(()=>{
@@ -38,7 +38,7 @@ const Setting = ({SendRequestEdit,helpPostId,SendRequest,presets,caution,setCaut
         </>:null
       }
       <Title>도움 상세정보</Title>
-      <Content onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
+      <Content value={content} onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
 1. 어떤 도움이 필요한지 적어주세요!
 2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
       <Title>주의사항</Title>

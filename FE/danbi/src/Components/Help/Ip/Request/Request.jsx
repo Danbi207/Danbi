@@ -66,14 +66,14 @@ const Request = () => {
       setFaceType(data.faceFlag ? "contact" : "untact");
       setHelpType(data.category);
       setDest({
-        destAddr:data.destAddr,
-        destLatitude:data.destLatitude,
-        destLongitude:data.destLongitude
+        destAddr:data.position.destAddr,
+        destLatitude:data.position.destLatitude,
+        destLongitude:data.position.destLongitude
       });
       setMeet({
-        meetAddr:data.meetAddr,
-        meetLatitude:data.meetLatitude,
-        meetLongitude:data.meetLongitude
+        meetAddr:data.position.meetAddr,
+        meetLatitude:data.position.meetLatitude,
+        meetLongitude:data.position.meetLongitude
       });
     }
   },[helpPostId]);
@@ -206,7 +206,7 @@ const Request = () => {
             tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear}></Time>:null
           }
           {
-            tap==="setting" ? <Setting SendRequestEdit={SendRequestEdit} helpPostId={helpPostId} SendRequest={SendRequest} presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
+            tap==="setting" ? <Setting content={content} SendRequestEdit={SendRequestEdit} helpPostId={helpPostId} SendRequest={SendRequest} presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
           }
         </MainWrap>
       </>
