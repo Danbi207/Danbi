@@ -61,6 +61,12 @@ public class AlarmController {
         return ApiResponse.ok("알림을 삭제 처리했습니다.");
     }
 
+    @Operation(summary = "모든알림 삭제처리 API", description = "모든알림 삭제처리")
+    @DeleteMapping()
+    ApiResponse<Integer> deleteAllAlarm(@MemberInfo MemberInfoDto memberInfoDto) {
+        return ApiResponse.ok(alarmInfoService.deleteAllAlarm(memberInfoDto.getMemberId()));
+    }
+
     @Operation(summary = "알림 생성 API", description = "알림 생성")
     @PostMapping
     ApiResponse<String> registerAlarm(@MemberInfo MemberInfoDto memberInfoDto, @RequestBody RequestAlarmDto requestAlarmDto) {

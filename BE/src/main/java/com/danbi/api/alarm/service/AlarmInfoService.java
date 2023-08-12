@@ -30,5 +30,7 @@ public interface AlarmInfoService {
     //알림 생성
     ResponseAlarmDto registerAlarm(Long memberId, RequestAlarmDto requestAlarmDto);
 
+    // 모든 알람 삭제
+    Integer deleteAllAlarm(Long memberId);
 
 }
