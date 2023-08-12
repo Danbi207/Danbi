@@ -97,7 +97,10 @@ const IPHome = (props) => {
     }
   },[coord2Address]);
 
-
+  // 화면 재랜더링을 위해
+  useEffect(()=>{ 
+    emergencyReqeust();
+  },[emergencyReqeust])
 
   return (
     <IpHomeWrap>

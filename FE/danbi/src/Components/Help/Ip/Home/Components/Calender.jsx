@@ -168,7 +168,7 @@ const Calendar = () => {
         dispatch(setIpRequestList(getHelpData(year ,month, i)));
         dispatch(setMode('ipdetail'));
         }} key={"calender"+i}>
-          <div>{i}</div>
+          {i}
           { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
         </CalenderItem>)
     }
