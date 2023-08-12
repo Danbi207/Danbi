@@ -83,7 +83,7 @@ const Request = () => {
         data["emergencyFlag"]=false;
         data["genderFlag"]=genderOption;
         try{
-          const res = await authPost("api/v1/help/create",data);
+          const res = await authPost("/api/v1/help/create",data);
           if(res){
             console.log(res);
           }
