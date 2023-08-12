@@ -60,6 +60,7 @@ const Wrap = styled.div`
   width: 100%;
 `;
 const FriendWrap = styled.div`
+  color: ${(props) => props.theme.colors.titleColor};
   font-size: 16px;
   width: 100%;
   height: calc(100% - 6.2rem);

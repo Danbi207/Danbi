@@ -85,15 +85,15 @@ const Btns = styled.div`
 `;
 const AcceptBtn = styled.button`
   border-radius: 10px;
-  background-color: #6161ff;
-  color: white;
+  background-color: #FFEA7E;
+  color: #19191B;
   width: 4rem;
   height: 2rem;
 `;
 const DeleteBtn = styled.button`
   border-radius: 10px;
   background-color: #d9d9d9;
-  color: black;
+  color: #19191B;
   width: 4rem;
   height: 2rem;
 `;

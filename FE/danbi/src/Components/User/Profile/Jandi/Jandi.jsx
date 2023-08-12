@@ -200,7 +200,7 @@ const EmptyItem = styled.div`
 `;
 
 const OverRayWrap = styled.div`
-  background-color: rgba(128, 128, 128, 0.5);
+  background-color: rgba(128, 128, 128, 0.25);
   position: fixed;
   width: auto;
   height: auto;

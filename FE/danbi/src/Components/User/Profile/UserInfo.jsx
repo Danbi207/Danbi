@@ -22,7 +22,7 @@ const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
+        <div style={{display: 'flex', flexDirection: 'row', marginBottom: '0.75rem'}}>
           <UserName>{name}</UserName>
           {friendFlag ? <FriendBadge /> : null}
           {accusePoint < 0 ? null : accusePoint > 1 ? (
@@ -70,7 +70,6 @@ const UserName = styled.div`
   font-size: 17px;
   height: 1rem;
   text-align: start;
-  margin-bottom: 0.75rem;
   margin-left: 0.25rem;
 `;
 

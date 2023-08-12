@@ -75,7 +75,7 @@ const Btn = styled.div`
 const DeleteBtn = styled.button`
   border-radius: 10px;
   background-color: #d9d9d9;
-  color: black;
+  color: #19191B;
   width: 4rem;
   height: 2rem;
 `;

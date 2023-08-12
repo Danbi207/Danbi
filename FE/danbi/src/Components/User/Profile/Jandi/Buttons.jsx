@@ -65,7 +65,7 @@ const Btns = styled.div`
 `;
 
 const PickBtn = styled.button`
-  background-color: #6161ff;
+  background-color: #FFEA7E;
   border-radius: 10px;
   width: 3rem;
   height: 2rem;
