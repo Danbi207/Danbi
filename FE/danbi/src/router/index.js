@@ -1,6 +1,6 @@
 import Login from "../Components/User/Login/Login";
 import KakaoOauth from "../Components/User/Login/Oauth/KakaoOauth";
-import IpRequest from "../Components/Help/Ip/Request/IpRequest";
+// import IpRequest from "../Components/Help/Ip/Request/IpRequest";
 import Detail from "../Components/Help/Co/Detail/Detail";
 import MatchedHelp from "../Components/Help/Co/Matched/MatchedHelp";
 import Profile from "../Components/User/Profile/Profile";
@@ -32,7 +32,8 @@ const routes = [
   },
   {
     path : "/help/ip/request",
-    Component : IpRequest
+    // Component : IpRequest
+    Component : Request
   },
   {
     path : "/help/ip/request/map/:mode",

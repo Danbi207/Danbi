@@ -6,7 +6,7 @@ import Time from './Components/Time/Time';
 import Setting from "./Components/Setting/Setting";
 import RequestMap from "./Components/RequestMap/RequestMap";
 import { authGet, authPost } from '../../../../Util/apis/api';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const Request = () => {
   const [tap,setTap] = useState("time");
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
@@ -26,6 +26,8 @@ const Request = () => {
   const [cautionTitle,setCautionTitle] = useState("직접입력");
   const [caution,setCaution] = useState('');
   const {kakao} = window;
+  const location = useLocation();
+  const helpPostId = location.state ? location.state.helpPostId : null;
   const navigate = useNavigate();
   const getPreset = useCallback(async()=>{
     try{
@@ -41,6 +43,99 @@ const Request = () => {
   useEffect(()=>{
     getPreset();
   },[getPreset]);
+
+  const getHelpData = useCallback(async()=>{
+    //DO : 상세정보보기일 경우 기존의 요청내용을 동기화
+    const data = await authGet(`/api/v1/help/detail/${helpPostId}`);
+    if(data){
+      let temp = data.startTime.split(" ");
+      let _day = temp[0].split("-");
+      let _time = temp[1].split(":");
+      setYear(parseInt(_day)[0]);
+      setMonth(parseInt(_day)[1]-1);
+      setDay(parseInt(_day)[2]);
+      setHour(parseInt(_time[0]));
+      setMinute(parseInt(_time[1]));
+      const useDate = new Date(data.endTime);
+      useDate.setMinutes(useDate.getMinutes()-(new Date(data.startTime)).getMinutes());
+      setUseTime(useDate.getMinutes());
+      setGenderOption(data.genderFlag);
+      setContent(data.content);
+      setCaution(data.caution);
+      setFaceType(data.faceFlag ? "contact" : "untact");
+      setHelpType(data.category);
+      setDest({
+        destAddr:data.destAddr,
+        destLatitude:data.destLatitude,
+        destLongitude:data.destLongitude
+      });
+      setMeet({
+        meetAddr:data.meetAddr,
+        meetLatitude:data.meetLatitude,
+        meetLongitude:data.meetLongitude
+      });
+    }
+  },[helpPostId]);
+
+  useEffect(()=>{
+    if(helpPostId){
+      getHelpData();
+    }
+  },[helpPostId,getHelpData]);
+
+  const SendRequestEdit = useCallback(async()=>{
+    const geocoder = new kakao.maps.services.Geocoder();
+    const callback = async (result,status) =>{
+      if (status === window.kakao.maps.services.Status.OK) {
+        const addr = result[0].address.address_name ? result[0].address.address_name:result[0].road_address;
+        const data = {};
+        const startTime = `${year}-${(month+1) < 10 ? "0"+(month+1):(month+1)}-${day < 10 ? "0"+day : day} ${hour < 10 ? "0"+hour : hour}:${minute < 10 ? "0"+minute:minute}`;
+        if( (new Date(startTime)) < (new Date())){
+          alert("도움 시작시간이 현재시간보다 이전입니다. 다시 설정해주세요");
+          return;
+        }
+        data["start_time"]=startTime;
+        const endTime = new Date(startTime);
+        endTime.setMinutes(endTime.getMinutes()+useTime);
+        data["end_time"]=`${endTime.getFullYear()}-${(endTime.getMonth()+1)<10?"0"+(endTime.getMonth()+1):(endTime.getMonth()+1)}-${endTime.getDate() < 10 ? "0"+endTime.getDate():endTime.getDate()} ${endTime.getHours() < 10 ? "0"+endTime.getHours():endTime.getHours()}:${endTime.getMinutes() < 10 ? "0"+endTime.getMinutes():endTime.getMinutes()}`
+        data["position"]={
+          addr,
+          latitude:position.coords.latitude,
+          longitude:position.coords.longitude,
+          ...meet,
+          ...dest
+        };
+        if(faceType==="NONE") {
+          alert("대면/비대면 여부를 설정해 주세요");
+          return;
+        }
+        data["faceFlag"]=faceType==="contact";
+        if(faceType==="contact" && helpType ==="NONE"){
+          alert("도움유형을 선택해 주세요");
+          return;
+        }
+        data["category"]=helpType;
+        data["caution"]=caution;
+        if(content===""){
+          alert("도움 상세정보를 입력해주세요");
+          return;
+        }
+        data["content"]=content;
+        data["emergencyFlag"]=true;
+        data["genderFlag"]=genderOption;
+        try{
+          const res = await authPost(`/api/v1/help/${helpPostId}`,data);
+          if(res){
+            console.log(res);
+          }
+        }catch(err){
+          console.log(err);
+        }
+        navigate("/help/ip");
+      }
+    };
+    geocoder.coord2Address(position.coords.longitude, position.coords.latitude, callback);
+  },[position,helpType,caution,faceType,meet,dest,kakao,content,genderOption,year,month,day,hour,minute,useTime,navigate,helpPostId]);
 
   const SendRequest = useCallback(async()=>{
     const geocoder = new kakao.maps.services.Geocoder();
@@ -110,7 +205,7 @@ const Request = () => {
             tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear}></Time>:null
           }
           {
-            tap==="setting" ? <Setting SendRequest={SendRequest} presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
+            tap==="setting" ? <Setting SendRequestEdit={SendRequestEdit} helpPostId={helpPostId} SendRequest={SendRequest} presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
           }
         </MainWrap>
       </>

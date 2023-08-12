@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-const Setting = ({SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
+const Setting = ({SendRequestEdit,helpPostId,SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
   const [cautionSelect,setCautionSelect] = useState(false);
   const [cautionWrite,setCautionWrite] = useState(true);
   const setCurPosition = useCallback(()=>{
@@ -63,7 +63,7 @@ const Setting = ({SendRequest,presets,caution,setCaution,cautionTitle,setCaution
         </Options>
       </Select>
       <Content placeholder='상대방이 도움을 줄 때 조심해야할 점을 적어주세요!' readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
-      <RequestBtn onClick={SendRequest}>저장하기</RequestBtn>
+      <RequestBtn onClick={()=>{helpPostId ? SendRequestEdit():SendRequest()}}>{helpPostId?"도움 수정하기":"도움 요청하기"}</RequestBtn>
     </Wrap>
   )
 }
