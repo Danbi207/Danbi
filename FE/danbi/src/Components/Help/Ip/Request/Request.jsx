@@ -4,51 +4,59 @@ import Footer from "../../../Common/Footer/Footer";
 import Header from "../../../Common/Header/Header";
 import Time from './Components/Time/Time';
 import Setting from "./Components/Setting/Setting";
+import RequestMap from "./Components/RequestMap/RequestMap";
 const Request = () => {
   const [tap,setTap] = useState("time");
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
   const [day,setDay] = useState((new Date()).getDate());
-  const [noon,setNoon] = useState("오전");
-  const [hour,setHour] = useState(1);
-  const [minute,setMinute] = useState(5);
+  const [hour,setHour] = useState((new Date()).getHours());
+  const [minute,setMinute] = useState((new Date()).getMinutes()-(new Date()).getMinutes()%5+5);
   const [useTime,setUseTime] = useState(15);
   const [genderOption,setGenderOption] = useState(false);
+  const [faceType,setFaceType] = useState("none");
+  const [helpType,setHelpType] = useState("none");
+  const [meet,setMeet] = useState(null);
+  const [dest,setDest] = useState(null);
+  const [position,setPosition] = useState({coords:{latitude:36.1071233,longitude:128.216481}});//지도 Position
+  const [content,setContent] = useState('');
   useEffect(()=>{console.log(day)},[day]);
 
   return (
     <Wrap>
       <Header></Header>
-      <Tap>
-        <TapItem $on = {tap==="time"} onClick={()=>setTap("time")}>시간예약</TapItem>
-        <TapItem $on = {tap==="setting"} onClick={()=>setTap("setting")}>상세설정</TapItem>
-      </Tap>
-      <div>
-        {
-          tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} noon={noon} setNoon={setNoon} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear}></Time>:null
-        }
-        {
-          tap==="setting" ? <Setting></Setting>:null
-        }
-      </div>
+      {
+        tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
+        <Tap>
+          <TapItem $on = {tap==="time"} onClick={()=>setTap("time")}>시간예약</TapItem>
+          <TapItem $on = {tap==="setting"} onClick={()=>setTap("setting")}>상세설정</TapItem>
+        </Tap>
+        <MainWrap $full={false}>
+          {
+            tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear}></Time>:null
+          }
+          {
+            tap==="setting" ? <Setting setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
+          }
+        </MainWrap>
+      </>
+      }
       <Footer></Footer>
     </Wrap>
   )
 }
-
+const MainWrap = styled.div`
+  height: ${props=>props.$full ? "calc(100% - 6.2rem)" :"calc(100% - 9.2rem)"};
+  padding: ${props=>props.$full ? null :"1rem 30%"};
+  @media screen and (max-width: 728px) {
+    padding: ${props=>props.$full ? null :"1rem"};
+  }
+`
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-
-  & >:nth-child(4){
-    height: calc(100% - 9.2rem);
-    padding: 1rem 30%;
-    @media screen and (max-width: 728px) {
-      padding: 1rem;
-    }
-  }
 `
 
 const Tap = styled.div`

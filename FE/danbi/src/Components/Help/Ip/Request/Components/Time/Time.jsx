@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import Calendar from "../Calendar/Calender";
 
-const Time = ({genderOption,setGenderOption,useTime,setUseTime,noon,setNoon,hour,setHour,minute,setMinute,year,setYear,month,setMonth,day,setDay}) => {
+const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minute,setMinute,year,setYear,month,setMonth,day,setDay}) => {
   const [hourSelect,setHourSelect] = useState(false);
-  const [noonSelect,setNoonSelect] = useState(false);
   const [minuteSelect,setMinuteSelect] = useState(false);
   return (
     <Wrap>
@@ -14,18 +13,11 @@ const Time = ({genderOption,setGenderOption,useTime,setUseTime,noon,setNoon,hour
       <Title>시작 시간</Title>
       <div>
         <Select>
-          <div onClick={()=>setNoonSelect(!noonSelect)}>{noon}<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
-          <Options $open={noonSelect}>
-            <Option onClick={()=>{setNoonSelect(false);setNoon("오전");}}>오전</Option>
-            <Option onClick={()=>{setNoonSelect(false);setNoon("오후");}}>오후</Option>
-          </Options>
-        </Select>
-        <Select>
           <div onClick={()=>setHourSelect(!hourSelect)}>{hour}시<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
           <Options $open={hourSelect}>
             {
-              (new Array(12)).fill(0).map((e,idx)=>
-              <Option onClick={()=>{setHourSelect(false);setHour(idx+1);}} key={idx}>{idx+1}시</Option>)
+              (new Array(24)).fill(0).map((e,idx)=>
+              <Option onClick={()=>{setHourSelect(false);setHour((idx));}} key={idx}>{idx}시</Option>)
             }
           </Options>
         </Select>
@@ -33,7 +25,7 @@ const Time = ({genderOption,setGenderOption,useTime,setUseTime,noon,setNoon,hour
           <div onClick={()=>setMinuteSelect(!minuteSelect)}>{minute}분<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
           <Options $open={minuteSelect}>
             {
-              (new Array(12)).fill(0).map((e,idx)=>
+              (new Array(11)).fill(0).map((e,idx)=>
               <Option onClick={()=>{setMinuteSelect(false);setMinute(5+idx*5);}} key={idx}>{5+idx*5}분</Option>)
             }
           </Options>
@@ -116,6 +108,8 @@ const Options = styled.div`
 `
 
 const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   & > :nth-child(3){
