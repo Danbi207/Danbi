@@ -29,7 +29,7 @@ const Request = () => {
     try{
       const data = await authGet("/api/v1/preset");
       if(data){
-        setPresets(data.preset_list);
+        setPresets(data.presetList);
       }
     }catch(err){
       console.log(err);
