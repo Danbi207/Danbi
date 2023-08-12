@@ -12,6 +12,7 @@ const NavBar = (props) => {
   const userId = useSelector((state) => state.user.userId);
   const handleLogout = useCallback( async () => {
     await authPost('/api/v1/member/logout');
+    navigate('/');
   }, []);
 
   return (
