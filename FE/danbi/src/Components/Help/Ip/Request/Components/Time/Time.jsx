@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import Calendar from "../Calendar/Calender";
 
-const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minute,setMinute,year,setYear,month,setMonth,day,setDay}) => {
+const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minute,setMinute,year,setYear,month,setMonth,day,setDay,setTap, props}) => {
   const [hourSelect,setHourSelect] = useState(false);
   const [minuteSelect,setMinuteSelect] = useState(false);
   return (
@@ -16,8 +16,8 @@ const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minu
           <div onClick={()=>setHourSelect(!hourSelect)}>{hour}시<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
           <Options $open={hourSelect}>
             {
-              (new Array(24)).fill(0).map((e,idx)=>
-              <Option onClick={()=>{setHourSelect(false);setHour((idx));}} key={idx}>{idx}시</Option>)
+              (new Array(18)).fill(0).map((e,idx)=>
+              <Option onClick={()=>{setHourSelect(false);setHour((idx));}} key={idx}>{idx+6}시</Option>)
             }
           </Options>
         </Select>
@@ -40,6 +40,7 @@ const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minu
         </div>
       <Title>선택사항</Title>
       <Label><input onChange={()=>setGenderOption(!genderOption)} checked={genderOption} type="checkbox"/><div>동성이었으면 좋겠어요</div></Label>
+      <RequestBtn onClick={()=>(setTap("setting"))}>다음</RequestBtn>
     </Wrap>
   )
 }
@@ -48,13 +49,17 @@ const Label = styled.label`
   margin-left: 1rem;
   display: flex;
   cursor: pointer;
+  & > input{
+    accent-color: #FFEA7E;
+  }
+
   & > div{
     margin-left: 1rem;
     line-height: 3rem;
   }
 `
 const UseTimeItem = styled.button`
-  width: 6rem;
+  width: 8rem;
   height: 2rem;
   line-height: 2rem;
   border-radius: 1rem;
@@ -71,7 +76,7 @@ const SelectImg = styled.img`
 const Select = styled.ul`
   border-radius: 1rem;
   border: 1px solid #b0b0b0;
-  width: 6rem;
+  width: 8rem;
   height: 2rem;
   line-height: 2rem;
   text-align: center;
@@ -112,6 +117,7 @@ const Wrap = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
   & > :nth-child(3){
     display: flex;
     height: 2rem;
@@ -141,4 +147,14 @@ const Title = styled.div`
   font-size: 1.25rem;
   font-weight: 900;
 `
+
+const RequestBtn = styled.button`
+  margin-left: calc((100% - 20rem)/2);
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  width: 20rem;
+  height: 5rem;
+  background-color: #FFEA7E;
+`
+
 export default Time

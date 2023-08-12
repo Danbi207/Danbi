@@ -2,9 +2,11 @@ import React from 'react'
 import { useState } from 'react';
 import { useCallback } from 'react';
 import styled from 'styled-components';
+
 const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
   const [cautionSelect,setCautionSelect] = useState(false);
   const [cautionWrite,setCautionWrite] = useState(true);
+
   const setCurPosition = useCallback(()=>{
     if (navigator.geolocation) { // GPS를 지원하면
       navigator.geolocation.getCurrentPosition((e)=>{
@@ -14,6 +16,7 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
       setPosition({coords:{latitude:36.1071233,longitude:128.216481}})
     }
   },[setPosition]);
+
   return (
     <Wrap>
       <Title>대면/비대면</Title>
@@ -39,8 +42,8 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
       }
       <Title>도움 상세정보</Title>
       <Content value={content} onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
-1. 어떤 도움이 필요한지 적어주세요!
-2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
+        1. 어떤 도움이 필요한지 적어주세요!
+        2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
       <Title>주의사항</Title>
       <Select>
         <div onClick={()=>{setCautionSelect(!cautionSelect);}}>{cautionTitle}<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
@@ -67,6 +70,7 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
     </Wrap>
   )
 }
+
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -157,7 +161,7 @@ const Content = styled.textarea`
   border: 1px solid #E3E3E3;
   padding: 1rem;
   resize: none;
-  font-size: 10px;
+  font-size: 12px;
   width: 100%;
   height: 5rem;
   margin: 0.5rem 0;

@@ -7,6 +7,7 @@ import Setting from "./Components/Setting/Setting";
 import RequestMap from "./Components/RequestMap/RequestMap";
 import { authGet, authPost, authPut } from '../../../../Util/apis/api';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 const Request = () => {
   const [tap,setTap] = useState("time");
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
@@ -17,7 +18,7 @@ const Request = () => {
   const [useTime,setUseTime] = useState(15);
   const [genderOption,setGenderOption] = useState(false);
   const [faceType,setFaceType] = useState("NONE");
-  const [helpType,setHelpType] = useState("NONE");
+  const [helpType,setHelpType] = useState("ETC");
   const [meet,setMeet] = useState(null);
   const [dest,setDest] = useState(null);
   const [position,setPosition] = useState({coords:{latitude:36.1071233,longitude:128.1111}});//지도 Position
@@ -29,6 +30,7 @@ const Request = () => {
   const location = useLocation();
   const helpPostId = location.state ? location.state.helpPostId : null;
   const navigate = useNavigate();
+
   const getPreset = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/preset");
@@ -203,7 +205,7 @@ const Request = () => {
         </Tap>
         <MainWrap $full={false}>
           {
-            tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear}></Time>:null
+            tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear} setTap={setTap}></Time>:null
           }
           {
             tap==="setting" ? <Setting content={content} SendRequestEdit={SendRequestEdit} helpPostId={helpPostId} SendRequest={SendRequest} presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null

@@ -70,7 +70,14 @@ const Calendar = ({year,setYear,month,setMonth,day,setDay}) => {
 
     for(let i = startDate.getDate(); i <= endDate.getDate(); i++){ //달력값 넣기
       let className = 'valid'
+
+      const currentLoopDate = new Date(year, month, i);
+      curDay.setHours(0, 0, 0, 0);
       
+      // 지난 날짜이면
+      if (currentLoopDate.getTime() < curDay.getTime()) {
+        className = 'not-valid';
+    }
       // 선택된 날이 오늘이면
       if (curDay.getFullYear() === year && curDay.getMonth() === month && day === i) {
         className = 'selected';
