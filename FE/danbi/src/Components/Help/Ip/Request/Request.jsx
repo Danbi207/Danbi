@@ -44,7 +44,7 @@ const Request = () => {
     <Wrap>
       <Header></Header>
       {
-        tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
+        tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap meet={meet} dest={dest} setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
         <Tap>
           <TapItem $on = {tap==="time"} onClick={()=>setTap("time")}>시간예약</TapItem>
           <TapItem $on = {tap==="setting"} onClick={()=>setTap("setting")}>상세설정</TapItem>

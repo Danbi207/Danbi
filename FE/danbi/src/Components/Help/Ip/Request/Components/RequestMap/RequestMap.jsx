@@ -2,9 +2,21 @@ import React from 'react'
 import styled from 'styled-components';
 import {Map,CustomOverlayMap} from "react-kakao-maps-sdk";
 import { useState } from 'react';
-const RequestMap = ({setDest,setMeet,setTap,tap,position}) => {
-  const [markerPosition,setMarkerPosition]=useState(null);
-  const [addr,setAddr] = useState("");
+const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
+  const [markerPosition,setMarkerPosition]=useState(
+    tap==="meet"?
+      meet ? {lat:meet.meetLatitude,lng:meet.meetLongitude}:null
+    :tap==="dest"?
+      dest ? {lat:dest.destLatitude,lng:dest.destLongitude}:null
+    :null
+  );
+  const [addr,setAddr] = useState(
+    tap==="meet"?
+      meet ? meet.meetAddress:null
+    :tap==="dest"?
+      dest ? dest.destAddress:null
+    :null
+  );
   const {kakao} = window;
   return (
     <Wrap>
