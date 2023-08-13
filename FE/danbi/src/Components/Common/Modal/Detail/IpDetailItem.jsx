@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components';
 import { authDelete } from '../../../../Util/apis/api';
 import { useDispatch } from 'react-redux';
@@ -35,6 +35,10 @@ const IpDetailItem = ({data}) => {
     }
   },[data, dispatch]) 
 
+  const handleMove = () => {
+      navigate('/desired-url-path');  // 원하는 URL로 변경해주세요.
+  }
+
   return (
     <HelpItemWrap>
       <TitleWrap>도움 정보</TitleWrap>
@@ -48,8 +52,11 @@ const IpDetailItem = ({data}) => {
         <Item>{data.content}</Item>
       </DetailItemWrap>
       <BTNWrap>
-        <DetailBTN onClick={goToDetail}>상세보기</DetailBTN>
-        <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN>
+        {
+          data.state === "MATCHED" ? <DetailBTN onClick={handleMove}>도움받기</DetailBTN> :
+          data.state === "ACTIVE" ? <><DetailBTN onClick={goToDetail}>수정하기</DetailBTN>
+          <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN></> : null 
+        }
       </BTNWrap>
     </HelpItemWrap>
   )
@@ -109,6 +116,7 @@ const DeleteBTN = styled.button`
   color: #fff;
   border-radius: 10px
 `
+
 
 
 

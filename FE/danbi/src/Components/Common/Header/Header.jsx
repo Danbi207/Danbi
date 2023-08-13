@@ -32,6 +32,7 @@ const Header = () => {
   const DeleteAlrams = useCallback(async()=>{
     try { 
       await authDelete('/api/v1/pofile/alarm', {});
+      console.log('알람 가져오기 전에 삭제 에러')
       Alrams(); 
     }
     catch(err) {
