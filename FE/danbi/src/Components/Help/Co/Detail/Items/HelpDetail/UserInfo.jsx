@@ -20,7 +20,7 @@ const UserInfo = ({ data }) => {
         <ProfileImg alt='' src={data.ip.profileUrl} />
         <Body>
           <BottomWrap>
-            <Name>{data.ip.name}</Name>
+            <Name onClick={() => {navigate(`/user/profile/${data.ip.ipId}`)}}>{data.ip.name}</Name>
             <BadgeWrap>
               {data.friendFlag ? <FriendBadge /> : null}
               {data.ip.accusePoint < 0 ? null : data.ip.accusePoint > 1 ? (
