@@ -25,24 +25,23 @@ const UserFile = () => {
 
   const FileSubmit = useCallback(async () => {
     try {
-      // 각 일을 보내는 로직
       const formData = new FormData(); 
       imageFiles.forEach((file) => {
         formData.append('file', file);
       });
 
-      await authFilePost('/api/v1/submit/ip/certification', imageFiles);
-      console.log(imageFiles)
+      await authFilePost('/api/v1/submit/ip/certification', formData);
+      console.log(formData)
       // DO : 로그아웃
       // await authPost('/api/v1/member/logout', {}) 
       // localStorage.removeItem('role');
       // localStorage.removeItem('refreshToken');
       // localStorage.removeItem('refreshTokenExpireTime');
-      navigate('/')
+      // navigate('/')
     } catch (error) {
         console.error("에러 발생:", error);
     }
-  }, [imageFiles,navigate]);
+  }, [imageFiles]);
   
   const onChange = (e) => {
     const files = [...e.target.files]; 
