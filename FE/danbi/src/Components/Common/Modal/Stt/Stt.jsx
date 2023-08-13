@@ -7,7 +7,7 @@ const Stt = () => {
   const dispatch = useDispatch();
   const [time,setTime] = useState(5);
   useEffect(()=>{
-    //DO : 명령어 입력을 5초동안 받음
+    //DO : 명령어 입력을 15초동안 받음
     const countdown = setInterval(()=>{
       if(time > 0){
         setTime(time-1);
@@ -21,7 +21,7 @@ const Stt = () => {
   },[mode,time,dispatch]);
   useEffect(()=>{
     if(mode==="stt"){
-      setTime(5);
+      setTime(15);
     }
   },[mode]);
   return (

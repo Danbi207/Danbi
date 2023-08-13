@@ -6,8 +6,12 @@ export const modalSlice = createSlice({
     mode: null,
     ipRequestList: [],
     targetMemberId: 0,
+    isDeleted : false,
   },
   reducers: {
+    setIsDeleted: (state,action)=>{
+      state.isDeleted=!state.isDeleted;
+    },
     setMode: (state, action) => {
       state.mode = action.payload;
     },
@@ -26,6 +30,6 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { setMode, setIpRequestList, setTargetMemberId, deleteIpRequest } = modalSlice.actions;
+export const { setIsDeleted,setMode, setIpRequestList, setTargetMemberId, deleteIpRequest } = modalSlice.actions;
 
 export default modalSlice.reducer;

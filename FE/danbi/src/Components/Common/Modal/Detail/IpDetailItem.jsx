@@ -4,7 +4,7 @@ import { authDelete } from '../../../../Util/apis/api';
 import { useDispatch } from 'react-redux';
 import { deleteIpRequest, setMode } from '../../../../store/Slice/ModalSlice';
 import { useNavigate } from 'react-router-dom';
-
+import {setIsDeleted} from "../../../../store/Slice/ModalSlice";
 
 
 const IpDetailItem = ({data}) => {
@@ -29,6 +29,7 @@ const IpDetailItem = ({data}) => {
     try{
       await authDelete(`/api/v1/help/${data.helpPostId}`, {});
       dispatch(deleteIpRequest(data.helpPostId));
+      dispatch(setIsDeleted());
     }
     catch(err) {
       console.log(err)

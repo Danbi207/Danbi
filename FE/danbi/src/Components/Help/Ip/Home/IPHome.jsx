@@ -91,7 +91,6 @@ const IPHome = (props) => {
     });
   },[geocoder,kakao,emergencyReqeust])
   
-
   const setCurPosition = useCallback((mode)=>{
     //DO : gps 현재 위치 얻기
     if (navigator.geolocation) { // GPS를 지원하면
@@ -115,7 +114,7 @@ const IPHome = (props) => {
       fuzzyMatchingThreshold: 0.2,
     },
     {
-      command: ["긴급","도와줘","긴급요청"],
+      command: "긴급",
       callback: (command) => {
         if(commandMode==="stt"){
           setCurPosition("emergency");
@@ -125,7 +124,29 @@ const IPHome = (props) => {
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
     },
-  ] 
+    {
+      command: "긴급요청",
+      callback: (command) => {
+        if(commandMode==="stt"){
+          setCurPosition("emergency");
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: "도와줘",
+      callback: (command) => {
+        if(commandMode==="stt"){
+          setCurPosition("emergency");
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+  ]
 
   const {browserSupportsSpeechRecognition} = useSpeechRecognition({commands});
   useEffect(()=>{
@@ -137,19 +158,28 @@ const IPHome = (props) => {
   return (
     <IpHomeWrap>
       <Header/>
+      <Main>
         <Wrap>
           <Calender refresh={refresh} />
+        </Wrap>
+        <BtnWrap>
           <EmergencyBTN onClick={()=>setCurPosition("emergency")}>긴급도움 요청하기</EmergencyBTN>
           <RequestBTN onClick={()=>{navigate('/help/ip/request')}}>도움 요청하기</RequestBTN>
-        </Wrap>
-      <Footer/>
+        </BtnWrap>
+      </Main>
+    <Footer/>
     </IpHomeWrap>
   );
 };
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: calc(100% - 6.2rem);
+`
+
 const EmergencyBTN = styled.button`
-  position: absolute;
-  left : calc(( 100% - 30rem )/2);
-  bottom: 10rem;
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
@@ -159,29 +189,31 @@ const EmergencyBTN = styled.button`
   @media screen and (max-width: 500px) {
     width: 20rem;
     height: 5rem;
-    left : calc(( 100% - 20rem )/2);
-    bottom: 14rem;
   }
+`
+const BtnWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom:1.5rem;
 `
 const IpHomeWrap = styled.div`
   width: 100%;
-  height: 60%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
 `
 
 const Wrap = styled.div `
   width: 100%;
-  height: 100%;;
+  height: 100%;
   background-color: ${props=>props.theme.colors.bgColor};
-
 `
 
 const RequestBTN = styled.button`
-  position: absolute;
-  left : calc(( 100% - 30rem )/2);
-  bottom: 5rem;
   width: 30rem;
   height: 3rem;
   border-radius: 2rem;
@@ -191,8 +223,6 @@ const RequestBTN = styled.button`
   @media screen and (max-width: 500px) {
     width: 20rem;
     height: 5rem;
-    left : calc(( 100% - 20rem )/2);
-    bottom: 7rem;
   }
 `
 

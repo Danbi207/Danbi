@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react';
 import { useCallback } from 'react';
 import { authPost } from '../../../../../Util/apis/api';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
+import { useSelector } from 'react-redux';
 
 
 const Calendar = ({refresh}) => {
   const dispatch = useDispatch();
-
+  const isDeleted = useSelector((state)=>state.modal.isDeleted);
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
   const [help,setHelpData] = useState({});  // help 정보 저장
@@ -109,6 +110,14 @@ const Calendar = ({refresh}) => {
     }
   };
 
+  useEffect(()=>{
+    if(isDeleted){
+      GetMonth();
+    }else{
+      GetMonth();
+    }
+  },[GetMonth,isDeleted]);
+
   //DO : 모달창에서 삭제를 실행할 때 달력에 데이터를 입력 
   useEffect(()=>{
     GetMonth();
@@ -116,7 +125,11 @@ const Calendar = ({refresh}) => {
 
   //DO : 긴급요청을 할 때마다 데이터를 입력
   useEffect(()=>{
-    GetMonth();
+    if(refresh){
+      GetMonth();
+    }else{
+      GetMonth();
+    }
   },[GetMonth,refresh])
 
   useEffect((year, month) => {
@@ -171,8 +184,8 @@ const Calendar = ({refresh}) => {
         dispatch(setIpRequestList(getHelpData(year ,month, i)));
         dispatch(setMode('ipdetail'));
         }} key={"calender"+i}>
-          {i}
-          { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
+          <div>{i}</div>
+          { getHelpData(year ,month, i).length > 0 && <ActiveIcon icon={faCircle}/> }
         </CalenderItem>)
     }
     
@@ -261,11 +274,6 @@ const HeaderEnd = styled.div`
     height: 1rem;
     margin-left: 5%;
     color: gray;
-
-    /* &:hover {
-      transform: scale(1.2);
-      color: darkgray;
-    } */
   }
 `
 
@@ -296,14 +304,16 @@ const Body = styled.div`
   display: grid;
   grid-template-columns: repeat(7,1fr);
   grid-template-rows: repeat(${(props) => props.$weekCnt}, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  grid-auto-rows: 1fr;
 `
 
 const CalenderItem = styled.div`
   border : 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 0.5rem;
-  margin: 0.1rem;
+
   font-size: 0.8rem;
-  padding: 2px 0 0 2px;
 
   &.not-valid{
     color : ${props=>props.theme.colors.calDateColor};
@@ -319,15 +329,21 @@ const CalenderItem = styled.div`
   }
 
   &.selected {
-    transform: scale(1.02);
     border: none;
     background-color: #f3c5b6;
     font-weight: 600;
   }
 `
 
-const StyledIcon = styled(FontAwesomeIcon)`
-  color: #ff4242;
+// const StyledIcon = styled(FontAwesomeIcon)`
+//   color: #ff4242;
+// `
+const ActiveIcon = styled.div`
+  background-color: #ff4242;
+  width: 5px;
+  height: 5px;
+  border-radius: 5px;
+  margin-left: 0.5rem;
 `
 
 

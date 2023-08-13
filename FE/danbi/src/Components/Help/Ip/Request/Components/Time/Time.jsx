@@ -119,7 +119,11 @@ const Wrap = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-
+  flex-wrap: nowrap;
+  overflow-y: auto;
+  & > * {
+    flex: 0 0 auto;
+  }
   & > :nth-child(3){
     display: flex;
     height: 2rem;
@@ -139,9 +143,9 @@ const Wrap = styled.div`
 
 const CalendarWrap = styled.div`
   width: 100%;
-  height: 30rem;
+  height: 20rem;
   @media screen and (max-width: 768) {
-    height: 20rem;
+    height: 15rem;
   }
 `
 
@@ -156,7 +160,7 @@ const RequestBtn = styled.button`
   border-radius: 1rem;
   font-size: 1.5rem;
   width: 20rem;
-  height: 5rem;
+  height: 3rem;
   background-color: #FFEA7E;
 `
 
