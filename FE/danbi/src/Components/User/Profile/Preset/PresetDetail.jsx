@@ -111,6 +111,7 @@ const PresetDetail = ({
       command: '재생',
       callback: () => {
         if (commandMode === 'stt') {
+          dispatch(setMdoe(null));
           getSpeech(value);
         }
       },

@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import PresetItem from './PresetItem.jsx';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode } from '../../../../store/Slice/ModalSlice.js';
 
 const Preset = ({ preset_list, setPresetList }) => {
   console.log(preset_list);
   const [OpenTitle, setOpenTitle] = useState(-1);
+  const [OpenDetail, setOpenDetail] = useState(-1);
   const showDetail = (title) => {
     setOpenTitle(title);
   };
@@ -16,6 +20,66 @@ const Preset = ({ preset_list, setPresetList }) => {
     items.splice(result.destination.index, 0, reorderedItem);
     setPresetList(items);
   };
+
+  const showDetailWithIndex = (index) => {
+    setOpenDetail(index);
+  };
+
+  const dispatch = useDispatch();
+  const commandMode = useSelector((state) => state.modal.mode);
+
+  const commands = [
+    {
+      command: '단비',
+      callback: () => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '1번',
+      callback: () => {
+        if (commandMode === 'stt') {
+          dispatch(setMode(null));
+          showDetailWithIndex(0);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '2번',
+      callback: () => {
+        if (commandMode === 'stt') {
+          dispatch(setMode(null));
+          showDetailWithIndex(0);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '3번',
+      callback: () => {
+        if (commandMode === 'stt') {
+          dispatch(setMode(null));
+          showDetailWithIndex(0);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+  ];
+  const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
+  useEffect(() => {
+    if (browserSupportsSpeechRecognition) {
+      //STT가 지원하는 경우
+      SpeechRecognition.startListening({ continuous: true, language: 'ko' });
+    }
+  }, [browserSupportsSpeechRecognition]);
 
   return (
     <DragDropContext onDragEnd={handleChange}>
@@ -40,6 +104,7 @@ const Preset = ({ preset_list, setPresetList }) => {
                         key={value.title}
                         showDetail={showDetail}
                         setPresetList={setPresetList}
+                        OpenDetail={OpenDetail}
                       />
                     </Wrap>
                   )}

@@ -90,7 +90,6 @@ const IPHome = () => {
         });
         if (res) {
           setRefresh(!refresh); //달력데이터를 재렌더링
-          getSpeech('긴급요청을 했습니다!');
           alert('긴급요청을 했습니다!');
         }
       } catch (err) {
