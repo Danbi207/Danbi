@@ -25,6 +25,12 @@ const UserFile = ({ usertype, setUserType}) => {
 
   const FileSubmit = useCallback(async () => {
     try {
+      // 각 일을 보내는 로직
+      const formData = new FormData(); 
+      imageFiles.forEach((file) => {
+        formData.append('file', file);
+      });
+
       await authFilePost('/api/v1/submit/ip/certification', imageFiles);
       console.log(imageFiles)
       // DO : 로그아웃
@@ -43,10 +49,10 @@ const UserFile = ({ usertype, setUserType}) => {
     setImageFiles(files); 
 
     // 선택된 모든 파일들을 FormData에 추가
-    const formData = new FormData(); 
-    files.forEach((file) => {
-      formData.append('file', file);
-    });
+    // const formData = new FormData(); 
+    // files.forEach((file) => {
+    //   formData.append('file', file);
+    // });
 
     // 이미지 파일 미리보기 생성
     const previewURLs = [];

@@ -29,15 +29,15 @@ const Header = () => {
   }, []);
 
   // 알람 데이터 일괄 삭제
-  // const DeleteAlrams = useCallback(async()=>{
-  //   try { 
-  //     await authDelete('/api/v1/pofile/alarm', {});
-  //     Alrams(); 
-  //   }
-  //   catch(err) {
-  //     console.log(err)
-  //   }
-  // },[Alrams])
+  const DeleteAlrams = useCallback(async()=>{
+    try { 
+      await authDelete('/api/v1/pofile/alarm', {});
+      Alrams(); 
+    }
+    catch(err) {
+      console.log(err)
+    }
+  },[Alrams])
 
   useEffect(()=>{
     Alrams();
@@ -53,7 +53,7 @@ const Header = () => {
         </IconWrap>
         <AlramWrap $out={alramFlag}>
             <BTNWrap>
-              <DeleteBTN onClick={()=>{}}>알림 모두 삭제</DeleteBTN>
+              <DeleteBTN onClick={()=>{DeleteAlrams()}}>알림 모두 삭제</DeleteBTN>
             </BTNWrap>
             <HR/>
             {alramlist.map((item, idx) => 
