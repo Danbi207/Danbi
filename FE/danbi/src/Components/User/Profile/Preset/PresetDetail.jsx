@@ -14,6 +14,7 @@ const PresetDetail = ({
   sequence,
   setPresetList,
 }) => {
+  const [Recording, setRecording] = useState(false);
   const [value, setValue] = useState(content);
   // 녹음 시작 (리셋하면서 시작)
   const StartRecord = () => {
@@ -107,7 +108,6 @@ const PresetDetail = ({
       SpeechRecognition.startListening({ continuous: true });
     }
   }, [browserSupportsSpeechRecognition]);
-  const [Recording, setRecording] = useState(false);
 
   return (
     <PresetDetailWrap>
