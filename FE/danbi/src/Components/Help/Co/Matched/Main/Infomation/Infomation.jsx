@@ -17,8 +17,10 @@ const Infomation = ({help}) => {
   })
 
   const getInfo = useCallback(async()=>{
+    if(!help) return;
     try{
-      const data = await authGet(`/api/v1/profile/${localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}`);
+      const role = localStorage.getItem("role");
+      const data = await authGet(`/api/v1/profile/${role==="ip" ? help.helper.helperId : help.ip.ipId}`);
       if(data){
         setInfo(data);
       }
