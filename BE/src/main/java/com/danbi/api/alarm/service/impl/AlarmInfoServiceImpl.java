@@ -150,6 +150,7 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
                 .build();
     }
 
+    @Transactional
     @Override
     public Integer deleteAllAlarm(Long memberId) {
         return alarmService.deleteAllAlarm(memberId);
