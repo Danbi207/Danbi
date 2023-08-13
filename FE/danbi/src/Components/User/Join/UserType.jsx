@@ -13,7 +13,6 @@ const UserType = ({ usertype, setUserType}) => {
       await authPost('/api/v1/member/role', {"role" : role});
       await reissueAccessToken();
       if (role === 'ROLE_HELPER'){
-        // FIXME : role을 수정해야 하는지 확인
         localStorage.setItem('role', 'helper')
         navigate('/help/helper')
         return;
@@ -59,7 +58,7 @@ const SelectWrap = styled.div`
     background-color: ${props=>props.theme.colors.bgColor};
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    
     @media screen and (max-width: 500px) {
     width: 100%;
     height: 100%;
@@ -68,7 +67,11 @@ const SelectWrap = styled.div`
 
 const TypesSelect = styled.div`
     margin-top: 5vh;
-    height: 15rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     &>div{
       display: flex;
       justify-content: center;
@@ -86,6 +89,7 @@ const Boxes = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-grow: 1;
 `
 
 const SelectBTN = styled.button`
@@ -125,6 +129,7 @@ const NextBTN  = styled.button`
   background-color: ${props => props.theme.colors.buttonbgColor};
   color: ${props => props.theme.colors.buttontextColor};
   font-size : 2rem;
+  margin-bottom: 2rem;
   @media screen and (max-width: 500px) {
     width: 20rem;
     height: 3rem;

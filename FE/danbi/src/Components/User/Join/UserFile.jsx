@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { authPost, reissueAccessToken, authFilePost } from '../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
-
 const UserFile = () => {
   const hiddenFileInputRef = useRef();
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
@@ -12,36 +11,40 @@ const UserFile = () => {
   const [imageFiles, setImageFiles] = useState([]); // 이미지 파일들을 저장하기 위한 state
   const navigate = useNavigate();
 
-  // const PutFileRole = useCallback(async () => {
-  //   try {
-  //     await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP"});
-  //     await reissueAccessToken();
-  //     localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP");  
-  //   } catch (error) {
-  //       console.error("에러 발생:", error);
-  //   }
-  // }, []);
-
+  const PutFileRole = useCallback(async () => {
+    try {
+      await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP"});
+      await reissueAccessToken();
+      localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP");  
+    } catch (error) {
+        console.error("에러 발생:", error);
+    }
+  }, []);
 
   const FileSubmit = useCallback(async () => {
     try {
+      // 이미지 파일 업로드 여부 확인
+      if (imageFiles.length === 0) {
+        alert("이미지 파일을 제출해주세요.")
+        return;
+      }
       const formData = new FormData(); 
       imageFiles.forEach((imgFile) => {
         formData.append('file', imgFile);
       });
 
       await authFilePost('/api/v1/submit/ip/certification', formData);
-      console.log(formData)
+      console.log(imageFiles)
       // DO : 로그아웃
-      // await authPost('/api/v1/member/logout', {}) 
-      // localStorage.removeItem('role');
-      // localStorage.removeItem('refreshToken');
-      // localStorage.removeItem('refreshTokenExpireTime');
-      // navigate('/')
+      await authPost('/api/v1/member/logout', {}) 
+      localStorage.removeItem('role');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('refreshTokenExpireTime');
+      navigate('/')
     } catch (error) {
         console.error("에러 발생:", error);
     }
-  }, [imageFiles]);
+  }, [imageFiles, navigate]);
   
   const onChange = (e) => {
     const files = [...e.target.files]; 
@@ -87,7 +90,7 @@ const UserFile = () => {
       </UploadWrap>
       <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange}
         ref={hiddenFileInputRef}  />
-      <NextBTN onClick={()=>{FileSubmit()}}>제출</NextBTN>
+      <NextBTN onClick={()=>{PutFileRole(); FileSubmit()}}>제출</NextBTN>
     </SubmitWrap>
   );
 }
@@ -106,19 +109,10 @@ const Question = styled.div`
   text-align: center;
 `
 
-// const UploadBtn = styled.button`
-//   margin-top: 0.5rem;
-//   margin-left: 10%;
-//   width: 5rem;
-//   height: 1.5rem;
-//   border-radius: 0.5rem;
-//   background-color: #6161FF;
-// `
-
 const NextBTN  = styled.button`
   position: absolute;
   left : calc(( 100% - 30rem )/2);
-  bottom: 1rem;
+  bottom: 2rem;
   width: 30rem;
   height: 3rem;
   border-radius: 0.75rem;
