@@ -5,6 +5,8 @@ import Preset from './Preset.jsx';
 import { authGet, authPost } from '../../../../Util/apis/api';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useDispatch, useSelector } from 'react-redux';
+import { setMode } from '../../../../store/Slice/ModalSlice';
+
 const PresetModal = ({ setModalOpen }) => {
   const dispatch = useDispatch();
   const closeBtn = () => {
@@ -32,6 +34,7 @@ const PresetModal = ({ setModalOpen }) => {
       callback: (command) => {
         if (commandMode === 'stt') {
           showTextArea(true);
+          dispatch(setMode(null));
         }
       },
       isFuzzyMatch: true,
@@ -42,6 +45,7 @@ const PresetModal = ({ setModalOpen }) => {
       callback: (command) => {
         if (commandMode === 'stt') {
           showTextArea(true);
+          dispatch(setMode(null));
         }
       },
       isFuzzyMatch: true,
@@ -52,6 +56,7 @@ const PresetModal = ({ setModalOpen }) => {
       callback: (command) => {
         if (commandMode === 'stt') {
           showTextArea(true);
+          dispatch(setMode(null));
         }
       },
       isFuzzyMatch: true,
