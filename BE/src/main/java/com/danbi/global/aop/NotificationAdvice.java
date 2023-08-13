@@ -73,8 +73,10 @@ public class NotificationAdvice {
             }
 
 
-            String content = from.getName()+ "님의 신고가 승인 되었습니다.";
+            String content = to.getName()+ "님의 불건전한 행위로 신고가 접수 되었습니다.";
             sendFcmMessage(from, title, content);
+            sendFcmMessage(to, title, content);
+
             alarmSave(from, to, title, content, type);
         }
     }
