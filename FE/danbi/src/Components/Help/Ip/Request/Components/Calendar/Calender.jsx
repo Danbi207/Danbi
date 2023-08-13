@@ -230,11 +230,11 @@ const CalenderItem = styled.div`
 
   &.valid{
     color : ${props=>props.theme.colors.titleColor};
-    &:hover {
+    /* &:hover {
       transform: scale(1.01);
       border: none;
       background-color: #FFEA7E;
-    }
+    } */
   }
 
   &.selected {

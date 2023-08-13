@@ -7,13 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
-// import { useSelector } from 'react-redux';
-import { getMonth } from 'date-fns';
 
 
 const Calendar = ({refresh}) => {
   const dispatch = useDispatch();
-  // const ipRequestList = useSelector(state => state.modal.ipRequestList)
 
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
@@ -119,7 +116,7 @@ const Calendar = ({refresh}) => {
 
   //DO : 긴급요청을 할 때마다 데이터를 입력
   useEffect(()=>{
-    getMonth();
+    GetMonth();
   },[GetMonth,refresh])
 
   useEffect((year, month) => {
@@ -260,16 +257,15 @@ const HeaderEnd = styled.div`
   align-items: center;
   
   &>.Icon{
-    width: 11%;
-    height: fit-content;
-    width: fit-content;
+    width: 1rem;
+    height: 1rem;
     margin-left: 5%;
     color: gray;
 
-    &:hover {
+    /* &:hover {
       transform: scale(1.2);
       color: darkgray;
-    }
+    } */
   }
 `
 
@@ -315,11 +311,11 @@ const CalenderItem = styled.div`
 
   &.valid{
     color : ${props=>props.theme.colors.titleColor};
-    &:hover {
+    /* &:hover {
       transform: scale(1.01);
       border: none;
       background-color: #f3c5b6;
-    }
+    } */
   }
 
   &.selected {
@@ -332,7 +328,6 @@ const CalenderItem = styled.div`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: #ff4242;
-  /* margin-top: 0.5rem; */
 `
 
 
