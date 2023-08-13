@@ -234,6 +234,7 @@ const ControlBtn = styled.button`
   border-radius: 1rem;
   background-color: #FFEA7E;
   color: #000;
+  font-size: 10px;
   &>img{
     vertical-align: middle;
   }
