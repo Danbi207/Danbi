@@ -6,6 +6,7 @@ import { authGet, authPost } from '../../../../Util/apis/api';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../../../store/Slice/ModalSlice';
+import { getSpeech } from '../Utils/TTS';
 
 const PresetModal = ({ setModalOpen }) => {
   const closeBtn = () => {
@@ -62,11 +63,25 @@ const PresetModal = ({ setModalOpen }) => {
       fuzzyMatchingThreshold: 0.2,
     },
     {
-      command: '취소',
+      command: '닫기',
       callback: () => {
         if (commandMode === 'stt') {
-          showTextArea(false);
           dispatch(setMode(null));
+          setModalOpen(false);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '저장',
+      callback: () => {
+        if (commandMode === 'stt') {
+          if (commandMode === 'stt') {
+            dispatch(setMode(null));
+            handleSave();
+            getSpeech('저장완료');
+          }
         }
       },
     },
