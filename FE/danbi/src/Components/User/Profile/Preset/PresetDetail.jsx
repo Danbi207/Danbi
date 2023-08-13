@@ -1,11 +1,10 @@
-import React, { useDebugValue, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { getSpeech } from '../Utils/TTS';
 import { authPost, authGet } from '../../../../Util/apis/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../../../store/Slice/ModalSlice';
-import { getSpeech } from '../Utils/TTS';
 
 const PresetDetail = ({
   content,
