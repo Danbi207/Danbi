@@ -36,7 +36,7 @@ const IpDetailItem = ({data}) => {
   },[data, dispatch]) 
 
   const handleMove = () => {
-      navigate('/desired-url-path');  // 원하는 URL로 변경해주세요.
+      navigate(`/help/ip/matched/${data.helpPostId}`); 
   }
 
   return (
