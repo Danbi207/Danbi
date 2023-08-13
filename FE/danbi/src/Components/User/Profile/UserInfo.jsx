@@ -3,7 +3,15 @@ import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
 import { authPost } from '../../../Util/apis/api.js';
 import { useSelector } from 'react-redux';
-const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
+const UserInfo = ({
+  url,
+  name,
+  targetId,
+  friendFlag,
+  accusePoint,
+  requestedFriendFlag,
+  requestFriendFlag,
+}) => {
   console.log(friendFlag);
   console.log(accusePoint);
   console.log(accusePoint);
@@ -20,19 +28,21 @@ const UserInfo = ({ url, name, targetId, friendFlag, accusePoint }) => {
     <UserInfoWrap>
       <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
-        <div style={{display: 'flex', flexDirection: 'row', marginBottom: '0.75rem'}}>
+        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '0.75rem' }}>
           <UserName>{name}</UserName>
           {friendFlag ? <FriendBadge /> : null}
           {accusePoint < 0 ? null : accusePoint > 1 ? (
-                <AccuseBadge $state={'yellowcard'} />
-              ) : (
-                <AccuseBadge $state={'redcard'} />
-              )}
+            <AccuseBadge $state={'yellowcard'} />
+          ) : (
+            <AccuseBadge $state={'redcard'} />
+          )}
         </div>
         {cur_id === Number(targetId) ? null : (
           <Btns>
-            {friendFlag ? null :<PlusButton onClick={handlePlus}>친구추가</PlusButton>}
-            <AccuseButton targetId={targetId}/>
+            {friendFlag || requestedFriendFlag || requestFriendFlag ? null : (
+              <PlusButton onClick={handlePlus}>친구추가</PlusButton>
+            )}
+            <AccuseButton targetId={targetId} />
           </Btns>
         )}
       </UserDetail>
@@ -90,9 +100,10 @@ const FriendBadge = styled.img.attrs((props) => ({
 }))``;
 
 const AccuseBadge = styled.img.attrs((props) => ({
-  src: props.$state === 'yellow'
-  ? props.theme.images.yellowcard
-  : props.theme.images.redcard,
+  src:
+    props.$state === 'yellow'
+      ? props.theme.images.yellowcard
+      : props.theme.images.redcard,
 }))``;
 
 export default UserInfo;

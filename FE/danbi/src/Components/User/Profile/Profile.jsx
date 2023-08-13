@@ -11,7 +11,8 @@ import PresetModal from './Preset/PresetModal.jsx';
 import PickModal from './Utils/PickModal.jsx';
 import { authGet } from '../../../Util/apis/api.js';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode } from '../../../store/Slice/ModalSlice.js';
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
@@ -28,8 +29,12 @@ const Profile = () => {
     name: '',
     accumulatePoint: 0,
     friendFlag: false,
+    requestFriendFlag: false,
+    requestedFriendFlag: false,
   });
 
+  const dispatch = useDispatch();
+  const commandMode = useSelector((state) => state.modal.mode);
   // TODO : userId params 조회
   const { userId } = useParams();
 
@@ -48,6 +53,59 @@ const Profile = () => {
 
   const cur_id = useSelector((state) => state.user.userId);
 
+  const commands = [
+    {
+      command: '단비',
+      callback: (command) => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '프리셋',
+      callback: () => {
+        if (commandMode === 'stt') {
+          setModalOpen(true);
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '프리셋 설정',
+      callback: () => {
+        if (commandMode === 'stt') {
+          setModalOpen(true);
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '설정',
+      callback: () => {
+        if (commandMode === 'stt') {
+          setModalOpen(true);
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+  ];
+
+  const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
+  useEffect(() => {
+    if (browserSupportsSpeechRecognition) {
+      //STT가 지원하는 경우
+      SpeechRecognition.startListening({ continuous: true, language: 'ko' });
+    }
+  }, [browserSupportsSpeechRecognition]);
   return (
     <ProfileWrap>
       <Header />
@@ -58,6 +116,8 @@ const Profile = () => {
           targetId={userId}
           friendFlag={data.friendFlag}
           accusePoint={data.accusePoint}
+          requestFriendFlag={data.requestFriendFlag}
+          requestedFriendFlag={data.requestedFriendFlag}
         />
         {localStorage.getItem('role') === 'ip' && Number(userId) === cur_id ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
