@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import IpDetail from './Detail/IpDetail';
 import UserModal from "./Admin/UserModal";
 import UCModal from "./Admin/UCModal";
-
+import Stt from "./Stt/Stt";
 const Modal = () => {
   const mode = useSelector((state) => state.modal.mode);
   return (
@@ -33,6 +33,12 @@ const Modal = () => {
           <BackgroundWrap></BackgroundWrap>
           <UCModal></UCModal>
         </>:null
+      }
+      {
+        mode === "stt" ? <>
+          <BackgroundWrap></BackgroundWrap>
+          <Stt></Stt>
+        </> : null
       }
     </>
   )
