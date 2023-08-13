@@ -1,20 +1,20 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect,useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import Header from "../../../Common/Header/Header";
 import Footer from "../../../Common/Footer/Footer";
 import Calender from "./Components/Calender";
 import {setUserId,setProfileId,setName,setProfileUrl,setGender}  from "../../../../store/Slice/userSlice";
-import { useDispatch } from "react-redux";
+import {setMode} from "../../../../store/Slice/ModalSlice"
+import { useDispatch,useSelector } from "react-redux";
 import {authGet, authPost} from "../../../../Util/apis/api";
-import { useRef } from "react";
 const IPHome = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {kakao} = window;
   const geocoder = useRef(new kakao.maps.services.Geocoder());
-
+  const commandMode = useSelector(state=>state.modal.mode);
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
@@ -50,7 +50,7 @@ const IPHome = (props) => {
         minute = curTime.getMinutes();
         const end_time = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour < 10 ? "0"+hour : hour}:${minute < 10 ? "0"+minute : minute}`;
 
-        await authPost("/api/v1/help/create",{
+        const res = await authPost("/api/v1/help/create",{
           "position" : {
               "latitude" : position.coords.latitude,
               "longitude" : position.coords.longitude,
@@ -71,6 +71,9 @@ const IPHome = (props) => {
           start_time,
           end_time
         });
+        if(res){
+          alert("긴급요청을 했습니다!");
+        }
     }catch(err){
       console.log(err);
     }
@@ -102,6 +105,35 @@ const IPHome = (props) => {
     emergencyReqeust();
   },[emergencyReqeust])
 
+  const commands = [
+    {
+      command: "단비",
+      callback: (command) => {
+        console.log("단비");
+        dispatch(setMode("stt"));
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: ["긴급","도와줘","긴급요청"],
+      callback: (command) => {
+        if(commandMode==="stt"){
+          emergencyReqeust();
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+  ] 
+
+  const {browserSupportsSpeechRecognition} = useSpeechRecognition({commands});
+  useEffect(()=>{
+    if (browserSupportsSpeechRecognition) {//STT가 지원하는 경우
+      SpeechRecognition.startListening({continuous: true, language: 'ko'})
+    }
+  },[browserSupportsSpeechRecognition]);
   return (
     <IpHomeWrap>
       <Header/>
