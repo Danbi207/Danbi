@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect,useRef } from "react";
+import React, { useCallback, useEffect,useRef,useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
@@ -16,6 +16,7 @@ const IPHome = (props) => {
   const {kakao} = window;
   const geocoder = useRef(new kakao.maps.services.Geocoder());
   const commandMode = useSelector(state=>state.modal.mode);
+  const [refresh,setRefresh] = useState(false);
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
@@ -73,12 +74,13 @@ const IPHome = (props) => {
           end_time
         });
         if(res){
+          setRefresh(!refresh);//달력데이터를 재렌더링
           alert("긴급요청을 했습니다!");
         }
     }catch(err){
       console.log(err);
     }
-  },[]);
+  },[refresh]);
 
   const coord2Address = useCallback((po,mode)=>{
     const coord = new kakao.maps.LatLng(po.coords.latitude, po.coords.longitude);
@@ -136,7 +138,7 @@ const IPHome = (props) => {
     <IpHomeWrap>
       <Header/>
         <Wrap>
-          <Calender/>
+          <Calender refresh={refresh} />
           <EmergencyBTN onClick={()=>setCurPosition("emergency")}>긴급도움 요청하기</EmergencyBTN>
           <RequestBTN onClick={()=>{navigate('/help/ip/request')}}>도움 요청하기</RequestBTN>
         </Wrap>

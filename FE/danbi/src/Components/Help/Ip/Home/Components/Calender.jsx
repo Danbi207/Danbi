@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import { getMonth } from 'date-fns';
 
 
-const Calendar = () => {
+const Calendar = ({refresh}) => {
   const dispatch = useDispatch();
-  const ipRequestList = useSelector(state => state.modal.ipRequestList)
+  // const ipRequestList = useSelector(state => state.modal.ipRequestList)
 
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
@@ -111,10 +112,15 @@ const Calendar = () => {
     }
   };
 
-  // 모달창에서 삭제를 실행할 때 달력에 재랜더링을 위해서
+  //DO : 모달창에서 삭제를 실행할 때 달력에 데이터를 입력 
   useEffect(()=>{
     GetMonth();
   },[GetMonth])
+
+  //DO : 긴급요청을 할 때마다 데이터를 입력
+  useEffect(()=>{
+    getMonth();
+  },[GetMonth,refresh])
 
   useEffect((year, month) => {
     //DO : 달이 바뀔때마다 주차 수를 자동으로 계산
