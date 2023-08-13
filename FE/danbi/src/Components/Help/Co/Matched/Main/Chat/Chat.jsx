@@ -16,7 +16,7 @@ const Chat = (props) => {
   const chatRef = useRef();
   const socketRef = useRef();
   const pcRef = useRef();
-  const streamRef = useRef();
+  const stream = useRef();
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const [chatValue,setChatValue] = useState("");
@@ -44,35 +44,33 @@ const Chat = (props) => {
   }
   const setVideoTracks = useCallback(async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
+      stream.current = await navigator.mediaDevices.getUserMedia({
+        video: onVideo,
+        audio: onAudio,
       });
-      streamRef.current = stream;
-      if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+      if (localVideoRef.current) localVideoRef.current.srcObject = stream.current;
       if (!(pcRef.current && socketRef.current)) return;
-      stream.getTracks().forEach((track) => {
+      stream.current.getTracks().forEach((track) => {
         if (!pcRef.current) return;
-        pcRef.current.addTrack(track, stream);
+        pcRef.current.addTrack(track, stream.current);
       });
       pcRef.current.onicecandidate = (e) => {
         if (e.candidate) {
-          if (!socketRef.current) return;
-          console.log("onicecandidate");
-          socketRef.current.emit("candidate", e.candidate);
+        if (!socketRef.current) return;
+        socketRef.current.emit("candidate", e.candidate);
         }
       };
       pcRef.current.oniceconnectionstatechange = (e) => {
-        console.log(e);
+        // console.log(e);
       };
       pcRef.current.ontrack = (ev) => {
-        console.log("add remotetrack success");
+        // console.log("add remotetrack success");
         if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = ev.streams[0];
+        remoteVideoRef.current.srcObject = ev.streams[0];
         }
       };
       socketRef.current.emit("join_room", {
-        room: "1234",
+        room: props.roomId,
       });
     } catch (e) {
       console.error(e);
@@ -187,7 +185,7 @@ const Chat = (props) => {
           <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
             <ControlBtn onClick={()=>{
-              streamRef.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
+              stream.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
               setOnVideo(!onVideo);
             }} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
@@ -195,7 +193,7 @@ const Chat = (props) => {
               }
             </ControlBtn>
             <ControlBtn onClick={()=>{
-              streamRef.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
+              stream.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
               setOnAudio(!onAudio);
             }}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
