@@ -33,7 +33,7 @@ const IPHome = (props) => {
 
   useEffect(()=>{getUserInfo()},[getUserInfo]);
 
-  const emergencyReqeust = useCallback(async(position,address)=>{
+  const emergencyReqeust = useCallback(async(po,ad)=>{
     try{
       let curTime = new Date();
         let year = curTime.getFullYear();
@@ -53,15 +53,15 @@ const IPHome = (props) => {
 
         const res = await authPost("/api/v1/help/create",{
           "position" : {
-              "latitude" : position.coords.latitude,
-              "longitude" : position.coords.longitude,
-              "addr" : address,
-              "destLatitude" : position.coords.latitude,
-              "destLongitude" : position.coords.longitude,
-              "destAddr" : address,
-              "meetLatitude" : position.coords.latitude,
-              "meetLongitude" : position.coords.longitude,
-              "meetAddr" : address
+              "latitude" : po.coords.latitude,
+              "longitude" : po.coords.longitude,
+              "addr" : ad,
+              "destLatitude" : po.coords.latitude,
+              "destLongitude" : po.coords.longitude,
+              "destAddr" : ad,
+              "meetLatitude" : po.coords.latitude,
+              "meetLongitude" : po.coords.longitude,
+              "meetAddr" : ad
           },
           "category" : "ETC",
           "caution" : "긴급요청입니다!주의해주세요.",
@@ -80,11 +80,11 @@ const IPHome = (props) => {
     }
   },[]);
 
-  const coord2Address = useCallback((position,mode)=>{
-    const coord = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  const coord2Address = useCallback((po,mode)=>{
+    const coord = new kakao.maps.LatLng(po.coords.latitude, po.coords.longitude);
     geocoder.current.coord2Address(coord.getLng(), coord.getLat(), (result,status)=>{
       if (status === kakao.maps.services.Status.OK) {
-        if(mode === "emergency")emergencyReqeust(position,result[0].address.address_name ? result[0].address.address_name : result[0].road_address);
+        if(mode === "emergency")emergencyReqeust(po,result[0].address.address_name ? result[0].address.address_name : result[0].road_address);
       }
     });
   },[geocoder,kakao,emergencyReqeust])
@@ -101,11 +101,6 @@ const IPHome = (props) => {
     }
   },[coord2Address]);
 
-  // 화면 재랜더링을 위해
-  useEffect(()=>{ 
-    emergencyReqeust();
-  },[emergencyReqeust])
-
   const commands = [
     {
       command: "단비",
@@ -121,7 +116,7 @@ const IPHome = (props) => {
       command: ["긴급","도와줘","긴급요청"],
       callback: (command) => {
         if(commandMode==="stt"){
-          emergencyReqeust();
+          setCurPosition("emergency");
           dispatch(setMode(null));
         }
       },
@@ -136,6 +131,7 @@ const IPHome = (props) => {
       SpeechRecognition.startListening({continuous: true, language: 'ko'})
     }
   },[browserSupportsSpeechRecognition]);
+
   return (
     <IpHomeWrap>
       <Header/>

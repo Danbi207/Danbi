@@ -18,7 +18,7 @@ const Stt = () => {
       }
     },1000);
     return ()=>clearInterval(countdown);
-  },[mode,time]);
+  },[mode,time,dispatch]);
   useEffect(()=>{
     if(mode==="stt"){
       setTime(5);
