@@ -59,9 +59,11 @@ const PresetModal = ({ setModalOpen }) => {
   ];
 
   const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
-  if (browserSupportsSpeechRecognition) {
-    SpeechRecognition.startListening({ continus: true, language: 'ko' });
-  }
+  useEffect(() => {
+    if (browserSupportsSpeechRecognition) {
+      SpeechRecognition.startListening({ continus: true, language: 'ko' });
+    }
+  }, [browserSupportsSpeechRecognition]);
   // TODO : presetList 조회
   const [presetList, setPresetList] = useState([]);
 

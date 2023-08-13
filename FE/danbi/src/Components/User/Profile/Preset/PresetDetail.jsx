@@ -63,15 +63,41 @@ const PresetDetail = ({
     getSpeech(value);
   };
 
-  // const commands = [
-  //   {
-  //     command: '단비',
-  //     callback: (command) => {},
-  //   },
-  // ];
+  const commands = [
+    {
+      command: '단비',
+      callback: (command) => {},
+    },
+    {
+      command: '녹음',
+      callback: (command) => {
+        StartRecord();
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '종료',
+      callback: (command) => {
+        StopRecord();
+      },
+    },
+    {
+      command: '취소',
+      callback: (command) => {
+        CloseDetail();
+      },
+    },
+    {
+      command: '저장',
+      callback: (command) => {
+        SaveDetail();
+      },
+    },
+  ];
 
-  // if (browserSupportsSpeechRecognition) {
-  // }
+  if (browserSupportsSpeechRecognition) {
+  }
 
   return (
     <PresetDetailWrap>
