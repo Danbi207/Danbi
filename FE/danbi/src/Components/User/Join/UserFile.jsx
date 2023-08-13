@@ -26,8 +26,8 @@ const UserFile = () => {
   const FileSubmit = useCallback(async () => {
     try {
       const formData = new FormData(); 
-      imageFiles.forEach((file) => {
-        formData.append('file', file);
+      imageFiles.forEach((imgFile) => {
+        formData.append('file', imgFile);
       });
 
       await authFilePost('/api/v1/submit/ip/certification', formData);
@@ -46,12 +46,6 @@ const UserFile = () => {
   const onChange = (e) => {
     const files = [...e.target.files]; 
     setImageFiles(files); 
-
-    // 선택된 모든 파일들을 FormData에 추가
-    // const formData = new FormData(); 
-    // files.forEach((file) => {
-    //   formData.append('file', file);
-    // });
 
     // 이미지 파일 미리보기 생성
     const previewURLs = [];
