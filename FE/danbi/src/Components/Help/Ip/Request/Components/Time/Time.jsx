@@ -56,6 +56,7 @@ const Label = styled.label`
   & > div{
     margin-left: 1rem;
     line-height: 3rem;
+    color : ${props=>props.theme.colors.titleColor};
   }
 `
 const UseTimeItem = styled.button`

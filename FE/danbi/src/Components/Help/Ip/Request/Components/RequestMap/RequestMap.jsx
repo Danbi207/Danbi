@@ -80,7 +80,7 @@ const Marker = styled.div`
 const Btn = styled.div`
   position: absolute;
   z-index: 2;
-  bottom: 1rem;
+  bottom: 2rem;
   border: 1px solid #000;
   border-radius: 1rem;
   width: 15rem;

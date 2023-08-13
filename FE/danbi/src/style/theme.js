@@ -7,7 +7,9 @@ export const dark ={
     buttonbgColor: '#FFEA7E',
     buttontextColor: '#19191B',
     redBtnColor : "#E85151",
-    whiteColor : "#FFFFFF"
+    whiteColor : "#FFFFFF",
+    calDateColor : "#414040",
+    CalDayColor : '#FFFFFF',
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-black.svg`,
@@ -68,7 +70,9 @@ export const light ={
     buttontextColor: '#000000',
     whiteBgColor : '#FFFFFF',
     redBtnColor : "#E85151",
-    whiteColor : "#FFFFFF"
+    whiteColor : "#FFFFFF",
+    calDateColor : "#c4c4c4",
+    CalDayColor : '#f3c5b6',
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,

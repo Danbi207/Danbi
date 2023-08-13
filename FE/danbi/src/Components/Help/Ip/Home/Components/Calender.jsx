@@ -224,7 +224,6 @@ const HeaderWrap = styled.div `
   height: 8%;
   display: flex;
   justify-content: space-between;
-  /* background-color: #7979ff; */
 `
 
 const HeaderStart = styled.div`
@@ -239,12 +238,11 @@ const HeaderStart = styled.div`
 const HeaderText = styled.span`
   font-size: 1rem;
   font-weight: 600;
-  /* padding-left: 1rem; */
+  color : ${props=>props.theme.colors.titleColor};
 
   &>.month{
     margin-right: 1rem;
     font-size: 1.6rem;
-    /* padding-left: 0; */
   }
 `
 
@@ -260,7 +258,7 @@ const HeaderEnd = styled.div`
     height: fit-content;
     width: fit-content;
     margin-left: 5%;
-    /* color: gray; */
+    color: gray;
 
     &:hover {
       transform: scale(1.2);
@@ -284,7 +282,7 @@ const DaysWrap = styled.div`
   justify-content: flex-start;
   align-content: flex-start;
   padding-left: 1%;
-  background-color:#ebcfc6;
+  background-color: ${props=>props.theme.colors.CalDayColor};
   color : #000; 
   border-radius: 10px;
   }
@@ -299,17 +297,18 @@ const Body = styled.div`
 `
 
 const CalenderItem = styled.div`
-  border : 1px solid #000;
+  border : 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 0.5rem;
   margin: 0.1rem;
   font-size: 0.8rem;
   padding: 2px 0 0 2px;
 
   &.not-valid{
-    color : #c4c4c4;
+    color : ${props=>props.theme.colors.calDateColor};
   }
 
   &.valid{
+    color : ${props=>props.theme.colors.titleColor};
     &:hover {
       transform: scale(1.01);
       box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
