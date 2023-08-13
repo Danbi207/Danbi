@@ -7,7 +7,7 @@ const AcceptButton = ({ helpPostId }) => {
   const navigate = useNavigate();
   const fetchData = useCallback(async () => {
     try {
-      const data = authPost(`/api/v1/help/${helpPostId}`, {});
+      const data = await authPost(`/api/v1/help/${helpPostId}`, {});
       if(data){
         navigate(`/help/helper/matched/${helpPostId}`);
       }

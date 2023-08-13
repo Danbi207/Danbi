@@ -13,34 +13,37 @@ const Login = () => {
   },[])
 
   const autoLogin = useCallback(async()=>{
-    const isLogin = await reissueAccessToken();
-    
-    if(isLogin){
-      const role = localStorage.getItem("role");
-      // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
-      if(role==="ROLE_UNDEFINED" || role==="ROLE_UNSUBMIT_IP"){
-        navigate("/user/join", { replace: true });
-        return;
+    try{
+      const isLogin = await reissueAccessToken();
+      
+      if(isLogin){
+        const role = localStorage.getItem("role");
+        // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
+        if(role==="ROLE_UNDEFINED" || role==="ROLE_UNSUBMIT_IP"){
+          navigate("/user/join", { replace: true });
+          return;
+        }
+  
+        if(role === "admin"){//역할이 관리자인 경우
+          localStorage.setItem("role","admin");
+          navigate("/admin",{replace:true});
+        }
+  
+        // FCM 토큰 함수 호출
+        requestFcmToken()
+  
+        if(role === "ip"){//역할이 IP인 경우
+          localStorage.setItem("role","ip");
+          navigate("/help/ip", { replace: true });
+        }
+  
+        if(role === "helper"){//역할이 Helper인경우
+          localStorage.setItem("role","helper");
+          navigate("/help/helper", { replace: true });
+        }
       }
-
-      if(role === "admin"){//역할이 관리자인 경우
-        localStorage.setItem("role","admin");
-        navigate("/admin",{replace:true});
-      }
-
-      // FCM 토큰 함수 호출
-      requestFcmToken()
-
-      if(role === "ip"){//역할이 IP인 경우
-        localStorage.setItem("role","ip");
-        navigate("/help/ip", { replace: true });
-      }
-
-      if(role === "helper"){//역할이 Helper인경우
-        localStorage.setItem("role","helper");
-        navigate("/help/helper", { replace: true });
-      }
-
+    }catch(err){
+      console.log(err);
     }
   },[navigate,requestFcmToken]);
 

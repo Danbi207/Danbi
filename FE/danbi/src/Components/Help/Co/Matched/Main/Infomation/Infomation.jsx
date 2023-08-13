@@ -48,7 +48,7 @@ const Infomation = ({help}) => {
               <>
                 <Title>상대방 정보</Title>
                 <UserInfoWrap>
-                  <UserImg $url={info.profileUrl}></UserImg>
+                  <UserImg src={info.profileUrl}></UserImg>
                   <div>
                     <UserTitle>
                       <div onClick={()=>navigate(`/user/profile/${localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId}`)}>{info.name}</div>

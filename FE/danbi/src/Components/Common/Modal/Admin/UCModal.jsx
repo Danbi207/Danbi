@@ -3,7 +3,7 @@ import { useSelector,useDispatch } from 'react-redux'
 import { styled } from 'styled-components'
 import {setMode} from "../../../../store/Slice/ModalSlice"
 import { useEffect } from 'react'
-import { authGet } from '../../../../Util/apis/api'
+import { authGet, authPost } from '../../../../Util/apis/api'
 import { useCallback } from 'react'
 const UCModal = () => {
   const user = useSelector(state=>state.admin.user);
@@ -26,7 +26,7 @@ const UCModal = () => {
   const accept = useCallback(async()=>{
     if(user.id !==0){
       try{
-        const data = authGet(`/api/v1/admin/ip/permit/${user.id}`);
+        const data = authPost(`/api/v1/admin/ip/permit/${user.id}`);
         if(data){
           alert("승인되었습니다.")
         }
@@ -39,7 +39,7 @@ const UCModal = () => {
   const reject = useCallback(async()=>{
     if(user.id !==0){
       try{
-        const data = authGet(`/api/v1/admin/ip/reject/${user.id}`);
+        const data = authPost(`/api/v1/admin/ip/reject/${user.id}`);
         if(data){
           alert("거절되었습니다.")
         }
