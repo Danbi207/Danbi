@@ -68,7 +68,7 @@ const HelpItemWrap = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  border: 1px solid #000;
+  border: 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 10px;
   margin-bottom: 0.5rem;
 ` 
@@ -77,6 +77,7 @@ const TitleWrap = styled.div`
   font-size : 1rem;
   margin : 0.5rem;
   align-self : flex-start;
+  color : ${props=>props.theme.colors.titleColor};
 ` 
 
 const ItemWrap = styled.div`

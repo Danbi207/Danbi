@@ -64,6 +64,7 @@ const CloseBtn = styled.button`
   position: absolute;
   top: 0;
   right: 0;
+  color : ${props=>props.theme.colors.titleColor}
 `
 
 
