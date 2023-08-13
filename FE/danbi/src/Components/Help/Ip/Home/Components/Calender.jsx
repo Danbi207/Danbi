@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react';
 import { useCallback } from 'react';
 import { authPost } from '../../../../../Util/apis/api';
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
@@ -82,7 +82,6 @@ const Calendar = ({refresh}) => {
         }
       }
       setHelpData(res);
-      console.log(res);
     }
     catch (error) {
       setHelpData(res);
@@ -185,7 +184,8 @@ const Calendar = ({refresh}) => {
         dispatch(setMode('ipdetail'));
         }} key={"calender"+i}>
           <div>{i}</div>
-          { getHelpData(year ,month, i).length > 0 && <ActiveIcon icon={faCircle}/> }
+          {/* { getHelpData(year ,month, i).length > 0 && <ActiveIcon/> } */}
+          { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
         </CalenderItem>)
     }
     
@@ -335,9 +335,13 @@ const CalenderItem = styled.div`
   }
 `
 
-// const StyledIcon = styled(FontAwesomeIcon)`
-//   color: #ff4242;
-// `
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: #ff4242;
+  width: 5px;
+  height: 5px;
+  border-radius: 5px;
+  margin-left: 0.5rem;
+`
 
 
 const ActiveIcon = styled.div`

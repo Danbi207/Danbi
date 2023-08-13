@@ -17,13 +17,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authGet, authPost } from '../../../../Util/apis/api';
 import { getSpeech } from '../../../User/Profile/Utils/TTS';
 
-const IPHome = (props) => {
+const IPHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { kakao } = window;
   const geocoder = useRef(new kakao.maps.services.Geocoder());
   const commandMode = useSelector((state) => state.modal.mode);
   const [refresh, setRefresh] = useState(false);
+
   const getUserInfo = useCallback(async () => {
     try {
       const data = await authGet('/api/v1/member');
@@ -188,7 +189,7 @@ const IPHome = (props) => {
 
   return (
     <IpHomeWrap>
-      <Header />
+      <Header/>
       <Main>
         <Wrap>
           <Calender refresh={refresh} />
@@ -206,6 +207,14 @@ const IPHome = (props) => {
     </IpHomeWrap>
   );
 };
+
+const IpHomeWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
 const Main = styled.div`
   display: flex;
   flex-direction: column;
@@ -213,6 +222,22 @@ const Main = styled.div`
   width: 100%;
   height: calc(100% - 6.2rem);
 `;
+
+const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${(props) => props.theme.colors.bgColor};
+`
+
+const BtnWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+`
 
 const EmergencyBTN = styled.button`
   width: 30rem;
@@ -225,28 +250,7 @@ const EmergencyBTN = styled.button`
     width: 20rem;
     height: 5rem;
   }
-`;
-const BtnWrap = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-`;
-const IpHomeWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Wrap = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: ${(props) => props.theme.colors.bgColor};
-`;
+`
 
 const RequestBTN = styled.button`
   width: 30rem;
