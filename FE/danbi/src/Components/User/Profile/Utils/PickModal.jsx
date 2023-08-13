@@ -51,8 +51,8 @@ const PickModal = ({ setPickModalOpen }) => {
   
   const handlePickModal = async () => {
     try{
-      setShowAnimation(true);
       const pickdata = await authPost('/api/v1/item', {});
+      setShowAnimation(true);
       setTimeout(() => {
         setShowAnimation(false);
         setPickModalOpen(true);
@@ -61,7 +61,7 @@ const PickModal = ({ setPickModalOpen }) => {
         dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
         dispatch(setCheckedRgb(pickdata.item.checkedRgb));
         dispatch(setDewPoint(pickdata.dewPoint));
-        if(pickdata.item.tier === 'legandary'){
+        if(pickdata.item.ranking === 'legandary'){
           Jsconfetti.addConfetti({
             confettiColors: [
               "#ff0a54",
