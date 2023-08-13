@@ -19,7 +19,7 @@ const PresetDetail = ({
     resetTranscript,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
-  } = useSpeechRecognition();
+  } = useSpeechRecognition({ commands });
   const [Recording, setRecording] = useState(false);
 
   // 녹음 시작 (리셋하면서 시작)
@@ -95,9 +95,11 @@ const PresetDetail = ({
       },
     },
   ];
-
-  if (browserSupportsSpeechRecognition) {
-  }
+  useEffect(() => {
+    if (browserSupportsSpeechRecognition) {
+      SpeechRecognition.startListening({ continuous: true });
+    }
+  }, [browserSupportsSpeechRecognition]);
 
   return (
     <PresetDetailWrap>

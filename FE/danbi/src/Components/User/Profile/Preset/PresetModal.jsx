@@ -4,8 +4,9 @@ import PresetTextArea from './PresetTextArea';
 import Preset from './Preset.jsx';
 import { authGet, authPost } from '../../../../Util/apis/api';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const PresetModal = ({ setModalOpen }) => {
+  const dispatch = useDispatch();
   const closeBtn = () => {
     setModalOpen(false);
   };
