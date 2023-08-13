@@ -72,7 +72,7 @@ const PresetDetail = ({
   const commands = [
     {
       command: '단비',
-      callback: (command) => {
+      callback: () => {
         if (commandMode === null) {
           dispatch(setMode('stt'));
         }
@@ -80,7 +80,7 @@ const PresetDetail = ({
     },
     {
       command: '녹음',
-      callback: (command) => {
+      callback: () => {
         StartRecord();
         setTimeout(() => {
           StopRecord();
@@ -92,14 +92,14 @@ const PresetDetail = ({
     },
     {
       command: '취소',
-      callback: (command) => {
+      callback: () => {
         CloseDetail();
         dispatch(setMode(null));
       },
     },
     {
       command: '저장',
-      callback: (command) => {
+      callback: () => {
         SaveDetail();
         dispatch(setMode(null));
       },

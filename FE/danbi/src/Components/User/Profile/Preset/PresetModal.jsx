@@ -21,7 +21,7 @@ const PresetModal = ({ setModalOpen }) => {
   const commands = [
     {
       command: '단비',
-      callback: (command) => {
+      callback: () => {
         if (commandMode === null) {
           dispatch(setMode('stt'));
         }
@@ -31,7 +31,7 @@ const PresetModal = ({ setModalOpen }) => {
     },
     {
       command: '추가',
-      callback: (command) => {
+      callback: () => {
         if (commandMode === 'stt') {
           showTextArea(true);
           dispatch(setMode(null));
@@ -42,7 +42,7 @@ const PresetModal = ({ setModalOpen }) => {
     },
     {
       command: '프리셋추가',
-      callback: (command) => {
+      callback: () => {
         if (commandMode === 'stt') {
           showTextArea(true);
           dispatch(setMode(null));
@@ -53,7 +53,7 @@ const PresetModal = ({ setModalOpen }) => {
     },
     {
       command: '추가하기',
-      callback: (command) => {
+      callback: () => {
         if (commandMode === 'stt') {
           showTextArea(true);
           dispatch(setMode(null));
@@ -61,6 +61,15 @@ const PresetModal = ({ setModalOpen }) => {
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '취소',
+      callback: () => {
+        if (commandMode === 'stt') {
+          showTextArea(false);
+          dispatch(setMode(null));
+        }
+      },
     },
   ];
 
