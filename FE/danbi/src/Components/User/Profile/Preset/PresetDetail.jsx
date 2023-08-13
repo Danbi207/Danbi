@@ -15,16 +15,6 @@ const PresetDetail = ({
   setPresetList,
 }) => {
   const [value, setValue] = useState(content);
-  const dispatch = useDispatch();
-  const commandMode = useSelector((state) => state.modal.mode);
-  const {
-    transcript,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-    isMicrophoneAvailable,
-  } = useSpeechRecognition({ commands });
-  const [Recording, setRecording] = useState(false);
-
   // 녹음 시작 (리셋하면서 시작)
   const StartRecord = () => {
     setRecording(true);
@@ -68,7 +58,8 @@ const PresetDetail = ({
   const handleBtn = () => {
     getSpeech(value);
   };
-
+  const dispatch = useDispatch();
+  const commandMode = useSelector((state) => state.modal.mode);
   const commands = [
     {
       command: '단비',
@@ -105,11 +96,18 @@ const PresetDetail = ({
       },
     },
   ];
+  const {
+    transcript,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+    isMicrophoneAvailable,
+  } = useSpeechRecognition({ commands });
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });
     }
   }, [browserSupportsSpeechRecognition]);
+  const [Recording, setRecording] = useState(false);
 
   return (
     <PresetDetailWrap>
