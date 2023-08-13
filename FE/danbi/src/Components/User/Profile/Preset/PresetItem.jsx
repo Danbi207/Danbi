@@ -45,7 +45,7 @@ const PresetItem = ({ value, index, OpenTitle, showDetail, setPresetList }) => {
           </Btns>
         </PreSetElement>
       </Element>
-      {OpenTitle === value.title && (
+      {OpenTitle === value.title && EditActive && (
         <PresetDetail
           sequence={value.sequence}
           content={value.content}
