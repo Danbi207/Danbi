@@ -197,16 +197,12 @@ const IPHome = (props) => {
           <EmergencyBTN onClick={() => setCurPosition('emergency')}>
             긴급도움 요청하기
           </EmergencyBTN>
-          <RequestBTN
-            onClick={() => {
-              navigate('/help/ip/request');
-            }}
-          >
+          <RequestBTN onClick={() => {navigate('/help/ip/request')}}>
             도움 요청하기
           </RequestBTN>
         </BtnWrap>
       </Main>
-      <Footer />
+      <Footer/>
     </IpHomeWrap>
   );
 };

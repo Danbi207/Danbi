@@ -338,6 +338,8 @@ const CalenderItem = styled.div`
 // const StyledIcon = styled(FontAwesomeIcon)`
 //   color: #ff4242;
 // `
+
+
 const ActiveIcon = styled.div`
   background-color: #ff4242;
   width: 5px;

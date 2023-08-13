@@ -17,7 +17,7 @@ const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minu
           <Options $open={hourSelect}>
             {
               (new Array(18)).fill(0).map((e,idx)=>
-              <Option onClick={()=>{setHourSelect(false);setHour((idx));}} key={idx}>{idx+6}시</Option>)
+              <Option onClick={()=>{setHourSelect(false);setHour((idx+6));}} key={idx}>{idx+6}시</Option>)
             }
           </Options>
         </Select>

@@ -5,22 +5,22 @@ import { authPost, reissueAccessToken, authFilePost } from '../../../Util/apis/a
 import { useNavigate } from 'react-router-dom';
 
 
-const UserFile = ({ usertype, setUserType}) => {
+const UserFile = () => {
   const hiddenFileInputRef = useRef();
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
   const [imageFiles, setImageFiles] = useState([]); // 이미지 파일들을 저장하기 위한 state
   const navigate = useNavigate();
 
-  const PutFileRole = useCallback(async () => {
-    try {
-      await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP"});
-      await reissueAccessToken();
-      localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP");  
-    } catch (error) {
-        console.error("에러 발생:", error);
-    }
-  }, []);
+  // const PutFileRole = useCallback(async () => {
+  //   try {
+  //     await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP"});
+  //     await reissueAccessToken();
+  //     localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP");  
+  //   } catch (error) {
+  //       console.error("에러 발생:", error);
+  //   }
+  // }, []);
 
 
   const FileSubmit = useCallback(async () => {
@@ -34,10 +34,10 @@ const UserFile = ({ usertype, setUserType}) => {
       await authFilePost('/api/v1/submit/ip/certification', imageFiles);
       console.log(imageFiles)
       // DO : 로그아웃
-      await authPost('/api/v1/member/logout', {}) 
-      localStorage.removeItem('role');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('refreshTokenExpireTime');
+      // await authPost('/api/v1/member/logout', {}) 
+      // localStorage.removeItem('role');
+      // localStorage.removeItem('refreshToken');
+      // localStorage.removeItem('refreshTokenExpireTime');
       navigate('/')
     } catch (error) {
         console.error("에러 발생:", error);
@@ -94,8 +94,7 @@ const UserFile = ({ usertype, setUserType}) => {
       </UploadWrap>
       <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange}
         ref={hiddenFileInputRef}  />
-      {/* <UploadBtn onClick={()=>hiddenFileInputRef.current.click()}>업로드</UploadBtn> */}
-      <NextBTN onClick={()=>{PutFileRole(); FileSubmit();}}>제출</NextBTN>
+      <NextBTN onClick={()=>{FileSubmit()}}>제출</NextBTN>
     </SubmitWrap>
   );
 }

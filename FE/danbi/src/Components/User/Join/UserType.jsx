@@ -45,7 +45,9 @@ const UserType = ({ usertype, setUserType}) => {
               </SelectBTN>
               { explainmode === 'ROLE_UNSUBMIT_IP' ? <TextWrap>대면 / 비대면으로 이동과 기타 도움을 받아요</TextWrap> : null }
             </Boxes>
-          <NextBTN onClick={()=>{PutRole()}}>다음</NextBTN>
+            <div>
+              <NextBTN onClick={()=>{PutRole()}}>다음</NextBTN>
+            </div>
         </TypesSelect>
     </SelectWrap>
   )
@@ -65,13 +67,19 @@ const SelectWrap = styled.div`
 `
 
 const TypesSelect = styled.div`
-    margin-top: 5rem;
+    margin-top: 5vh;
     height: 15rem;
+    &>div{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 `
 
 const Question = styled.div`
     font-size: 1.6rem;
     text-align: center;
+    color : ${props=>props.theme.colors.titleColor};
 `
 
 const Boxes = styled.div`
@@ -107,12 +115,10 @@ const TextWrap = styled.div`
   width: 100%;
   padding-top: 2rem;
   text-align : center;
+  color : ${props=>props.theme.colors.titleColor};
 ` 
 
 const NextBTN  = styled.button`
-  position: absolute;
-  left : calc(( 100% - 30rem )/2);
-  bottom: 1rem;
   width: 30rem;
   height: 3rem;
   border-radius: 0.75rem;
@@ -122,7 +128,6 @@ const NextBTN  = styled.button`
   @media screen and (max-width: 500px) {
     width: 20rem;
     height: 3rem;
-    left : calc(( 100% - 20rem )/2);
   }
 `
 
