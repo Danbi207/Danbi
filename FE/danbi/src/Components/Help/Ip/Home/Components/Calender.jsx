@@ -311,7 +311,6 @@ const CalenderItem = styled.div`
     color : ${props=>props.theme.colors.titleColor};
     &:hover {
       transform: scale(1.01);
-      box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
       border: none;
       background-color: #f3c5b6;
     }
@@ -319,7 +318,6 @@ const CalenderItem = styled.div`
 
   &.selected {
     transform: scale(1.02);
-    box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
     border: none;
     background-color: #f3c5b6;
     font-weight: 600;

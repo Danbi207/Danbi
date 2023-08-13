@@ -54,7 +54,7 @@ const IpDetailItem = ({data}) => {
       <BTNWrap>
         {
           data.state === "MATCHED" ? <DetailBTN onClick={handleMove}>도움받기</DetailBTN> :
-          data.state === "ACTIVE" ? <><DetailBTN onClick={goToDetail}>수정하기</DetailBTN>
+          data.state === "ACTIVATE" ? <><DetailBTN onClick={goToDetail}>수정하기</DetailBTN>
           <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN></> : null 
         }
       </BTNWrap>

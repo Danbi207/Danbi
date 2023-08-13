@@ -203,7 +203,6 @@ const DaysWrap = styled.div`
   align-content: flex-start;
   padding-left: 1%;
   background-color: ${props=>props.theme.colors.CalDayColor};
-
   color : #000; 
   border-radius: 10px;
   }
@@ -233,15 +232,13 @@ const CalenderItem = styled.div`
     color : ${props=>props.theme.colors.titleColor};
     &:hover {
       transform: scale(1.01);
-      box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
       border: none;
-      background-color: #f3c5b6;
+      background-color: #FFEA7E;
     }
   }
 
   &.selected {
     transform: scale(1.02);
-    box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
     border: none;
     background-color: #FFEA7E;
     font-weight: 600;
