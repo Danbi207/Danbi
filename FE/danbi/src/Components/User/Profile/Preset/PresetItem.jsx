@@ -3,7 +3,14 @@ import styled from 'styled-components';
 import PresetDetail from './PresetDetail';
 import { authDelete, authGet } from '../../../../Util/apis/api';
 
-const PresetItem = ({ value, index, OpenTitle, showDetail, setPresetList }) => {
+const PresetItem = ({
+  value,
+  index,
+  OpenTitle,
+  showDetail,
+  setPresetList,
+  OpenDetail,
+}) => {
   const [EditActive, setEditActive] = useState(false);
 
   const callConfirm = useCallback(async () => {
@@ -45,16 +52,17 @@ const PresetItem = ({ value, index, OpenTitle, showDetail, setPresetList }) => {
           </Btns>
         </PreSetElement>
       </Element>
-      {OpenTitle === value.title && EditActive && (
-        <PresetDetail
-          sequence={value.sequence}
-          content={value.content}
-          PresetId={value.id}
-          showDetail={showDetail}
-          setEditActive={setEditActive}
-          setPresetList={setPresetList}
-        />
-      )}
+      {(OpenTitle === value.title && EditActive) ||
+        (OpenDetail === index && EditActive && (
+          <PresetDetail
+            sequence={value.sequence}
+            content={value.content}
+            PresetId={value.id}
+            showDetail={showDetail}
+            setEditActive={setEditActive}
+            setPresetList={setPresetList}
+          />
+        ))}
     </>
   );
 };
