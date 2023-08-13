@@ -36,7 +36,8 @@ const IpDetailItem = ({data}) => {
   },[data, dispatch]) 
 
   const handleMove = () => {
-      navigate(`/help/ip/matched/${data.helpPostId}`); 
+    dispatch(setMode(""))
+    navigate(`/help/ip/matched/${data.helpPostId}`); 
   }
 
   return (
