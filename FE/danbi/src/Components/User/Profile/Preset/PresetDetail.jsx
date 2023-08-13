@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useDebugValue, useState } from 'react';
 import styled from 'styled-components';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { getSpeech } from '../Utils/TTS';
 import { authPost, authGet } from '../../../../Util/apis/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode } from '../../../../store/Slice/ModalSlice';
+import { getSpeech } from '../Utils/TTS';
 
 const PresetDetail = ({
   content,
@@ -13,7 +16,8 @@ const PresetDetail = ({
   setPresetList,
 }) => {
   const [value, setValue] = useState(content);
-
+  const dispatch = useDispatch();
+  const commandMode = useSelector((state) => state.modal.mode);
   const {
     transcript,
     resetTranscript,
@@ -26,14 +30,16 @@ const PresetDetail = ({
   const StartRecord = () => {
     setRecording(true);
     resetTranscript();
+    getSpeech('녹음시작');
     SpeechRecognition.startListening({ continuous: true });
   };
 
   // 녹음 종료
   const StopRecord = () => {
     setRecording(false);
-    SpeechRecognition.stopListening();
     setValue(transcript);
+    getSpeech('녹음종료');
+    SpeechRecognition.stopListening();
   };
 
   const CloseDetail = () => {
@@ -53,6 +59,7 @@ const PresetDetail = ({
       setPresetList(res.presetList);
       showDetail(-1);
       alert('저장되었습니다.');
+      getSpeech('저장되었습니다.');
       setEditActive(false);
     } catch (err) {
       console.log(err);
@@ -66,32 +73,36 @@ const PresetDetail = ({
   const commands = [
     {
       command: '단비',
-      callback: (command) => {},
+      callback: (command) => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
     },
     {
       command: '녹음',
       callback: (command) => {
         StartRecord();
+        setTimeout(() => {
+          StopRecord();
+          dispatch(setMode(null));
+        }, 150000);
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
     },
     {
-      command: '종료',
-      callback: (command) => {
-        StopRecord();
-      },
-    },
-    {
       command: '취소',
       callback: (command) => {
         CloseDetail();
+        dispatch(setMode(null));
       },
     },
     {
       command: '저장',
       callback: (command) => {
         SaveDetail();
+        dispatch(setMode(null));
       },
     },
   ];
