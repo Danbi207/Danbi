@@ -20,8 +20,8 @@ const Buttons = ({
   const dispatch = useDispatch();
   const handlePickModal = async () => {
     try {
-      setPickModalOpen(true);
       const pickdata = await authPost('/api/v1/item', {});
+      setPickModalOpen(true);
       dispatch(setName(pickdata.item.name));
       dispatch(setTier(pickdata.item.ranking));
       dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
