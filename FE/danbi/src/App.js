@@ -14,6 +14,7 @@ import Loading from "./Components/Common/Loading/Loading.jsx";
 import axios from 'axios';
 import { requestPermission } from './Util/hooks/requestPermission';
 import { reissueAccessToken } from './Util/apis/api';
+import { useCallback } from 'react';
 
 // 뽑기 이벤트 Canvas 생성
 // confetti canvas 생성
