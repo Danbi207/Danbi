@@ -77,6 +77,7 @@ const PickModal = ({ setPickModalOpen }) => {
         }
       }, 1500);
     } catch(err) {
+      alert('뽑기 불가');
       console.log(err);
     }
   };

@@ -1,21 +1,21 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect,useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import Header from "../../../Common/Header/Header";
 import Footer from "../../../Common/Footer/Footer";
 import Calender from "./Components/Calender";
 import {setUserId,setProfileId,setName,setProfileUrl,setGender}  from "../../../../store/Slice/userSlice";
-import { useDispatch } from "react-redux";
+import {setMode} from "../../../../store/Slice/ModalSlice"
+import { useDispatch,useSelector } from "react-redux";
 import {authGet, authPost} from "../../../../Util/apis/api";
-import { useRef } from "react";
 
 const IPHome = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {kakao} = window;
   const geocoder = useRef(new kakao.maps.services.Geocoder());
-
+  const commandMode = useSelector(state=>state.modal.mode);
   const getUserInfo = useCallback(async()=>{
     try{
       const data = await authGet("/api/v1/member");
@@ -33,7 +33,7 @@ const IPHome = (props) => {
 
   useEffect(()=>{getUserInfo()},[getUserInfo]);
 
-  const emergencyReqeust = useCallback(async(position,address)=>{
+  const emergencyReqeust = useCallback(async(po,ad)=>{
     try{
       let curTime = new Date();
         let year = curTime.getFullYear();
@@ -51,17 +51,17 @@ const IPHome = (props) => {
         minute = curTime.getMinutes();
         const end_time = `${year}-${month < 10 ? "0"+month : month}-${day < 10 ? "0"+day : day} ${hour < 10 ? "0"+hour : hour}:${minute < 10 ? "0"+minute : minute}`;
 
-        await authPost("/api/v1/help/create",{
+        const res = await authPost("/api/v1/help/create",{
           "position" : {
-              "latitude" : position.coords.latitude,
-              "longitude" : position.coords.longitude,
-              "addr" : address,
-              "destLatitude" : position.coords.latitude,
-              "destLongitude" : position.coords.longitude,
-              "destAddr" : address,
-              "meetLatitude" : position.coords.latitude,
-              "meetLongitude" : position.coords.longitude,
-              "meetAddr" : address
+              "latitude" : po.coords.latitude,
+              "longitude" : po.coords.longitude,
+              "addr" : ad,
+              "destLatitude" : po.coords.latitude,
+              "destLongitude" : po.coords.longitude,
+              "destAddr" : ad,
+              "meetLatitude" : po.coords.latitude,
+              "meetLongitude" : po.coords.longitude,
+              "meetAddr" : ad
           },
           "category" : "ETC",
           "caution" : "긴급요청입니다!주의해주세요.",
@@ -72,16 +72,19 @@ const IPHome = (props) => {
           start_time,
           end_time
         });
+        if(res){
+          alert("긴급요청을 했습니다!");
+        }
     }catch(err){
       console.log(err);
     }
   },[]);
 
-  const coord2Address = useCallback((position,mode)=>{
-    const coord = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  const coord2Address = useCallback((po,mode)=>{
+    const coord = new kakao.maps.LatLng(po.coords.latitude, po.coords.longitude);
     geocoder.current.coord2Address(coord.getLng(), coord.getLat(), (result,status)=>{
       if (status === kakao.maps.services.Status.OK) {
-        if(mode === "emergency")emergencyReqeust(position,result[0].address.address_name ? result[0].address.address_name : result[0].road_address);
+        if(mode === "emergency")emergencyReqeust(po,result[0].address.address_name ? result[0].address.address_name : result[0].road_address);
       }
     });
   },[geocoder,kakao,emergencyReqeust])
@@ -98,10 +101,36 @@ const IPHome = (props) => {
     }
   },[coord2Address]);
 
-  // 화면 재랜더링을 위해
-  useEffect(()=>{ 
-    emergencyReqeust();
-  },[emergencyReqeust])
+  const commands = [
+    {
+      command: "단비",
+      callback: (command) => {
+        if(commandMode===null){
+          dispatch(setMode("stt"));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: ["긴급","도와줘","긴급요청"],
+      callback: (command) => {
+        if(commandMode==="stt"){
+          setCurPosition("emergency");
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+  ] 
+
+  const {browserSupportsSpeechRecognition} = useSpeechRecognition({commands});
+  useEffect(()=>{
+    if (browserSupportsSpeechRecognition) {//STT가 지원하는 경우
+      SpeechRecognition.startListening({continuous: true, language: 'ko'})
+    }
+  },[browserSupportsSpeechRecognition]);
 
   return (
     <IpHomeWrap>
