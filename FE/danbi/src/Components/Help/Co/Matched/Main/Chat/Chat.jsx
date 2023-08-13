@@ -30,12 +30,10 @@ const Chat = (props) => {
   const sendMessage = ()=>{
     const message = {
       helpId:props.roomId,
-      userId : props.myProfile.userId,
       name:props.myProfile.name,
       content:chatValue,
       date: getDay(),
     };
-    console.log(message);
     socketRef.current.emit("message", message);
     const messageEl = document.createElement("div");
     messageEl.className="RightChatWrap";
@@ -72,7 +70,7 @@ const Chat = (props) => {
         }
       };
       socketRef.current.emit("join_room", {
-        room: props.roomId
+        room: props.roomId,
       });
     } catch (e) {
       console.error(e);
@@ -110,19 +108,15 @@ const Chat = (props) => {
 
   useEffect(()=>{
     //DO : 지난 채팅내역을 불러옴
+    //FIXME : 채팅내역에서 nickname을 비교해 내가 친 채팅인지 상대방이 친 채팅인지 구분하여 넣기
     axios({
       method:"get",
       url:`/room/chat/${props.roomId}`,
     }).then(({data})=>{
       for(let i = 0; i < data.length; i++){
         const messageEl = document.createElement("div");
-        if(data[i].userId===props.myProfile.userId){
-          messageEl.className="RightChatWrap";
-          messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
-        }else{
-          messageEl.className="LeftChatWrap";
-          messageEl.innerHTML = `<span>${data[i].name} : ${data[i].content}</span><span>${data[i].date}</span>`;
-        }
+        messageEl.className="RightChatWrap";
+        messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
         chatRef.current.appendChild(messageEl);
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
       }
@@ -190,24 +184,20 @@ const Chat = (props) => {
           <VideoTitle>나</VideoTitle>
           <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
-            <ControlBtn $on={onVideo} onClick={()=>{
+            <ControlBtn onClick={()=>{
               stream.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
               setOnVideo(!onVideo);
-            }} >
+            }} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
-                onVideo ? <>
-                <img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />화면 끄기</> : 
-                <><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_off_FILL1_wght400_GRAD0_opsz48 1.svg`} />화면 켜기</>
+                onVideo ? "화면 끄기" : "화면 켜기"
               }
             </ControlBtn>
-            <ControlBtn $on={onAudio} onClick={()=>{
+            <ControlBtn onClick={()=>{
               stream.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
               setOnAudio(!onAudio);
-            }}>
+            }}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
-                onAudio ? <>
-                  <img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />소리 끄기</> : 
-                  <><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_off_FILL1_wght400_GRAD0_opsz48 1.svg`} />소리 켜기</>
+                onAudio ? "소리 끄기" : "소리 켜기"
               }
             </ControlBtn>
           </ControlBtnWrap>
@@ -218,26 +208,17 @@ const Chat = (props) => {
         </ChatItems>
         <div>
           <ChatInput value={chatValue} onKeyDown={(e)=>{if(e.key==="Enter"){sendMessage();}}} onChange={(e)=>setChatValue(e.target.value)}></ChatInput>
-          <ChatBtn onClick={sendMessage}>
-            <ChatImg />
-          </ChatBtn>
+          <ChatBtn onClick={sendMessage}></ChatBtn>
         </div>
       </ChatWrap>
     </Wrap>
   )
 }
 const ChatBtn = styled.button`
+  background-image: url(${props=>props.theme.images.send});
   width: 1rem;
   height: 1rem;
 `
-
-const ChatImg = styled.img.attrs(props => ({
-  src: props => props.theme.images.send
-}))`
-  width: 20px;
-  height: 20px;
-`
-
 const ChatInput = styled.input`
   width: calc(100% - 1.5rem);
   margin-right: 1rem;
@@ -251,13 +232,10 @@ const ControlBtn = styled.button`
   padding: 0 0.5rem;
   height: 1.5rem;
   border-radius: 1rem;
-  background-color: ${props=>props.$on ? "#39D353":"#E85151"};
+  background-color: #FFEA7E;
   color: #000;
   &>img{
     vertical-align: middle;
-  }
-  @media screen and (max-width: 500px) {
-    font-size: 10px;
   }
 `
 const ControlBtnWrap = styled.div`
