@@ -2,6 +2,7 @@ package com.danbi.api.friend.service;
 
 import com.danbi.api.friend.dto.response.ResponseFriendDto;
 import com.danbi.api.friend.dto.response.ResponseFriendListDto;
+import com.danbi.domain.friend.entity.Friend;
 
 import java.util.List;
 
@@ -26,7 +27,8 @@ public interface FriendInfoService {
     ResponseFriendListDto searchMyFriend(Long memberId);
 
     boolean isFriend(Long from, Long to);
-
+    public boolean isMyWaitFriend(Long from, Long to);
+    public boolean isOtherWaitFriend(Long from, Long to);
     boolean checkFriend(Long fromMemberId, Long toMemberId); // querydsl
 
 }

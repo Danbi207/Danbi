@@ -26,6 +26,8 @@ public class ProfileInfoService {
 
     public ProfileResponseDto searchProfile(Long myMemberId,Long memberId) {
         boolean isFriend = friendInfoService.checkFriend(myMemberId, memberId);
+        boolean isMyWaitFriend = friendInfoService.isMyWaitFriend(myMemberId, memberId);
+        boolean isOtherWaitFriend = friendInfoService.isOtherWaitFriend(myMemberId, memberId);
 
         ProfileQueryDto profileInfo = profileService.getProfileInfo(memberId);
         List<ProfileHelpDto> profileHelpInfo = profileService.getProfileHelpInfo(memberId);
@@ -51,6 +53,8 @@ public class ProfileInfoService {
 
         return ProfileResponseDto.builder()
                 .friendFlag(isFriend)
+                .requestFriendFlag(isMyWaitFriend)
+                .requestedFriendFlag(isOtherWaitFriend)
                 .profileId(profileInfo.getProfileId())
                 .guestBookId(profileInfo.getGuestBookId())
                 .name(profileInfo.getName())
@@ -66,4 +70,5 @@ public class ProfileInfoService {
                 .helpLog(helpDtos)
                 .comments(comments).build();
     }
+
 }
