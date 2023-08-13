@@ -19,8 +19,8 @@ const Buttons = ({
 }) => {
   const dispatch = useDispatch();
   const handlePickModal = async () => {
-    setPickModalOpen(true);
     try {
+      setPickModalOpen(true);
       const pickdata = await authPost('/api/v1/item', {});
       dispatch(setName(pickdata.item.name));
       dispatch(setTier(pickdata.item.ranking));
@@ -28,6 +28,7 @@ const Buttons = ({
       dispatch(setCheckedRgb(pickdata.item.checkedRgb));
       dispatch(setDewPoint(pickdata.dewPoint));
     } catch (err) {
+      alert('뽑기 불가');
       console.log(err);
     }
   };
