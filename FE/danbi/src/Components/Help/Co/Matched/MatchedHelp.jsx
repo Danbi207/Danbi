@@ -94,7 +94,7 @@ const MatchedHelp = () => {
 }
 const MainWrap = styled.div`
   width: 100%;
-  height: calc(100% - 6rem);
+  height: calc(100% - 9.2rem);
 `
 
 const MatchedHelpWrap = styled.div`
@@ -102,5 +102,6 @@ const MatchedHelpWrap = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  color: ${props=>props.theme.colors.titleColor};
 `
 export default MatchedHelp
