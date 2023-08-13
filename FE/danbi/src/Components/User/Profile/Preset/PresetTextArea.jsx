@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { authPost } from '../../../../Util/apis/api';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode } from '../../../../store/Slice/ModalSlice';
 
 const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) => {
-  const [textArea, setTextArea] = useState("");
-  
+  const [textArea, setTextArea] = useState('');
+
+  const dispatch = useDispatch();
+  const commandMode = useSelector((state) => state.modal.mode);
+
   const SavePreset = async () => {
     setOpenTextArea(!OpenTextArea);
     const textJson = {
-      "title": textArea,
-      "content": textArea,
-      "sequence": length + 1
-    }
-    try{
+      title: textArea,
+      content: textArea,
+      sequence: length + 1,
+    };
+    try {
       await authPost('/api/v1/preset/create', textJson);
       fetchData();
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -25,9 +31,50 @@ const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) =>
   };
 
   const handleChange = (e) => {
-    setTextArea(e.target.value)
+    setTextArea(e.target.value);
   };
-  
+
+  const commands = [
+    {
+      command: '단비',
+      callback: () => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '취소',
+      callback: () => {
+        if (commandMode === 'stt') {
+          dispatch(setMode(null));
+          setOpenTextArea(false);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '저장',
+      callback: () => {
+        if (commandMode === 'stt') {
+          dispatch(setMode(null));
+          SavePreset();
+        }
+      },
+    },
+  ];
+
+  const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
+  useEffect(() => {
+    if (browserSupportsSpeechRecognition) {
+      //STT가 지원하는 경우
+      SpeechRecognition.startListening({ continuous: true, language: 'ko' });
+    }
+  }, [browserSupportsSpeechRecognition]);
+
   return (
     <TextAreaWrap>
       <TextArea
@@ -51,7 +98,7 @@ const TextAreaWrap = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  border: 1px solid ${props => props.theme.colors.titleColor};
+  border: 1px solid ${(props) => props.theme.colors.titleColor};
   border-radius: 10px;
   resize: none;
   background-color: transparent;
@@ -61,7 +108,7 @@ const TextArea = styled.textarea`
   padding: 0.5rem 0 0.5rem 5px;
   width: 100%;
   height: 6rem;
-  color: ${props => props.theme.colors.titleColor};
+  color: ${(props) => props.theme.colors.titleColor};
   &::placeholder {
     color: #8e8b8b;
   }

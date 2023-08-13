@@ -20,7 +20,6 @@ const PresetDetail = ({
   const StartRecord = () => {
     setRecording(true);
     resetTranscript();
-    getSpeech('녹음시작');
     SpeechRecognition.startListening({ continuous: true });
   };
 
@@ -28,7 +27,6 @@ const PresetDetail = ({
   const StopRecord = () => {
     setRecording(false);
     setValue(transcript);
-    getSpeech('녹음종료');
   };
 
   const CloseDetail = () => {
@@ -48,7 +46,6 @@ const PresetDetail = ({
       setPresetList(res.presetList);
       showDetail(-1);
       alert('저장되었습니다.');
-      getSpeech('저장되었습니다.');
       setEditActive(false);
     } catch (err) {
       console.log(err);
@@ -68,6 +65,8 @@ const PresetDetail = ({
           dispatch(setMode('stt'));
         }
       },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
     },
     {
       command: '녹음',
@@ -75,8 +74,10 @@ const PresetDetail = ({
         if (commandMode === 'stt') {
           dispatch(setMode(null));
           StartRecord();
+          getSpeech('녹음시작');
           setTimeout(() => {
             StopRecord();
+            getSpeech('녹음완료');
           }, 15000);
         }
       },
@@ -95,11 +96,12 @@ const PresetDetail = ({
       fuzzyMatchingThreshold: 0.2,
     },
     {
-      command: '저장',
+      command: '수정',
       callback: () => {
         if (commandMode === 'stt') {
           SaveDetail();
           dispatch(setMode(null));
+          getSpeech('수정완료');
         }
       },
       isFuzzyMatch: true,

@@ -57,7 +57,7 @@ const Profile = () => {
   const commands = [
     {
       command: '단비',
-      callback: (command) => {
+      callback: () => {
         if (commandMode === null) {
           dispatch(setMode('stt'));
         }
