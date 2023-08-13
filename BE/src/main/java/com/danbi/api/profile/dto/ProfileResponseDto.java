@@ -14,6 +14,8 @@ import java.util.List;
 public class ProfileResponseDto {
 
     private boolean friendFlag;
+    private boolean requestFriendFlag;
+    private boolean requestedFriendFlag;
     private Long profileId;
     private Long guestBookId;
     private String name;

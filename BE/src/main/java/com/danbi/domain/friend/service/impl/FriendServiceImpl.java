@@ -97,17 +97,30 @@ public class FriendServiceImpl implements FriendService {
         }
     }
 
-    private boolean checkFromFriend(Friend friend) {
-        return friendRepository.existsByFromAndToAndTypeAndState(friend.getFrom(), friend.getTo(), Type.PERMIT, State.ACTIVATE);
+    private boolean checkFromFriend(Friend friend, Type type) {
+        return friendRepository.existsByFromAndToAndTypeAndState(friend.getFrom(), friend.getTo(), type, State.ACTIVATE);
     }
 
-    private boolean checkToFriend(Friend friend) {
-        return friendRepository.existsByFromAndToAndTypeAndState(friend.getTo(), friend.getFrom(), Type.PERMIT, State.ACTIVATE);
+    private boolean checkToFriend(Friend friend, Type type) {
+        return friendRepository.existsByFromAndToAndTypeAndState(friend.getTo(), friend.getFrom(), type, State.ACTIVATE);
     }
+
+
 
     public boolean isFriend(Friend friend) {
-        return checkFromFriend(friend) || checkToFriend(friend);
+        return checkFromFriend(friend,Type.PERMIT) || checkToFriend(friend,Type.PERMIT);
     }
+
+    @Override
+    public boolean isMyWaitFriend(Friend friend) {
+        return checkFromFriend(friend,Type.WAIT);
+    }
+
+    @Override
+    public boolean isOtherWaitFriend(Friend friend) {
+        return checkToFriend(friend,Type.WAIT);
+    }
+
 
     @Override
     public boolean checkFriend(Long fromMemberId, Long toMemberId) {

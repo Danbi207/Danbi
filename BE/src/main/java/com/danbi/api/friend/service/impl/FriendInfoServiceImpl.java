@@ -182,6 +182,33 @@ public class FriendInfoServiceImpl implements FriendInfoService {
     }
 
     @Override
+    public boolean isMyWaitFriend(Long from, Long to) {
+        Member fromMember = memberService.findByMemberId(from);
+        Member toMember = memberService.findByMemberId(to);
+        Friend friend = Friend.builder()
+                .from(fromMember)
+                .to(toMember)
+                .type(Type.WAIT)
+                .state(State.ACTIVATE)
+                .build();
+        return friendService.isMyWaitFriend(friend);
+    }
+
+    @Override
+    public boolean isOtherWaitFriend(Long from, Long to) {
+        Member fromMember = memberService.findByMemberId(from);
+        Member toMember = memberService.findByMemberId(to);
+        Friend friend = Friend.builder()
+                .from(fromMember)
+                .to(toMember)
+                .type(Type.WAIT)
+                .state(State.ACTIVATE)
+                .build();
+        return friendService.isOtherWaitFriend(friend);
+    }
+
+
+    @Override
     public boolean checkFriend(Long fromMemberId, Long toMemberId) {
         return friendService.checkFriend(fromMemberId, toMemberId);
     }
