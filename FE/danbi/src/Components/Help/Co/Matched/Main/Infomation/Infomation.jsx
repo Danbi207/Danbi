@@ -9,7 +9,6 @@ const Infomation = ({help}) => {
 
   const accept = useCallback(async()=>{
     try{
-      const role = localStorage.getItem("role");
       await authPost(`/api/v1/help/success/${role}/${help.helpId}`);
     }catch(err){
       console.log(err);
@@ -169,6 +168,9 @@ const InfomationWrap = styled.div`
 const AcceptBtn = styled.button`
   background-color: #FFEA7E;
   width: 20rem;
-  height: 2rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  color: #000;
 `
 export default Infomation
