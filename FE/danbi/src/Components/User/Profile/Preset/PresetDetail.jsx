@@ -29,7 +29,6 @@ const PresetDetail = ({
     setRecording(false);
     setValue(transcript);
     getSpeech('녹음종료');
-    SpeechRecognition.stopListening();
   };
 
   const CloseDetail = () => {
@@ -73,11 +72,13 @@ const PresetDetail = ({
     {
       command: '녹음',
       callback: () => {
-        StartRecord();
-        setTimeout(() => {
-          StopRecord();
+        if (commandMode === 'stt') {
           dispatch(setMode(null));
-        }, 15000);
+          StartRecord();
+          setTimeout(() => {
+            StopRecord();
+          }, 15000);
+        }
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
@@ -85,8 +86,10 @@ const PresetDetail = ({
     {
       command: '취소',
       callback: () => {
-        CloseDetail();
-        dispatch(setMode(null));
+        if (commandMode === 'stt') {
+          CloseDetail();
+          dispatch(setMode(null));
+        }
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
@@ -94,8 +97,10 @@ const PresetDetail = ({
     {
       command: '저장',
       callback: () => {
-        SaveDetail();
-        dispatch(setMode(null));
+        if (commandMode === 'stt') {
+          SaveDetail();
+          dispatch(setMode(null));
+        }
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
@@ -103,7 +108,9 @@ const PresetDetail = ({
     {
       command: '재생',
       callback: () => {
-        getSpeech(value);
+        if (commandMode === 'stt') {
+          getSpeech(value);
+        }
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
