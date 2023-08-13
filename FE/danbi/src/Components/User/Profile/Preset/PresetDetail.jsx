@@ -88,6 +88,8 @@ const PresetDetail = ({
         CloseDetail();
         dispatch(setMode(null));
       },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
     },
     {
       command: '저장',
@@ -95,6 +97,16 @@ const PresetDetail = ({
         SaveDetail();
         dispatch(setMode(null));
       },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '재생',
+      callback: () => {
+        getSpeech(value);
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
     },
   ];
   const {
