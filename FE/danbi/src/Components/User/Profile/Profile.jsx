@@ -13,6 +13,7 @@ import { authGet } from '../../../Util/apis/api.js';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../../store/Slice/ModalSlice.js';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const Profile = () => {
   const [ModalOpen, setModalOpen] = useState(false);
