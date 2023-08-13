@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { styled } from 'styled-components'
+import styled from 'styled-components'
 import Calendar from "../Calendar/Calender";
 
-const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minute,setMinute,year,setYear,month,setMonth,day,setDay,setTap, props}) => {
+const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minute,setMinute,year,setYear,month,setMonth,day,setDay,setTap,props}) => {
   const [hourSelect,setHourSelect] = useState(false);
   const [minuteSelect,setMinuteSelect] = useState(false);
   return (
@@ -82,6 +82,7 @@ const Select = styled.ul`
   text-align: center;
   background-color: ${props=>props.theme.colors.buttonbgColor};
   cursor: pointer;
+  
   & > :first-child{
     display: flex;
     justify-content: center;

@@ -9,6 +9,7 @@ import {setUserId,setProfileId,setName,setProfileUrl,setGender}  from "../../../
 import { useDispatch } from "react-redux";
 import {authGet, authPost} from "../../../../Util/apis/api";
 import { useRef } from "react";
+
 const IPHome = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

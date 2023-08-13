@@ -1,5 +1,5 @@
 import React,{ useEffect, useState, useCallback } from 'react';
-import { styled } from 'styled-components';
+import  styled  from 'styled-components';
 import Footer from "../../../Common/Footer/Footer";
 import Header from "../../../Common/Header/Header";
 import Time from './Components/Time/Time';
