@@ -33,6 +33,7 @@ export const reissueAccessToken = async ()=>{
     console.log(err.response);
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
+    localStorage.removeItem("role");
     token.clear();
     throw err;
   }
