@@ -63,6 +63,16 @@ const PresetDetail = ({
     getSpeech(value);
   };
 
+  // const commands = [
+  //   {
+  //     command: '단비',
+  //     callback: (command) => {},
+  //   },
+  // ];
+
+  // if (browserSupportsSpeechRecognition) {
+  // }
+
   return (
     <PresetDetailWrap>
       <DetailTextArea

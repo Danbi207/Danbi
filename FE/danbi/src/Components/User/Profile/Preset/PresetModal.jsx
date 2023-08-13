@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import PresetTextArea from './PresetTextArea';
 import Preset from './Preset.jsx';
 import { authGet, authPost } from '../../../../Util/apis/api';
-
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useSelector } from 'react-redux';
 const PresetModal = ({ setModalOpen }) => {
   const closeBtn = () => {
     setModalOpen(false);
@@ -12,7 +13,55 @@ const PresetModal = ({ setModalOpen }) => {
   const showTextArea = () => {
     setOpenTextArea(!OpenTextArea);
   };
+  const commandMode = useSelector((state) => state.modal.mode);
 
+  const commands = [
+    {
+      command: '단비',
+      callback: (command) => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '추가',
+      callback: (command) => {
+        if (commandMode === 'stt') {
+          showTextArea(true);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '프리셋추가',
+      callback: (command) => {
+        if (commandMode === 'stt') {
+          showTextArea(true);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '추가하기',
+      callback: (command) => {
+        if (commandMode === 'stt') {
+          showTextArea(true);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+  ];
+
+  const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
+  if (browserSupportsSpeechRecognition) {
+    SpeechRecognition.startListening({ continus: true, language: 'ko' });
+  }
   // TODO : presetList 조회
   const [presetList, setPresetList] = useState([]);
 
