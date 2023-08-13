@@ -76,7 +76,7 @@ const PresetDetail = ({
         setTimeout(() => {
           StopRecord();
           dispatch(setMode(null));
-        }, 150000);
+        }, 15000);
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
