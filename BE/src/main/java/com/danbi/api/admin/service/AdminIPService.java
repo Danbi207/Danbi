@@ -44,6 +44,7 @@ public class AdminIPService {
 
     }
 
+    @Transactional
     public void permitIp(Long targetIpId) {
         Member member = memberRepository.findById(targetIpId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
@@ -60,6 +61,7 @@ public class AdminIPService {
         }
     }
 
+    @Transactional
     public void rejectIP(Long targetIpId) {
         Member member = memberRepository.findById(targetIpId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));

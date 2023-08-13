@@ -111,6 +111,7 @@ public class AlarmServiceImpl implements AlarmService {
         return alarmRepository.findALLByFromOrTo(findMember);
     }
 
+    @Transactional
     @Override
     public Integer deleteAllAlarm(Long memberId) {
         Member findMember = memberService.findByMemberId(memberId);
