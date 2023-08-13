@@ -1,6 +1,6 @@
 import './App.css';
 import { useDispatch,useSelector } from "react-redux";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import routes from "./router";
 import {dark,light} from "./style/theme.js";
 import { ThemeProvider } from 'styled-components';
@@ -24,8 +24,6 @@ function App() {
   const dispatch = useDispatch();
   const [loading,setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
   // FCM 토큰 함수 호출
   const  requestFcmToken = useCallback(async ()=> {
     await requestPermission()
@@ -36,35 +34,12 @@ function App() {
       const isLogin = await reissueAccessToken();
       
       if(isLogin){
-        const role = localStorage.getItem("role");
-        // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
-        if(role==="ROLE_UNDEFINED" || role==="ROLE_UNSUBMIT_IP"){
-          navigate("/user/join", { replace: true });
-          return;
-        }
-  
-        if(role === "admin"){//역할이 관리자인 경우
-          localStorage.setItem("role","admin");
-          navigate("/admin",{replace:true});
-        }
-  
-        // FCM 토큰 함수 호출
         requestFcmToken()
-  
-        if(role === "ip"){//역할이 IP인 경우
-          localStorage.setItem("role","ip");
-          navigate("/help/ip", { replace: true });
-        }
-  
-        if(role === "helper"){//역할이 Helper인경우
-          localStorage.setItem("role","helper");
-          navigate("/help/helper", { replace: true });
-        }
       }
     }catch(err){
       console.log(err);
     }
-  },[navigate,requestFcmToken]);
+  },[requestFcmToken]);
 
   useEffect(()=>{
     autoLogin();
