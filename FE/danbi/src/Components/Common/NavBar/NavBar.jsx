@@ -11,7 +11,14 @@ const NavBar = (props) => {
   const role = localStorage.getItem('role');
   const userId = useSelector((state) => state.user.userId);
   const handleLogout = useCallback( async () => {
-    await authPost('/api/v1/member/logout');
+    try{
+      await authPost('/api/v1/member/logout');
+      localStorage.removeItem("role");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("refreshTokenExpireTime");
+    }catch(err){
+      console.log(err);
+    }
     navigate('/');
   }, []);
 
