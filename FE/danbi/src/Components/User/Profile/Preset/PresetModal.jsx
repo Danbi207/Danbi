@@ -7,8 +7,64 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../../../store/Slice/ModalSlice';
 
+const dispatch = useDispatch();
+const commandMode = useSelector((state) => state.modal.mode);
+const commands = [
+  {
+    command: '단비',
+    callback: () => {
+      if (commandMode === null) {
+        dispatch(setMode('stt'));
+      }
+    },
+    isFuzzyMatch: true,
+    fuzzyMatchingThreshold: 0.2,
+  },
+  {
+    command: '추가',
+    callback: () => {
+      if (commandMode === 'stt') {
+        showTextArea(true);
+        dispatch(setMode(null));
+      }
+    },
+    isFuzzyMatch: true,
+    fuzzyMatchingThreshold: 0.2,
+  },
+  {
+    command: '프리셋추가',
+    callback: () => {
+      if (commandMode === 'stt') {
+        showTextArea(true);
+        dispatch(setMode(null));
+      }
+    },
+    isFuzzyMatch: true,
+    fuzzyMatchingThreshold: 0.2,
+  },
+  {
+    command: '추가하기',
+    callback: () => {
+      if (commandMode === 'stt') {
+        showTextArea(true);
+        dispatch(setMode(null));
+      }
+    },
+    isFuzzyMatch: true,
+    fuzzyMatchingThreshold: 0.2,
+  },
+  {
+    command: '취소',
+    callback: () => {
+      if (commandMode === 'stt') {
+        showTextArea(false);
+        dispatch(setMode(null));
+      }
+    },
+  },
+];
+
 const PresetModal = ({ setModalOpen }) => {
-  const dispatch = useDispatch();
   const closeBtn = () => {
     setModalOpen(false);
   };
@@ -16,62 +72,6 @@ const PresetModal = ({ setModalOpen }) => {
   const showTextArea = () => {
     setOpenTextArea(!OpenTextArea);
   };
-  const commandMode = useSelector((state) => state.modal.mode);
-
-  const commands = [
-    {
-      command: '단비',
-      callback: () => {
-        if (commandMode === null) {
-          dispatch(setMode('stt'));
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-    {
-      command: '추가',
-      callback: () => {
-        if (commandMode === 'stt') {
-          showTextArea(true);
-          dispatch(setMode(null));
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-    {
-      command: '프리셋추가',
-      callback: () => {
-        if (commandMode === 'stt') {
-          showTextArea(true);
-          dispatch(setMode(null));
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-    {
-      command: '추가하기',
-      callback: () => {
-        if (commandMode === 'stt') {
-          showTextArea(true);
-          dispatch(setMode(null));
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-    {
-      command: '취소',
-      callback: () => {
-        if (commandMode === 'stt') {
-          showTextArea(false);
-          dispatch(setMode(null));
-        }
-      },
-    },
-  ];
 
   const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
   useEffect(() => {
