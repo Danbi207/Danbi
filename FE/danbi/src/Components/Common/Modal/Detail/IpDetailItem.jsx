@@ -89,7 +89,7 @@ const ItemWrap = styled.div`
 
 const Item = styled.div`
   font-size: 0.8rem;
-  margin-left: 1rem;
+  margin: 0.5rem;
 ` 
 
 const DetailItemWrap = styled.div`

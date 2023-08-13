@@ -50,7 +50,7 @@ const Request = () => {
     //DO : 상세정보보기일 경우 기존의 요청내용을 동기화
     const data = await authGet(`/api/v1/help/detail/${helpPostId}`);
     if(data){
-      console.log(data);
+      // console.log(data);
       let temp = data.startTime.split(" ");
       let _day = temp[0].split("-");
       let _time = temp[1].split(":");
@@ -127,10 +127,7 @@ const Request = () => {
         data["emergencyFlag"]=true;
         data["genderFlag"]=genderOption;
         try{
-          const res = await authPut(`/api/v1/help/${helpPostId}`,data);
-          if(res){
-            console.log(res);
-          }
+          await authPut(`/api/v1/help/${helpPostId}`,data);
         }catch(err){
           console.log(err);
         }
@@ -181,10 +178,7 @@ const Request = () => {
         data["emergencyFlag"]=false;
         data["genderFlag"]=genderOption;
         try{
-          const res = await authPost("/api/v1/help/create",data);
-          if(res){
-            console.log(res);
-          }
+          await authPost("/api/v1/help/create",data);
         }catch(err){
           console.log(err);
         }

@@ -32,7 +32,6 @@ const routes = [
   },
   {
     path : "/help/ip/request",
-    // Component : IpRequest
     Component : Request
   },
   {
@@ -67,10 +66,5 @@ const routes = [
     path:"/test",
     Component:Test
   },
-  {
-    path:"/Request",
-    Component:Request
-
-  }
 ];
 export default routes;

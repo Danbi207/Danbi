@@ -2,7 +2,9 @@ import React from 'react'
 import styled from 'styled-components';
 import {Map,CustomOverlayMap} from "react-kakao-maps-sdk";
 import { useState } from 'react';
+
 const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
+
   const [markerPosition,setMarkerPosition]=useState(
     tap==="meet"?
       meet ? {lat:meet.meetLatitude,lng:meet.meetLongitude}:null
@@ -10,6 +12,7 @@ const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
       dest ? {lat:dest.destLatitude,lng:dest.destLongitude}:null
     :null
   );
+
   const [addr,setAddr] = useState(
     tap==="meet"?
       meet ? meet.meetAddr:null
@@ -17,13 +20,15 @@ const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
       dest ? dest.destAddr:null
     :null
   );
+
   const {kakao} = window;
+
   return (
     <Wrap>
       <Map
         center={{lat:position.coords.latitude,lng:position.coords.longitude}}
         style={{width:"100%",height:"100%"}}
-        level={7}
+        level={5}
         onClick={(_t,e)=>{
           const geocoder = new kakao.maps.services.Geocoder();
           const callback = (result,status) =>{
@@ -83,11 +88,11 @@ const Btn = styled.div`
   bottom: 2rem;
   border: 1px solid #000;
   border-radius: 1rem;
-  width: 15rem;
+  width: 20rem;
   height: 3rem;
   line-height: 3rem;
   text-align: center;
-  left: calc((100% - 15rem)/2);
+  left: calc((100% - 20rem)/2);
   background-color: #FFEA7E;
   font-size: 1.5rem;
 `

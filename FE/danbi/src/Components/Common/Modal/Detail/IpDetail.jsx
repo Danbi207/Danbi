@@ -13,10 +13,6 @@ const IpDetail = (props) => {
   useEffect(() => {
     if (ipRequestList) {
       setIpList(ipRequestList.map((item, index) => <IpDetailItem key={index} data={item}/>));
-      console.log(ipRequestList);
-    }
-    else {
-      console.log('iprequest 없음')
     }
   }, [ipRequestList]);
 
@@ -66,7 +62,5 @@ const CloseBtn = styled.button`
   right: 0;
   color : ${props=>props.theme.colors.titleColor}
 `
-
-
 
 export default IpDetail;
