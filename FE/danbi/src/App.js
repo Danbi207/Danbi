@@ -47,19 +47,17 @@ function App() {
 
   useEffect(()=>{
     //axios 호출시 인터셉트
-    axios.interceptors.request.use(function (config) {
-      if(config.url.includes('detection')){
-        setLoading(true);
-      }
-      return config
+    axios.interceptors.request.use(function (req) {
+      setLoading(true);
+      return req
     }, function (error) {
       return Promise.reject(error);
     });
 
     //axios 호출 종료시 인터셉트
-    axios.interceptors.response.use(function (response) {      
+    axios.interceptors.response.use(function (res) {      
       setLoading(false);
-      return response;
+      return res;
     }, function (error) {
       setLoading(false)
       return Promise.reject(error);
