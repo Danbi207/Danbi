@@ -4,7 +4,7 @@ export const dark ={
     bgColor: '#19191B',
     boxColor: '#E3E3E3',
     jandibgColor: '#FFFFFF',
-    buttonbgColor: '#FFFFFF',
+    buttonbgColor: '#FFEA7E',
     buttontextColor: '#19191B',
     redBtnColor : "#E85151",
     whiteColor : "#FFFFFF"

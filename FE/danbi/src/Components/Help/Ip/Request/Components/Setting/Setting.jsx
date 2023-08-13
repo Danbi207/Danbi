@@ -203,6 +203,7 @@ const Title = styled.div`
   flex-direction: column;
   overflow-y: auto;
   flex-wrap: nowrap;
+  color : ${props=>props.theme.colors.titleColor};
   & > *{
     flex: 0 0 auto;
   }

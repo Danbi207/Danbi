@@ -80,7 +80,7 @@ const Select = styled.ul`
   height: 2rem;
   line-height: 2rem;
   text-align: center;
-  background-color: #fff;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
   cursor: pointer;
   & > :first-child{
     display: flex;
@@ -146,6 +146,7 @@ const CalendarWrap = styled.div`
 const Title = styled.div`
   font-size: 1.25rem;
   font-weight: 900;
+  color : ${props=>props.theme.colors.titleColor};
 `
 
 const RequestBtn = styled.button`

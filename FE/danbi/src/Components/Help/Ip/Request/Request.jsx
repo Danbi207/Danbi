@@ -236,6 +236,7 @@ const Tap = styled.div`
   height: 3rem;
   display: grid;
   grid-template-columns: repeat(2,1fr);
+  color : ${props=>props.theme.colors.titleColor};
 `
 const TapItem = styled.button`
   border-bottom: 3px solid ${props=>props.$on ? props.theme.colors.titleColor : "transparent"};
