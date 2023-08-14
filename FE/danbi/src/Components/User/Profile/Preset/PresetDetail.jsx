@@ -78,6 +78,7 @@ const PresetDetail = ({
             setRecording(false);
             setValue(finalTranscript);
             getSpeech('녹음완료');
+            console.log(finalTranscript);
           }, 10000);
         }
       },
