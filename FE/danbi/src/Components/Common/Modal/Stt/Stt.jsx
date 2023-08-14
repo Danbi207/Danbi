@@ -98,7 +98,7 @@ const Wrap = styled.div`
 `
 
 const ModalWrap = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 6;
   width: 80%;
   left: 10%;

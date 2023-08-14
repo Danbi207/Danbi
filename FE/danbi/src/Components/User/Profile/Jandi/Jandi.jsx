@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import Buttons from './Buttons.jsx';
@@ -55,11 +55,12 @@ const Jandi = ({
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
 
-  const onGross = (e, idx) => {
+  const onGross = useCallback((e, idx) => {
     if (selectIdx !== idx) {
+      console.log(idx);
       setSelectIdx(idx);
-      console.log(typeof selectIdx);
     } else {
+      console.log(idx);
       setSelectIdx(-1);
     }
     setShowOverLay({
@@ -69,7 +70,7 @@ const Jandi = ({
       idx,
       content: help_log[idx].createdTime,
     });
-  };
+  }, [ShowOverLay.idx, help_log, selectIdx]); 
   const GrossItems = useMemo(() => {
     const res = [];
     for (let i = page * colCnt * rowCnt; i < (page + 1) * colCnt * rowCnt; i++) {
@@ -144,7 +145,7 @@ const Jandi = ({
       />
       {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
-          {ShowOverLay.content}
+          {ShowOverLay.content.slice(0, 10)}
         </OverRayWrap>
       )}
       {ShowHelp.show && (

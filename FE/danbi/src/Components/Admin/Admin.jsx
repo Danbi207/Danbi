@@ -246,8 +246,11 @@ const SearchWrap = styled.div`
   }
 `
 const Wrap = styled.div`
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  left: 0;
+  height: 0;
+  width: 100vw;
+  height: 100vh;
   padding: 1rem;
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
