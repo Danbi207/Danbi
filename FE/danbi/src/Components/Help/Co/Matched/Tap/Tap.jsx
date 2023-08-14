@@ -12,10 +12,14 @@ const Tap = (props) => {
         props.stopCurPosition();
         props.setMode("Chat");
       }}>소통</TapItem>
-      <TapItem $defaultMode="RealtimeMap" $mode={props.mode} onClick={()=>{
-        props.startCurPosition();
-        props.setMode("RealtimeMap");
-      }}>실시간 위치</TapItem>
+      {
+        props.faceFlag?
+        <TapItem $defaultMode="RealtimeMap" $mode={props.mode} onClick={()=>{
+          props.startCurPosition();
+          props.setMode("RealtimeMap");
+        }}>실시간 위치</TapItem>
+        :null
+      }
     </TapWrap>
   )
 }
