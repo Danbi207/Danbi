@@ -81,7 +81,7 @@ const GuestBook = ({ guestBookId, userId }) => {
 
 const GuestBookWrap = styled.div`
   margin-top: 0.5rem;
-  height: calc(100% - 3.2rem);
+  /* height: calc(100% - 3.2rem); */
 `;
 
 const ChatWrap = styled.div`
