@@ -58,9 +58,11 @@ const Jandi = ({
   const onGross = useCallback((e, idx) => {
     if (selectIdx !== idx) {
       console.log(idx);
+      console.log(selectIdx);
       setSelectIdx(idx);
     } else {
       console.log(idx);
+      console.log(selectIdx);
       setSelectIdx(-1);
     }
     setShowOverLay({
