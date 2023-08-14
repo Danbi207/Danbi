@@ -218,9 +218,8 @@ const Main = styled.div`
   height: 100%;
 `
 const MainWrap = styled.div`
-  height: ${props=>props.$full ? "calc(100% - 6.2rem)" :"calc(100% - 9.2rem)"};
-  /* height: 100%; */
-  padding: 0.5rem 1rem;
+  height: ${props=>props.$full ? "100%" :"calc(100% - 3.2rem)"};
+  padding:${props=>props.$full ? "0" :"0.5rem 1rem;"}; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
