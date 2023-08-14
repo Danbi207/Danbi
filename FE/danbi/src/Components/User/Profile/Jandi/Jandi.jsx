@@ -65,7 +65,7 @@ const Jandi = ({
     setShowOverLay({
       x: e.clientX,
       y: e.clientY,
-      show: idx !== ShowOverLay.idx,
+      show: idx === ShowOverLay.idx,
       idx,
       content: help_log[idx].createdTime,
     });

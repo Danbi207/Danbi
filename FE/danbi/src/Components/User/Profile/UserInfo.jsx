@@ -12,9 +12,6 @@ const UserInfo = ({
   requestedFriendFlag,
   requestFriendFlag,
 }) => {
-  console.log(friendFlag);
-  console.log(accusePoint);
-  console.log(accusePoint);
 
   const handlePlus = async () => {
     const data = {
@@ -32,7 +29,7 @@ const UserInfo = ({
         <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '0.75rem' }}>
           <UserName>{name}</UserName>
           {friendFlag ? <FriendBadge /> : null}
-          {accusePoint < 0 ? null : accusePoint > 1 ? (
+          {accusePoint === 0 ? null : accusePoint === 1 ? (
             <AccuseBadge $state={'yellowcard'} />
           ) : (
             <AccuseBadge $state={'redcard'} />
