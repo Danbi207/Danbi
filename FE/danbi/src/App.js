@@ -77,6 +77,10 @@ function App() {
     {
       document.body.offsetWidth >= 768?
       <PCWrap>
+        <TextWrap>
+        <div>꼭 필요한 때 알맞게 내리는 비</div>
+        <div>단비</div>
+        </TextWrap>
         <MobileWrap>
           <ThemeProvider theme={theme}>
           <AppWrap className="App">
@@ -128,12 +132,28 @@ const AppWrap = styled.div`
   background-color: ${props=>props.theme.colors.bgColor};
   /* color: ${props=>props.theme.colors.titleColor}; */
 `
-
+const TextWrap = styled.div`
+  width: calc(90% - 400px);
+  height: 100%;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &>div:first-child{
+    font-size: 2rem;
+  }
+  &>div:last-child{
+    font-size: 3rem;
+  }
+`
 const PCWrap = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: red;
+  background-image: url(wheelchair.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 `
 
 const MobileWrap = styled.div`
