@@ -60,11 +60,12 @@ const Jandi = ({
       setSelectIdx(idx);
     } else {
       setSelectIdx(-1);
+      setShowOverLay(!ShowOverLay.show)
     }
     setShowOverLay({
       x: e.clientX,
       y: e.clientY,
-      show: idx === ShowOverLay.idx,
+      show: idx !== ShowOverLay.idx,
       idx,
       content: help_log[idx].createdTime,
     });
