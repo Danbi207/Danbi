@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { reissueAccessToken } from '../../../Util/apis/api';
-import axios from 'axios';
+import { TestLogin, reissueAccessToken } from '../../../Util/apis/api';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -48,23 +47,25 @@ const Login = () => {
     window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_OAUTH_REDIRECT_URI}&response_type=code`;
   }
 
-  const TestLogin=()=>{
-    const email = prompt("ID를 입력하세요");
-    const password = prompt("PASSWORD를 입력하세요");
-    axios.post("/api/v1/test/member/login",{
-      email,password
-    }).then(({data})=>{
-      console.log(data);
-      alert("TEST용 계정 로그인에 성공했습니다.");
-    });
-  }
-
   return (
     <LoginWrap>
       <Logo/>
       <KakaoLoginBtn src={`${process.env.PUBLIC_URL}/assets/kakaoLoginBtn.svg`} onClick={()=>kakaoLogin()} alt="카카오 로그인"/>
-      <Btn onClick={TestLogin}>IP로그인</Btn>
-      <Btn onClick={TestLogin}>Helper로그인</Btn>
+      <Btn onClick={async()=>{
+        const email = prompt("ID를 입력하세요");
+        const password = prompt("PASSWORD를 입력하세요");
+        try{
+          const res = await TestLogin(email,password);
+          const role = localStorage.getItem("role");
+          if(res){
+            alert("테스트용 로그인에 성공하셨습니다.");
+            navigate(`/help/${role}`,{replace:true});
+          }
+        }catch(err){
+          alert("로그인에 실패했습니다.");
+          console.log(err);
+        }
+      }}>테스트 로그인</Btn>
     </LoginWrap>
   )
 }
