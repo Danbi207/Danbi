@@ -215,7 +215,13 @@ const Request = () => {
 }
 const Main = styled.div`
   width: 100%;
-  height: ${props=>props.$check ? "calc(100%-6.2rem)" : "100%"};
+  height: ${props=>props.$check ? "calc(100% - 6.2rem)" : "100%"};
+  overflow-y: auto;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar { 
+    display: none;
+	  }
 `
 const MainWrap = styled.div`
   height: ${props=>props.$full ? "100%" :"calc(100% - 3.2rem)"};
