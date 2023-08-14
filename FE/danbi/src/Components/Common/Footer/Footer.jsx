@@ -23,6 +23,10 @@ const Footer = () => {
       setMode(location.pathname.replaceAll("/",""));
   },[location]);
 
+  useEffect(()=>{
+    console.log(mode)
+  },[mode])
+
   return (
     <FooterWrap>      
       <Box>
@@ -36,7 +40,7 @@ const Footer = () => {
       <Home 
         fill={mode === 'home' ? '#FFEA7E' : '#000'}
         width={30} height={30}
-        $mode={mode} onClick={()=>{setMode("home"); navigate(`/help/${localStorage.getItem("role")}`) }}></Home>
+        onClick={()=>{setMode("home"); navigate(`/help/${localStorage.getItem("role")}`) }}></Home>
         <P $mode={mode}>홈</P>
       </Box>
       <Box>
@@ -74,7 +78,7 @@ const Box = styled.div`
 const P = styled.div`
   font-size: 12px;
   text-align: center;
-  color : ${props=>props.$mode === 'friend' || props.$mode === 'profile' || props.$mode === 'profile' ? '#FFEA7E' : '#000' }
+  color : ${props=>props.$mode === 'friend' || props.$mode === 'home' || props.$mode === 'profile' ? '#FFEA7E' : '#000' }
 `
 
 export default Footer;
