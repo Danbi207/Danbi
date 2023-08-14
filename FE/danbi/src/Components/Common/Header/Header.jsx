@@ -21,8 +21,9 @@ const Header = () => {
   const Alrams = useCallback(async() => {
     try {
       const response = await authGet('/api/v1/pofile/alarm');
-      console.log(response)
-      setAlramList(response.alarm_list); 
+      if(response){
+        setAlramList(response.alarm_list); 
+      }
     } catch (err) {
       console.log(err);
     }
@@ -32,7 +33,6 @@ const Header = () => {
   const DeleteAlrams = useCallback(async()=>{
     try { 
       await authDelete('/api/v1/pofile/alarm', {});
-      console.log('알람 가져오기 전에 삭제 에러')
       Alrams(); 
     }
     catch(err) {
@@ -43,6 +43,12 @@ const Header = () => {
   useEffect(()=>{
     Alrams();
   },[Alrams])
+
+  useEffect(()=>{
+    if (alramFlag === true){
+      Alrams();
+    }
+  },[alramFlag])
 
   return (
     <>
