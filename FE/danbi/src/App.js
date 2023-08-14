@@ -67,7 +67,9 @@ function App() {
   useEffect(()=>{
     //DO : 쿠키에 저장된 theme을 불러와 redux에 저장
     const savedTheme = getCookie('theme');
-    dispatch(setTheme(savedTheme));
+    if(savedTheme){
+      dispatch(setTheme(savedTheme));
+    }
   },[dispatch])
   const themeMode = useSelector((state) => state.setting.theme);
   const theme = themeMode === 'light' ? light : dark;
