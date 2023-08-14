@@ -153,7 +153,7 @@ const ProfileWrap = styled.div`
 
 const Wrap = styled.div`
   margin-top: 1rem;
-  height: 100%;
+  height: calc(100% - 6.2rem);
   width: 100%;
 `;
 
