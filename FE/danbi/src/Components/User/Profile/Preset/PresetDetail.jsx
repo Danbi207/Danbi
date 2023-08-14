@@ -18,7 +18,7 @@ const PresetDetail = ({
   // 녹음 시작 (리셋하면서 시작)
   const StartRecord = () => {
     setRecording(true);
-    resetTranscript({transcript});
+    resetTranscript();
     SpeechRecognition.startListening({ continuous: true });
   };
 
