@@ -72,12 +72,9 @@ const PresetDetail = ({
       callback: () => {
         if (commandMode === 'stt') {
           dispatch(setMode(null));
-          setRecording(true);
-          resetTranscript();
-          SpeechRecognition.startListening({ continuous: true });
+          StartRecord();
           setTimeout(() => {
-            setValue(transcript);
-            setRecording(false);
+            StopRecord();
             getSpeech('녹음완료');
           }, 10000);
         }
