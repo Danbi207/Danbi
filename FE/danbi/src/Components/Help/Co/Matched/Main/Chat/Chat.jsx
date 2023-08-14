@@ -269,6 +269,7 @@ const VideoWrap = styled.div`
   grid-template-columns: repeat(2,1fr);
   grid-column-gap:0.5rem;
   width: 100%;
+  height: 40%;
   padding: 1rem;
 `
 const ChatItems = styled.div`
@@ -290,7 +291,7 @@ const ChatItems = styled.div`
 const ChatWrap = styled.div`
   padding: 1rem;
   width: 100%;
-  height: calc(100% - 16rem);
+  height: 60%;
   &>:last-child{
     margin-top: 1rem;
     width: 100%;
