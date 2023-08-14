@@ -161,6 +161,7 @@ const InfomationWrap = styled.div`
 
 const AcceptBtn = styled.button`
   background-color: #FFEA7E;
+  margin-left: calc((100% - 20rem)/2);
   width: 20rem;
   height: 3rem;
   font-size: 1.5rem;
