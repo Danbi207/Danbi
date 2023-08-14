@@ -117,12 +117,7 @@ const ChatSection = styled.div`
   align-items: center;
   justify-content: center;
   padding-left: 0.5rem;
-  @media (min-width: 360px) {
-    width: 85%;
-  }
-  @media (max-width: 360px) {
-    width: 14rem;
-  }
+  width: 62%;
 `;
 const ChatForm = styled.form`
   width: 100%;
