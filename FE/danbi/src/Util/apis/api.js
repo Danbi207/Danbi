@@ -273,7 +273,12 @@ export const TestLogin = async(email,password)=>{
       token.setAccessTokenExpireTime(data.accessTokenExpireTime);
       localStorage.setItem("refreshToken",data.refreshToken);
       localStorage.setItem("refreshTokenExpireTime",data.refreshTokenExpireTime);
-      localStorage.setItem("role","ROLE_IP");
+      if(data.role==="ROLE_IP"){
+        localStorage.setItem("role","ip");
+      }
+      if(data.role==="ROLE_HELPER"){
+        localStorage.setItem("role","helper");
+      }
       return true;
     }
   }catch(err){
