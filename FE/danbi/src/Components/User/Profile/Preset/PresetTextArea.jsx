@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { authPost } from '../../../../Util/apis/api';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';

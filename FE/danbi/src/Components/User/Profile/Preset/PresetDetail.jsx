@@ -5,7 +5,6 @@ import { getSpeech } from '../Utils/TTS';
 import { authPost, authGet } from '../../../../Util/apis/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../../../store/Slice/ModalSlice';
-
 const PresetDetail = ({
   content,
   PresetId,
@@ -111,7 +110,7 @@ const PresetDetail = ({
       command: '재생',
       callback: () => {
         if (commandMode === 'stt') {
-          dispatch(setMdoe(null));
+          dispatch(setMode(null));
           getSpeech(value);
         }
       },
