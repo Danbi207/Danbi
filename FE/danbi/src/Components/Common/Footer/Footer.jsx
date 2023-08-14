@@ -31,8 +31,8 @@ const FooterWrap = styled.div`
     width: 100%; 
     height: 3.2rem;
     z-index: 4;
-    position: fixed;
-    bottom: 0;
+    /* position: fixed;
+    bottom: 0; */
     background-color: ${props=>props.theme.colors.whiteBgColor};
     display: flex;
     justify-content: space-around;

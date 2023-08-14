@@ -41,10 +41,6 @@ const Header = () => {
   },[Alrams])
 
   useEffect(()=>{
-    Alrams();
-  },[Alrams])
-
-  useEffect(()=>{
     if (alramFlag === true){
       Alrams();
     }

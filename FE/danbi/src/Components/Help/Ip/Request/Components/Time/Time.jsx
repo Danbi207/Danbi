@@ -121,6 +121,12 @@ const Wrap = styled.div`
   height: 100%;
   flex-wrap: nowrap;
   overflow-y: auto;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar { 
+    display: none;
+	  }
+
   & > * {
     flex: 0 0 auto;
   }
