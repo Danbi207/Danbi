@@ -262,3 +262,26 @@ export const authFilePost = async (url,formData)=>{
     }
   }
 }
+
+export const TestLogin = async(email,password)=>{
+  try{
+    const {data} = await axios.post("/api/v1/test/member/login",{
+      email,password
+    });
+    if(data){
+      token.setAccessToken(data.accessToken);
+      token.setAccessTokenExpireTime(data.accessTokenExpireTime);
+      localStorage.setItem("refreshToken",data.refreshToken);
+      localStorage.setItem("refreshTokenExpireTime",data.refreshTokenExpireTime);
+      if(data.role==="ROLE_IP"){
+        localStorage.setItem("role","ip");
+      }
+      if(data.role==="ROLE_HELPER"){
+        localStorage.setItem("role","helper");
+      }
+      return true;
+    }
+  }catch(err){
+    throw err;
+  }
+}
