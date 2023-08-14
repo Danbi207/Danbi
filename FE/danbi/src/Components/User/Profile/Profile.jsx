@@ -119,6 +119,7 @@ const Profile = () => {
           accusePoint={data.accusePoint}
           requestFriendFlag={data.requestFriendFlag}
           requestedFriendFlag={data.requestedFriendFlag}
+          userId={data.userId}
         />
         {localStorage.getItem('role') === 'ip' && Number(userId) === cur_id ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />

@@ -24,8 +24,9 @@ const PresetDetail = ({
 
   // 녹음 종료
   const StopRecord = () => {
-    setRecording(false);
+    console.log(transcript);
     setValue(transcript);
+    setRecording(false);
   };
 
   const CloseDetail = () => {
@@ -44,7 +45,7 @@ const PresetDetail = ({
       const res = await authGet(`/api/v1/preset`);
       setPresetList(res.presetList);
       showDetail(-1);
-      alert('저장되었습니다.');
+      alert('수정되었습니다.');
       setEditActive(false);
     } catch (err) {
       console.log(err);
@@ -77,7 +78,7 @@ const PresetDetail = ({
           setTimeout(() => {
             StopRecord();
             getSpeech('녹음완료');
-          }, 15000);
+          }, 10000);
         }
       },
       isFuzzyMatch: true,
