@@ -75,7 +75,7 @@ function App() {
   return (
     <>
     {
-      document.body.offsetWidth >= 1000?
+      document.body.offsetWidth >= 768?
       <PCWrap>
         <MobileWrap>
           <ThemeProvider theme={theme}>
