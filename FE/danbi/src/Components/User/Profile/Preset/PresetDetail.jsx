@@ -24,7 +24,6 @@ const PresetDetail = ({
 
   // 녹음 종료
   const StopRecord = () => {
-    console.log(transcript);
     setValue(transcript);
     setRecording(false);
   };
@@ -76,7 +75,8 @@ const PresetDetail = ({
           StartRecord();
           getSpeech('녹음시작');
           setTimeout(() => {
-            StopRecord();
+            setRecording(false);
+            setValue(transcript);
             getSpeech('녹음완료');
           }, 10000);
         }
