@@ -18,13 +18,12 @@ const PresetDetail = ({
   // 녹음 시작 (리셋하면서 시작)
   const StartRecord = () => {
     setRecording(true);
-    resetTranscript();
+    resetTranscript({transcript});
     SpeechRecognition.startListening({ continuous: true });
   };
 
   // 녹음 종료
   const StopRecord = () => {
-    console.log(transcript);
     setValue(transcript);
     setRecording(false);
   };
@@ -76,7 +75,8 @@ const PresetDetail = ({
           StartRecord();
           getSpeech('녹음시작');
           setTimeout(() => {
-            StopRecord();
+            setRecording(false);
+            setValue(transcript);
             getSpeech('녹음완료');
           }, 10000);
         }
