@@ -71,7 +71,7 @@ const HelpItemWrap = styled.div`
   position: relative;
   border: 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 10px;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 ` 
 
 const TitleWrap = styled.div`
