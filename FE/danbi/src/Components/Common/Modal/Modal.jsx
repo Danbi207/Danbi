@@ -9,7 +9,7 @@ import Stt from "./Stt/Stt";
 const Modal = () => {
   const mode = useSelector((state) => state.modal.mode);
   return (
-    <Wrap>
+    <Wrap $mode={mode}>
       {
         mode === "accuse" ? <>
           <BackgroundWrap></BackgroundWrap>
@@ -49,6 +49,7 @@ const Wrap = styled.div`
   position: absolute;
   left: 0;
   top: 0;
+  z-index: ${props=>props.$mode ? 5 : -1};
 `
 
 const BackgroundWrap = styled.div`
