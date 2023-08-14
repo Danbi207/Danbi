@@ -120,11 +120,11 @@ const PresetDetail = ({
     },
   ];
   const {
-    transcript,
     resetTranscript,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
   } = useSpeechRecognition({ commands });
+  const { transcript } = useSpeechRecognition();
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });
