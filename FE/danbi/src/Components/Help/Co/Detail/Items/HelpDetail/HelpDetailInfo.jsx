@@ -40,7 +40,6 @@ const DetailWrap = styled.div`
   display: flex;
   flex-direction:column;
   width: 100%;
-  height: 100%;
   gap:0.5rem;
   padding: 0 1rem;
 `;

@@ -191,7 +191,7 @@ const Request = () => {
   return (
     <Wrap>
       <Header></Header>
-      <Main>
+      <Main $check={tap === 'setting'}>
         {
           tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap meet={meet} dest={dest} setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
           <Tap>
@@ -215,12 +215,17 @@ const Request = () => {
 }
 const Main = styled.div`
   width: 100%;
-  height: 100%;
+  height: ${props=>props.$check ? "calc(100% - 6.2rem)" : "100%"};
+  overflow-y: auto;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar { 
+    display: none;
+	  }
 `
 const MainWrap = styled.div`
-  height: ${props=>props.$full ? "calc(100% - 6.2rem)" :"calc(100% - 9.2rem)"};
-  /* height: 100%; */
-  padding: 0.5rem 1rem;
+  height: ${props=>props.$full ? "100%" :"calc(100% - 3.2rem)"};
+  padding:${props=>props.$full ? "0" :"0.5rem 1rem;"}; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;

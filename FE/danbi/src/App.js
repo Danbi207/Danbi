@@ -15,7 +15,6 @@ import axios from 'axios';
 import { requestPermission } from './Util/hooks/requestPermission';
 import { reissueAccessToken } from './Util/apis/api';
 import { useCallback } from 'react';
-
 // 뽑기 이벤트 Canvas 생성
 // confetti canvas 생성
 export const Jsconfetti = new JSconfetti();
@@ -76,7 +75,11 @@ function App() {
     <>
     {
       document.body.offsetWidth >= 768?
-      <PCWrap>
+      <PCWrap $url = {`${process.env.PUBLIC_URL}/wheelchair.jpg`}>
+        <TextWrap>
+        <div>꼭 필요한 때 알맞게 내리는 비</div>
+        <div>단비</div>
+        </TextWrap>
         <MobileWrap>
           <ThemeProvider theme={theme}>
           <AppWrap className="App">
@@ -125,15 +128,32 @@ function App() {
 }
 
 const AppWrap = styled.div`
+  position: relative;
   background-color: ${props=>props.theme.colors.bgColor};
   /* color: ${props=>props.theme.colors.titleColor}; */
 `
-
+const TextWrap = styled.div`
+  width: calc(90% - 400px);
+  height: 100%;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &>div:first-child{
+    font-size: 2rem;
+  }
+  &>div:last-child{
+    font-size: 3rem;
+  }
+`
 const PCWrap = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: red;
+  background-image: url(${props=>props.$url});
+  background-size: cover;
+  background-repeat: no-repeat;
 `
 
 const MobileWrap = styled.div`

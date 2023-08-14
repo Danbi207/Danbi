@@ -10,7 +10,10 @@ const Infomation = ({help}) => {
   const accept = useCallback(async()=>{
     try{
       const role = localStorage.getItem("role");
-      await authPost(`/api/v1/help/success/${role}/${help.helpId}`);
+      const res = await authPost(`/api/v1/help/success/${role}/${help.helpId}`);
+      if(res){
+        navigate(`/help/${role}`);
+      }
     }catch(err){
       console.log(err);
     }

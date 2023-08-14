@@ -239,7 +239,7 @@ const BtnWrap = styled.div`
 `
 
 const EmergencyBTN = styled.button`
-  width: 20rem;
+  width: 90%;
   height: 5rem;
   border-radius: 2rem;
   background-color: ${(props) => props.theme.colors.redBtnColor};
@@ -248,7 +248,7 @@ const EmergencyBTN = styled.button`
 `
 
 const RequestBTN = styled.button`
-  width: 20rem;
+  width: 90%;
   height: 5rem;
   border-radius: 2rem;
   background-color: ${(props) => props.theme.colors.buttonbgColor};

@@ -136,6 +136,7 @@ const Calendar = ({year,setYear,month,setMonth,day,setDay}) => {
 const CalenderWrap = styled.div `
   width: 100%;
   height: 100%;
+  padding : 1rem 0;
 `
 
 const HeaderWrap = styled.div `

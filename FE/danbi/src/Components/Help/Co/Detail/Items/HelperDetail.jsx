@@ -63,11 +63,18 @@ const HelperDetail = ({ helpPostId }) => {
 };
 
 const HelperDetailWrap = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  flex-wrap: nowrap;
+  overflow-y:auto;
+  &>*{
+    flex: 0 0 auto;
+  }
 `;
 
 const HR = styled.div`

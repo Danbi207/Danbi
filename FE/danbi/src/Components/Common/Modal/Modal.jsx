@@ -9,7 +9,7 @@ import Stt from "./Stt/Stt";
 const Modal = () => {
   const mode = useSelector((state) => state.modal.mode);
   return (
-    <>
+    <Wrap $mode={mode}>
       {
         mode === "accuse" ? <>
           <BackgroundWrap></BackgroundWrap>
@@ -40,14 +40,23 @@ const Modal = () => {
           <Stt></Stt>
         </> : null
       }
-    </>
+    </Wrap>
   )
 }
-const BackgroundWrap = styled.div`
-  position: fixed;
+const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  z-index: ${props=>props.$mode ? 5 : -1};
+`
+
+const BackgroundWrap = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
   z-index: 5;
   background-color:${props=>props.theme.colors.titleColor};
   opacity: 0.4;
