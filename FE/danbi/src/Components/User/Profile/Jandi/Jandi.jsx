@@ -60,7 +60,6 @@ const Jandi = ({
       setSelectIdx(idx);
     } else {
       setSelectIdx(-1);
-      setShowOverLay({idx: -1});
     }
     setShowOverLay({
       x: e.clientX,
