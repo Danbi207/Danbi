@@ -42,7 +42,6 @@ public class MemberInfoArgumentResolver implements HandlerMethodArgumentResolver
         return MemberInfoDto.builder()
                 .memberId(memberId)
                 .role(Role.from(role))
-                .state(State.from(state))
                 .build();
     }
 
