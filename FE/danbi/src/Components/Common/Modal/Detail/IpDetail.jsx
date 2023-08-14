@@ -5,7 +5,7 @@ import IpDetailItem from './IpDetailItem';
 import { useDispatch } from 'react-redux';
 import {setMode} from '../../../../store/Slice/ModalSlice'
 
-const IpDetail = (props) => {
+const IpDetail = () => {
   const ipRequestList =  useSelector((state)=>state.modal.ipRequestList)
   const [iplist, setIpList] = useState([]);
   const dispatch = useDispatch();

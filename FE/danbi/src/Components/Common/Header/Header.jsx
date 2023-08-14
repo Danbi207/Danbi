@@ -60,12 +60,14 @@ const Header = () => {
             </BTNWrap>
             <HR/>
             {alramlist.map((item, idx) => 
+            <>
             <AlramsWrap key={idx}>
               <TitleWrap>{item.title}</TitleWrap>
               <ContetnWrap>{item.content}</ContetnWrap>
               <TimeWrap>{item.creatTime}</TimeWrap>
-              <HR/>
-            </AlramsWrap>)}
+            </AlramsWrap>
+            <HR/>
+            </>)}
         </AlramWrap>
       </HeaderWrap>
       <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
@@ -211,7 +213,7 @@ const DeleteBTN = styled.button`
 `
 
 const AlramsWrap = styled.div`
-  margin : 0.5rem 0;
+  margin : 0.5rem;
 `
 
 const TitleWrap = styled.div`
@@ -235,6 +237,7 @@ const TimeWrap = styled.div`
 const HR = styled.hr`
   width: 100%;
   border-color: #888;
+  margin : 0;
 `
 
 
