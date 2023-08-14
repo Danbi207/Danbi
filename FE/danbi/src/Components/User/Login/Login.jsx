@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { reissueAccessToken } from '../../../Util/apis/api';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -47,10 +48,23 @@ const Login = () => {
     window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_OAUTH_REDIRECT_URI}&response_type=code`;
   }
 
+  const TestLogin=()=>{
+    const email = prompt("ID를 입력하세요");
+    const password = prompt("PASSWORD를 입력하세요");
+    axios.post("/api/v1/test/member/login",{
+      email,password
+    }).then(({data})=>{
+      console.log(data);
+      alert("TEST용 계정 로그인에 성공했습니다.");
+    });
+  }
+
   return (
     <LoginWrap>
       <Logo/>
       <KakaoLoginBtn src={`${process.env.PUBLIC_URL}/assets/kakaoLoginBtn.svg`} onClick={()=>kakaoLogin()} alt="카카오 로그인"/>
+      <Btn onClick={TestLogin}>IP로그인</Btn>
+      <Btn onClick={TestLogin}>Helper로그인</Btn>
     </LoginWrap>
   )
 }
@@ -74,7 +88,13 @@ const LoginWrap = styled.div`
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
 `
-
+const Btn = styled.button`
+  margin-left: 10%;
+  width: 80%;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: #FEE500;
+`
 const KakaoLoginBtn = styled.img`
   height: 3rem;
   margin: 0 auto;

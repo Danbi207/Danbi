@@ -18,7 +18,6 @@ const Jandi = ({
   dewPoint,
   accumulatePoint,
 }) => {
-  console.log(help_log);
   const colCnt = 8;
   const rowCnt = 2;
 
