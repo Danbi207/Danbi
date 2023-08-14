@@ -232,7 +232,7 @@ const Calendar = ({refresh}) => {
 const CalenderWrap = styled.div `
   width: 100%;
   height: 100%;
-  padding : 1rem 0;
+  padding : 1rem;
 `
 
 const HeaderWrap = styled.div `

@@ -165,6 +165,7 @@ const RequestBtn = styled.button`
   width: 20rem;
   height: 3rem;
   background-color: #FFEA7E;
+  margin-top: 1rem;
 `
 
 export default Time

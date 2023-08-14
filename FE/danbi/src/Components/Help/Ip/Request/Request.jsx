@@ -191,7 +191,7 @@ const Request = () => {
   return (
     <Wrap>
       <Header></Header>
-      <Main>
+      <Main $check={tap === 'setting'}>
         {
           tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap meet={meet} dest={dest} setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
           <Tap>
@@ -215,7 +215,7 @@ const Request = () => {
 }
 const Main = styled.div`
   width: 100%;
-  height: 100%;
+  height: ${props=>props.$check ? "calc(100%-6.2rem)" : "100%"};
 `
 const MainWrap = styled.div`
   height: ${props=>props.$full ? "100%" :"calc(100% - 3.2rem)"};
