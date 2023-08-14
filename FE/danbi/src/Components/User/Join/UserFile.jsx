@@ -82,9 +82,9 @@ const UserFile = () => {
       <UploadWrap>  
         <ImgPrevBtn onClick={prevImage}>{"<"}-</ImgPrevBtn>
         <ImgDiv>
-          { imagePreviews !== [] ? 
+          { imagePreviews.length > 0 ? 
             <img src={imagePreviews[currentImageIndex]} alt=''/>
-            : <div>이미지가 없습니다.</div> }
+            : null }
         </ImgDiv>
         <ImgNextBtn onClick={nextImage}>-{">"}</ImgNextBtn>
       </UploadWrap>
@@ -100,28 +100,9 @@ const SubmitWrap = styled.div`
   height: 100%;
   background-color: ${props=>props.theme.colors.bgColor};
   color : ${props=>props.theme.colors.titleColor};
-`
-const Question = styled.div`
-  width: 100%;
-  height: 5rem;
-  line-height: 5rem;
-  font-size: 1.5rem;
-  text-align: center;
-`
-
-const NextBTN  = styled.button`
-  position: absolute;
-  bottom: 2rem;
-  width: 20rem;
-  height: 3rem;
-  left : calc(( 100% - 20rem )/2);
-  border-radius: 0.75rem;
-  background-color: ${props => props.theme.colors.buttonbgColor};
-  color: ${props => props.theme.colors.buttontextColor};
-  font-size : 2rem;
-  @media screen and (max-width: 500px) {
-    
-  }
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 `
 
 const UploadWrap = styled.div `
@@ -131,20 +112,32 @@ const UploadWrap = styled.div `
   position: relative;
 `
 
+const Question = styled.div`
+  font-size: 1.8rem;
+  text-align: center;
+  color : ${props=>props.theme.colors.titleColor};
+  margin: 3rem 0;
+  @media screen and (max-height : 680px) {
+    margin: 2.5rem 0;
+    padding-bottom: 1rem;
+  }
+`
+
 const ImgPrevBtn = styled.button`
   position: absolute;
   font-size: 3rem;
-  left: 1rem;
+  left: 0.2rem;
+  color : ${props=>props.theme.colors.titleColor};
 `
 
 const ImgDiv = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
-  @media screen and (max-width: 500px) {
+  width: 25rem;
+  height: 25rem;
+  @media screen and (max-width: 680px) {
     width: 20rem;
     height: 20rem;
   }
-  width: 25rem;
-  height: 25rem;
   & img{
     width: 100%;
     height: 100%;
@@ -154,18 +147,32 @@ const ImgDiv = styled.div`
 const ImgNextBtn = styled.button`
   position: absolute;
   font-size: 3rem;
-  right: 1rem;
+  right: 0.2rem;
+  color : ${props=>props.theme.colors.titleColor};
 `
 
 const SubmitInput = styled.input`
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 680px) {
     width: 20rem;
     margin-left: calc((100% - 20rem)/2);
   }
   width: 30rem;
-  margin-left: calc((100% - 25rem)/2);
   margin-top: 1rem;
-  /* display: none; */
+`
+
+const NextBTN  = styled.button`
+  position: absolute;
+  bottom: 2rem;
+  width: 92%;
+  height: 3rem;
+  left : calc(( 100% - 92% )/2);
+  border-radius: 0.75rem;
+  background-color: ${props => props.theme.colors.buttonbgColor};
+  color: ${props => props.theme.colors.buttontextColor};
+  font-size : 2rem;
+  @media screen and (max-width: 680px) {
+    
+  }
 `
 
 export default UserFile;
