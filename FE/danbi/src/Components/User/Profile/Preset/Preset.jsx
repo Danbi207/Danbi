@@ -75,7 +75,6 @@ const Preset = ({ preset_list, setPresetList }) => {
       fuzzyMatchingThreshold: 0.2,
     },
   ];
-  
   const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
