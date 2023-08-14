@@ -49,7 +49,7 @@ const Footer = () => {
         $color={mode === 'profile' ? '#fbc037' : undefined}
         width={30} height={30}
         onClick={()=>{navigate(`/user/profile/${userId}`)}}></ProfileSVG>
-        <P $mode={mode === 'home' ? '#fbc037' : props=>props.theme.colors.titleColor}>프로필</P>
+        <P $mode={mode === 'profile' ? '#fbc037' : props=>props.theme.colors.titleColor}>프로필</P>
       </Box>
     </FooterWrap> 
   )
