@@ -129,6 +129,7 @@ const PresetDetail = ({
   } = useSpeechRecognition({ commands });
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
+      resetTranscript();
       SpeechRecognition.startListening({ continuous: true });
     }
   }, [browserSupportsSpeechRecognition]);
