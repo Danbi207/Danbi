@@ -50,7 +50,7 @@ const Login = () => {
   const TestLogin=async()=>{
     const email = prompt("ID를 입력하세요");
     const password = prompt("PASSWORD를 입력하세요");
-    const res = await authPost("api/v1/test/member",{
+    const res = await authPost("/api/v1/test/member",{
       email,password
     })
     if(res){
