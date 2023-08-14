@@ -142,7 +142,7 @@ const MobileWrap = styled.div`
   position: absolute;
   top : 5%;
   right: 5%;
-  width: 28rem;
+  width: 499px;
   height: 90%;
 `
 export default App;
