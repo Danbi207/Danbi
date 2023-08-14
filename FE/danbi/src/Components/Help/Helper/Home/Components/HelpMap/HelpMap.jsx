@@ -2,20 +2,13 @@ import React, { useState,useCallback} from 'react'
 import styled, { keyframes }  from 'styled-components';
 import HelpMapItemMobile from "./HelpMapItemMobile.jsx";
 import {Map,CustomOverlayMap} from "react-kakao-maps-sdk";
-import HelpMapItemPC from './HelpMapItemPC.jsx';
 
 const HelpMap = ({position,helpList}) => {
   const [curHelp,setCurHelp] = useState(null);
   const [visible,setVisible] = useState("none");
-  const [curIdx,setCurIdx] = useState(0);
   const showDetail = useCallback((help,idx)=>{
     setCurHelp(help);
-    setCurIdx(idx);
-    if(window.innerWidth < 768){
-      setVisible("mobile");
-    }else{
-      setVisible("pc");
-    }
+    setVisible("mobile");
   },[]);
 
   const getMakers = ()=>{
@@ -29,9 +22,6 @@ const HelpMap = ({position,helpList}) => {
       if(helpList[i].emergencyFlag){
         res.push(<CustomOverlayMap key={helpList[i].helpPostId} position={{lat:helpList[i].position.meetLatitude,lng:helpList[i].position.meetLongitude}}>
           <Marker alt='' $haste={true} src={`${process.env.PUBLIC_URL}/assets/haste.svg`} onClick={()=>showDetail(helpList[i],i)} ></Marker>
-          <MarkerWrap>
-            <HelpMapItemPC help={helpList[i]} visible={visible} defaultIdx={i} curIdx={curIdx} setCurIdx={setCurIdx} ></HelpMapItemPC>
-          </MarkerWrap>
         </CustomOverlayMap>);
         continue;
       }
@@ -41,7 +31,6 @@ const HelpMap = ({position,helpList}) => {
         <CustomOverlayMap key={helpList[i].helpPostId} position={{lat:helpList[i].position.meetLatitude,lng:helpList[i].position.meetLongitude}}>
           <MarkerWrap>
             <Marker alt='' $haste={(new Date() >= new Date(helpList[i].startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_firends.svg`} onClick={()=>showDetail(helpList[i],i)} ></Marker>
-            <HelpMapItemPC help={helpList[i]} visible={visible} defaultIdx={i} curIdx={curIdx} setCurIdx={setCurIdx}></HelpMapItemPC>
           </MarkerWrap>
         </CustomOverlayMap>);
         continue;
@@ -51,7 +40,6 @@ const HelpMap = ({position,helpList}) => {
       <CustomOverlayMap key={helpList[i].helpPostId} position={{lat:helpList[i].position.meetLatitude,lng:helpList[i].position.meetLongitude}}>
         <MarkerWrap>
           <Marker alt='' $haste={(new Date() >= new Date(helpList[i].startTime))} src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`} onClick={()=>showDetail(helpList[i],i)} ></Marker>
-          <HelpMapItemPC help={helpList[i]} visible={visible} defaultIdx={i} curIdx={curIdx} setCurIdx={setCurIdx}></HelpMapItemPC>
         </MarkerWrap>
       </CustomOverlayMap>);
     };
