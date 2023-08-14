@@ -73,17 +73,13 @@ const PresetDetail = ({
         if (commandMode === 'stt') {
           dispatch(setMode(null));
           setRecording(true);
-          resetTranscript();
-          SpeechRecognition.startListening({ continuous: true });
-          console.log(transcript);
+          SpeechRecognition.startListening();
           getSpeech('녹음시작');
-          let recordedTranscript = '';
           setTimeout(() => {
             setRecording(false);
-            recordedTranscript = transcript;
-            setValue(recordedTranscript);
+            SpeechRecognition.stopListening();
+            setValue(transcript);
             getSpeech('녹음완료');
-            console.log(recordedTranscript);
           }, 10000);
         }
       },
