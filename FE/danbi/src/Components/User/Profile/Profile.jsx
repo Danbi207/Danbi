@@ -119,7 +119,6 @@ const Profile = () => {
           accusePoint={data.accusePoint}
           requestFriendFlag={data.requestFriendFlag}
           requestedFriendFlag={data.requestedFriendFlag}
-          userId={userId}
         />
         {localStorage.getItem('role') === 'ip' && Number(userId) === cur_id ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
@@ -150,7 +149,7 @@ const ProfileWrap = styled.div`
   color: ${(props) => props.theme.colors.titleColor};
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: calc(100% - 6.2rem);
 `;
 
 const Wrap = styled.div`

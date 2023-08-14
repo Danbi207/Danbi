@@ -11,7 +11,6 @@ const UserInfo = ({
   accusePoint,
   requestedFriendFlag,
   requestFriendFlag,
-  userId,
 }) => {
   console.log(friendFlag);
   console.log(accusePoint);
@@ -22,7 +21,7 @@ const UserInfo = ({
       targetId,
     };
     await authPost('/api/v1/friends', data);
-    await authGet(`/api/v1/profile/${userId}`);
+    await authGet(`/api/v1/profile/${targetId}`);
   };
 
   const cur_id = useSelector((state) => state.user.userId);
