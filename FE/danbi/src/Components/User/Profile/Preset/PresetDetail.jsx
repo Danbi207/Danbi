@@ -74,6 +74,7 @@ const PresetDetail = ({
           dispatch(setMode(null));
           setRecording(true);
           resetTranscript();
+          SpeechRecognition.startListening({ continuous: true });
           console.log(transcript);
           getSpeech('녹음시작');
           let recordedTranscript = '';
