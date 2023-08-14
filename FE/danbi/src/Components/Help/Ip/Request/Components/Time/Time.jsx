@@ -91,7 +91,7 @@ const Select = styled.ul`
   }
 `
 const Option = styled.li`
-  flex: 0 0 auto;
+  /* flex: 0 0 auto; */
   border-bottom: 1px solid #b0b0b0;
   z-index: 1;
 `
@@ -149,7 +149,7 @@ const Wrap = styled.div`
 
 const CalendarWrap = styled.div`
   width: 100%;
-  height: 15rem;
+  height: 20rem;
 `
 
 const Title = styled.div`
