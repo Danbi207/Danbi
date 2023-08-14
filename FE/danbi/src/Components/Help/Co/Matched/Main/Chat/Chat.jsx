@@ -253,12 +253,8 @@ const VideoTitle = styled.div`
   text-align: center;
 `
 const Video = styled.video`
-  width: 95%;
-  height: 100%;
-  @media screen and (max-width: 500px) {
-    width: 160px;
-    height: 160px;
-  }
+  width: 160px;
+  height: 160px;
   background-color: #000;
 `
 const VideoSubWrap = styled.div`
@@ -266,11 +262,7 @@ const VideoSubWrap = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 90%;
-  @media screen and (max-width: 500px) {
-    width: 100%;
-    height: 12rem;
-  }
+  height: 12rem;
 `
 const VideoWrap = styled.div`
   display: grid;
@@ -297,12 +289,8 @@ const ChatItems = styled.div`
 `
 const ChatWrap = styled.div`
   padding: 1rem;
-  width: 25%;
-  height: calc(100% - 3.5rem);
-  @media screen and (max-width: 500px) {
-    width: 100%;
-    height: calc(100% - 16rem);
-  }
+  width: 100%;
+  height: calc(100% - 16rem);
   &>:last-child{
     margin-top: 1rem;
     width: 100%;
@@ -315,8 +303,6 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  @media screen and (max-width: 500px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `
 export default Chat

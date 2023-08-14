@@ -71,10 +71,7 @@ const HelperDetailWrap = styled.div`
 `;
 
 const HR = styled.div`
-  width: 40%;
-  @media screen and (max-width: 500px) {
-    width: 85%;
-  }
+  width: 85%;
   height: 1px;
   background-color: #d5cece;
 `;

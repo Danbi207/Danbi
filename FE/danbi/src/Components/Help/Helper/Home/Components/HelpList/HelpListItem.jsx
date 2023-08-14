@@ -66,9 +66,7 @@ const TimeWrap = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
   overflow-y: hidden;
   white-space: pre-wrap;
-  @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
-  }
+  font-size: 0.8rem;
 `
 
 
@@ -96,13 +94,7 @@ const RowWrap = styled.div`
 `
 
 const HelpMapItemWrap = styled.div`
-  width: 40%;
-  @media screen and (max-width: 1024px) {
-    width: 60%;
-  }
-  @media screen and (max-width: 768px) {
-    width: 90%;
-  }
+  width: 90%;
   height: 19rem;
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};

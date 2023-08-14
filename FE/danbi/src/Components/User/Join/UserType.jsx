@@ -53,65 +53,60 @@ const UserType = ({ usertype, setUserType}) => {
 }
 
 const SelectWrap = styled.div`
-    width: 40%;
-    height: 100%;
-    background-color: ${props=>props.theme.colors.bgColor};
-    display: flex;
-    flex-direction: column;
-    
-    @media screen and (max-width: 500px) {
-    width: 100%;
-    height: 100%;
-  }
+  width: 100%;
+  height: 100%;
+  background-color: ${props=>props.theme.colors.bgColor};
+  display: flex;
+  flex-direction: column;
 `
 
 const TypesSelect = styled.div`
-    margin-top: 5vh;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  margin-top: 5vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    &>div{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  &>div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const Question = styled.div`
-    font-size: 1.6rem;
-    text-align: center;
-    color : ${props=>props.theme.colors.titleColor};
+  font-size: 1.6rem;
+  text-align: center;
+  color : ${props=>props.theme.colors.titleColor};
 `
 
 const Boxes = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
 `
 
 const SelectBTN = styled.button`
-    width: 13rem;
-    height: 13rem;
-    border-radius: 0.75rem;
+  width: 13rem;
+  height: 13rem;
+  border-radius: 0.75rem;
+  font-size: 2.3rem;
+  background-color: ${props=> props.$default === props.$select 
+    ? props.theme.colors.buttonbgColor
+    : props.theme.colors.boxColor};
+  margin-top: 2rem;
+  transition: 0.5s;
+  &:hover {
+      background-color: ${props=>props.theme.colors.buttonbgColor};
+      color: ${props=>props.theme.colors.buttontextColor};
+      transform: scale(1.1);
+      transition: 0.5s;
+  }
+  &>p {
     font-size: 2.3rem;
-    background-color: ${props=> props.$default === props.$select 
-      ? props.theme.colors.buttonbgColor
-      : props.theme.colors.boxColor};
-    margin-top: 2rem;
-    transition: 0.5s;
-    &:hover {
-        background-color: ${props=>props.theme.colors.buttonbgColor};
-        color: ${props=>props.theme.colors.buttontextColor};
-        transform: scale(1.1);
-        transition: 0.5s;
-    }
-    &>p {
-      font-size: 2.3rem;
-      padding-top: 0.5rem;
-    }
+    padding-top: 0.5rem;
+  }
 ` 
 
 const TextWrap = styled.div`
@@ -123,17 +118,13 @@ const TextWrap = styled.div`
 ` 
 
 const NextBTN  = styled.button`
-  width: 30rem;
+  width: 20rem;
   height: 3rem;
   border-radius: 0.75rem;
   background-color: ${props => props.theme.colors.buttonbgColor};
   color: ${props => props.theme.colors.buttontextColor};
   font-size : 2rem;
   margin-bottom: 2rem;
-  @media screen and (max-width: 500px) {
-    width: 20rem;
-    height: 3rem;
-  }
 `
 
 export default UserType;

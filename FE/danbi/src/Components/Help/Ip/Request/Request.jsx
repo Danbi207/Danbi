@@ -213,10 +213,7 @@ const Request = () => {
 }
 const MainWrap = styled.div`
   height: ${props=>props.$full ? "calc(100% - 6.2rem)" :"calc(100% - 9.2rem)"};
-  padding: ${props=>props.$full ? null :"1rem 30%"};
-  @media screen and (max-width: 728px) {
-    padding: ${props=>props.$full ? null :"1rem"};
-  }
+  padding: ${props=>props.$full ? null :"1rem"};
 `
 const Wrap = styled.div`
   display: flex;

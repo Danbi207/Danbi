@@ -69,20 +69,14 @@ const LoginWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
-  width: 28rem;
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
+  width: 100%;
   height: 100%;
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
 `
 
 const KakaoLoginBtn = styled.img`
-  @media screen and (max-width: 500px) {
-    height: 3rem;
-  }
-  height: 3.5rem;
+  height: 3rem;
   margin: 0 auto;
   cursor: pointer;
 `
