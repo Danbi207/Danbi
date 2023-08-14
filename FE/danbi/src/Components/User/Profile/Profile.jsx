@@ -154,7 +154,7 @@ const ProfileWrap = styled.div`
   color: ${(props) => props.theme.colors.titleColor};
   display: flex;
   flex-direction: column;
-  height: calc(100% - 9.2rem);
+  height: 100%;
 `;
 
 const Wrap = styled.div`
