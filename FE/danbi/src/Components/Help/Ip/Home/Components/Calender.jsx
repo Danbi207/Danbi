@@ -337,20 +337,20 @@ const CalenderItem = styled.div`
 
 const StyledIcon = styled(FontAwesomeIcon)`
   color: #ff4242;
-  width: 5px;
-  height: 5px;
+  width: 10px;
+  height: 10px;
   border-radius: 5px;
   margin-left: 0.5rem;
 `
 
 
-const ActiveIcon = styled.div`
-  background-color: #ff4242;
-  width: 5px;
-  height: 5px;
-  border-radius: 5px;
-  margin-left: 0.5rem;
-`
+// const ActiveIcon = styled.div`
+//   background-color: #ff4242;
+//   width: 5px;
+//   height: 5px;
+//   border-radius: 5px;
+//   margin-left: 0.5rem;
+// `
 
 
 
