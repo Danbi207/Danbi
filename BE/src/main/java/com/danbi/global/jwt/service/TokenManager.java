@@ -1,6 +1,7 @@
 package com.danbi.global.jwt.service;
 
 import com.danbi.domain.member.constant.Role;
+import com.danbi.domain.member.constant.State;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.AuthenticationException;
 import com.danbi.global.jwt.constant.GrantType;
@@ -47,13 +48,14 @@ public class TokenManager {
         return new Date(System.currentTimeMillis() + Long.parseLong(refreshTokenExpirationTime));
     }
 
-    public String createAccessToken(Long memberId, Role role, Date expirationTime) {
+    public String createAccessToken(Long memberId, Role role, State state, Date expirationTime) {
         String accessToken = Jwts.builder()
                 .setSubject(TokenType.ACCESS.name())    // 토큰 제목
                 .setIssuedAt(new Date())                // 토큰 발급 시간
                 .setExpiration(expirationTime)          // 토큰 만료 시간
                 .claim("memberId", memberId)      // 회원 아이디
                 .claim("role", role)              // 유저 role
+                .claim("state", state)
                 .signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
                 .setHeaderParam("typ", "JWT")
                 .compact();
