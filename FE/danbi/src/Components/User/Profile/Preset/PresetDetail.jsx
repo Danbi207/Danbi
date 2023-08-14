@@ -72,20 +72,21 @@ const PresetDetail = ({
       callback: () => {
         if (commandMode === 'stt') {
           dispatch(setMode(null));
-          resetTranscript();
           StartRecord();
           getSpeech('녹음시작');
+          let recordedTranscript = ''; 
           setTimeout(() => {
             setRecording(false);
-            setValue(transcript);
+            recordedTranscript = transcript; 
+            setValue(recordedTranscript);
             getSpeech('녹음완료');
-            console.log(transcript);
+            console.log(recordedTranscript);
           }, 10000);
         }
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
-    },
+    }
     {
       command: '취소',
       callback: () => {
