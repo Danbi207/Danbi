@@ -216,8 +216,9 @@ const Chat = (props) => {
 }
 const ChatBtn = styled.button`
   background-image: url(${props=>props.theme.images.send});
-  width: 1rem;
-  height: 1rem;
+  background-repeat:no-repeat;
+  width: 1.5rem;
+  height: 1.5rem;
 `
 const ChatInput = styled.input`
   width: calc(100% - 1.5rem);
