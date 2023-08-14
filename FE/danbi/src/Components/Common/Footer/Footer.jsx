@@ -23,15 +23,16 @@ const Footer = () => {
       setMode(location.pathname.replaceAll("/",""));
   },[location]);
 
-  useEffect(()=>{
-    console.log(mode)
-  },[mode])
+  // useEffect(()=>{
+  //   console.log(location);
+  //   console.log(mode)
+  // },[mode])
 
   return (
     <FooterWrap>      
       <Box>
         <Frined 
-          fill={mode === 'friend' ? '#FFEA7E' : '#000'}
+          fill={mode === 'friend' ? '#FFEA7E' : '#888'}
           width={30} height={30}
           onClick={()=>{setMode("friend"); navigate("/user/friend")}}></Frined>
         <P $mode={mode}>친구</P>
@@ -40,14 +41,14 @@ const Footer = () => {
       <Home 
         fill={mode === 'home' ? '#FFEA7E' : '#000'}
         width={30} height={30}
-        onClick={()=>{setMode("home"); navigate(`/help/${localStorage.getItem("role")}`) }}></Home>
+        onClick={()=>{setMode("home"); navigate(`/help/${localStorage.getItem("role")}`)}}></Home>
         <P $mode={mode}>홈</P>
       </Box>
       <Box>
       <Profile 
         fill={mode === 'profile' ? '#FFEA7E' : '#000'}
         width={30} height={30}
-        onClick={()=>{setMode("profile"); navigate(`/user/profile/${userId}`) }}></Profile>
+        onClick={()=>{setMode("profile"); navigate(`/user/profile/${userId}`)}}></Profile>
         <P $mode={mode}>프로필</P>
       </Box>
     </FooterWrap> 
@@ -78,7 +79,7 @@ const Box = styled.div`
 const P = styled.div`
   font-size: 12px;
   text-align: center;
-  color : ${props=>props.$mode === 'friend' || props.$mode === 'home' || props.$mode === 'profile' ? '#FFEA7E' : '#000' }
+  /* color : ${props=>props.$mode === 'friend' || props.$mode === 'home' || props.$mode === 'profile' ? '#FFEA7E' : '#000' } */
 `
 
 export default Footer;
