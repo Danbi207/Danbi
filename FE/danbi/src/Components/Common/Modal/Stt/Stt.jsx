@@ -107,11 +107,12 @@ const ModalWrap = styled.div`
   @media screen and (max-width: 768px) {
     width: 80%;
     left: 10%;
-    height: 50%;
+    height: 70%;
     top: 25%;
   }
   padding: 1rem;
   background-color: ${(props) => props.theme.colors.bgColor};
+  color:${props=>props.theme.colors.titleColor};
 `;
 
 export default Stt
