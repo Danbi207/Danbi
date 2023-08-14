@@ -19,11 +19,9 @@ import { useCallback } from 'react';
 // 뽑기 이벤트 Canvas 생성
 // confetti canvas 생성
 export const Jsconfetti = new JSconfetti();
-
 function App() {
   const dispatch = useDispatch();
   const [loading,setLoading] = useState(false);
-  const [isPC,setIsPC] = useState("win16|win32|win64|mac|macintel".indexOf(navigator.platform.toLowerCase()) >= 0);
   // FCM 토큰 함수 호출
   const  requestFcmToken = useCallback(async ()=> {
     await requestPermission()
@@ -77,7 +75,7 @@ function App() {
   return (
     <>
     {
-      isPC?
+      document.body.offsetWidth >= 1000?
       <PCWrap>
         <MobileWrap>
           <ThemeProvider theme={theme}>
