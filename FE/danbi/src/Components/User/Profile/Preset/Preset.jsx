@@ -13,6 +13,11 @@ const Preset = ({ preset_list, setPresetList }) => {
   const showDetail = (title) => {
     setOpenTitle(title);
   };
+
+  const showDetailWithIndex = (index) => {
+    setOpenDetail(index);
+  };
+
   const handleChange = (result) => {
     if (!result.destination) return;
     const items = [...preset_list];
@@ -21,9 +26,6 @@ const Preset = ({ preset_list, setPresetList }) => {
     setPresetList(items);
   };
 
-  const showDetailWithIndex = (index) => {
-    setOpenDetail(index);
-  };
 
   const dispatch = useDispatch();
   const commandMode = useSelector((state) => state.modal.mode);
@@ -73,6 +75,7 @@ const Preset = ({ preset_list, setPresetList }) => {
       fuzzyMatchingThreshold: 0.2,
     },
   ];
+  
   const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {

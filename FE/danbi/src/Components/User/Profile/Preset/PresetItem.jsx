@@ -15,14 +15,14 @@ const PresetItem = ({
 
   const callConfirm = useCallback(async () => {
     try {
-      if (window.confirm('삭제함?')) {
+      if (window.confirm('삭제하시겠습니까?')) {
         const deleteUrl = `/api/v1/preset/${value.id}`;
         await authDelete(deleteUrl, {});
         const res = await authGet('/api/v1/preset');
         setPresetList(res.presetList);
-        alert('삭제됨');
+        alert('삭제되었습니다.');
       } else {
-        alert('취소함');
+        alert('취소하였습니다.');
       }
     } catch (err) {
       console.log(err);
@@ -52,8 +52,7 @@ const PresetItem = ({
           </Btns>
         </PreSetElement>
       </Element>
-      {(OpenTitle === value.title && EditActive) ||
-        (OpenDetail === index && EditActive && (
+      {(OpenTitle === value.title) &&
           <PresetDetail
             sequence={value.sequence}
             content={value.content}
@@ -62,7 +61,7 @@ const PresetItem = ({
             setEditActive={setEditActive}
             setPresetList={setPresetList}
           />
-        ))}
+        }
     </>
   );
 };
