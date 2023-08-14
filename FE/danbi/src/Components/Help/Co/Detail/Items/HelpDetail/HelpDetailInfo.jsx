@@ -92,10 +92,7 @@ const CautionBody = styled.div`
 const MapInfo = styled.div`
   display: flex;
   flex-direction: column;
-  height: 20rem;
-  @media screen and (max-width: 768px) {
-    height: 8rem;
-  }
+  height: 8rem;
 `;
 
 const MapHeader = styled.span`

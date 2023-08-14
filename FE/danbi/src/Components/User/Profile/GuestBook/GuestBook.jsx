@@ -118,6 +118,7 @@ const ChatSection = styled.div`
   justify-content: center;
   padding-left: 0.5rem;
   width: 62%;
+  padding-right: 0.5rem;
 `;
 const ChatForm = styled.form`
   width: 100%;

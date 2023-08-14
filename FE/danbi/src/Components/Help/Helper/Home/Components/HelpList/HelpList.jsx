@@ -24,10 +24,7 @@ const HelpList = ({helpList}) => {
   )
 }
 const HR = styled.div`
-  width: 40%;
-  @media screen and (max-width: 768px) {
-    width: 90%;
-  }
+  width: 90%;
   height: 1px;
   background-color: #D5CECE;
 `

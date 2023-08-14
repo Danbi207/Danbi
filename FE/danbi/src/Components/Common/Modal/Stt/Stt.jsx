@@ -100,16 +100,10 @@ const Wrap = styled.div`
 const ModalWrap = styled.div`
   position: fixed;
   z-index: 6;
-  left: 30%;
-  width: 40%;
-  height: 50%;
+  width: 80%;
+  left: 10%;
+  height: 70%;
   top: 25%;
-  @media screen and (max-width: 768px) {
-    width: 80%;
-    left: 10%;
-    height: 70%;
-    top: 25%;
-  }
   padding: 1rem;
   background-color: ${(props) => props.theme.colors.bgColor};
   color:${props=>props.theme.colors.titleColor};

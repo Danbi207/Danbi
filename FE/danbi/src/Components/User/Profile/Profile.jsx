@@ -110,6 +110,7 @@ const Profile = () => {
   return (
     <ProfileWrap>
       <Header />
+      <Main>
       <Wrap>
         <UserInfo
           url={data.profileUrl}
@@ -119,7 +120,6 @@ const Profile = () => {
           accusePoint={data.accusePoint}
           requestFriendFlag={data.requestFriendFlag}
           requestedFriendFlag={data.requestedFriendFlag}
-          userId={data.userId}
         />
         {localStorage.getItem('role') === 'ip' && Number(userId) === cur_id ? (
           <PresetButton setModalOpen={setModalOpen} ModalOpen={ModalOpen} />
@@ -139,18 +139,23 @@ const Profile = () => {
         <GuestBook guestBookId={data.guestBookId} userId={userId} />
         {ModalOpen && <PresetModal setModalOpen={setModalOpen} />}
       </Wrap>
+      </Main>
       <Footer />
     </ProfileWrap>
   );
 };
-
+const Main = styled.div`
+  width: 100%;
+  height: 100%;
+`
 const ProfileWrap = styled.div`
   width: 100%;
+  height: 100%;
   background-color: ${(props) => props.theme.colors.bgColor};
   color: ${(props) => props.theme.colors.titleColor};
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: calc(100% - 6.2rem);
 `;
 
 const Wrap = styled.div`

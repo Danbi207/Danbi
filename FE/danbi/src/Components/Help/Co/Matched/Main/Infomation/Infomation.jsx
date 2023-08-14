@@ -102,7 +102,7 @@ const HelpContent = styled.textarea`
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
   &::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
 `
 const UserInfoWrap = styled.div.attrs(props => ({
@@ -140,14 +140,7 @@ const Title = styled.div`
 `
 const Container = styled.div`
   width: 100%;
-  padding: 0 25%;
-
-  @media screen and (max-width: 1080px) {
-    padding: 0 15%;
-  }
-  @media screen and (max-width: 500px) {
-    padding: 0;
-  }
+  padding: 0;
 `
 const InfomationWrap = styled.div`
   width: 100%;
@@ -168,6 +161,7 @@ const InfomationWrap = styled.div`
 
 const AcceptBtn = styled.button`
   background-color: #FFEA7E;
+  margin-left: calc((100% - 20rem)/2);
   width: 20rem;
   height: 3rem;
   font-size: 1.5rem;

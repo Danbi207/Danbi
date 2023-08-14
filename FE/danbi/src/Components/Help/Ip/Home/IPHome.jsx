@@ -239,29 +239,21 @@ const BtnWrap = styled.div`
 `
 
 const EmergencyBTN = styled.button`
-  width: 30rem;
-  height: 3rem;
+  width: 20rem;
+  height: 5rem;
   border-radius: 2rem;
   background-color: ${(props) => props.theme.colors.redBtnColor};
   color: #fff;
   font-size: 2rem;
-  @media screen and (max-width: 500px) {
-    width: 20rem;
-    height: 5rem;
-  }
 `
 
 const RequestBTN = styled.button`
-  width: 30rem;
-  height: 3rem;
+  width: 20rem;
+  height: 5rem;
   border-radius: 2rem;
   background-color: ${(props) => props.theme.colors.buttonbgColor};
   color: ${(props) => props.theme.colors.buttontextColor};
   font-size: 2rem;
-  @media screen and (max-width: 500px) {
-    width: 20rem;
-    height: 5rem;
-  }
 `;
 
 export default IPHome;

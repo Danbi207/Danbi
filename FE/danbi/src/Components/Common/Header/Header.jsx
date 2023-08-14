@@ -76,11 +76,8 @@ const NavBarWrap = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  width: 25%;
+  width: 100%;
   height: 100%;
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
   z-index: 4;
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
   animation: ${props => props.$out ? fadeIn : fadeOut} 0.5s linear;

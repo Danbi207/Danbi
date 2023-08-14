@@ -96,12 +96,8 @@ const CompleteBTN = styled.button`
   bottom: 5rem;
   z-index: 3;
   background-color: #ffea7e;
-  width: 50%;
-  left: 25%;
-  @media screen and (max-width: 500px) {
-    width: 80%;
-    left: 10%;;
-  }
+  width: 80%;
+  left: 10%;;
   height: 3rem;
   border: 1px solid #000;
   border-radius: 1rem;

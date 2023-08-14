@@ -101,9 +101,6 @@ const AccuseBtn = styled.button`
   height: 3rem;
   margin-left: 10%;
   width: 80%;
-  @media screen and (max-width: 500px) {
-    width: 80%;
-  }
   border-radius: 0.5rem;
 `;
 const UploadBtn = styled.button`
@@ -178,16 +175,10 @@ const AccuseWrap = styled.div`
 const ModalWrap = styled.div`
   position: fixed;
   z-index: 6;
-  left: 25%;
-  width: 50%;
-  height: 80%;
-  top: 10%;
-  @media screen and (max-width: 500px) {
-    width: 80%;
-    left: 10%;
-    height: 75%;
-    top: 12.5%;
-  }
+  width: 80%;
+  left: 10%;
+  height: 75%;
+  top: 12.5%;
   padding: 1rem;
   background-color: ${(props) => props.theme.colors.bgColor};
 `;

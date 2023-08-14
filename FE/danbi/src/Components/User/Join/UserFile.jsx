@@ -111,18 +111,16 @@ const Question = styled.div`
 
 const NextBTN  = styled.button`
   position: absolute;
-  left : calc(( 100% - 30rem )/2);
   bottom: 2rem;
-  width: 30rem;
+  width: 20rem;
   height: 3rem;
+  left : calc(( 100% - 20rem )/2);
   border-radius: 0.75rem;
   background-color: ${props => props.theme.colors.buttonbgColor};
   color: ${props => props.theme.colors.buttontextColor};
   font-size : 2rem;
   @media screen and (max-width: 500px) {
-    width: 20rem;
-    height: 3rem;
-    left : calc(( 100% - 20rem )/2);
+    
   }
 `
 
