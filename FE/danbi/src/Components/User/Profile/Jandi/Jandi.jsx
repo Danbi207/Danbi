@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import Buttons from './Buttons.jsx';
@@ -55,7 +55,7 @@ const Jandi = ({
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
 
-  const onGross = (e, idx) => {
+  const onGross = useCallback((e, idx) => {
     if (selectIdx !== idx) {
       setSelectIdx(idx);
       console.log(typeof selectIdx);
@@ -69,7 +69,7 @@ const Jandi = ({
       idx,
       content: help_log[idx].createdTime,
     });
-  };
+  }, [ShowOverLay.idx, help_log, selectIdx]); 
   const GrossItems = useMemo(() => {
     const res = [];
     for (let i = page * colCnt * rowCnt; i < (page + 1) * colCnt * rowCnt; i++) {
