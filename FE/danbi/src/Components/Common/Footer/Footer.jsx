@@ -27,30 +27,29 @@ const Footer = () => {
     <FooterWrap>      
       <Box>
         <Frined 
-          fill={mode === 'fried' ? '#FFEA7E' : '#000'}
+          fill={mode === 'friend' ? '#FFEA7E' : '#000'}
           width={30} height={30}
-          $mode={mode} onClick={()=>{setMode("friend"); navigate("/user/friend")}}></Frined>
-        <p>친구</p>
+          onClick={()=>{setMode("friend"); navigate("/user/friend")}}></Frined>
+        <P $mode={mode}>친구</P>
       </Box>
       <Box>
       <Home 
         fill={mode === 'home' ? '#FFEA7E' : '#000'}
         width={30} height={30}
         $mode={mode} onClick={()=>{setMode("home"); navigate(`/help/${localStorage.getItem("role")}`) }}></Home>
-        <p>홈</p>
+        <P $mode={mode}>홈</P>
       </Box>
       <Box>
       <Profile 
         fill={mode === 'profile' ? '#FFEA7E' : '#000'}
         width={30} height={30}
-        $mode={mode} onClick={()=>{setMode("profile"); navigate(`/user/profile/${userId}`) }}></Profile>
-        <p>프로필</p>
+        onClick={()=>{setMode("profile"); navigate(`/user/profile/${userId}`) }}></Profile>
+        <P $mode={mode}>프로필</P>
       </Box>
-      
-      
     </FooterWrap> 
   )
 }
+
 const FooterWrap = styled.div`
     width: 100%; 
     height: 3.2rem;
@@ -61,40 +60,21 @@ const FooterWrap = styled.div`
     align-items: center;
 `
 
-// const Img = styled.div`
-//   width : 90%;
-//   height : 90%;
-// ` 
-
 const Box = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+  color: ${({ theme }) => theme.colors.white};
   &>p {
     font-size: 12px;
     text-align: center;
   }
 `
 
-// const FriendsImg = styled(Img)`
-//   background-image : url(${props=> props.$mode === "friends"? props.theme.images.friendsFilled : props.theme.images.friends});
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-size: 2rem;
-// `
-
-// const Homeimg = styled(Img)`
-//   background-image : url(${props=> props.$mode==="home" ? props.theme.images.homeFilled : props.theme.images.home});
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-size: 2.5rem;
-// `
-// const ProfileImg = styled(Img).attrs()`
-//   background-image : url(${props=> props.$mode==="profile" ? props.theme.images.profileFiiled : props.theme.images.profile});
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-size: 2.2rem;
-// `
+const P = styled.div`
+  font-size: 12px;
+  text-align: center;
+  color : ${props=>props.$mode === 'friend' || props.$mode === 'profile' || props.$mode === 'profile' ? '#FFEA7E' : '#000' }
+`
 
 export default Footer;
