@@ -8,13 +8,11 @@ const UserSubmit = () => {
 
   return (
     <SubmitWrap>
-      {/* <UserType usertype={usertype} setUserType={setUserType}/> */}
-      <UserFile usertype={usertype} setUserType={setUserType}/>
-    {/* {
+    {
       usertype === 'ROLE_UNDEFINED' ? 
       <UserType usertype={usertype} setUserType={setUserType}/> : 
       <UserFile usertype={usertype} setUserType={setUserType}/>
-    } */}
+    }
   </SubmitWrap>
   )
 }
