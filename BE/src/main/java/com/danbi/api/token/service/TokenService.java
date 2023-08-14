@@ -23,7 +23,7 @@ public class TokenService {
         Member member = memberService.findByRefreshToken(refreshToken);
 
         Date accessTokenExpireTime = tokenManager.createAccessTokenExpireTime();
-        String accessToken = tokenManager.createAccessToken(member.getId(), member.getRole(), accessTokenExpireTime);
+        String accessToken = tokenManager.createAccessToken(member.getId(), member.getRole(), member.getState(), accessTokenExpireTime);
 
         return AccessTokenResponseDto.builder()
                 .grantType(GrantType.BEARER.getType())

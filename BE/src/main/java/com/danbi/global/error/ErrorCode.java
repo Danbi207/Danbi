@@ -25,6 +25,7 @@ public enum ErrorCode {
     MEMBER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
     MEMBER_ROLE_NOT_EXIST(HttpStatus.BAD_REQUEST, "M-004", "해당 역할은 존재하지 않습니다."),
     INVALID_CERTIFICATE_IP(HttpStatus.BAD_REQUEST, "M-005", "해당 회원은 IP 역할 승인이 불가능합니다."),
+    MEMBER_STATE_NOT_EXIST(HttpStatus.BAD_REQUEST, "M-006", "해당 회원의 State는 없습니다."),
 
     // 프로필
     PROFILE_NOT_EXISTS(HttpStatus.BAD_REQUEST, "P-001", "해당 프로필은 존재하지 않습니다."),
@@ -88,8 +89,8 @@ public enum ErrorCode {
     FILE_AMOUNTS_LIMIT(HttpStatus.BAD_REQUEST, "F-002", "제출할 수 있는 파일 수를 초과했습니다."),
 
     // Paging
-    PAGING_LIMIT(HttpStatus.BAD_REQUEST, "PA-001", "페이징 크기 제한을 초과했습니다.")
-    ;
+    PAGING_LIMIT(HttpStatus.BAD_REQUEST, "PA-001", "페이징 크기 제한을 초과했습니다.");
+
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
         this.httpStatus = httpStatus;
