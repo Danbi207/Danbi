@@ -24,8 +24,8 @@ self.addEventListener("push", function (e) {
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-self.addEventListener("notificationclick", function (event) {
-  console.log("notification click");
-  event.notification.close();
-  // event.waitUntil(clients.openWindow(url));
+self.addEventListener("notificationclick", function (e) {
+  alert("notification 클릭해");
+  self.clients.openWindow('https://i9d207.p.ssafy.io');
+  e.notification.close();
 });
