@@ -152,9 +152,9 @@ const ProfileWrap = styled.div`
 `;
 
 const Wrap = styled.div`
-  margin-top: 1rem;
-  height: calc(100% - 6rem);
+  height: calc(100% - 6.2rem);
   width: 100%;
+  padding-top: 1rem;
 `;
 
 const JandiWrap = styled.div``;
