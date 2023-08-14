@@ -76,7 +76,7 @@ const PresetDetail = ({
           getSpeech('녹음시작');
           setTimeout(() => {
             setRecording(false);
-            setValue(transcript);
+            setValue(finalTranscript);
             getSpeech('녹음완료');
           }, 10000);
         }
@@ -120,11 +120,12 @@ const PresetDetail = ({
     },
   ];
   const {
+    transcript,
+    finalTranscript,
     resetTranscript,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
   } = useSpeechRecognition({ commands });
-  const { transcript } = useSpeechRecognition();
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });
