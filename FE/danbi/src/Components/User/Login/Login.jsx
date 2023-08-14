@@ -51,7 +51,7 @@ const Login = () => {
   const TestLogin=()=>{
     const email = prompt("ID를 입력하세요");
     const password = prompt("PASSWORD를 입력하세요");
-    axios.post("/api/v1/test/member",{
+    axios.post("/api/v1/test/member/login",{
       email,password
     }).then(({data})=>{
       console.log(data);
