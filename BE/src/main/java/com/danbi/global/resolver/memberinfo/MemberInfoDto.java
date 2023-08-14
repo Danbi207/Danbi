@@ -11,6 +11,5 @@ public class MemberInfoDto {
 
     private Long memberId;
     private Role role;
-    private State state;
 
 }
