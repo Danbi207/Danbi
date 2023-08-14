@@ -61,8 +61,8 @@ const HelperHome = () => {
 
   
   const setContact = useCallback(async(position) => {
-    setMode("contact");
     try{
+      setMode("contact");
       const data = await authPost(`/api/v1/help/contact`,{
         longitude:position.coords.longitude+"",
         latitude:position.coords.latitude+"",
@@ -79,7 +79,6 @@ const HelperHome = () => {
   
   
   const setMap = useCallback(async (position)=>{
-    setMode("map");
     try{
       const data = await authPost(`/api/v1/help/contact`,{
         longitude:position.coords.longitude+"",
@@ -87,6 +86,7 @@ const HelperHome = () => {
         gender
       });
       if(data){
+        setMode("map");
         setHelpList(data);
       }
     }catch(err){
