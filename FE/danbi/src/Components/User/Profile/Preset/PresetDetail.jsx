@@ -74,10 +74,10 @@ const PresetDetail = ({
           dispatch(setMode(null));
           StartRecord();
           getSpeech('녹음시작');
-          let recordedTranscript = ''; 
+          let recordedTranscript = '';
           setTimeout(() => {
             setRecording(false);
-            recordedTranscript = transcript; 
+            recordedTranscript = transcript;
             setValue(recordedTranscript);
             getSpeech('녹음완료');
             console.log(recordedTranscript);
@@ -86,7 +86,7 @@ const PresetDetail = ({
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.2,
-    }
+    },
     {
       command: '취소',
       callback: () => {
