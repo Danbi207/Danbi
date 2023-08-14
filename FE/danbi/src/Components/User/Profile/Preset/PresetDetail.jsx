@@ -72,7 +72,8 @@ const PresetDetail = ({
       callback: () => {
         if (commandMode === 'stt') {
           dispatch(setMode(null));
-          StartRecord();
+          setRecording(true);
+          resetTranscript();
           getSpeech('녹음시작');
           let recordedTranscript = '';
           setTimeout(() => {
