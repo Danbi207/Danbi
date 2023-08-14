@@ -1,6 +1,6 @@
 export const dark ={
   colors:{
-    titleColor : '#FFFFFF',
+    titleColor : '#FFF',
     bgColor: '#19191B',
     boxColor: '#E3E3E3',
     jandibgColor: '#FFFFFF',

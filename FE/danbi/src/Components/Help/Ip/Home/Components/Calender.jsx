@@ -283,7 +283,9 @@ const DaysWrap = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 0.65rem;
-  padding: 2px;
+  padding: 5px 0;
+  column-gap: 5px;
+
 
   &>.col {
   width: 15%;
