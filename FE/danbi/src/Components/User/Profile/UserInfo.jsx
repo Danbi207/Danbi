@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccuseButton from './Utils/AccuseButton.jsx';
-import { authPost } from '../../../Util/apis/api.js';
+import { authPost, authGet } from '../../../Util/apis/api.js';
 import { useSelector } from 'react-redux';
 const UserInfo = ({
   url,
@@ -11,6 +11,7 @@ const UserInfo = ({
   accusePoint,
   requestedFriendFlag,
   requestFriendFlag,
+  userId,
 }) => {
   console.log(friendFlag);
   console.log(accusePoint);
@@ -21,6 +22,7 @@ const UserInfo = ({
       targetId,
     };
     await authPost('/api/v1/friends', data);
+    await authGet(`/api/v1/profile/${userId}`);
   };
 
   const cur_id = useSelector((state) => state.user.userId);
