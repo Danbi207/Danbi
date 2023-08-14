@@ -191,28 +191,34 @@ const Request = () => {
   return (
     <Wrap>
       <Header></Header>
-      {
-        tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap meet={meet} dest={dest} setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
-        <Tap>
-          <TapItem $on = {tap==="time"} onClick={()=>setTap("time")}>시간예약</TapItem>
-          <TapItem $on = {tap==="setting"} onClick={()=>setTap("setting")}>상세설정</TapItem>
-        </Tap>
-        <MainWrap $full={false}>
-          {
-            tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear} setTap={setTap}></Time>:null
-          }
-          {
-            tap==="setting" ? <Setting content={content} SendRequestEdit={SendRequestEdit} helpPostId={helpPostId} SendRequest={SendRequest} presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
-          }
-        </MainWrap>
-      </>
-      }
+      <Main>
+        {
+          tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap meet={meet} dest={dest} setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
+          <Tap>
+            <TapItem $on = {tap==="time"} onClick={()=>setTap("time")}>시간예약</TapItem>
+            <TapItem $on = {tap==="setting"} onClick={()=>setTap("setting")}>상세설정</TapItem>
+          </Tap>
+          <MainWrap $full={false}>
+            {
+              tap==="time" ? <Time setGenderOption={setGenderOption} genderOption={genderOption} useTime={useTime} setUseTime={setUseTime} setMinute={setMinute} minute={minute} hour={hour} setHour={setHour} day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear} setTap={setTap}></Time>:null
+            }
+            {
+              tap==="setting" ? <Setting content={content} SendRequestEdit={SendRequestEdit} helpPostId={helpPostId} SendRequest={SendRequest} presets={presets} setCautionTitle={setCautionTitle} cautionTitle={cautionTitle} caution={caution} setCaution={setCaution} setContent={setContent} setPosition={setPosition} setTap={setTap} dest={dest} meet={meet} setHelpType={setHelpType} helpType={helpType} setFaceType={setFaceType} faceType={faceType}></Setting>:null
+            }
+          </MainWrap>
+        </>
+        }
+      </Main>
       <Footer></Footer>
     </Wrap>
   )
 }
+const Main = styled.div`
+  width: 100%;
+  height: 100%;
+`
 const MainWrap = styled.div`
-  height: ${props=>props.$full ? "calc(100% - 6.2rem)" :"calc(100% - 9.2rem)"};
+  height: 100%;
   padding: ${props=>props.$full ? null :"1rem"};
 `
 const Wrap = styled.div`
