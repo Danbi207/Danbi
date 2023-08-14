@@ -57,9 +57,10 @@ const Jandi = ({
 
   const onGross = useCallback((e, idx) => {
     if (selectIdx !== idx) {
+      console.log(idx);
       setSelectIdx(idx);
-      console.log(typeof selectIdx);
     } else {
+      console.log(idx);
       setSelectIdx(-1);
     }
     setShowOverLay({
@@ -144,7 +145,7 @@ const Jandi = ({
       />
       {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
-          {ShowOverLay.content}
+          {ShowOverLay.content.slice(0, 10)}
         </OverRayWrap>
       )}
       {ShowHelp.show && (
