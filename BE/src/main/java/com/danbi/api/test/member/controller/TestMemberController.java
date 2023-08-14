@@ -16,7 +16,7 @@ public class TestMemberController {
 
     private final TestMemberService testMemberService;
 
-    @PostMapping
+    @PostMapping("/login")
     public OauthLoginDto.Response login(@RequestBody TestMemberLoginRequest request) {
 
         return testMemberService.login(request.getEmail(), request.getPassword());
