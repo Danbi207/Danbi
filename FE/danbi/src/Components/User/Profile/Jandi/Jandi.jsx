@@ -57,13 +57,10 @@ const Jandi = ({
 
   const onGross = useCallback((e, idx) => {
     if (selectIdx !== idx) {
-      console.log(idx);
-      console.log(selectIdx);
       setSelectIdx(idx);
     } else {
-      console.log(idx);
-      console.log(selectIdx);
       setSelectIdx(-1);
+      setShowOverLay({idx: -1});
     }
     setShowOverLay({
       x: e.clientX,
@@ -72,8 +69,7 @@ const Jandi = ({
       idx,
       content: help_log[idx].createdTime,
     });
-    console.log(ShowOverLay.show);
-  }, [ShowOverLay.idx, help_log, selectIdx]); 
+  }, [ShowOverLay.idx, help_log, selectIdx]);
   const GrossItems = useMemo(() => {
     const res = [];
     for (let i = page * colCnt * rowCnt; i < (page + 1) * colCnt * rowCnt; i++) {
