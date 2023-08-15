@@ -4,13 +4,18 @@ import NavBar from '../NavBar/NavBar';
 import { useCallback } from 'react';
 import { authDelete, authGet } from '../../../Util/apis/api';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const Header = () => {
   const [navFlag,setNavFlag] = useState(false);
   const [alramFlag,setAlramFlag] = useState(false);
   const [alramlist, setAlramList] = useState([]);
+  const navigate = useNavigate();
+  // const [alrcount, setAlrCount] = useState(0);
 
   const mvHome = ()=>{
     //FIXME : 유저정보를 읽어서 ip홈 or helper홈 라우팅
+    navigate(`/help/${localStorage.getItem("role")}`)
   }
 
   const toggleAlram = ()=>{
@@ -28,6 +33,18 @@ const Header = () => {
       console.log(err);
     }
   }, []);
+
+  // const NotReadAlrams = useCallback(async()=>{
+  //   try {
+  //     const setAlrCount = await authGet('/api/v1/pofile/alarm/notread/count');
+  //     if (setAlrCount){
+  //       setAlrCount(setAlrCount)
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // },[])
 
   // 알람 데이터 일괄 삭제
   const DeleteAlrams = useCallback(async()=>{
@@ -60,14 +77,14 @@ const Header = () => {
             </BTNWrap>
             <HR/>
             {alramlist.map((item, idx) => 
-            <>
-            <AlramsWrap key={idx}>
+            <React.Fragment key={item.alarmId}>
+            <AlramsWrap>
               <TitleWrap>{item.title}</TitleWrap>
               <ContetnWrap>{item.content}</ContetnWrap>
               <TimeWrap>{item.creatTime}</TimeWrap>
             </AlramsWrap>
             <HR/>
-            </>)}
+            </React.Fragment>)}
         </AlramWrap>
       </HeaderWrap>
       <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>

@@ -18,8 +18,8 @@ const Footer = () => {
   
   useEffect(()=>{
     let path = location.pathname
-    console.log(location)
-    console.log(path)
+    // console.log(location)
+    // console.log(path)
     if (path === '/user/friend') {setMode('friend');}
     if(path.startsWith("/help/ip") || path.startsWith("/help/helper")){
       setMode("home")}
