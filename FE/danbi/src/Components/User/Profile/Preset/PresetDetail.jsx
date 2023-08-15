@@ -71,17 +71,25 @@ const PresetDetail = ({
       command: '녹음',
       callback: () => {
         if (commandMode === 'stt') {
-          dispatch(setMode(null));
           setRecording(true);
+          resetTranscript();
           SpeechRecognition.startListening();
-          setValue(transcript);
+          setValue('녹음중...');
           getSpeech('녹음시작');
-          setTimeout(() => {
+
+          const recordingTimeout = setTimeout(() => {
             setRecording(false);
             setValue(transcript);
             SpeechRecognition.stopListening();
             getSpeech('녹음완료');
           }, 10000);
+
+          SpeechRecognition.onEnd = () => {
+            clearTimeout(recordingTimeout);
+            setRecording(false);
+            setValue(transcript);
+            getSpeech('녹음완료');
+          };
         }
       },
       isFuzzyMatch: true,
