@@ -74,11 +74,12 @@ const PresetDetail = ({
           dispatch(setMode(null));
           setRecording(true);
           SpeechRecognition.startListening();
+          setValue(transcript);
           getSpeech('녹음시작');
           setTimeout(() => {
             setRecording(false);
-            SpeechRecognition.stopListening();
             setValue(transcript);
+            SpeechRecognition.stopListening();
             getSpeech('녹음완료');
           }, 10000);
         }
