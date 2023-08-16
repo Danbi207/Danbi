@@ -4,14 +4,14 @@ import { authPost, authDelete, authGet } from '../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
 const Waitting = ({ value, setWaittingFriends, setMyFriends }) => {
-  console.log(value);
+  // console.log(value);
   const handleAccept = async () => {
     const target_id = {
       targetId: value.targetId,
     };
     try {
       const res = await authPost('/api/v1/friends/permit', target_id);
-      console.log(res);
+      // console.log(res);
       const waittingResponse = await authGet('/api/v1/friends/responses');
       const myFriendResponse = await authGet('/api/v1/friends');
       setWaittingFriends(waittingResponse.result);

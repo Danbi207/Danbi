@@ -36,7 +36,14 @@ const Footer = () => {
           width={30} height={30}></FriendSVG>
         <P $mode={mode === 'friend' ? '#fbc037' : props=>props.theme.colors.titleColor}>친구</P>
       </Box>
-      <Box onClick={()=>{navigate(`/help/${localStorage.getItem("role")}`)}}>
+      <Box onClick={()=>{
+        const role = localStorage.getItem("role");
+        if(role === "admin"){
+          navigate("/admin");
+          return;
+        }
+        navigate(`/help/${role}`
+      )}}>
       <HomeSVG 
         $color={mode === 'home' ? '#fbc037' : undefined}
         width={30} height={30}></HomeSVG>

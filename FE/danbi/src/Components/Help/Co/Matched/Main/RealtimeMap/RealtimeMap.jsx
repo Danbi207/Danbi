@@ -11,7 +11,7 @@ const RealtimeMap = (props) => {
   useEffect(()=>{
     if(props.curposition !== null){
       const curPosition = new kakao.maps.LatLng(props.curposition.coords.latitude,props.curposition.coords.longitude);
-      console.log(props.curposition.coords);
+      // console.log(props.curposition.coords);
       const marker = new kakao.maps.Marker({
         position: curPosition
       });

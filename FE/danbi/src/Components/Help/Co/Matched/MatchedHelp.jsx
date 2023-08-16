@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Infomation from './Main/Infomation/Infomation.jsx';
 import Chat from './Main/Chat/Chat.jsx';
 import RealtimeMap from './Main/RealtimeMap/RealtimeMap.jsx';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {authGet} from "../../../../Util/apis/api.js";
 import axios from 'axios';
 
@@ -17,6 +17,7 @@ const MatchedHelp = () => {
   const [curposition,setCurPosition] = useState(null);
   const [watchID,setWatchID] = useState(null);
   const [myProfile,setMyProfile] = useState(null);
+  const navigate = useNavigate();
   const stopCurPosition = ()=>{
     if(watchID !== null){
       navigator.geolocation.clearWatch(watchID);
@@ -39,9 +40,16 @@ const MatchedHelp = () => {
       const data = await authGet(`/api/v1/help/matched/${helpPostId}`);
       setHelp(data);
     }catch(err){
-      console.log(err.response);
+      if(err.response){
+        if(err.response.data.errorCode==="HP-005"){
+          alert(err.response.data.errorMessage);
+          navigate("/help/helper",{replace:true});
+          return;
+        }
+        
+      }
     }
-  },[]);
+  },[helpPostId]);
   
   const getMyProfile = useCallback(async()=>{
     try{
@@ -73,6 +81,8 @@ const MatchedHelp = () => {
       }else{
         setMode("Chat");
       }
+    }).catch((err)=>{
+      console.log(err.response);
     });
   },[helpPostId]);
 

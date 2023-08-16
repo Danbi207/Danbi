@@ -130,17 +130,31 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
+  width: auto;
+  height: auto;
 `;
 
-const EditBtn = styled.button``;
+const EditBtn = styled.button`
+  width: 12px;
+  height: 12px;
+`;
 const EditImg = styled.img.attrs((props) => ({
   src: props.theme.images.edit_small,
-}))``;
+}))`
+  width: 12px;
+  height: 12px;
+`;
 
-const DeleteBtn = styled.button``;
+const DeleteBtn = styled.button`
+  width: 12px;
+  height: 12px;
+`;
 const DeleteImg = styled.img.attrs((props) => ({
   src: props.theme.images.delete_small,
-}))``;
+}))`
+  width: 12px;
+  height: 12px;
+`;
 
 const EditSection = styled.div``;
 const EditTextArea = styled.textarea`
@@ -158,7 +172,7 @@ const EditTextArea = styled.textarea`
 `;
 const SaveBtn = styled.button``;
 const SaveImg = styled.img.attrs((props) => ({
-  src: props.theme.images.save
+  src: props.theme.images.preset_save
 }))``;
 
 export default GuestBookComment;

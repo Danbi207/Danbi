@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import DetailMap from './DetailMap.jsx';
 
 const HelpDetailInfo = ({ data }) => {
-  console.log(data);
   return (
     <DetailWrap>
       <BasicInfo>

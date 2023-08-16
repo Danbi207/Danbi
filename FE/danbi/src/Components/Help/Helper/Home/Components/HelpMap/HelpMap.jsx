@@ -43,7 +43,7 @@ const HelpMap = ({position,helpList}) => {
         </MarkerWrap>
       </CustomOverlayMap>);
     };
-    console.log(res);
+    
     return res;
   }
 

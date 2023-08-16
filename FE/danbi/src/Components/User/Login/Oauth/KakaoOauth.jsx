@@ -32,7 +32,7 @@ const KaKaoOauth = () => {
       url : process.env.REACT_APP_KAKAO_OUATH__PATH,
       data : {code,redirectUrl} 
     }).then(({data})=>{
-      console.log(data);
+      // console.log(data);
       setToken(data.accessToken);
       setTokenExpireTime(data.accessTokenExpirationTime);
       

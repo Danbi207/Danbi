@@ -82,6 +82,7 @@ const PresetDetail = ({
             setValue(transcript);
             SpeechRecognition.stopListening();
             getSpeech('녹음완료');
+            // console.log(finalTranscript);
           }, 10000);
 
           SpeechRecognition.onEnd = () => {

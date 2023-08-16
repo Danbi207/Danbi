@@ -24,7 +24,9 @@ const HelperHome = () => {
         navigate(`/help/helper/matched/${data.helpPostId}`);
       }
     }catch(err){
-      console.log(err);
+      if(err.response){
+        alert(err.response.data.errorMessage);
+      }
     }
   },[]);
 
@@ -43,7 +45,9 @@ const HelperHome = () => {
         dispatch(setGender(data.gender));
       }
     }catch(err){
-      console.log(err.response);
+      if(err.response){
+        alert(err.response.data.errorMessage);
+      }
     }
   },[dispatch]);
 
@@ -55,7 +59,9 @@ const HelperHome = () => {
         setMode("untact");
       }
     }catch(err){
-      console.log(err.response);
+      if(err.response){
+        alert(err.response.data.errorMessage);
+      }
     }
   },[setHelpList,setMode,gender]);
 
@@ -72,8 +78,9 @@ const HelperHome = () => {
         setHelpList(data);
       }
     }catch(err){
-      console.log(err.response);
-      alert(err);
+      if(err.response){
+        alert(err.response.data.errorMessage);
+      }
     }
   },[setHelpList,setMode,gender]);
   
@@ -90,8 +97,9 @@ const HelperHome = () => {
         setHelpList(data);
       }
     }catch(err){
-      alert(err);
-      console.log(err.response);
+      if(err.response){
+        alert(err.response.data.errorMessage);
+      }
     }
   },[setMode,gender]);
 

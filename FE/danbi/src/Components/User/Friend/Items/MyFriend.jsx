@@ -4,7 +4,7 @@ import { authDelete, authGet } from '../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
 
 const MyFriend = ({ value, setMyFriends, setWaittingFriends }) => {
-  console.log(value);
+  // console.log(value);
   const handleDelete = async () => {
     try {
       await authDelete(`/api/v1/friends/delete/${value.friendId}`, {});
