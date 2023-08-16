@@ -139,7 +139,7 @@ const EditBtn = styled.button`
   height: 12px;
 `;
 const EditImg = styled.img.attrs((props) => ({
-  src: props.theme.images.edit_small,
+  src: props.theme.images.edit_Small,
 }))`
   width: 12px;
   height: 12px;
@@ -150,7 +150,7 @@ const DeleteBtn = styled.button`
   height: 12px;
 `;
 const DeleteImg = styled.img.attrs((props) => ({
-  src: props.theme.images.delete_small,
+  src: props.theme.images.delete_Small,
 }))`
   width: 12px;
   height: 12px;
