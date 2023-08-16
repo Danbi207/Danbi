@@ -45,6 +45,7 @@ public class TestMemberService {
         Member member = Member.builder()
                 .oauthType(OauthType.TEST)
                 .name(request.getName())
+                .nickname(request.getNickname())
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .role(Role.from(request.getRole()))
