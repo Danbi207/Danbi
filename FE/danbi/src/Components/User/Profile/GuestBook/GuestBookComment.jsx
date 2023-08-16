@@ -132,12 +132,18 @@ const Buttons = styled.div`
   justify-content: end;
 `;
 
-const EditBtn = styled.button``;
+const EditBtn = styled.button`
+  width: auto;
+  height: auto;
+`;
 const EditImg = styled.img.attrs((props) => ({
   src: props.theme.images.edit_small,
 }))``;
 
-const DeleteBtn = styled.button``;
+const DeleteBtn = styled.button`
+  width: auto;
+  height: auto;
+`;
 const DeleteImg = styled.img.attrs((props) => ({
   src: props.theme.images.delete_small,
 }))``;
