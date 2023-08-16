@@ -61,9 +61,14 @@ const GuestBookComment = ({
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
             />
-            <SaveBtn onClick={handleEdit}>
-              <SaveImg />
-            </SaveBtn>
+            <Buttons>
+              <SaveBtn onClick={handleEdit}>
+                저장
+              </SaveBtn>
+              <CancleBtn onClick={() => setEditMode(false)}>
+                취소
+              </CancleBtn>
+            </Buttons>
           </EditSection>
         ) : (
           <Content>{comment.content}</Content>
@@ -72,10 +77,10 @@ const GuestBookComment = ({
       {writerName === userName && !editMode && (
         <Buttons>
           <EditBtn onClick={() => setEditMode(true)}>
-            <EditImg />
+            수정
           </EditBtn>
           <DeleteBtn onClick={() => handleDelete(comment)}>
-            <DeleteImg />
+            삭제
           </DeleteBtn>
         </Buttons>
       )}
@@ -83,7 +88,7 @@ const GuestBookComment = ({
       {writerName !== userName && Number(userId) === cur_id && (
         <Buttons>
           <DeleteBtn onClick={() => handleDelete(comment)}>
-            <DeleteImg />
+            삭제
           </DeleteBtn>
         </Buttons>
       )}
@@ -137,17 +142,11 @@ const Buttons = styled.div`
 
 const EditBtn = styled.button`
 `;
-const EditImg = styled.img.attrs((props) => ({
-  src: props.theme.images.edit_Small,
-}))`
-`;
+
 
 const DeleteBtn = styled.button`
 `;
-const DeleteImg = styled.img.attrs((props) => ({
-  src: props.theme.images.delete_Small,
-}))`
-`;
+
 
 const EditSection = styled.div`
   display: flex;
@@ -169,11 +168,8 @@ const EditTextArea = styled.textarea`
   color: ${(props) => props.theme.colors.titleColor};
 `;
 const SaveBtn = styled.button`
-  position: absolute;
-  right: 1rem;
 `;
-const SaveImg = styled.img.attrs((props) => ({
-  src: props.theme.images.preset_save
-}))``;
+
+const CancleBtn = styled.button``;
 
 export default GuestBookComment;
