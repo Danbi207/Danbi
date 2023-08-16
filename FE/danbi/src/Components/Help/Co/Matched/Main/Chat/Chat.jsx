@@ -16,7 +16,7 @@ const Chat = (props) => {
   const chatRef = useRef();
   const socketRef = useRef();
   const pcRef = useRef();
-  const stream = useRef();
+  const streamRef = useRef();
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const [chatValue,setChatValue] = useState("");
@@ -45,15 +45,16 @@ const Chat = (props) => {
   }
   const setVideoTracks = useCallback(async () => {
     try {
-      stream.current = await navigator.mediaDevices.getUserMedia({
+      const stream = await navigator.mediaDevices.getUserMedia({
         video: onVideo,
         audio: onAudio,
       });
-      if (localVideoRef.current) localVideoRef.current.srcObject = stream.current;
+      streamRef.current = stream;
+      if (localVideoRef.current) localVideoRef.current.srcObject = stream;
       if (!(pcRef.current && socketRef.current)) return;
-      stream.current.getTracks().forEach((track) => {
+      stream.getTracks().forEach((track) => {
         if (!pcRef.current) return;
-        pcRef.current.addTrack(track, stream.current);
+        pcRef.current.addTrack(track, stream);
       });
       pcRef.current.onicecandidate = (e) => {
         if (e.candidate) {
@@ -109,15 +110,19 @@ const Chat = (props) => {
 
   useEffect(()=>{
     //DO : 지난 채팅내역을 불러옴
-    //FIXME : 채팅내역에서 nickname을 비교해 내가 친 채팅인지 상대방이 친 채팅인지 구분하여 넣기
     axios({
       method:"get",
       url:`/room/chat/${props.roomId}`,
     }).then(({data})=>{
       for(let i = 0; i < data.length; i++){
         const messageEl = document.createElement("div");
-        messageEl.className="RightChatWrap";
-        messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
+        if(data[i].userId===props.myProfile.userId){
+          messageEl.className="RightChatWrap";
+          messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
+        }else{
+          messageEl.className="LeftChatWrap";
+          messageEl.innerHTML = `<span>${data[i].name} : ${data[i].content}</span><span>${data[i].date}</span>`;
+        }
         chatRef.current.appendChild(messageEl);
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
       }
@@ -186,7 +191,7 @@ const Chat = (props) => {
           <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
             <ControlBtn onClick={()=>{
-              stream.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
+              streamRef.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
               setOnVideo(!onVideo);
             }} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
@@ -194,7 +199,7 @@ const Chat = (props) => {
               }
             </ControlBtn>
             <ControlBtn onClick={()=>{
-              stream.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
+              streamRef.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
               setOnAudio(!onAudio);
             }}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
