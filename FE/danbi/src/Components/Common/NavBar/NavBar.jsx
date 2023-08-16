@@ -22,7 +22,6 @@ const NavBar = (props) => {
     try{
       const res = await authPost('/api/v1/member/logout');
       if(res){
-        console.log(res);
         localStorage.removeItem("role");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("refreshTokenExpireTime");
