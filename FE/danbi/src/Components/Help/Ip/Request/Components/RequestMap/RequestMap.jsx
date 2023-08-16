@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Map,CustomOverlayMap} from "react-kakao-maps-sdk";
 import { useState } from 'react';
 
-const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
+const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position,from,setFrom}) => {
 
   const [markerPosition,setMarkerPosition]=useState(
     tap==="meet"?
@@ -36,6 +36,7 @@ const RequestMap = ({meet,dest,setDest,setMeet,setTap,tap,position}) => {
               setAddr(result[0].address.address_name ? result[0].address.address_name:result[0].road_address);
               if(tap === "meet"){
                 setMeet({meetAddr:result[0].address.address_name ? result[0].address.address_name:result[0].road_address,meetLatitude:e.latLng.getLat(),meetLongitude:e.latLng.getLng()});
+                setFrom({meetAddr:result[0].address.address_name ? result[0].address.address_name:result[0].road_address,meetLatitude:e.latLng.getLat(),meetLongitude:e.latLng.getLng()});
                 setMarkerPosition({lat:e.latLng.getLat(),lng:e.latLng.getLng()});
               }
     

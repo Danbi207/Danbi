@@ -21,7 +21,10 @@ const Request = () => {
   const [helpType,setHelpType] = useState("ETC");
   const [meet,setMeet] = useState(null);
   const [dest,setDest] = useState(null);
-  const [position,setPosition] = useState({coords:{latitude:36.1071233,longitude:128.1111}});//지도 Position
+  
+  const [from, setFrom] = useState({coords:{latitude:36.110336,longitude:128.4162384}});
+  const [position,setPosition] = useState({coords:{latitude:36.110336,longitude:128.4162384}}); //현재 위치에서 찍을 수 있는 위도, 경도
+
   const [content,setContent] = useState('');
   const [presets,setPresets] = useState([]);
   const [cautionTitle,setCautionTitle] = useState("직접입력");
@@ -103,8 +106,8 @@ const Request = () => {
         data["end_time"]=`${endTime.getFullYear()}-${(endTime.getMonth()+1)<10?"0"+(endTime.getMonth()+1):(endTime.getMonth()+1)}-${endTime.getDate() < 10 ? "0"+endTime.getDate():endTime.getDate()} ${endTime.getHours() < 10 ? "0"+endTime.getHours():endTime.getHours()}:${endTime.getMinutes() < 10 ? "0"+endTime.getMinutes():endTime.getMinutes()}`
         data["position"]={
           addr,
-          latitude:position.coords.latitude,
-          longitude:position.coords.longitude,
+          latitude:from.coords.latitude,
+          longitude:from.coords.longitude,
           ...meet,
           ...dest
         };
@@ -135,7 +138,7 @@ const Request = () => {
       }
     };
     geocoder.coord2Address(position.coords.longitude, position.coords.latitude, callback);
-  },[position,helpType,caution,faceType,meet,dest,kakao,content,genderOption,year,month,day,hour,minute,useTime,navigate,helpPostId]);
+  },[position,helpType,caution,faceType,meet,dest,kakao,content,genderOption,year,month,day,hour,minute,useTime,navigate,helpPostId,from]);
 
   const SendRequest = useCallback(async()=>{
     const geocoder = new kakao.maps.services.Geocoder();
@@ -154,8 +157,8 @@ const Request = () => {
         data["end_time"]=`${endTime.getFullYear()}-${(endTime.getMonth()+1)<10?"0"+(endTime.getMonth()+1):(endTime.getMonth()+1)}-${endTime.getDate() < 10 ? "0"+endTime.getDate():endTime.getDate()} ${endTime.getHours() < 10 ? "0"+endTime.getHours():endTime.getHours()}:${endTime.getMinutes() < 10 ? "0"+endTime.getMinutes():endTime.getMinutes()}`
         data["position"]={
           addr,
-          latitude:position.coords.latitude,
-          longitude:position.coords.longitude,
+          latitude:from.coords.latitude,
+          longitude:from.coords.longitude,
           ...meet,
           ...dest
         };
@@ -185,15 +188,15 @@ const Request = () => {
         navigate("/help/ip");
       }
     };
-    geocoder.coord2Address(position.coords.longitude, position.coords.latitude, callback);
-  },[position,helpType,caution,faceType,meet,dest,kakao,content,genderOption,year,month,day,hour,minute,useTime,navigate]);
+    geocoder.coord2Address(from.coords.longitude, from.coords.latitude, callback);
+  },[helpType,caution,faceType,meet,dest,kakao,content,genderOption,year,month,day,hour,minute,useTime,navigate,from]);
 
   return (
     <Wrap>
       <Header></Header>
       <Main $full={false}>
         {
-          tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap meet={meet} dest={dest} setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap}></RequestMap></MainWrap> : <>
+          tap==="dest" || tap === "meet" ? <MainWrap $full={true} ><RequestMap meet={meet} dest={dest} setDest={setDest} setMeet={setMeet} position={position} setTap={setTap} tap={tap} from={from} setFrom={setFrom}></RequestMap></MainWrap> : <>
           <Tap>
             <TapItem $on = {tap==="time"} onClick={()=>setTap("time")}>시간예약</TapItem>
             <TapItem $on = {tap==="setting"} onClick={()=>setTap("setting")}>상세설정</TapItem>
