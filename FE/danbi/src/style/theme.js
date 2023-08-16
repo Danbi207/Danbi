@@ -108,7 +108,7 @@ export const light ={
 
     edit_Big : `${process.env.PUBLIC_URL}/assets/Edit-White-Big.svg`,
     edit_Small : `${process.env.PUBLIC_URL}/assets/Edit-White-Small.svg`,
-    delete_Big : `${process.env.PUBLIC_URL}/assets/Delete-White.svg`,
+    delete_Big : `${process.env.PUBLIC_URL}/assets/Delete-White-Big.svg`,
     delete_Small : `${process.env.PUBLIC_URL}/assets/Delete-White-Small.svg`,
     preset_save : `${process.env.PUBLIC_URL}/assets/Save-White-Icon.svg`,
 
