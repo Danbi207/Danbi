@@ -129,34 +129,32 @@ const Content = styled.span`
 const Buttons = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: end;
   width: auto;
   height: auto;
+  position: absolute;
+  right: 1rem;
 `;
 
 const EditBtn = styled.button`
-  width: 12px;
-  height: 12px;
 `;
 const EditImg = styled.img.attrs((props) => ({
-  src: props.theme.images.edit_small,
+  src: props.theme.images.edit_Small,
 }))`
-  width: 12px;
-  height: 12px;
 `;
 
 const DeleteBtn = styled.button`
-  width: 12px;
-  height: 12px;
 `;
 const DeleteImg = styled.img.attrs((props) => ({
-  src: props.theme.images.delete_small,
+  src: props.theme.images.delete_Small,
 }))`
-  width: 12px;
-  height: 12px;
 `;
 
-const EditSection = styled.div``;
+const EditSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const EditTextArea = styled.textarea`
   border: 1px solid ${(props) => props.theme.colors.titleColor};
   border-radius: 10px;
@@ -170,7 +168,10 @@ const EditTextArea = styled.textarea`
   height: auto;
   color: ${(props) => props.theme.colors.titleColor};
 `;
-const SaveBtn = styled.button``;
+const SaveBtn = styled.button`
+  position: absolute;
+  right: 1rem;
+`;
 const SaveImg = styled.img.attrs((props) => ({
   src: props.theme.images.preset_save
 }))``;
