@@ -10,10 +10,12 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
   const setCurPosition = useCallback(()=>{
     if (navigator.geolocation) { // GPS를 지원하면
       navigator.geolocation.getCurrentPosition((e)=>{
+        console.log(e);
         setPosition(e);
       });
     }else{
-      setPosition({coords:{latitude:36.1071233,longitude:128.216481}})
+      // FIXME : GPS 지원을 안하면 막히게
+      setPosition({coords:{latitude:36.110336,longitude:128.4162384}}) 
     }
   },[setPosition]);
 
