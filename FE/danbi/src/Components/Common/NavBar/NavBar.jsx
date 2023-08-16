@@ -18,16 +18,19 @@ const NavBar = (props) => {
 
   const handleLogout = useCallback( async () => {
     try{
-      await authPost('/api/v1/member/logout');
-      localStorage.removeItem("role");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("refreshTokenExpireTime");
-      window.location.reload();
+      const res = await authPost('/api/v1/member/logout');
+      if(res){
+        localStorage.removeItem("role");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("refreshTokenExpireTime");
+        navigate('/',{replace:true});
+        window.location.reload();
+      }
     }catch(err){
       console.log(err);
     }
     navigate('/');
-  }, [navigate]);
+  }, []);
 
   return (
     <>

@@ -9,13 +9,13 @@ const DetailMap = ({ position }) => {
     // 지도 위치 변경시 panto를 이용할지에 대해서 정의
     isPanto: true,
   })
-  const markers = useMemo(()=>{
+  const markers = ()=>{
     const res = [];
     let key = 0;
     if(position.meetLatitude && position.meetLongitude!==""){
       res.push(
         <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
-          <div>목적지</div>
+          <div>만나는 장소</div>
           <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
         </CustomOverlayMap>
       );
@@ -25,7 +25,7 @@ const DetailMap = ({ position }) => {
     if(position.destLatitude && position.destLatitude!==""){
       res.push(
         <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
-          <div>만나는 장소</div>
+          <div>목적지</div>
           <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
         </CustomOverlayMap>
       );
@@ -33,7 +33,7 @@ const DetailMap = ({ position }) => {
     
 
     return res;
-  },[position])
+  }
 
   useEffect(()=>{
     if(position.meetLatitude){
@@ -52,7 +52,7 @@ const DetailMap = ({ position }) => {
       level={7}
     >
       {
-        markers
+        markers()
       }
     </Map>
   );

@@ -16,14 +16,14 @@ const HelperDetail = ({ helpPostId }) => {
       accusePoint: 0,
     },
     position: {
-      latitude: 37.566826,
-      longitude: 126.9786567,
+      latitude: 0,
+      longitude: 0,
       addr: '',
-      destLatitude: 37.566826,
-      destLongitude: 126.9786567,
+      destLatitude: 0,
+      destLongitude: 0,
       destAddr: '',
-      meetLatitude: 37.616826,
-      meetLongitude: 126.9786567,
+      meetLatitude: 0,
+      meetLongitude: 0,
       meetAddr: '',
     },
     faceFlag: true,
@@ -41,6 +41,7 @@ const HelperDetail = ({ helpPostId }) => {
       try {
         const res = await authGet(`/api/v1/help/detail/${helpPostId}`);
         if (res) {
+          console.log(res);
           setData(res);
         }
       } catch (err) {
