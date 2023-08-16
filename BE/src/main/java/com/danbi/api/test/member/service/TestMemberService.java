@@ -39,6 +39,7 @@ public class TestMemberService {
         return OauthLoginDto.Response.of(jwtTokenDto, member.getRole());
     }
 
+    @Transactional
     public void signup(TestMemberSignUpRequestDto request) {
 
         Member member = Member.builder()
