@@ -158,7 +158,7 @@ const EditTextArea = styled.textarea`
 `;
 const SaveBtn = styled.button``;
 const SaveImg = styled.img.attrs((props) => ({
-  src: props.theme.images.save
+  src: props.theme.images.preset_save
 }))``;
 
 export default GuestBookComment;
