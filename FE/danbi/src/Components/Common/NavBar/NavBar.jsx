@@ -24,6 +24,7 @@ const NavBar = (props) => {
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("refreshTokenExpireTime");
         navigate('/',{replace:true});
+        window.location.reload();
       }
     }catch(err){
       console.log(err);
