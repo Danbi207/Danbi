@@ -1,6 +1,6 @@
 export const dark ={
   colors:{
-    titleColor : '#FFFFFF',
+    titleColor : '#FFF',
     bgColor: '#19191B',
     boxColor: '#E3E3E3',
     jandibgColor: '#FFFFFF',
@@ -10,6 +10,7 @@ export const dark ={
     whiteColor : "#FFFFFF",
     calDateColor : "#414040",
     CalDayColor : '#FFFFFF',
+    AlrDateColor : "#a09f9f"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-black.svg`,
@@ -34,8 +35,12 @@ export const dark ={
 
     help: `${process.env.PUBLIC_URL}/assets/Help-Black.svg`,
     
-    edit : `${process.env.PUBLIC_URL}/assets/Edit-Black.svg`,
-    delete: `${process.env.PUBLIC_URL}/assets/Delete-Black.svg`,
+    edit_Big : `${process.env.PUBLIC_URL}/assets/Edit-Black-Big.svg`,
+    edit_Small : `${process.env.PUBLIC_URL}/assets/Edit-Black-Small.svg`,
+    delete_Big : `${process.env.PUBLIC_URL}/assets/Delete-Black-Big.svg`,
+    delete_Small : `${process.env.PUBLIC_URL}/assets/Delete-Black-Small.svg`,
+    save : `${process.env.PUBLIC_URL}/assets/Save-Black.svg`,
+
     play: `${process.env.PUBLIC_URL}/assets/Play-Black.svg`,
     stop: `${process.env.PUBLIC_URL}/assets/Stop-Black.svg`,
     record: `${process.env.PUBLIC_URL}/assets/Mic-Black.svg`,
@@ -57,7 +62,10 @@ export const dark ={
   },
   animation: {
     pick: `${process.env.PUBLIC_URL}/json/animation.json`,
-  }
+  },
+  font : {
+    fontWeight : "normal",
+  },
 } 
 
 export const light ={
@@ -73,6 +81,7 @@ export const light ={
     whiteColor : "#FFFFFF",
     calDateColor : "#c4c4c4",
     CalDayColor : '#f3c5b6',
+    AlrDateColor : "#d8d8d8"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,
@@ -97,8 +106,12 @@ export const light ={
 
     help: `${process.env.PUBLIC_URL}/assets/Help-White.svg`,
 
-    edit : `${process.env.PUBLIC_URL}/assets/Edit-White.svg`,
-    delete: `${process.env.PUBLIC_URL}/assets/Delete-White.svg`,
+    edit_Big : `${process.env.PUBLIC_URL}/assets/Edit-White-Big.svg`,
+    edit_Small : `${process.env.PUBLIC_URL}/assets/Edit-White-Small.svg`,
+    delete_Big : `${process.env.PUBLIC_URL}/assets/Delete-White.svg`,
+    delete_Small : `${process.env.PUBLIC_URL}/assets/Delete-White-Small.svg`,
+    save : `${process.env.PUBLIC_URL}/assets/Save-White.svg`,
+
     play: `${process.env.PUBLIC_URL}/assets/Play-White.svg`,
     stop: `${process.env.PUBLIC_URL}/assets/Stop-White.svg`,
     record: `${process.env.PUBLIC_URL}/assets/Mic-White.svg`,
@@ -120,5 +133,8 @@ export const light ={
   },
   animation: {
     pick: `${process.env.PUBLIC_URL}/json/animation.json`,
-  }
+  },
+  font : {
+    fontWeight : "bold",
+  },
 }

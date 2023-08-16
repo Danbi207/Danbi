@@ -27,62 +27,6 @@ const Preset = ({ preset_list, setPresetList }) => {
   };
 
 
-  const dispatch = useDispatch();
-  const commandMode = useSelector((state) => state.modal.mode);
-
-  const commands = [
-    {
-      command: '단비',
-      callback: () => {
-        if (commandMode === null) {
-          dispatch(setMode('stt'));
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-    {
-      command: '1번',
-      callback: () => {
-        if (commandMode === 'stt') {
-          dispatch(setMode(null));
-          showDetailWithIndex(0);
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-    {
-      command: '2번',
-      callback: () => {
-        if (commandMode === 'stt') {
-          dispatch(setMode(null));
-          showDetailWithIndex(0);
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-    {
-      command: '3번',
-      callback: () => {
-        if (commandMode === 'stt') {
-          dispatch(setMode(null));
-          showDetailWithIndex(0);
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.2,
-    },
-  ];
-  const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
-  useEffect(() => {
-    if (browserSupportsSpeechRecognition) {
-      //STT가 지원하는 경우
-      SpeechRecognition.startListening({ continuous: true, language: 'ko' });
-    }
-  }, [browserSupportsSpeechRecognition]);
-
   return (
     <DragDropContext onDragEnd={handleChange}>
       <PresetWrap className="container">

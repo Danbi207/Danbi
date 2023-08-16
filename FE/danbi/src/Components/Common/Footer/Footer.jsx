@@ -17,46 +17,43 @@ const Footer = () => {
   const location = useLocation();
   
   useEffect(()=>{
-    console.log(location.pathname)
-    if(location.pathname==="/" || location.pathname==="/helper"){setMode("home");}
-    else
-      setMode(location.pathname.replaceAll("/",""));
+    let path = location.pathname
+    // console.log(location)
+    // console.log(path)
+    if (path === '/user/friend') {setMode('friend');}
+    if(path.startsWith("/help/ip") || path.startsWith("/help/helper")){
+      setMode("home")}
+    if (path.startsWith('/user/profile/') && !isNaN(Number(path.slice(14)))) {
+      setMode('profile')
+    }
   },[location]);
-
-  // useEffect(()=>{
-  //   console.log(location);
-  //   console.log(mode)
-  // },[mode])
 
   return (
     <FooterWrap>      
-      <Box>
-        <Frined 
-          fill={mode === 'friend' ? '#FFEA7E' : '#888'}
-          width={30} height={30}
-          onClick={()=>{setMode("friend"); navigate("/user/friend")}}></Frined>
-        <P $mode={mode}>친구</P>
+      <Box onClick={()=>{navigate("/user/friend")}}>
+        <FriendSVG 
+          $color={mode === 'friend' ? '#fbc037' : undefined}
+          width={30} height={30}></FriendSVG>
+        <P $mode={mode === 'friend' ? '#fbc037' : props=>props.theme.colors.titleColor}>친구</P>
       </Box>
-      <Box>
-      <Home 
-        fill={mode === 'home' ? '#FFEA7E' : '#000'}
-        width={30} height={30}
-        onClick={()=>{
-          setMode("home");
-          const role = localStorage.getItem("role");
-          if(role === "admin"){
-            navigate(`/admin`);
-          }
-          navigate(`/help/${role}`)
-          }}></Home>
-        <P $mode={mode}>홈</P>
+      <Box onClick={()=>{
+        const role = localStorage.getItem("role");
+        if(role === "admin"){
+          navigate("/admin");
+          return;
+        }
+        navigate(`/help/${role}`
+      )}}>
+      <HomeSVG 
+        $color={mode === 'home' ? '#fbc037' : undefined}
+        width={30} height={30}></HomeSVG>
+        <P $mode={mode === 'home' ? '#fbc037' : props=>props.theme.colors.titleColor}>홈</P>
       </Box>
-      <Box>
-      <Profile 
-        fill={mode === 'profile' ? '#FFEA7E' : '#000'}
-        width={30} height={30}
-        onClick={()=>{setMode("profile"); navigate(`/user/profile/${userId}`)}}></Profile>
-        <P $mode={mode}>프로필</P>
+      <Box onClick={()=>{navigate(`/user/profile/${userId}`)}}>
+      <ProfileSVG 
+        $color={mode === 'profile' ? '#fbc037' : undefined}
+        width={30} height={30}></ProfileSVG>
+        <P $mode={mode === 'profile' ? '#fbc037' : props=>props.theme.colors.titleColor}>프로필</P>
       </Box>
     </FooterWrap> 
   )
@@ -86,7 +83,19 @@ const Box = styled.div`
 const P = styled.div`
   font-size: 12px;
   text-align: center;
-  /* color : ${props=>props.$mode === 'friend' || props.$mode === 'home' || props.$mode === 'profile' ? '#FFEA7E' : '#000' } */
+  color: ${props => props.$mode};
+`
+
+const FriendSVG = styled(Frined)`
+    fill: ${props => props.$color ? props.$color : props.theme.colors.titleColor};
+`
+
+const HomeSVG = styled(Home)`
+    fill: ${props => props.$color ? props.$color : props.theme.colors.titleColor};
+`
+
+const ProfileSVG = styled(Profile)`
+    fill: ${props => props.$color ? props.$color : props.theme.colors.titleColor};
 `
 
 export default Footer;

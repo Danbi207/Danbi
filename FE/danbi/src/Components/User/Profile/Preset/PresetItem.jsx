@@ -93,7 +93,7 @@ const EditBtn = styled.button`
 `;
 
 const EditImg = styled.img.attrs((props) => ({
-  src: props.theme.images.edit,
+  src: props.theme.images.edit_Big,
 }))``;
 
 const ElementContent = styled.div`
@@ -111,7 +111,7 @@ const DeleteBtn = styled.button`
 `;
 
 const DeleteImg = styled.img.attrs((props) => ({
-  src: props.theme.images.delete,
+  src: props.theme.images.delete_Big,
 }))``;
 
 const Btns = styled.div`

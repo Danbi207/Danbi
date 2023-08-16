@@ -4,13 +4,17 @@ import NavBar from '../NavBar/NavBar';
 import { useCallback } from 'react';
 import { authDelete, authGet } from '../../../Util/apis/api';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const Header = () => {
   const [navFlag,setNavFlag] = useState(false);
   const [alramFlag,setAlramFlag] = useState(false);
   const [alramlist, setAlramList] = useState([]);
+  const navigate = useNavigate();
+  // const [alrcount, setAlrCount] = useState(0);
 
   const mvHome = ()=>{
-    //FIXME : 유저정보를 읽어서 ip홈 or helper홈 라우팅
+    navigate(`/help/${localStorage.getItem("role")}`)
   }
 
   const toggleAlram = ()=>{
@@ -28,6 +32,18 @@ const Header = () => {
       console.log(err);
     }
   }, []);
+
+  // const NotReadAlrams = useCallback(async()=>{
+  //   try {
+  //     const setAlrCount = await authGet('/api/v1/pofile/alarm/notread/count');
+  //     if (setAlrCount){
+  //       setAlrCount(setAlrCount)
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+  // },[])
 
   // 알람 데이터 일괄 삭제
   const DeleteAlrams = useCallback(async()=>{
@@ -58,16 +74,15 @@ const Header = () => {
             <BTNWrap>
               <DeleteBTN onClick={()=>{DeleteAlrams()}}>알림 모두 삭제</DeleteBTN>
             </BTNWrap>
-            <HR/>
             {alramlist.map((item, idx) => 
-            <>
-            <AlramsWrap key={idx}>
+            <React.Fragment key={item.alarmId}>
+            <AlramsWrap>
               <TitleWrap>{item.title}</TitleWrap>
-              <ContetnWrap>{item.content}</ContetnWrap>
               <TimeWrap>{item.creatTime}</TimeWrap>
+              <ContetnWrap>{item.content}</ContetnWrap>
             </AlramsWrap>
             <HR/>
-            </>)}
+            </React.Fragment>)}
         </AlramWrap>
       </HeaderWrap>
       <NavBarWrap $out={navFlag}><NavBar setNavFlag={setNavFlag} /></NavBarWrap>
@@ -154,7 +169,7 @@ const AlramWrap = styled.div`
   height: 30rem;
   bottom: -30rem;
   right: 0;
-  background-color: #fff;
+  background-color: ${props=>props.theme.colors.bgColor};
 
   z-index: 3;
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
@@ -220,23 +235,29 @@ const TitleWrap = styled.div`
   font-size: 1rem;
   font-weight: bold;
   padding-bottom: 0.2rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  color : ${props=>props.theme.colors.jandibgColor}
 `
 
 const ContetnWrap = styled.div`
   font-size: 0.7rem;
-  color: #000;
+  color : ${props=>props.theme.colors.jandibgColor};
   padding-bottom: 0.2rem;
+  font-family: "NanumGothicLight";
+  font-weight : ${props=>props.theme.font.fontWeight}
 `
 
-const TimeWrap = styled.div`
+const TimeWrap = styled.span`
   font-size: 0.3rem ;
-  color: gray;
+  color: ${props=>props.theme.colors.AlrDateColor};
   padding-bottom: 0.2rem;
+
 `
 
 const HR = styled.hr`
   width: 100%;
-  border-color: #888;
+  background-color: #939393;
   margin : 0;
 `
 
