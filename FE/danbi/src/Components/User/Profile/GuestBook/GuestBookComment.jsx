@@ -141,10 +141,13 @@ const Buttons = styled.div`
 `;
 
 const EditBtn = styled.button`
+  font-size: 14px;
+  margin-right: 10px;
 `;
 
 
 const DeleteBtn = styled.button`
+  font-size: 14px;
 `;
 
 
@@ -168,8 +171,12 @@ const EditTextArea = styled.textarea`
   color: ${(props) => props.theme.colors.titleColor};
 `;
 const SaveBtn = styled.button`
+  font-size: 14px;
+  margin-right: 10px;
 `;
 
-const CancleBtn = styled.button``;
+const CancleBtn = styled.button`
+  font-size: 14px;
+`;
 
 export default GuestBookComment;
