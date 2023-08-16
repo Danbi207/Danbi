@@ -125,7 +125,7 @@ const Request = () => {
           alert("도움 상세정보를 입력해주세요");
           return;
         }
-        if (faceType === "face" && (dest.destLatitude !== null || dest.destLongitude !== null)){
+        if (faceType === "contact" && (dest.destLatitude !== null || dest.destLongitude !== null)){
           alert("만나는 곳을 입력하세요");
           return;
         }
@@ -181,7 +181,7 @@ const Request = () => {
           alert("도움 상세정보를 입력해주세요");
           return;
         }
-        if (faceType === "face" && (dest.destLatitude !== null || dest.destLongitude !== null)){
+        if (faceType === "contact" && (dest.destLatitude !== null || dest.destLongitude !== null)){
           alert("만나는 곳을 입력하세요");
           return;
         }
