@@ -130,6 +130,8 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
+  width: auto;
+  height: auto;
 `;
 
 const EditBtn = styled.button`
