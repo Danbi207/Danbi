@@ -27,7 +27,6 @@ export const reissueAccessToken = async ()=>{
       url: process.env.REACT_APP_SERVER+"/api/v1/access-token/issue",
       headers:{"Authorization" : `Bearer ${refreshToken}`}
     });
-    console.log(data);
     token.setAccessToken(data.accessToken);
     token.setAccessTokenExpireTime(data.accessTokenExpireTime);
     return data;
