@@ -14,7 +14,6 @@ const Header = () => {
   // const [alrcount, setAlrCount] = useState(0);
 
   const mvHome = ()=>{
-    //FIXME : 유저정보를 읽어서 ip홈 or helper홈 라우팅
     navigate(`/help/${localStorage.getItem("role")}`)
   }
 
@@ -25,122 +24,10 @@ const Header = () => {
   // 알람 전체 데이터를 가져온다.
   const Alrams = useCallback(async() => {
     try {
-      // const response = await authGet('/api/v1/pofile/alarm');
-      // if(response){
-      //   setAlramList(response.alarm_list); 
-      // }
-      setAlramList([
-        {
-            "alarmId": 92,
-            "fromName": "강민석",
-            "toName": "윤태웅",
-            "title": "친구승인",
-            "content": "강민석님께서 윤태웅님의 친구요청을 승인하였습니다.",
-            "type": "FRIEND_PERMIT",
-            "creatTime": "2023-08-16 10:33",
-            "readFlag": false
-        },
-        {
-            "alarmId": 91,
-            "fromName": "윤태웅",
-            "toName": "강민석",
-            "title": "신고발신",
-            "content": "윤태웅님의 신고가 접수되었습니다.",
-            "type": "ACCUSE_SENT",
-            "creatTime": "2023-08-16 09:49",
-            "readFlag": false
-        },
-        {
-            "alarmId": 90,
-            "fromName": "윤태웅",
-            "toName": "강민석",
-            "title": "친구신청",
-            "content": "윤태웅님께서 강민석님에게 친구 요청하였습니다.",
-            "type": "FRIEND_REQUEST",
-            "creatTime": "2023-08-16 09:48",
-            "readFlag": false
-        },
-        {
-            "alarmId": 89,
-            "fromName": "윤태웅",
-            "toName": "강민석",
-            "title": "친구신청",
-            "content": "윤태웅님께서 강민석님에게 친구 요청하였습니다.",
-            "type": "FRIEND_REQUEST",
-            "creatTime": "2023-08-16 09:41",
-            "readFlag": false
-        },
-        {
-            "alarmId": 88,
-            "fromName": "강민석",
-            "toName": "윤태웅",
-            "title": "친구승인",
-            "content": "강민석님께서 윤태웅님의 친구요청을 승인하였습니다.",
-            "type": "FRIEND_PERMIT",
-            "creatTime": "2023-08-16 08:57",
-            "readFlag": false
-        },
-        {
-            "alarmId": 85,
-            "fromName": "강민석",
-            "toName": "김윤욱",
-            "title": "IP 도움완료",
-            "content": "강민석님이 IP도움 완료하였습니다.",
-            "type": "HELP_IP_COMPLETE",
-            "creatTime": "2023-08-14 14:00",
-            "readFlag": false
-        },
-        {
-            "alarmId": 84,
-            "fromName": "김윤욱",
-            "toName": "강민석",
-            "title": "HELPER 도움완료",
-            "content": "김윤욱님이 HELPER도움 완료하였습니다.",
-            "type": "HELP_HELPER_COMPLETE",
-            "creatTime": "2023-08-14 13:59",
-            "readFlag": false
-        },
-        {
-            "alarmId": 83,
-            "fromName": "김윤욱",
-            "toName": "강민석",
-            "title": "도움매칭",
-            "content": "김윤욱과 강민석님의 도움이 매칭되었습니다.",
-            "type": "HELP_MATCHING",
-            "creatTime": "2023-08-14 13:59",
-            "readFlag": false
-        },
-        {
-            "alarmId": 76,
-            "fromName": "강민석",
-            "toName": "김윤욱",
-            "title": "IP 도움완료",
-            "content": "강민석님이 IP도움 완료하였습니다.",
-            "type": "HELP_IP_COMPLETE",
-            "creatTime": "2023-08-14 13:20",
-            "readFlag": false
-        },
-        {
-            "alarmId": 75,
-            "fromName": "김윤욱",
-            "toName": "강민석",
-            "title": "HELPER 도움완료",
-            "content": "김윤욱님이 HELPER도움 완료하였습니다.",
-            "type": "HELP_HELPER_COMPLETE",
-            "creatTime": "2023-08-14 13:19",
-            "readFlag": false
-        },
-        {
-            "alarmId": 74,
-            "fromName": "김윤욱",
-            "toName": "강민석",
-            "title": "도움매칭",
-            "content": "김윤욱과 강민석님의 도움이 매칭되었습니다.",
-            "type": "HELP_MATCHING",
-            "creatTime": "2023-08-14 13:19",
-            "readFlag": false
-        }
-    ])
+      const response = await authGet('/api/v1/pofile/alarm');
+      if(response){
+        setAlramList(response.alarm_list); 
+      }
     } catch (err) {
       console.log(err);
     }
