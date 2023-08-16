@@ -70,19 +70,14 @@ function App() {
   },[dispatch])
   const themeMode = useSelector((state) => state.setting.theme);
   const theme = themeMode === 'light' ? light : dark;
-  const isPC = useCallback(()=>{
-    //DO : PC인지 모바일인지 검사, 터치가 되는 기기는 모바일로 인식
-    try {
-      document.createEvent("TouchEvent");
-      return false;
-    } catch (e) {
-      return true;
-    }
-  },[]);
+  const isMobile = useCallback(()=>{
+    //DO : PC인지 모바일인지 검사
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  },[navigator.userAgent]);
   return (
     <>
     {
-      isPC?
+      !isMobile()?
       <PCWrap $url = {`${process.env.PUBLIC_URL}/wheelchair.jpg`}>
         <MobileWrap>
           <ThemeProvider theme={theme}>
@@ -136,21 +131,7 @@ const AppWrap = styled.div`
   background-color: ${props=>props.theme.colors.bgColor};
   /* color: ${props=>props.theme.colors.titleColor}; */
 `
-const TextWrap = styled.div`
-  width: calc(90% - 400px);
-  height: 100%;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  &>div:first-child{
-    font-size: 2rem;
-  }
-  &>div:last-child{
-    font-size: 3rem;
-  }
-`
+
 const PCWrap = styled.div`
   position: relative;
   width: 100%;
