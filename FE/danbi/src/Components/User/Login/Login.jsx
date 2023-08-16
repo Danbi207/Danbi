@@ -10,7 +10,7 @@ const Login = () => {
     try{
       const isLogin = await reissueAccessToken();
       
-      if(isLogin !== null){
+      if(isLogin){
         const role = localStorage.getItem("role");
         // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
         if(role==="ROLE_UNDEFINED" || role==="ROLE_UNSUBMIT_IP"){
@@ -32,8 +32,6 @@ const Login = () => {
           localStorage.setItem("role","helper");
           navigate("/help/helper", { replace: true });
         }
-      } else {
-        console.log(isLogin);
       }
     }catch(err){
       console.log(err);
