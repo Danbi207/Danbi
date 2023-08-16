@@ -25,7 +25,7 @@ const NavBar = (props) => {
         localStorage.removeItem("role");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("refreshTokenExpireTime");
-        dispatch(reset());
+        // dispatch(reset());
         navigate('/',{replace:true});
       }
     }catch(err){
