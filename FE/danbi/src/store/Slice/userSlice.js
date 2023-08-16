@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  "userId": null,
+  "profileId": null,
+  "name": "",
+  "profileUrl": "",
+  "gender":""
+}
+
 export const userSlice = createSlice({
     name: "user",
-    initialState: {
-      "userId": null,
-      "profileId": null,
-      "name": "",
-      "profileUrl": "",
-      "gender":""
-    },
+    initialState,   
     reducers: {
       setUserId : (state,action)=>{
         state.userId = action.payload;
@@ -24,11 +26,11 @@ export const userSlice = createSlice({
       },
       setGender : (state,action)=>{
         state.gender = action.payload;
-      }
-      
+      },
+      reset: () => initialState
     }
 });
 
-export const {setUserId,setProfileId,setName,setProfileUrl,setGender} = userSlice.actions;
+export const {setUserId,setProfileId,setName,setProfileUrl,setGender, reset} = userSlice.actions;
 
 export default userSlice.reducer;
