@@ -103,6 +103,8 @@ const CommentWrap = styled.div`
   flex-direction: row;
   padding: 0 1rem;
   margin-top: 0.5rem;
+  justify-content: center;
+  align-items: center;
 `;
 
 const GuestImg = styled.img.attrs((props) => ({
