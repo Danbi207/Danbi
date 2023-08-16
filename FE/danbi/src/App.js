@@ -76,10 +76,6 @@ function App() {
     {
       document.body.offsetWidth >= 768?
       <PCWrap $url = {`${process.env.PUBLIC_URL}/wheelchair.jpg`}>
-        <TextWrap>
-        <div>꼭 필요한 때 알맞게 내리는 비</div>
-        <div>단비</div>
-        </TextWrap>
         <MobileWrap>
           <ThemeProvider theme={theme}>
           <AppWrap className="App">
