@@ -2,8 +2,9 @@ import React,{useCallback, useState} from 'react'
 import styled from 'styled-components';
 import Setting from '../Setting/Setting';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { authPost } from '../../../Util/apis/api';
+import { reset } from '../../../store/Slice/userSlice';
 
 import { ReactComponent as Home } from '../../../static/Home-white.svg'
 import { ReactComponent as Profile } from '../../../static/Profile-white.svg'
@@ -15,6 +16,7 @@ const NavBar = (props) => {
   const navigate = useNavigate();
   const role = localStorage.getItem('role');
   const userId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
 
   const handleLogout = useCallback( async () => {
     try{
@@ -24,7 +26,7 @@ const NavBar = (props) => {
         localStorage.removeItem("role");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("refreshTokenExpireTime");
-        window.location.reload();
+        dispatch(reset());
         navigate('/',{replace:true});
       }
     }catch(err){
