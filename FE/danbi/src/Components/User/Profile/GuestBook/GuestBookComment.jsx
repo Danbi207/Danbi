@@ -61,9 +61,14 @@ const GuestBookComment = ({
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
             />
-            <SaveBtn onClick={handleEdit}>
-              <SaveImg />
-            </SaveBtn>
+            <Buttons>
+              <SaveBtn onClick={handleEdit}>
+                저장
+              </SaveBtn>
+              <CancleBtn onClick={() => setEditMode(false)}>
+                취소
+              </CancleBtn>
+            </Buttons>
           </EditSection>
         ) : (
           <Content>{comment.content}</Content>
@@ -72,10 +77,10 @@ const GuestBookComment = ({
       {writerName === userName && !editMode && (
         <Buttons>
           <EditBtn onClick={() => setEditMode(true)}>
-            <EditImg />
+            수정
           </EditBtn>
           <DeleteBtn onClick={() => handleDelete(comment)}>
-            <DeleteImg />
+            삭제
           </DeleteBtn>
         </Buttons>
       )}
@@ -83,7 +88,7 @@ const GuestBookComment = ({
       {writerName !== userName && Number(userId) === cur_id && (
         <Buttons>
           <DeleteBtn onClick={() => handleDelete(comment)}>
-            <DeleteImg />
+            삭제
           </DeleteBtn>
         </Buttons>
       )}
@@ -98,6 +103,7 @@ const CommentWrap = styled.div`
   flex-direction: row;
   padding: 0 1rem;
   margin-top: 0.5rem;
+  align-items: center;
 `;
 
 const GuestImg = styled.img.attrs((props) => ({
@@ -129,34 +135,29 @@ const Content = styled.span`
 const Buttons = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: end;
   width: auto;
   height: auto;
+  position: absolute;
+  right: 1rem;
 `;
 
 const EditBtn = styled.button`
-  width: 12px;
-  height: 12px;
+  font-size: 14px;
+  margin-right: 10px;
 `;
-const EditImg = styled.img.attrs((props) => ({
-  src: props.theme.images.edit_small,
-}))`
-  width: 12px;
-  height: 12px;
-`;
+
 
 const DeleteBtn = styled.button`
-  width: 12px;
-  height: 12px;
-`;
-const DeleteImg = styled.img.attrs((props) => ({
-  src: props.theme.images.delete_small,
-}))`
-  width: 12px;
-  height: 12px;
+  font-size: 14px;
 `;
 
-const EditSection = styled.div``;
+
+const EditSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const EditTextArea = styled.textarea`
   border: 1px solid ${(props) => props.theme.colors.titleColor};
   border-radius: 10px;
@@ -170,9 +171,13 @@ const EditTextArea = styled.textarea`
   height: auto;
   color: ${(props) => props.theme.colors.titleColor};
 `;
-const SaveBtn = styled.button``;
-const SaveImg = styled.img.attrs((props) => ({
-  src: props.theme.images.preset_save
-}))``;
+const SaveBtn = styled.button`
+  font-size: 14px;
+  margin-right: 10px;
+`;
+
+const CancleBtn = styled.button`
+  font-size: 14px;
+`;
 
 export default GuestBookComment;

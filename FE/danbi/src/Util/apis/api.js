@@ -17,6 +17,7 @@ export const reissueAccessToken = async ()=>{
   const refreshToken = localStorage.getItem("refreshToken");
   
   if(!refreshToken || refreshToken===""){
+    console.log('토큰이 없다.')
     return null;
   }
 

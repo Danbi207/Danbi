@@ -6,11 +6,13 @@ export const dark ={
     jandibgColor: '#FFFFFF',
     buttonbgColor: '#FFEA7E',
     buttontextColor: '#19191B',
+    CommonBgColor : "#000",
     redBtnColor : "#E85151",
-    whiteColor : "#FFFFFF",
+    whiteColor : "#FFF",
     calDateColor : "#414040",
     CalDayColor : '#FFFFFF',
-    AlrDateColor : "#a09f9f"
+    AlrDateColor : "#a09f9f",
+    AlrbgColor : "#FFF"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-black.svg`,
@@ -76,12 +78,13 @@ export const light ={
     jandibgColor: '#19191B',
     buttonbgColor: '#FFEA7E',
     buttontextColor: '#000000',
-    whiteBgColor : '#FFFFFF',
+    CommonBgColor : '#FFFFFF',
     redBtnColor : "#E85151",
     whiteColor : "#FFFFFF",
     calDateColor : "#c4c4c4",
     CalDayColor : '#f3c5b6',
-    AlrDateColor : "#d8d8d8"
+    AlrDateColor : "#d8d8d8",
+    AlrbgColor : "#FFF"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,
