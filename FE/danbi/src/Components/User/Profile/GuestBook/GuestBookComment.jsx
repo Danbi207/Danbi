@@ -133,20 +133,26 @@ const Buttons = styled.div`
 `;
 
 const EditBtn = styled.button`
-  width: auto;
-  height: auto;
+  width: 12px;
+  height: 12px;
 `;
 const EditImg = styled.img.attrs((props) => ({
   src: props.theme.images.edit_small,
-}))``;
+}))`
+  width: 12px;
+  height: 12px;
+`;
 
 const DeleteBtn = styled.button`
-  width: auto;
-  height: auto;
+  width: 12px;
+  height: 12px;
 `;
 const DeleteImg = styled.img.attrs((props) => ({
   src: props.theme.images.delete_small,
-}))``;
+}))`
+  width: 12px;
+  height: 12px;
+`;
 
 const EditSection = styled.div``;
 const EditTextArea = styled.textarea`
