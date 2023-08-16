@@ -6,7 +6,7 @@ self.addEventListener("push", function (event) {
   const notificationTitle = resultData.title;
   const notificationOptions = {
     body: resultData.body,
-    icon: resultData.image,
+    icon: "favicon.ico",
     tag: resultData.tag,
     ...resultData,
   };

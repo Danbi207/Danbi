@@ -30,25 +30,22 @@ const Footer = () => {
 
   return (
     <FooterWrap>      
-      <Box>
+      <Box onClick={()=>{navigate("/user/friend")}}>
         <FriendSVG 
           $color={mode === 'friend' ? '#fbc037' : undefined}
-          width={30} height={30}
-          onClick={()=>{navigate("/user/friend")}}></FriendSVG>
+          width={30} height={30}></FriendSVG>
         <P $mode={mode === 'friend' ? '#fbc037' : props=>props.theme.colors.titleColor}>친구</P>
       </Box>
-      <Box>
+      <Box onClick={()=>{navigate(`/help/${localStorage.getItem("role")}`)}}>
       <HomeSVG 
         $color={mode === 'home' ? '#fbc037' : undefined}
-        width={30} height={30}
-        onClick={()=>{navigate(`/help/${localStorage.getItem("role")}`)}}></HomeSVG>
+        width={30} height={30}></HomeSVG>
         <P $mode={mode === 'home' ? '#fbc037' : props=>props.theme.colors.titleColor}>홈</P>
       </Box>
-      <Box>
+      <Box onClick={()=>{navigate(`/user/profile/${userId}`)}}>
       <ProfileSVG 
         $color={mode === 'profile' ? '#fbc037' : undefined}
-        width={30} height={30}
-        onClick={()=>{navigate(`/user/profile/${userId}`)}}></ProfileSVG>
+        width={30} height={30}></ProfileSVG>
         <P $mode={mode === 'profile' ? '#fbc037' : props=>props.theme.colors.titleColor}>프로필</P>
       </Box>
     </FooterWrap> 
