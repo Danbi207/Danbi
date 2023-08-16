@@ -70,11 +70,19 @@ function App() {
   },[dispatch])
   const themeMode = useSelector((state) => state.setting.theme);
   const theme = themeMode === 'light' ? light : dark;
-
+  const isPC = useCallback(()=>{
+    //DO : PC인지 모바일인지 검사, 터치가 되는 기기는 모바일로 인식
+    try {
+      document.createEvent("TouchEvent");
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },[]);
   return (
     <>
     {
-      document.body.offsetWidth >= 768?
+      isPC?
       <PCWrap $url = {`${process.env.PUBLIC_URL}/wheelchair.jpg`}>
         <MobileWrap>
           <ThemeProvider theme={theme}>
