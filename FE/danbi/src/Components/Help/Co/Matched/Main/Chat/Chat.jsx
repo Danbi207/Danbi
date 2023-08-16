@@ -49,31 +49,33 @@ const Chat = (props) => {
         video: onVideo,
         audio: onAudio,
       });
-      streamRef.current = stream;
-      if (localVideoRef.current) localVideoRef.current.srcObject = stream;
-      if (!(pcRef.current && socketRef.current)) return;
-      stream.getTracks().forEach((track) => {
-        if (!pcRef.current) return;
-        pcRef.current.addTrack(track, stream);
-      });
-      pcRef.current.onicecandidate = (e) => {
-        if (e.candidate) {
-        if (!socketRef.current) return;
-        socketRef.current.emit("candidate", e.candidate);
-        }
-      };
-      pcRef.current.oniceconnectionstatechange = (e) => {
-        // console.log(e);
-      };
-      pcRef.current.ontrack = (ev) => {
-        // console.log("add remotetrack success");
-        if (remoteVideoRef.current) {
-        remoteVideoRef.current.srcObject = ev.streams[0];
-        }
-      };
-      socketRef.current.emit("join_room", {
-        room: props.roomId,
-      });
+      if(stream){
+        streamRef.current = stream;
+        if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+        if (!(pcRef.current && socketRef.current)) return;
+        stream.getTracks().forEach((track) => {
+          if (!pcRef.current) return;
+          pcRef.current.addTrack(track, stream);
+        });
+        pcRef.current.onicecandidate = (e) => {
+          if (e.candidate) {
+          if (!socketRef.current) return;
+          socketRef.current.emit("candidate", e.candidate);
+          }
+        };
+        pcRef.current.oniceconnectionstatechange = (e) => {
+          // console.log(e);
+        };
+        pcRef.current.ontrack = (ev) => {
+          // console.log("add remotetrack success");
+          if (remoteVideoRef.current) {
+          remoteVideoRef.current.srcObject = ev.streams[0];
+          }
+        };
+        socketRef.current.emit("join_room", {
+          room: props.roomId,
+        });
+      }
     } catch (e) {
       console.error(e);
     }
