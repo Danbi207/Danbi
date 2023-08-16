@@ -38,7 +38,7 @@ export const dark ={
     edit_Small : `${process.env.PUBLIC_URL}/assets/Edit-Black-Small.svg`,
     delete_Big : `${process.env.PUBLIC_URL}/assets/Delete-Black-Big.svg`,
     delete_Small : `${process.env.PUBLIC_URL}/assets/Delete-Black-Small.svg`,
-    save : `${process.env.PUBLIC_URL}/assets/Save-Black.svg`,
+    preset_save : `${process.env.PUBLIC_URL}/assets/Save-Black-Icon.svg`,
 
     play: `${process.env.PUBLIC_URL}/assets/Play-Black.svg`,
     stop: `${process.env.PUBLIC_URL}/assets/Stop-Black.svg`,
@@ -50,7 +50,7 @@ export const dark ={
     epic: `${process.env.PUBLIC_URL}/assets/Epic.svg`,
     legendary: `${process.env.PUBLIC_URL}/assets/Legendary.svg`, 
 
-    save: `${process.env.PUBLIC_URL}/assets/Save.svg`,
+    save: `${process.env.PUBLIC_URL}/assets/Save-Black.svg`,
     close: `${process.env.PUBLIC_URL}/assets/Close.svg`,
 
     friendBadge: `${process.env.PUBLIC_URL}/assets/FriendBadge-Black.svg`,
@@ -105,7 +105,7 @@ export const light ={
     edit_Small : `${process.env.PUBLIC_URL}/assets/Edit-White-Small.svg`,
     delete_Big : `${process.env.PUBLIC_URL}/assets/Delete-White.svg`,
     delete_Small : `${process.env.PUBLIC_URL}/assets/Delete-White-Small.svg`,
-    save : `${process.env.PUBLIC_URL}/assets/Save-White.svg`,
+    preset_save : `${process.env.PUBLIC_URL}/assets/Save-White-Icon.svg`,
 
     play: `${process.env.PUBLIC_URL}/assets/Play-White.svg`,
     stop: `${process.env.PUBLIC_URL}/assets/Stop-White.svg`,
@@ -117,7 +117,7 @@ export const light ={
     epic: `${process.env.PUBLIC_URL}/assets/Epic.svg`,
     legendary: `${process.env.PUBLIC_URL}/assets/Legendary.svg`, 
 
-    save: `${process.env.PUBLIC_URL}/assets/Save.svg`,
+    save: `${process.env.PUBLIC_URL}/assets/Save-White.svg`,
     close: `${process.env.PUBLIC_URL}/assets/Close.svg`,
     
     friendBadge: `${process.env.PUBLIC_URL}/assets/FriendBadge-White.svg`,
