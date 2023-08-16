@@ -24,7 +24,7 @@ const PickModal = ({ setPickModalOpen }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowAnimation(false);
-      if(cur_Tier === 'legandary'){
+      if(cur_Tier === 'legendary'){
         Jsconfetti.addConfetti({
           confettiColors: [
             "#ff0a54",
@@ -61,7 +61,7 @@ const PickModal = ({ setPickModalOpen }) => {
         dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
         dispatch(setCheckedRgb(pickdata.item.checkedRgb));
         dispatch(setDewPoint(pickdata.dewPoint));
-        if(pickdata.item.ranking === 'legandary'){
+        if(pickdata.item.ranking === 'legendary'){
           Jsconfetti.addConfetti({
             confettiColors: [
               "#ff0a54",
