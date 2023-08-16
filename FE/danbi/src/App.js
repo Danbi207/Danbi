@@ -74,9 +74,9 @@ function App() {
     //DO : PC인지 모바일인지 검사, 터치가 되는 기기는 모바일로 인식
     try {
       document.createEvent("TouchEvent");
-      return true;
-    } catch (e) {
       return false;
+    } catch (e) {
+      return true;
     }
   },[]);
   return (
