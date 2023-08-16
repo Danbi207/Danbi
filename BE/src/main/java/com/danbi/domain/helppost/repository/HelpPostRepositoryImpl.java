@@ -65,8 +65,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .leftJoin(helpPost.member, member)
                 .leftJoin(member.profile, profile)
                 .where(
-                        positions.latitude.between(subtractFromString(latitude), plusFromString(latitude)),
-                        positions.longitude.between(subtractFromString(longitude),plusFromString(longitude)),
+                        positions.meetLatitude.between(subtractFromString(latitude), plusFromString(latitude)),
+                        positions.meetLongitude.between(subtractFromString(longitude),plusFromString(longitude)),
                         helpPost.faceFlag.eq(true),
                         helpPost.state.eq(State.ACTIVATE),
                         searchByGender(gender)
