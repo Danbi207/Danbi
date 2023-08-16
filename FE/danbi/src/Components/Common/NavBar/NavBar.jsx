@@ -8,12 +8,14 @@ import { authPost } from '../../../Util/apis/api';
 import { ReactComponent as Home } from '../../../static/Home-white.svg'
 import { ReactComponent as Profile } from '../../../static/Profile-white.svg'
 import { ReactComponent as Logout } from '../../../static/Logout-white.svg'
+import { ReactComponent as setting } from '../../../static/Setting-white.svg'
 
 const NavBar = (props) => {
   const [settingFlag,setSettingFlag] = useState(false);
   const navigate = useNavigate();
   const role = localStorage.getItem('role');
   const userId = useSelector((state) => state.user.userId);
+
   const handleLogout = useCallback( async () => {
     try{
       await authPost('/api/v1/member/logout');
@@ -24,7 +26,7 @@ const NavBar = (props) => {
       console.log(err);
     }
     navigate('/');
-  }, []);
+  }, [navigate]);
 
   return (
     <>
@@ -44,14 +46,16 @@ const NavBar = (props) => {
                 <ProfileImg/>프로필
               </Box>
             </NavBarItem>
+            <NavBarItem onClick={()=>setSettingFlag(true)}>
+              <Box>
+              <SettingImg/>세팅
+              </Box>
+            </NavBarItem>
             <NavBarItem onClick={handleLogout}>
               <Box>
                 <LogoutImg/>로그아웃
               </Box>
             </NavBarItem>
-          
-          
-          <NavBarItem onClick={()=>setSettingFlag(true)}><SettingImg/>세팅</NavBarItem>
         </NavBarWrap>
       }
     </>
@@ -85,10 +89,10 @@ const ProfileImg = styled(Profile)`
   width: 3rem;
   margin-right: 1rem;
 `
-const SettingImg = styled.div`
-  background-image: url(${props=>props.theme.images.setting});
-  background-repeat: no-repeat;
+const SettingImg = styled(setting)`
+  fill: ${props =>props.theme.colors.titleColor};
   width: 3rem;
+  margin-right: 1rem;
 `
 const LogoutImg = styled(Logout)`
   fill: ${props =>props.theme.colors.titleColor};
