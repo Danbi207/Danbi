@@ -137,8 +137,8 @@ const Request = () => {
         navigate("/help/ip");
       }
     };
-    geocoder.coord2Address(position.coords.longitude, position.coords.latitude, callback);
-  },[position,helpType,caution,faceType,meet,dest,kakao,content,genderOption,year,month,day,hour,minute,useTime,navigate,helpPostId,from]);
+    geocoder.coord2Address(from.coords.longitude, from.coords.latitude, callback);
+  },[helpType,caution,faceType,meet,dest,kakao,content,genderOption,year,month,day,hour,minute,useTime,navigate,helpPostId,from]);
 
   const SendRequest = useCallback(async()=>{
     const geocoder = new kakao.maps.services.Geocoder();
