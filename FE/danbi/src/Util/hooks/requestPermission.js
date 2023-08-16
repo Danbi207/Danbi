@@ -16,11 +16,11 @@ export const requestPermission = async () => {
   
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
-  console.log("권한 요청 중...");
+  // console.log("권한 요청 중...");
 
   const permission = await Notification.requestPermission();
   if (permission === "denied") {
-    console.log("알림 권한 허용 안됨");
+    // console.log("알림 권한 허용 안됨");
     return;
   }
 
@@ -45,7 +45,7 @@ export const requestPermission = async () => {
     }
 
   onMessage(messaging, (payload) => {
-    console.log("메시지가 도착했습니다.", payload);
+    // console.log("메시지가 도착했습니다.", payload);
   });
 }
 
