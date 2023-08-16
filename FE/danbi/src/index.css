@@ -3,6 +3,11 @@
     src: url("./fonts/NanumGothicExtraBold.otf");
 }
 
+@font-face {
+    font-family: "NanumGothicLight";
+    src: url("./fonts/NanumGothic-Regular.ttf");
+}
+
 *,*::after,*::before{
     font-family: "NanumGothic";
 

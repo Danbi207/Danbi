@@ -10,6 +10,7 @@ export const dark ={
     whiteColor : "#FFFFFF",
     calDateColor : "#414040",
     CalDayColor : '#FFFFFF',
+    AlrDateColor : "#a09f9f"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-black.svg`,
@@ -57,7 +58,10 @@ export const dark ={
   },
   animation: {
     pick: `${process.env.PUBLIC_URL}/json/animation.json`,
-  }
+  },
+  font : {
+    fontWeight : "normal",
+  },
 } 
 
 export const light ={
@@ -73,6 +77,7 @@ export const light ={
     whiteColor : "#FFFFFF",
     calDateColor : "#c4c4c4",
     CalDayColor : '#f3c5b6',
+    AlrDateColor : "#d8d8d8"
   },
   images:{
     logo : `${process.env.PUBLIC_URL}/assets/Danbi-Logo-white.svg`,
@@ -120,5 +125,8 @@ export const light ={
   },
   animation: {
     pick: `${process.env.PUBLIC_URL}/json/animation.json`,
-  }
+  },
+  font : {
+    fontWeight : "bold",
+  },
 }

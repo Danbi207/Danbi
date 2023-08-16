@@ -10,7 +10,7 @@ self.addEventListener("push", function (event) {
     tag: resultData.tag,
     ...resultData,
   };
-  // console.log("push: ", { resultData, notificationTitle, notificationOptions });
+  // console.log("push: ", {   resultData, notificationTitle, notificationOptions });
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
