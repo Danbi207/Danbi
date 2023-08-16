@@ -169,7 +169,7 @@ const AlramWrap = styled.div`
   height: 30rem;
   bottom: -30rem;
   right: 0;
-  background-color: ${props=>props.theme.colors.bgColor};
+  background-color: ${props=>props.theme.colors.CommonBgColor};
 
   z-index: 3;
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
@@ -208,7 +208,7 @@ const HeaderWrap = styled.div`
   height: 3rem;
   box-sizing: border-box;
   border-bottom:solid #19191B 1px;
-  background-color: ${props=>props.theme.colors.whiteBgColor};
+  background-color: ${props=>props.theme.colors.CommonBgColor};
 `
 
 const BTNWrap = styled.div`
