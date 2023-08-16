@@ -1,5 +1,6 @@
 package com.danbi.api.logout.controller;
 
+import com.danbi.api.ApiResponse;
 import com.danbi.api.logout.service.LogoutService;
 import com.danbi.global.util.AuthorizationHeaderUtils;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +19,14 @@ public class LogoutController {
     private final LogoutService logoutService;
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest httpServletRequest) {
+    public ApiResponse<String> logout(HttpServletRequest httpServletRequest) {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         AuthorizationHeaderUtils.validateAuthorization(authorizationHeader);
 
         String accessToken = authorizationHeader.split(" ")[1];
         logoutService.logout(accessToken);
 
-        return ResponseEntity.ok("logout success");
+        return ApiResponse.ok("logout success");
     }
 
 }
