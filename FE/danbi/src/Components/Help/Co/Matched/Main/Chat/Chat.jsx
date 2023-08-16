@@ -29,6 +29,7 @@ const Chat = (props) => {
 
   const sendMessage = ()=>{
     const message = {
+      userId:props.myProfile.userId,
       helpId:props.roomId,
       name:props.myProfile.name,
       content:chatValue,
