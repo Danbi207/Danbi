@@ -59,7 +59,7 @@ const ProfileImage = styled.img.attrs((props) => ({
   src: props.$profileUrl,
 }))`
   height: 6rem;
-  width: 7rem;
+  width: 6rem;
   border-radius: 50%;
 `;
 
