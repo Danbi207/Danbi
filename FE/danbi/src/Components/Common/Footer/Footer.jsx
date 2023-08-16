@@ -41,7 +41,14 @@ const Footer = () => {
       <Home 
         fill={mode === 'home' ? '#FFEA7E' : '#000'}
         width={30} height={30}
-        onClick={()=>{setMode("home"); navigate(`/help/${localStorage.getItem("role")}`)}}></Home>
+        onClick={()=>{
+          setMode("home");
+          const role = localStorage.getItem("role");
+          if(role === "admin"){
+            navigate(`/admin`);
+          }
+          navigate(`/help/${role}`)
+          }}></Home>
         <P $mode={mode}>홈</P>
       </Box>
       <Box>

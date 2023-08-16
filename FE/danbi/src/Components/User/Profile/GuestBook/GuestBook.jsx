@@ -48,7 +48,7 @@ const GuestBook = ({ guestBookId, userId }) => {
     try {
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }

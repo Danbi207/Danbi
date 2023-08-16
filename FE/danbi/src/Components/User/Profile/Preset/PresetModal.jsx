@@ -108,7 +108,7 @@ const PresetModal = ({ setModalOpen }) => {
 
   useEffect(() => {
     fetchData();
-    console.log(presetList);
+    // console.log(presetList);
   }, [fetchData]);
 
   const handleSave = async () => {

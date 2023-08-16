@@ -24,50 +24,58 @@ const TEST = () => {
   },[method,url,request]);
 
   const tokenApi = useCallback(async ()=>{
-    if(method==="get"){
-      const res = await authGet(url);
-      if(res === null) alert("로그인이 안되어있습니다")
-      console.log(res);
-    }
-
-    if(method==="post"){
-      const res = await authPost(url,JSON.parse(request));
-      if(res === null) alert("로그인이 안되어있습니다")
-      console.log(res);
-    }
-
-    if(method==="put"){
-      const res = await authPut(url,JSON.parse(request));
-      if(res === null) alert("로그인이 안되어있습니다")
-      console.log(res);
-    }
-
-    if(method==="delete"){
-      const res = await authDelete(url,JSON.parse(request));
-      if(res === null) alert("로그인이 안되어있습니다")
-      console.log(res);
+    try{
+      if(method==="get"){
+        const res = await authGet(url);
+        if(res === null) alert("로그인이 안되어있습니다")
+        console.log(res);
+      }
+  
+      if(method==="post"){
+        const res = await authPost(url,JSON.parse(request));
+        if(res === null) alert("로그인이 안되어있습니다")
+        console.log(res);
+      }
+  
+      if(method==="put"){
+        const res = await authPut(url,JSON.parse(request));
+        if(res === null) alert("로그인이 안되어있습니다")
+        console.log(res);
+      }
+  
+      if(method==="delete"){
+        const res = await authDelete(url,JSON.parse(request));
+        if(res === null) alert("로그인이 안되어있습니다")
+        console.log(res);
+      }
+    }catch(err){
+      console.log(err);
     }
   },[method,url,request]);
 
   const fileApi = useCallback(async ()=>{
-    if(!file){
-      alert("파일을 입력해주세요");
-      return;
+    try{
+      if(!file){
+        alert("파일을 입력해주세요");
+        return;
+      }
+      if(!fileKey||fileKey===""){
+        alert("파일 key를 입력해주세요");
+        return;
+      }
+      const json = request&&request!=="" ? JSON.parse(request) : {};
+      json[fileKey] = file;
+      console.log(json);
+      const formData = new FormData();
+      for (let key in json ) {
+        formData.append(key, json[key]);
+      }
+      const res = await authFilePost(url,formData);
+      if(res === null) alert("로그인이 안되어있습니다")
+      console.log(res);
+    }catch(err){
+      console.log(err);
     }
-    if(!fileKey||fileKey===""){
-      alert("파일 key를 입력해주세요");
-      return;
-    }
-    const json = request&&request!=="" ? JSON.parse(request) : {};
-    json[fileKey] = file;
-    console.log(json);
-    const formData = new FormData();
-    for (let key in json ) {
-      formData.append(key, json[key]);
-    }
-    const res = await authFilePost(url,formData);
-    if(res === null) alert("로그인이 안되어있습니다")
-    console.log(res);
   },[file,request,fileKey,url]);
 
   return (

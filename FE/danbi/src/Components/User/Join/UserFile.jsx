@@ -34,7 +34,7 @@ const UserFile = () => {
       });
 
       await authFilePost('/api/v1/submit/ip/certification', formData);
-      console.log(imageFiles)
+      // console.log(imageFiles)
       // DO : 로그아웃
       await authPost('/api/v1/member/logout', {}) 
       localStorage.removeItem('role');

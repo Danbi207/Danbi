@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMode } from '../../../../store/Slice/ModalSlice.js';
 
 const Preset = ({ preset_list, setPresetList }) => {
-  console.log(preset_list);
+  // console.log(preset_list);
   const [OpenTitle, setOpenTitle] = useState(-1);
   const [OpenDetail, setOpenDetail] = useState(-1);
   const showDetail = (title) => {
