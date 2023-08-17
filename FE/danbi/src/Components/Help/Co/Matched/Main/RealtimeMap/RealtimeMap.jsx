@@ -5,9 +5,10 @@ import styled, { keyframes } from 'styled-components';
 const RealtimeMap = ({position,curposition}) => {
   const [linePath,setLinePath] = useState([]);
   useEffect(()=>{
-    const coordinates = [];
-    if(position.destLongitude){
+    if(position && position.destLatitude){
+      const coordinates = [];
       coordinates.push([position.meetLongitude,position.meetLatitude]);
+      coordinates.push([position.destLongitude,position.destLatitude]);
       axios({
         method:"post",
         url:"https://api.openrouteservice.org/v2/directions/driving-car/geojson",
@@ -16,12 +17,12 @@ const RealtimeMap = ({position,curposition}) => {
         },
         data:{"coordinates":coordinates}
       }).then(({data})=>{
+        const res = [];
         // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
         for(let i = 0; i < data.features[0].geometry.coordinates.length; i++){
-          coordinates.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
+          res.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
         }
-        coordinates.push([position.destLongitude,position.destLatitude]);
-        setLinePath([...coordinates]);
+        setLinePath([...res]);
       }).catch(err=>{
         console.log(err);
       })
@@ -93,8 +94,8 @@ const CurMarker = styled.img`
 `
 
 const Marker = styled.img`
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
 `
 
 
