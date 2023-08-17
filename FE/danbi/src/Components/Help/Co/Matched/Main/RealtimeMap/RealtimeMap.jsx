@@ -28,16 +28,17 @@ const RealtimeMap = ({position,curposition}) => {
 
   const getMakers = ()=>{
     const res = [];
+    let key = 0;
     if(curposition){
       res.push(
-      <CustomOverlayMap position={{lat:curposition.coords.latitude,lng:curposition.coords.longitude}}>
+      <CustomOverlayMap key={key++} position={{lat:curposition.coords.latitude,lng:curposition.coords.longitude}}>
         <CurMarker alt='' src={`${process.env.PUBLIC_URL}/assets/curMarker.svg`}></CurMarker>
       </CustomOverlayMap>);
     }
     
     if(position){
       res.push(
-        <CustomOverlayMap position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
+        <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
           <MarkerWrap>
             <div>만나는 곳</div>
             <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
@@ -46,7 +47,7 @@ const RealtimeMap = ({position,curposition}) => {
 
         if(("destLatitude" in position) && position.destLatitude && ("destLongitude" in position) && position.destLongitude){
           res.push(
-            <CustomOverlayMap position={{lat:position.destLatitude,lng:position.destLongitude}}>
+            <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
               <MarkerWrap>
                 <div>목적지</div>
                 <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
