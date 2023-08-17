@@ -25,15 +25,12 @@ public class TestMemberService {
     private final MemberService memberService;
     private final TokenManager tokenManager;
 
-    public OauthLoginDto.Response login(String email, String password) {
-        JwtDto jwtTokenDto;
-        Optional<Member> optionalMember = memberService.findByEmail(email);
-
+    public OauthLoginDto.Response login(String email) {
         Member member = memberService.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
 
         // 토큰 생성
-        jwtTokenDto = tokenManager.createJwtTokenDto(member.getId(), member.getRole());
+        JwtDto jwtTokenDto = tokenManager.createJwtTokenDto(member.getId(), member.getRole());
         member.updateRefreshToken(jwtTokenDto);
 
         return OauthLoginDto.Response.of(jwtTokenDto, member.getRole());

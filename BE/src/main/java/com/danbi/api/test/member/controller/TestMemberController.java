@@ -23,7 +23,7 @@ public class TestMemberController {
     @PostMapping("/login")
     public OauthLoginDto.Response login(@Valid @RequestBody TestMemberLoginRequest request) {
 
-        return testMemberService.login(request.getEmail(), request.getPassword());
+        return testMemberService.login(request.getEmail());
     }
 
     @PostMapping("/signup")
