@@ -60,11 +60,11 @@ const GuestBook = ({ guestBookId, userId }) => {
 
   return (
     <GuestBookWrap>
+      <UserDetail>
+        <ProfileImage $profileUrl={profileUrl} alt="img" />
+        <UserName>{name}</UserName>
+      </UserDetail>
       <ChatWrap>
-        <UserDetail>
-          <ProfileImage $profileUrl={profileUrl} alt="img" />
-          <UserName>{name}</UserName>
-        </UserDetail>
         <ChatSection>
           <ChatForm onSubmit={handleSubmit}>
             <Chat value={textArea} onChange={handleChange} />
