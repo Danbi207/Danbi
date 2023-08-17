@@ -53,9 +53,8 @@ const Login = () => {
       <KakaoLoginBtn src={`${process.env.PUBLIC_URL}/assets/kakaoLoginBtn.svg`} onClick={()=>kakaoLogin()} alt="카카오 로그인"/>
       <Btn onClick={async()=>{
         const email = prompt("ID를 입력하세요");
-        const password = prompt("PASSWORD를 입력하세요");
         try{
-          const res = await TestLogin(email,password);
+          const res = await TestLogin(email);
           const role = localStorage.getItem("role");
           if(res){
             alert("테스트용 로그인에 성공하셨습니다.");

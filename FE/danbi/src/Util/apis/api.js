@@ -263,10 +263,10 @@ export const authFilePost = async (url,formData)=>{
   }
 }
 
-export const TestLogin = async(email,password)=>{
+export const TestLogin = async(email)=>{
   try{
     const {data} = await axios.post("/api/v1/test/member/login",{
-      email,password
+      email
     });
     if(data){
       token.setAccessToken(data.accessToken);
