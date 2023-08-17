@@ -83,7 +83,7 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
       }
       <Title>도움 상세정보</Title>
       <ContentWrap>
-        <Content value={content} onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
+        <Content value={contentRecording ? transcript : content} onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
 1. 어떤 도움이 필요한지 적어주세요!
 2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
@@ -121,7 +121,7 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
         </Options>
       </Select>
       <ContentWrap>
-        <Content placeholder='상대방이 도움을 줄 때 조심해야할 점을 적어주세요!' readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
+        <Content placeholder='상대방이 도움을 줄 때 조심해야할 점을 적어주세요!' readOnly={!cautionWrite} value={cautionRecording ? transcript : caution} onChange={(e)=>{setCaution(e.target.value)}} />
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
           <Buttons>
             <RecordingBtns>
