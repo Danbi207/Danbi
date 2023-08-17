@@ -100,7 +100,6 @@ const NavBarWrap = styled.div`
   animation: ${props => props.$out ? fadeIn : fadeOut} 0.5s linear;
   transition: visibility 0.5s linear;
   transform-origin : 100% 0 0;
-  border: 1px solid #000;
 `
 const fadeIn = keyframes`
   from {
@@ -170,6 +169,7 @@ const AlramWrap = styled.div`
   bottom: -30rem;
   right: 0;
   background-color: ${props=>props.theme.colors.CommonBgColor};
+  border-top: 1px solid #000;
 
   z-index: 3;
   visibility: ${props => props.$out ? 'visible' : 'hidden'};
