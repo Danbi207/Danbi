@@ -138,7 +138,7 @@ public class HelpPostService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<HelpPost> checkHelperTime(LocalDateTime time, Long memberId) {
+    public List<HelpPost> checkHelperTime(LocalDateTime time, Long memberId) {
         return helpPostRepository.findHelpPostByNowTime(time, memberId);
     }
 

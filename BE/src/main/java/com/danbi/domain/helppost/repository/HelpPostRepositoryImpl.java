@@ -193,9 +193,9 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     }
 
     @Override
-    public Optional<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId) {
+    public List<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId) {
 
-        HelpPost helpPost = jpaQueryFactory.selectFrom(QHelpPost.helpPost)
+        List<HelpPost> helpPost = jpaQueryFactory.selectFrom(QHelpPost.helpPost)
                 .innerJoin(help).on(QHelpPost.helpPost.eq(help.helpPost))
                 .leftJoin(QHelpPost.helpPost.positions, positions).fetchJoin()
                 .where(
@@ -203,8 +203,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                         QHelpPost.helpPost.state.eq(State.MATCHED),
                         QHelpPost.helpPost.startTime.before(time),
                         QHelpPost.helpPost.endTime.after(time)
-                ).fetchOne();
-        return Optional.ofNullable(helpPost);
+                ).fetch();
+        return helpPost;
     }
 
     @Override

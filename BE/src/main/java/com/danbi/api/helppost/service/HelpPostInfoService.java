@@ -247,9 +247,9 @@ public class HelpPostInfoService {
 
     public HelperTimeResponseDto checkHelperMatchedTime(Long memberId) {
         LocalDateTime time = LocalDateTime.now();
-        Optional<HelpPost> helpPost = helpPostService.checkHelperTime(time, memberId);
+        List<HelpPost> helpPost = helpPostService.checkHelperTime(time, memberId);
         return HelperTimeResponseDto.builder()
-                .helperMatched(helpPost.isPresent() ? true : false)
-                .helpPostId(helpPost.isPresent() ? helpPost.get().getId() : null).build();
+                .helperMatched(helpPost.size() > 0 ? true : false)
+                .helpPostId(helpPost.size() > 0 ? helpPost.get(0).getId() : null).build();
     }
 }

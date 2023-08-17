@@ -21,11 +21,12 @@ public interface HelpPostRepositoryCustom {
 
     List<HelpPostByMonthDto> findHelpPostByMonth(LocalDate startTime, Long memberId);
 
-    Optional<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId);
+    List<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId);
 
     List<HelpPost> checkIsHelperCanHelp(Long memberId, LocalDateTime startTime, LocalDateTime endTime);
 
     List<HelpPost> findNotMatchedHelpPost(LocalDateTime startTime, LocalDateTime endTime);
 
     List<BestHelpMemberDto> searchBestMember(LocalDateTime startTime, LocalDateTime endTime);
+
 }
