@@ -1,7 +1,31 @@
-import React from "react"
-import {Map,CustomOverlayMap} from "react-kakao-maps-sdk";
-
+import React, { useEffect ,useState} from "react"
+import {Map,CustomOverlayMap,Polyline} from "react-kakao-maps-sdk";
+import axios from "axios";
+import styled, { keyframes } from 'styled-components';
 const RealtimeMap = ({position,curposition}) => {
+  const [linePath,setLinePath] = useState([]);
+  useEffect(()=>{
+    const coordinates = [];
+    coordinates.push([position.meetLongitude,position.meetLatitude]);
+    coordinates.push([position.destLongitude,position.destLatitude]);
+    axios({
+      method:"post",
+      url:"https://api.openrouteservice.org/v2/directions/driving-car/geojson",
+      headers:{
+        "Authorization" : `${process.env.REACT_APP_OPENROUTESERVICE_KEY}`
+      },
+      data:{"coordinates":coordinates}
+    }).then(({data})=>{
+      // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+      for(let i = 0; i < data.features[0].geometry.coordinates.length; i++){
+        coordinates.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
+      }
+      setLinePath([...coordinates]);
+    }).catch(err=>{
+      console.log(err);
+    })
+  },[])
+
   const getMakers = ()=>{
     const res = [];
     res.push(
@@ -17,7 +41,7 @@ const RealtimeMap = ({position,curposition}) => {
         </MarkerWrap>
       </CustomOverlayMap>);
 
-    if((destLatitude in position) && position.destLatitude && (destLongitude in position) && position.destLongitude){
+    if(("destLatitude" in position) && position.destLatitude && ("destLongitude" in position) && position.destLongitude){
       res.push(
         <CustomOverlayMap position={{lat:position.destLatitude,lng:position.destLongitude}}>
           <MarkerWrap>
@@ -29,7 +53,7 @@ const RealtimeMap = ({position,curposition}) => {
     
     return res;
   }
-  
+
   return (
     <Map
       center={{lat:position.meetLatitude,lng:position.meetLongitude}}
@@ -39,6 +63,15 @@ const RealtimeMap = ({position,curposition}) => {
       {
         getMakers()
       }
+      <Polyline
+        path={[
+          linePath,
+        ]}
+        strokeWeight={5} // 선의 두께 입니다
+        strokeColor={"#FFAE00"} // 선의 색깔입니다
+        strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle={"solid"} // 선의 스타일입니다
+      />
     </Map>
   )
 }
