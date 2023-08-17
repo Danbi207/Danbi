@@ -122,8 +122,12 @@ const DetailBTN = styled.button`
 const ProfileBTN = styled.div`
   width: 45%;
   height: 2rem;
-  background-color: ${props=>props.theme.colors.buttonbgColor};
+  background-color: #93d3ff;
+  color : ${props=>props.theme.colors.titleColor};
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: cente
 `
 
 const DeleteBTN = styled.button`
