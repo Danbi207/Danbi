@@ -2,10 +2,43 @@ import React from 'react'
 import { useState } from 'react';
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { getSpeech } from '../../../../../User/Profile/Utils/TTS';
 
 const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
   const [cautionSelect,setCautionSelect] = useState(false);
   const [cautionWrite,setCautionWrite] = useState(true);
+  const [Recording, setRecording] = useState(false);
+
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
+
+ // 녹음 시작 (리셋하면서 시작)
+ const StartRecord = () => {
+  setRecording(true);
+  resetTranscript();
+  SpeechRecognition.startListening({ continuous: true });
+  };
+
+  // 녹음 종료
+  const StopRecord = (type) => {
+    if(type === 'caution'){
+      setCaution(transcript);
+      setRecording(false);
+      SpeechRecognition.stopListening();
+    } else if(type === 'content') {
+      setContent(transcript);
+      setRecording(false);
+      SpeechRecognition.stopListening();
+    }
+  };
+
+  const handleBtn = (type) => {
+    if(type === 'caution'){
+      getSpeech(caution);
+    } else if(type === 'content'){
+      getSpeech(content);
+    }
+  }
 
   const setCurPosition = useCallback(()=>{
     if (navigator.geolocation) { // GPS를 지원하면
@@ -43,9 +76,23 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
         </>:null
       }
       <Title>도움 상세정보</Title>
-      <Content value={content} onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
+      <ContentWrap>
+        <Content value={content} onChange={e=>setContent(e.target.value)} placeholder='다음과 같은 정보를 입력해주세요.
 1. 어떤 도움이 필요한지 적어주세요!
 2. 도움을 줄 사람에게 전하고 싶은 말을 적어주세요!'/>
+        {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
+          <Buttons>
+            <RecordingBtns>
+              <RecordBtn onClick={() => (Recording ? StopRecord() : StartRecord('content'))}>
+                {Recording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
+              </RecordBtn>
+              <TTSBtn onClick={handleBtn}>
+                <TTSImg />
+              </TTSBtn>
+            </RecordingBtns>
+          </Buttons>
+        ) : null}
+      </ContentWrap>
       <Title>주의사항</Title>
       <Select>
         <div onClick={()=>{setCautionSelect(!cautionSelect);}}>{cautionTitle}<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
@@ -67,7 +114,21 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
           }
         </Options>
       </Select>
-      <Content placeholder='상대방이 도움을 줄 때 조심해야할 점을 적어주세요!' readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
+      <ContentWrap>
+        <Content placeholder='상대방이 도움을 줄 때 조심해야할 점을 적어주세요!' readOnly={!cautionWrite} value={caution} onChange={(e)=>{setCaution(e.target.value)}} />
+        {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
+          <Buttons>
+            <RecordingBtns>
+              <RecordBtn onClick={() => (Recording ? StopRecord() : StartRecord('caution'))}>
+                {Recording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
+              </RecordBtn>
+              <TTSBtn onClick={handleBtn}>
+                <TTSImg />
+              </TTSBtn>
+            </RecordingBtns>
+          </Buttons>
+        ) : null}
+      </ContentWrap>
       <RequestBtn onClick={()=>{helpPostId ? SendRequestEdit():SendRequest()}}>{helpPostId?"도움 수정하기":"도움 요청하기"}</RequestBtn>
     </Wrap>
   )
@@ -99,7 +160,7 @@ const Wrap = styled.div`
     height: 10rem;
     padding: 0.5rem 0;
   }
-`
+`;
 
 const RequestBtn = styled.button`
   margin-left: calc((100% - 20rem)/2);
@@ -109,7 +170,7 @@ const RequestBtn = styled.button`
   height: 3rem;
   background-color: #FFEA7E;
   margin-top: 1rem;
-`
+`;
 
 const Select = styled.ul`
   margin-top: 0.5rem;
@@ -128,12 +189,12 @@ const Select = styled.ul`
     width: 100%;
     height: 2rem;
   }
-`
+`;
 const Option = styled.li`
   flex: 0 0 auto;
   border-bottom: 1px solid #b0b0b0;
   z-index: 1;
-`
+`;
 const Options = styled.div`
   width: 100%;
   position: relative;
@@ -151,13 +212,13 @@ const Options = styled.div`
   &::-webkit-scrollbar{
     display: none;
   }
-`
+`;
 const SelectImg = styled.img`
   position : absolute;
   right: 0;
   width: 2rem;
   height: 2rem;
-`
+`;
 
 const Content = styled.textarea`
   border-radius: 0.5rem;
@@ -167,8 +228,8 @@ const Content = styled.textarea`
   font-size: 12px;
   width: 100%;
   height: 5rem;
-  margin: 0.5rem 0;
-`
+`;
+
 const Input = styled.div`
   width: 100%;
   height: 1.5rem;
@@ -180,7 +241,7 @@ const Input = styled.div`
   border: 1px solid #E3E3E3;
   text-align: center;
   cursor: pointer;
-`
+`;
 
 const FaceTypeBtn = styled.div`
   border-radius: 0.5rem;
@@ -197,7 +258,7 @@ const FaceTypeBtn = styled.div`
     color: ${props=> props.theme.colors.buttontextColor};
     transform: scale(1.1);
   }
-`
+`;
 
 const Title = styled.div`
   font-size: 1.25rem;
@@ -210,6 +271,29 @@ const Title = styled.div`
   & > *{
     flex: 0 0 auto;
   }
-`
+`;
+
+const RecordBtn = styled.button``;
+
+const TTSBtn = styled.button``;
+
+const RecordingBtns = styled.div``;
+
+const RecordImg = styled.img.attrs((props) => ({
+  src: props.$state === 'stop' ? props.theme.images.stop : props.theme.images.record,
+}))``;
+
+const TTSImg = styled.img.attrs((props) => ({
+  src: props.theme.images.play,
+}))``;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ContentWrap = styled.div`
+  margin: 0.5rem 0;
+`;
 
 export default Setting
