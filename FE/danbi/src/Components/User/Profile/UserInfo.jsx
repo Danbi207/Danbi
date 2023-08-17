@@ -80,7 +80,7 @@ const UserName = styled.div`
 `;
 
 const PlusButton = styled.button`
-  background-color: #6161ff;
+  background-color: #FFEA7E;
   color: white;
   border-radius: 10px;
   width: 8rem;
