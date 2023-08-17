@@ -7,7 +7,6 @@ const RealtimeMap = ({position,curposition}) => {
   useEffect(()=>{
     const coordinates = [];
     coordinates.push([position.meetLongitude,position.meetLatitude]);
-    coordinates.push([position.destLongitude,position.destLatitude]);
     axios({
       method:"post",
       url:"https://api.openrouteservice.org/v2/directions/driving-car/geojson",
@@ -20,6 +19,7 @@ const RealtimeMap = ({position,curposition}) => {
       for(let i = 0; i < data.features[0].geometry.coordinates.length; i++){
         coordinates.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
       }
+      coordinates.push([position.destLongitude,position.destLatitude]);
       setLinePath([...coordinates]);
     }).catch(err=>{
       console.log(err);
@@ -28,16 +28,17 @@ const RealtimeMap = ({position,curposition}) => {
 
   const getMakers = ()=>{
     const res = [];
+    let key = 0;
     if(curposition){
       res.push(
-      <CustomOverlayMap position={{lat:curposition.coords.latitude,lng:curposition.coords.longitude}}>
+      <CustomOverlayMap key={key++} position={{lat:curposition.coords.latitude,lng:curposition.coords.longitude}}>
         <CurMarker alt='' src={`${process.env.PUBLIC_URL}/assets/curMarker.svg`}></CurMarker>
       </CustomOverlayMap>);
     }
     
     if(position){
       res.push(
-        <CustomOverlayMap position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
+        <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
           <MarkerWrap>
             <div>만나는 곳</div>
             <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
@@ -46,7 +47,7 @@ const RealtimeMap = ({position,curposition}) => {
 
         if(("destLatitude" in position) && position.destLatitude && ("destLongitude" in position) && position.destLongitude){
           res.push(
-            <CustomOverlayMap position={{lat:position.destLatitude,lng:position.destLongitude}}>
+            <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
               <MarkerWrap>
                 <div>목적지</div>
                 <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
@@ -67,7 +68,8 @@ const RealtimeMap = ({position,curposition}) => {
       {
         getMakers()
       }
-      <Polyline
+      {
+        position && position.destLatitude ? <Polyline
         path={[
           linePath,
         ]}
@@ -75,7 +77,8 @@ const RealtimeMap = ({position,curposition}) => {
         strokeColor={"#FFAE00"} // 선의 색깔입니다
         strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
         strokeStyle={"solid"} // 선의 스타일입니다
-      />
+      /> : null
+      }
     </Map>
   )
 }

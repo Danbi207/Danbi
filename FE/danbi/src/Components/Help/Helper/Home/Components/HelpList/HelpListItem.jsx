@@ -71,10 +71,9 @@ const TimeWrap = styled.div`
 
 
 const DetailBtn = styled.button`
-  background-color: #6938D3;
+  background-color: #FFEA7E;
   width: 100%;
   height: 3rem;
-  color: #fff;
   border-radius: 1rem;
 `
 const HelpContent = styled.div`

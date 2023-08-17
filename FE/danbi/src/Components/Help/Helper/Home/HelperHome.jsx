@@ -153,7 +153,7 @@ const HelperHome = () => {
 const MainWrap = styled.div`
   margin-top:3px;
   width: 100%;
-  height: calc(100% - 9.2rem);
+  height: calc(100% - 9.5rem);
 `
 
 const HelperHomeWrap = styled.div`
