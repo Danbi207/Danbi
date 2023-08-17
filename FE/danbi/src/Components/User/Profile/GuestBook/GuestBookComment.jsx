@@ -60,7 +60,7 @@ const GuestBookComment = ({
           {editMode ? (
             <EditSection>
               <EditTextArea
-                value={content}
+                value={editedContent}
                 onChange={(e) => setEditedContent(e.target.value)}
               />
               <Buttons>
@@ -78,8 +78,7 @@ const GuestBookComment = ({
           <EditBtn
             onClick={() => {
               setEditMode(true);
-              console.log('editedContent', editedContent);
-              console.log('content', content);
+              setEditedContent(content);
             }}
           >
             수정
