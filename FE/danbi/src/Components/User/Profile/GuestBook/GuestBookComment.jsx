@@ -132,6 +132,8 @@ const CreatedTime = styled.span`
 
 const Content = styled.span`
   font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 
 const Buttons = styled.div`
