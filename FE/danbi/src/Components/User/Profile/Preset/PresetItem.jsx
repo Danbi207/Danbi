@@ -34,7 +34,7 @@ const PresetItem = ({
       <Element key={index}>
         <PreSetElement className="el">
           <ElementContent>
-            {value.content ? value.content : `프리셋 ${index + 1}`}
+            {value.title ? value.title : `프리셋 ${index + 1}`}
           </ElementContent>
           <Btns>
             <EditBtn
