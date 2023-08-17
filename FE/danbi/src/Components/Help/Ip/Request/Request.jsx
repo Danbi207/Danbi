@@ -126,7 +126,7 @@ const Request = () => {
           return;
         }
         console.log(faceType);
-        if (faceType === "contact" && dest === null) {
+        if (faceType === "contact" && meet === null) {
           alert("만나는 장소를 선택해주세요");
         return;
 }
@@ -184,7 +184,7 @@ const Request = () => {
         }
         console.log(dest)
         console.log(faceType);
-        if (faceType === "contact" && dest === null) {
+        if (faceType === "contact" && meet === null) {
           alert("만나는 장소를 선택해주세요");
         return;
         }
