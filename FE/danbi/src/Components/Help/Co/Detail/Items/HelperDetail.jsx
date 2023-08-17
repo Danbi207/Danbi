@@ -41,7 +41,7 @@ const HelperDetail = ({ helpPostId }) => {
       try {
         const res = await authGet(`/api/v1/help/detail/${helpPostId}`);
         if (res) {
-          console.log(res);
+          // console.log(res);
           setData(res);
         }
       } catch (err) {

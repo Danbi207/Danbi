@@ -42,7 +42,7 @@ const Profile = () => {
   const fetchData = useCallback(async () => {
     try {
       const res = await authGet(`/api/v1/profile/${userId}`);
-      console.log(res);
+      // console.log(res);
       setData(res);
     } catch (err) {
       console.log(err);

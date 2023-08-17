@@ -21,7 +21,7 @@ const IpMap = () => {
   const cur_latitude = useSelector(state => state.ip.position.cur_latitude)
 
   useEffect(() => {
-    console.log(cur_latitude, cur_longitude)
+    // console.log(cur_latitude, cur_longitude)
     const mapOption = { 
       // center: new kakao.maps.LatLng(37.566826, 126.9786567),
       center: new kakao.maps.LatLng(cur_latitude, cur_longitude), 
@@ -48,8 +48,8 @@ const IpMap = () => {
         dispatch(setMeetLongitude(latlng.getLng())))
       : (dispatch(setDestLatitude(latlng.getLat())),
         dispatch(setDestLongitude(latlng.getLng())));
-      console.log(latlng.getLat())
-      console.log(latlng.getLng())
+      // console.log(latlng.getLat())
+      // console.log(latlng.getLng())
 
       // 클릭 위치 기반으로 도로면 주소 or 지번 주소를 가져옵니다
       searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
@@ -60,7 +60,7 @@ const IpMap = () => {
           mode === '0'
           ? dispatch(setMeetAddr(detailAddr))
           : dispatch(setDestAddr(detailAddr));
-          console.log(detailAddr);
+          // console.log(detailAddr);
 
           // 마커를 클릭한 위치에 표시합니다 
           marker.setPosition(mouseEvent.latLng);
