@@ -89,7 +89,7 @@ const MatchedHelp = () => {
   return (
     <MatchedHelpWrap>
       <Header></Header>
-      <Tap help={help} checkRoomId={checkRoomId} startCurPosition={startCurPosition} stopCurPosition={stopCurPosition} mode={mode} setMode={setMode}></Tap>
+      <Tap faceFlag={help ? help.faceFlag : false} checkRoomId={checkRoomId} startCurPosition={startCurPosition} stopCurPosition={stopCurPosition} mode={mode} setMode={setMode}></Tap>
       <MainWrap>
         {
           mode === "Infomation" ? <Infomation help={help}/>:

@@ -13,7 +13,7 @@ const Tap = (props) => {
         props.setMode("Chat");
       }}>소통</TapItem>
       {
-        props.help !== null && props.help.faceFlag?
+        props.faceFlag?
         <TapItem $defaultMode="RealtimeMap" $mode={props.mode} onClick={()=>{
           props.startCurPosition();
           props.setMode("RealtimeMap");
