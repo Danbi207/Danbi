@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Map,CustomOverlayMap   } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 
-const DetailMap = ({ position }) => {
+const DetailMap = ({ position, emergencyFlag }) => {
   const [state, setState] = useState({
     // 지도의 초기 위치
     center: { lat: 33.452613, lng: 126.570888 },
@@ -18,7 +18,7 @@ const DetailMap = ({ position }) => {
           <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Meeting.svg`}></Marker>
         </CustomOverlayMap>);
 
-        if(position.destLatitude && position.destLongitude){
+        if(!emergencyFlag && position.destLatitude && position.destLongitude){
           res.push(
             <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
               <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Destination.svg`}></Marker>

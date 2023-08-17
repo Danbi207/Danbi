@@ -28,6 +28,7 @@ const HelperDetail = ({ helpPostId }) => {
     },
     faceFlag: true,
     reservationFlag: true,
+    emergencyFlag: false,
     content: '',
     startTime: '2023-01-01 12:00',
     endTime: '2023-01-01 13:00',
