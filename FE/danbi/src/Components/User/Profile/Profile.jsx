@@ -157,6 +157,8 @@ const Wrap = styled.div`
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  height: 0;
 `;
 
 const JandiWrap = styled.div``;
