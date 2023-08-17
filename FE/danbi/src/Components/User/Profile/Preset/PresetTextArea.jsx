@@ -100,6 +100,7 @@ const TextAreaWrap = styled.div`
   width: 19rem;
   height: 6rem;
   margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 `;
 
 const TextArea = styled.textarea`
@@ -124,16 +125,17 @@ const TextArea = styled.textarea`
 
 const Title = styled.textarea`
   border: 1px solid ${(props) => props.theme.colors.titleColor};
-  border-radius: 10px;
+  border-radius: 5px;
+  padding-left: 5px;
   resize: none;
   background-color: transparent;
   text-align: start;
   outline: none;
   word-break: break-word;
-  padding: 0%.5rem 0 0.5rem 5px;
   width: 100%;
   height: 1.2rem;
   margin-bottom: 0.5rem;
+  overflow: hidden;
   color: ${(props) => props.theme.colors.titleColor};
   &::placeholder{
     color: #8e8b8b;
