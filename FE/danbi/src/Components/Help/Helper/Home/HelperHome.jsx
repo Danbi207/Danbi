@@ -142,7 +142,7 @@ const HelperHome = () => {
       </div>
       <MainWrap>
         {
-          mode === "map" ? <HelpMap helpList={helpList} position={position} /> : <HelpList helpList={helpList}/>
+          mode === "map" ? <HelpMap helpList={helpList} position={position} /> : <HelpList mode={mode} helpList={helpList}/>
         }
       </MainWrap>
       <Footer></Footer>

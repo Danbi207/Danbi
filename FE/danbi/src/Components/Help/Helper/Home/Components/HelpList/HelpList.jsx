@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import HelpListItem from "./HelpListItem";
 import { useEffect } from 'react';
 import { useState } from 'react';
-const HelpList = ({helpList}) => {
+const HelpList = ({mode,helpList}) => {
   const [friends,setFriends] = useState([]);
   const [helps,setHelps] = useState([]);
   const [emergencys,setEmergencys] = useState([]);
@@ -18,7 +18,7 @@ const HelpList = ({helpList}) => {
   return (
     <HelpListWrap>
       {
-        emergencys.length === 0 ? null :
+        mode==="uncontact"||emergencys.length === 0 ? null :
         <>
           <HelpTitle>긴급 도움</HelpTitle>
           {emergencys}
