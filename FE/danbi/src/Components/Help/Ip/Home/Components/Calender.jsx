@@ -82,10 +82,12 @@ const Calendar = ({refresh}) => {
         }
       }
       setHelpData(res);
+      return true;
     }
     catch (error) {
       setHelpData(res);
       console.error("에러 발생", error);
+      return false;
     }
   },[year, month])
 
@@ -177,11 +179,13 @@ const Calendar = ({refresh}) => {
 
       res.push(<CalenderItem
         className={className}
-        onClick={()=>{
-        setSelectedDate(new Date(year, month, i));
-        getHelpData(year ,month, i);
-        dispatch(setIpRequestList(getHelpData(year ,month, i)));
-        dispatch(setMode('ipdetail'));
+        onClick={async()=>{
+          if(GetMonth()){
+            setSelectedDate(new Date(year, month, i));
+            getHelpData(year ,month, i);
+            dispatch(setIpRequestList(getHelpData(year ,month, i)));
+            dispatch(setMode('ipdetail'));
+          }
         }} key={"calender"+i}>
           <div>{i}</div>
           {/* { getHelpData(year ,month, i).length > 0 && <ActiveIcon/> } */}
