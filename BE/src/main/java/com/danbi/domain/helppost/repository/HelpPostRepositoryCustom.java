@@ -13,7 +13,7 @@ public interface HelpPostRepositoryCustom {
     List<HelpPostQueryDto> search(String gender);
     List<HelpPostFaceDto> searchFace(String longitude, String latitude, String gender);
 
-    HelpPostDetailQeuryDto searchDetail(Long helpPostId);
+    Optional<HelpPostDetailQeuryDto> searchDetail(Long helpPostId);
 
     HelpPostMatchedDto searchMatchedDetail(Long helpPostId);
 

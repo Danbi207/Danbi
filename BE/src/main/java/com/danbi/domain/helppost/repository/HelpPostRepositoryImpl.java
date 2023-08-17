@@ -95,8 +95,8 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
 
 
     @Override
-    public HelpPostDetailQeuryDto searchDetail(Long helpPostId) {
-        return jpaQueryFactory.select(Projections.constructor(HelpPostDetailQeuryDto.class,
+    public Optional<HelpPostDetailQeuryDto> searchDetail(Long helpPostId) {
+        HelpPostDetailQeuryDto helpPostDetailQeuryDto = jpaQueryFactory.select(Projections.constructor(HelpPostDetailQeuryDto.class,
                         helpPost.id, member.id, member.name, member.profileUrl, point.accumulateDewPoint,
                         member.accuseStack, positions.latitude, positions.longitude, positions.addr,
                         positions.destLatitude, positions.destLongitude, positions.destAddr,
@@ -109,9 +109,11 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
                 .leftJoin(member.profile, profile)
                 .leftJoin(point).on(profile.eq(point.profile))
                 .where(
-                        helpPost.id.eq(helpPostId)
+                        helpPost.id.eq(helpPostId),
+                        helpPost.state.ne(State.DELETE)
                 )
                 .fetchOne();
+        return Optional.ofNullable(helpPostDetailQeuryDto);
     }
 
 

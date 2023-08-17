@@ -101,7 +101,15 @@ public class HelpPostService {
 
     @Transactional(readOnly = true)
     public HelpPostDetailQeuryDto searchDetail(Long HelpPostId) {
-        return helpPostRepository.searchDetail(HelpPostId);
+        Optional<HelpPostDetailQeuryDto> helpPostDetailQeuryDto = helpPostRepository.searchDetail(HelpPostId);
+        validateDetailIsNotDeleted(helpPostDetailQeuryDto);
+        return helpPostDetailQeuryDto.get();
+    }
+
+    private void validateDetailIsNotDeleted(Optional<HelpPostDetailQeuryDto> helpPostDetailQeuryDto) {
+        if (helpPostDetailQeuryDto.isEmpty()) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_DELETED);
+        }
     }
 
     @Transactional(readOnly = true)

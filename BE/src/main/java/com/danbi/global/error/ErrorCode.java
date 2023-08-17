@@ -61,6 +61,7 @@ public enum ErrorCode {
     HELPPOST_MISMATCH_ISMATCHED(HttpStatus.BAD_REQUEST,"HP-004","매칭된 도움 요청이 아닙니다."),
     HELPPOST_NOT_EXISTS(HttpStatus.BAD_REQUEST,"HP-005","해당번호의 매칭된 도움은 없습니다."),
     HELPPOST_MISMATCH_GENDER(HttpStatus.BAD_REQUEST,"HP-006","성별 요청이 잘못되었습니다."),
+    HELPPOST_MISMATCH_DELETED(HttpStatus.BAD_REQUEST,"HP-007","이미 삭제된 도움 요청 게시글 입니다."),
 
     // Help
     HELP_MISMATCH_IP(HttpStatus.BAD_REQUEST,"H-001","해당 도움의 IP와 유저가 동일하지 않습니다."),
