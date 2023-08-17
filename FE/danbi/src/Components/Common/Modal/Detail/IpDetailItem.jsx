@@ -42,6 +42,7 @@ const IpDetailItem = ({data}) => {
   }
 
   const ProfileMove = () => {
+    dispatch(setMode(""))
     navigate(`user/profile/${data.profileId}`)
   }
 
