@@ -60,7 +60,7 @@ const RealtimeMap = ({position,curposition}) => {
 
   return (
     <Map
-      center={{lat:position.meetLatitude,lng:position.meetLongitude}}
+      center={{lat:position ? position.meetLatitude : 36.1071233,lng: position ? position.meetLongitude : 128.416481}}
       style={{width:"100%",height:"100%"}}
       level={7}
     >
