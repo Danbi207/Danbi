@@ -146,11 +146,6 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   flex-wrap: nowrap;
-  overflow-y: auto;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar{
-    display: none;
-  }
   &>*{
     flex: 0 0 auto;
   }
