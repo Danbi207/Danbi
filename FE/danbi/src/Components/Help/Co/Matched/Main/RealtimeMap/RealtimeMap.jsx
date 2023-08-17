@@ -7,7 +7,6 @@ const RealtimeMap = ({position,curposition}) => {
   useEffect(()=>{
     const coordinates = [];
     coordinates.push([position.meetLongitude,position.meetLatitude]);
-    coordinates.push([position.destLongitude,position.destLatitude]);
     axios({
       method:"post",
       url:"https://api.openrouteservice.org/v2/directions/driving-car/geojson",
@@ -20,6 +19,7 @@ const RealtimeMap = ({position,curposition}) => {
       for(let i = 0; i < data.features[0].geometry.coordinates.length; i++){
         coordinates.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
       }
+      coordinates.push([position.destLongitude,position.destLatitude]);
       setLinePath([...coordinates]);
     }).catch(err=>{
       console.log(err);
@@ -67,7 +67,8 @@ const RealtimeMap = ({position,curposition}) => {
       {
         getMakers()
       }
-      <Polyline
+      {
+        position && position.destLatitude ? <Polyline
         path={[
           linePath,
         ]}
@@ -75,7 +76,8 @@ const RealtimeMap = ({position,curposition}) => {
         strokeColor={"#FFAE00"} // 선의 색깔입니다
         strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
         strokeStyle={"solid"} // 선의 스타일입니다
-      />
+      /> : null
+      }
     </Map>
   )
 }
