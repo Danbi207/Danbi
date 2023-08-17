@@ -25,6 +25,8 @@ public class TestMemberService {
     private final MemberService memberService;
     private final TokenManager tokenManager;
 
+
+    @Transactional
     public OauthLoginDto.Response login(String email) {
         Member member = memberService.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
