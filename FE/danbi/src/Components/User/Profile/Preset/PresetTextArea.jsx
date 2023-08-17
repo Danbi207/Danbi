@@ -168,6 +168,7 @@ const SaveBtn = styled.button`
   border-radius: 10px;
   font-size: 12px;
   text-align: center;
+  color: black;
 `;
 
 const CancleBtn = styled.button`

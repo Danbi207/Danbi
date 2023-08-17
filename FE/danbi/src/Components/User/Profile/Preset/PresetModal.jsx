@@ -218,6 +218,7 @@ const PresetAddBtn = styled.button`
   height: 2rem;
   border-radius: 10px;
   background-color: #ffea7e;
+  color: black;
 `;
 
 const ModalFooter = styled.div`

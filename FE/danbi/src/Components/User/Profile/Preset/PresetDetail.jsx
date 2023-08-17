@@ -186,6 +186,7 @@ const DetailTextArea = styled.textarea`
   ::-webkit-scrollbar {
     display: none;
   }
+  color: ${(props) => props.theme.colors.titleColor};
 `;
 
 const Btns = styled.div`
