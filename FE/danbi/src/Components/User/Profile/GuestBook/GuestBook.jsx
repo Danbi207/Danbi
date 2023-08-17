@@ -33,12 +33,16 @@ const GuestBook = ({ guestBookId, userId }) => {
     const res = comments.map((comment, index) => (
       <GuestBookComment
         key={index}
-        comment={comment}
+        //comment={comment}
+        commentId={comment.commentId}
+        content={comment.content}
         writerName={comment.name}
         userId={userId}
         setComment={setComment}
         guestBookId={guestBookId}
         memberId={comment.memberId}
+        profileUrl={comment.profileUrl}
+        created={comment.createdTime}
       />
     ));
     return res;
@@ -84,7 +88,7 @@ const GuestBookWrap = styled.div`
 `;
 
 const ChatWrap = styled.div`
-  height: 3rem;
+  height: auto;
   display: flex;
 `;
 
