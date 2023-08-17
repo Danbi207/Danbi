@@ -115,7 +115,7 @@ const TextAreaWrap = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  border: 1px solid ${(props) => (props.$isValid ? props.theme.colors.titleColor : red)};
+  border: 1px solid ${(props) => (props.$isValid ? props.theme.colors.titleColor : 'red')};
   border-radius: 10px;
   resize: none;
   background-color: transparent;
@@ -125,7 +125,7 @@ const TextArea = styled.textarea`
   padding: 0.5rem 0 0.5rem 5px;
   width: 100%;
   height: 6rem;
-  color: ${(props) => (props.$isValid ? props.theme.colors.titleColor : red)};
+  color: ${(props) => (props.$isValid ? props.theme.colors.titleColor : 'red')};
   &::placeholder {
     color: #8e8b8b;
   }
