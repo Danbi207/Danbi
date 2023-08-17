@@ -19,7 +19,7 @@ const GuestBookComment = ({
 }) => {
   const userName = useSelector((state) => state.user.name);
   const [editMode, setEditMode] = useState(false);
-  const [editedContent, setEditedContent] = useState(content);
+  const [editedContent, setEditedContent] = useState('');
 
   const handleDelete = async () => {
     try {
@@ -47,7 +47,7 @@ const GuestBookComment = ({
   const cur_id = useSelector((state) => state.user.userId);
   const createdTime = created.slice(0, 10);
   return (
-    <>
+    <Wrap>
       <CommentWrap>
         <GuestImg $url={profileUrl} alt="프로필 사진" />
         <ContentWrap>
@@ -60,7 +60,7 @@ const GuestBookComment = ({
           {editMode ? (
             <EditSection>
               <EditTextArea
-                value={editedContent}
+                value={content}
                 onChange={(e) => setEditedContent(e.target.value)}
               />
               <Buttons>
@@ -93,9 +93,11 @@ const GuestBookComment = ({
           <DeleteBtn onClick={() => handleDelete()}>삭제</DeleteBtn>
         </Buttons>
       )}
-    </>
+    </Wrap>
   );
 };
+
+const Wrap = styled.div``;
 
 const CommentWrap = styled.div`
   width: 100%;
