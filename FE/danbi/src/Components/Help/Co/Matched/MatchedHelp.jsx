@@ -104,7 +104,7 @@ const MatchedHelp = () => {
 }
 const MainWrap = styled.div`
   width: 100%;
-  height: calc(100% - 9.5rem);
+  height: calc(100% - 9.2rem);
 `
 
 const MatchedHelpWrap = styled.div`

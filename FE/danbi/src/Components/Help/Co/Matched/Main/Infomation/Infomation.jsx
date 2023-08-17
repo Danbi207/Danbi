@@ -132,7 +132,7 @@ const UserTitle = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  width: 5rem;
+  width: 8rem;
   &>:first-child{
     font-size: 1.5rem;
     cursor: pointer;
