@@ -98,7 +98,7 @@ const FriendBadge = styled.img.attrs((props) => ({
 
 const AccuseBadge = styled.img.attrs((props) => ({
   src:
-    props.$state === 'yellow'
+    props.$state === 'yellowcard'
       ? props.theme.images.yellowcard
       : props.theme.images.redcard,
 }))``;
