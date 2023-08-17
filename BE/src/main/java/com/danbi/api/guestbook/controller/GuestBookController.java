@@ -32,7 +32,7 @@ public class GuestBookController {
     @GetMapping("/{profileId}")
     @LimitedSizePagination
     public ApiResponse<GuestBookResponseDto> getGuestBook(@PathVariable Long profileId,
-                                                          @PageableDefault(size = 10,
+                                                          @PageableDefault(size = 100,
                                                                   sort = "createTime",
                                                                   direction = Sort.Direction.DESC) Pageable pageable) {
         GuestBookResponseDto guestBookResponseDto = guestBookProfileService.getGuestBook(profileId, pageable);
