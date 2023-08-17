@@ -42,7 +42,7 @@ const Profile = () => {
   const fetchData = useCallback(async () => {
     try {
       const res = await authGet(`/api/v1/profile/${userId}`);
-      console.log(res);
+      // console.log(res);
       setData(res);
     } catch (err) {
       console.log(err);
@@ -153,10 +153,12 @@ const ProfileWrap = styled.div`
 `;
 
 const Wrap = styled.div`
-  height: 0;
-  flex: 1;
   width: 100%;
   padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 0;
 `;
 
 const JandiWrap = styled.div``;

@@ -6,22 +6,24 @@ import { useNavigate } from 'react-router-dom';
 
 // userName이 redux의 name과 같으면 수정/삭제 버튼
 const GuestBookComment = ({
-  comment,
+  //comment,
+  content,
   writerName,
   userId,
   setComment,
   guestBookId,
   memberId,
+  commentId,
+  profileUrl,
+  created,
 }) => {
   const userName = useSelector((state) => state.user.name);
   const [editMode, setEditMode] = useState(false);
-  const [editedContent, setEditedContent] = useState(comment.content);
+  const [editedContent, setEditedContent] = useState('');
 
-  const handleDelete = async (comment) => {
+  const handleDelete = async () => {
     try {
-      await authDelete(
-        `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`
-      );
+      await authDelete(`/api/v1/profile/guestbook/${guestBookId}/${commentId}`);
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
     } catch (err) {
@@ -30,10 +32,9 @@ const GuestBookComment = ({
   };
   const handleEdit = async () => {
     try {
-      await authPost(
-        `/api/v1/profile/guestbook/${guestBookId}/${comment.commentId}`,
-        { content: editedContent }
-      );
+      await authPost(`/api/v1/profile/guestbook/${guestBookId}/${commentId}`, {
+        content: editedContent,
+      });
       const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
       setComment(res.guestBookDto.commentDtos);
       setEditMode(false);
@@ -44,57 +45,58 @@ const GuestBookComment = ({
 
   const navigate = useNavigate();
   const cur_id = useSelector((state) => state.user.userId);
-  const createdTime = comment.createdTime.slice(0, 10);
+  const createdTime = created.slice(0, 10);
   return (
-    <CommentWrap>
-      <GuestImg $url={comment.profileUrl} alt="프로필 사진" />
-      <ContentWrap>
-        <ContentHeader>
-          <GuestName onClick={() => navigate(`/user/profile/${memberId}`)}>
-            {comment.name}
-          </GuestName>
-          <CreatedTime>{createdTime}</CreatedTime>
-        </ContentHeader>
-        {editMode ? (
-          <EditSection>
-            <EditTextArea
-              value={editedContent}
-              onChange={(e) => setEditedContent(e.target.value)}
-            />
-            <Buttons>
-              <SaveBtn onClick={handleEdit}>
-                저장
-              </SaveBtn>
-              <CancleBtn onClick={() => setEditMode(false)}>
-                취소
-              </CancleBtn>
-            </Buttons>
-          </EditSection>
-        ) : (
-          <Content>{comment.content}</Content>
-        )}
-      </ContentWrap>
+    <Wrap>
+      <CommentWrap>
+        <GuestImg $url={profileUrl} alt="프로필 사진" />
+        <ContentWrap>
+          <ContentHeader>
+            <GuestName onClick={() => navigate(`/user/profile/${memberId}`)}>
+              {writerName}
+            </GuestName>
+            <CreatedTime>{createdTime}</CreatedTime>
+          </ContentHeader>
+          {editMode ? (
+            <EditSection>
+              <EditTextArea
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+              />
+              <Buttons>
+                <SaveBtn onClick={handleEdit}>저장</SaveBtn>
+                <CancleBtn onClick={() => setEditMode(false)}>취소</CancleBtn>
+              </Buttons>
+            </EditSection>
+          ) : (
+            <Content>{content}</Content>
+          )}
+        </ContentWrap>
+      </CommentWrap>
       {writerName === userName && !editMode && (
         <Buttons>
-          <EditBtn onClick={() => setEditMode(true)}>
+          <EditBtn
+            onClick={() => {
+              setEditMode(true);
+              setEditedContent(content);
+            }}
+          >
             수정
           </EditBtn>
-          <DeleteBtn onClick={() => handleDelete(comment)}>
-            삭제
-          </DeleteBtn>
+          <DeleteBtn onClick={() => handleDelete()}>삭제</DeleteBtn>
         </Buttons>
       )}
 
       {writerName !== userName && Number(userId) === cur_id && (
         <Buttons>
-          <DeleteBtn onClick={() => handleDelete(comment)}>
-            삭제
-          </DeleteBtn>
+          <DeleteBtn onClick={() => handleDelete()}>삭제</DeleteBtn>
         </Buttons>
       )}
-    </CommentWrap>
+    </Wrap>
   );
 };
+
+const Wrap = styled.div``;
 
 const CommentWrap = styled.div`
   width: 100%;
@@ -130,6 +132,8 @@ const CreatedTime = styled.span`
 
 const Content = styled.span`
   font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 
 const Buttons = styled.div`
@@ -137,8 +141,7 @@ const Buttons = styled.div`
   flex-direction: row;
   width: auto;
   height: auto;
-  position: absolute;
-  right: 1rem;
+  margin-left: 4rem;
 `;
 
 const EditBtn = styled.button`
@@ -146,11 +149,9 @@ const EditBtn = styled.button`
   margin-right: 10px;
 `;
 
-
 const DeleteBtn = styled.button`
   font-size: 14px;
 `;
-
 
 const EditSection = styled.div`
   display: flex;

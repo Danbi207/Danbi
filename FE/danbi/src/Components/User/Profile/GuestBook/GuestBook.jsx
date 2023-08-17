@@ -29,20 +29,24 @@ const GuestBook = ({ guestBookId, userId }) => {
     setTextArea(e.target.value);
   };
 
-  const guestsbookcomments = useMemo(() => {
+  const guestsbookcomments = () => {
     const res = comments.map((comment, index) => (
       <GuestBookComment
         key={index}
-        comment={comment}
+        //comment={comment}
+        commentId={comment.commentId}
+        content={comment.content}
         writerName={comment.name}
         userId={userId}
         setComment={setComment}
         guestBookId={guestBookId}
         memberId={comment.memberId}
+        profileUrl={comment.profileUrl}
+        created={comment.createdTime}
       />
     ));
     return res;
-  }, [comments]);
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -74,17 +78,21 @@ const GuestBook = ({ guestBookId, userId }) => {
           </ChatForm>
         </ChatSection>
       </ChatWrap>
-      {guestsbookcomments}
+      <Comments>{guestsbookcomments()}</Comments>
     </GuestBookWrap>
   );
 };
 
 const GuestBookWrap = styled.div`
   margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  flex: 1;
 `;
 
 const ChatWrap = styled.div`
-  height: 3rem;
+  height: auto;
   display: flex;
 `;
 
@@ -158,6 +166,15 @@ const ChatImg = styled.img.attrs((props) => ({
 }))`
   width: 20px;
   height: 20px;
+`;
+
+const Comments = styled.div`
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
 `;
 
 export default GuestBook;
