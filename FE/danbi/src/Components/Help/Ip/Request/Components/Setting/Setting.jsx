@@ -74,7 +74,7 @@ const Setting = ({
     if (navigator.geolocation) {
       // GPS를 지원하면
       navigator.geolocation.getCurrentPosition((e) => {
-        console.log(e);
+        // console.log(e);
         setPosition(e);
       });
     } else {
