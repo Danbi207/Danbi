@@ -28,10 +28,12 @@ const RealtimeMap = ({position,curposition}) => {
 
   const getMakers = ()=>{
     const res = [];
-    res.push(
-    <CustomOverlayMap position={{lat:curposition.coords.latitude,lng:curposition.coords.longitude}}>
-      <CurMarker alt='' src={`${process.env.PUBLIC_URL}/assets/curMarker.svg`}></CurMarker>
-    </CustomOverlayMap>);
+    if(curposition){
+      res.push(
+      <CustomOverlayMap position={{lat:curposition.coords.latitude,lng:curposition.coords.longitude}}>
+        <CurMarker alt='' src={`${process.env.PUBLIC_URL}/assets/curMarker.svg`}></CurMarker>
+      </CustomOverlayMap>);
+    }
     
     res.push(
       <CustomOverlayMap position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
