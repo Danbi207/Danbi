@@ -17,13 +17,19 @@ const UserInfo = ({ data }) => {
         <BackImg />
       </BackButton>
       <Wrap>
-        <ProfileImg alt='' src={data.ip.profileUrl} />
+        <ProfileImg alt="" src={data.ip.profileUrl} />
         <Body>
           <BottomWrap>
-            <Name onClick={() => {navigate(`/user/profile/${data.ip.ipId}`)}}>{data.ip.name}</Name>
+            <Name
+              onClick={() => {
+                navigate(`/user/profile/${data.ip.ipId}`);
+              }}
+            >
+              {data.ip.name}
+            </Name>
             <BadgeWrap>
               {data.friendFlag ? <FriendBadge /> : null}
-              {data.ip.accusePoint < 0 ? null : data.ip.accusePoint > 1 ? (
+              {data.ip.accusePoint === 0 ? null : data.ip.accusePoint === 1 ? (
                 <AccuseBadge $state={'yellowcard'} />
               ) : (
                 <AccuseBadge $state={'redcard'} />
@@ -52,7 +58,7 @@ const UserInfo = ({ data }) => {
 
 const UserInfoWrap = styled.div`
   width: 100%;
-  color: ${props=>props.theme.colors.titleColor};
+  color: ${(props) => props.theme.colors.titleColor};
 `;
 
 const Wrap = styled.div`
