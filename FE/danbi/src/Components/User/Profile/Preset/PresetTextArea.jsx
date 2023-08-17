@@ -7,14 +7,14 @@ import { setMode } from '../../../../store/Slice/ModalSlice';
 
 const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) => {
   const [textArea, setTextArea] = useState('');
-
+  const [title, setTitle] = useState('');
   const dispatch = useDispatch();
   const commandMode = useSelector((state) => state.modal.mode);
 
   const SavePreset = async () => {
     setOpenTextArea(!OpenTextArea);
     const textJson = {
-      title: textArea,
+      title: title,
       content: textArea,
       sequence: length + 1,
     };
@@ -33,6 +33,10 @@ const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) =>
   const handleChange = (e) => {
     setTextArea(e.target.value);
   };
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  }
 
   const commands = [
     {
@@ -77,6 +81,7 @@ const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) =>
 
   return (
     <TextAreaWrap>
+      <Title placeholder="제목" value={title} onChange={handleTitle} />
       <TextArea
         placeholder="저는 휠체어를 타고 있습니다.
 조심해서 밀어주세요!"
@@ -113,6 +118,27 @@ const TextArea = styled.textarea`
     color: #8e8b8b;
   }
   ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const Title = styled.textarea`
+  border: 1px solid ${(props) => props.theme.colors.titleColor};
+  border-radius: 10px;
+  resize: none;
+  background-color: transparent;
+  text-align: start;
+  outline: none;
+  word-break: break-word;
+  padding: 0%.5rem 0 0.5rem 5px;
+  width: 100%;
+  height: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: ${(props) => props.theme.colors.titleColor};
+  &::placeholder{
+    color: #8e8b8b;
+  }
+  ::-webkit-scrollbar{
     display: none;
   }
 `;
