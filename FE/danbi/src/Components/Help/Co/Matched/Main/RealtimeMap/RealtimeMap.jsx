@@ -6,25 +6,27 @@ const RealtimeMap = ({position,curposition}) => {
   const [linePath,setLinePath] = useState([]);
   useEffect(()=>{
     const coordinates = [];
-    coordinates.push([position.meetLongitude,position.meetLatitude]);
-    axios({
-      method:"post",
-      url:"https://api.openrouteservice.org/v2/directions/driving-car/geojson",
-      headers:{
-        "Authorization" : `${process.env.REACT_APP_OPENROUTESERVICE_KEY}`
-      },
-      data:{"coordinates":coordinates}
-    }).then(({data})=>{
-      // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
-      for(let i = 0; i < data.features[0].geometry.coordinates.length; i++){
-        coordinates.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
-      }
-      coordinates.push([position.destLongitude,position.destLatitude]);
-      setLinePath([...coordinates]);
-    }).catch(err=>{
-      console.log(err);
-    })
-  },[])
+    if(position.destLongitude){
+      coordinates.push([position.meetLongitude,position.meetLatitude]);
+      axios({
+        method:"post",
+        url:"https://api.openrouteservice.org/v2/directions/driving-car/geojson",
+        headers:{
+          "Authorization" : `${process.env.REACT_APP_OPENROUTESERVICE_KEY}`
+        },
+        data:{"coordinates":coordinates}
+      }).then(({data})=>{
+        // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+        for(let i = 0; i < data.features[0].geometry.coordinates.length; i++){
+          coordinates.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
+        }
+        coordinates.push([position.destLongitude,position.destLatitude]);
+        setLinePath([...coordinates]);
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
+  },[position])
 
   const getMakers = ()=>{
     const res = [];
@@ -68,8 +70,7 @@ const RealtimeMap = ({position,curposition}) => {
       {
         getMakers()
       }
-      {
-        position && position.destLatitude ? <Polyline
+      <Polyline
         path={[
           linePath,
         ]}
@@ -77,8 +78,7 @@ const RealtimeMap = ({position,curposition}) => {
         strokeColor={"#FFAE00"} // 선의 색깔입니다
         strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
         strokeStyle={"solid"} // 선의 스타일입니다
-      /> : null
-      }
+      />
     </Map>
   )
 }
