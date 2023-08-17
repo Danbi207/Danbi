@@ -94,9 +94,6 @@ const Accuse = () => {
 };
 
 const AccuseBtn = styled.button`
-  left: 0;
-  bottom: 0;
-  position: absolute;
   background-color: #e85151;
   height: 3rem;
   margin-left: 10%;
@@ -177,8 +174,8 @@ const ModalWrap = styled.div`
   z-index: 6;
   width: 80%;
   left: 10%;
-  height: 75%;
-  top: 12.5%;
+  height: 80%;
+  top: 10%;
   padding: 1rem;
   background-color: ${(props) => props.theme.colors.bgColor};
 `;
