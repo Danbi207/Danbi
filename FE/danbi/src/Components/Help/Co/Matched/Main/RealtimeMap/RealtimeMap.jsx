@@ -41,19 +41,13 @@ const RealtimeMap = ({position,curposition}) => {
     if(position){
       res.push(
         <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
-          <MarkerWrap>
-            <div>만나는 곳</div>
-            <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
-          </MarkerWrap>
+          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Meeting.svg`}></Marker>
         </CustomOverlayMap>);
 
-        if(("destLatitude" in position) && position.destLatitude && ("destLongitude" in position) && position.destLongitude){
+        if(position.destLatitude && position.destLongitude){
           res.push(
             <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
-              <MarkerWrap>
-                <div>목적지</div>
-                <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
-              </MarkerWrap>
+              <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Destination.svg`}></Marker>
             </CustomOverlayMap>);
         }
     }
@@ -98,15 +92,9 @@ const CurMarker = styled.img`
   animation: ${rotateMarker} 1s linear infinite;
 `
 
-const MarkerWrap = styled.div`
-  position: relative;
-`
-
 const Marker = styled.img`
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
-  position: relative;
+  width: 2rem;
+  height: 2rem;
 `
 
 
