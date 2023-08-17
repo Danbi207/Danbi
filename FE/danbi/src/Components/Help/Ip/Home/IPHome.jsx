@@ -178,7 +178,43 @@ const IPHome = () => {
     },
   ];
 
-  const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
+  const {
+    transcript,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  useEffect(()=>{
+    const word = transcript.split(" ");
+    if((word[word.length-1]).includes('단비')){
+      if (commandMode === null) {
+        dispatch(setMode('stt'));
+      }
+      resetTranscript();
+    }
+    else if((word[word.length-1]).includes('긴급')){
+      if (commandMode === 'stt') {
+        setCurPosition('emergency');
+        dispatch(setMode(null));
+      }
+      resetTranscript();
+    }
+    else if((word[word.length-1]).includes('도와줘')){
+      if (commandMode === 'stt') {
+        setCurPosition('emergency');
+        dispatch(setMode(null));
+      }
+      resetTranscript();
+    }
+    else if((word[word.length-1]).includes('도움')){
+      if (commandMode === 'stt') {
+        setCurPosition('emergency');
+        dispatch(setMode(null));
+      }
+      resetTranscript();
+    }
+  },[transcript]);
+
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       //STT가 지원하는 경우
