@@ -41,11 +41,13 @@ const HelperDetail = ({ helpPostId }) => {
       try {
         const res = await authGet(`/api/v1/help/detail/${helpPostId}`);
         if (res) {
-          // console.log(res);
           setData(res);
         }
       } catch (err) {
-        console.log(err);
+        console.log(err.response);
+        if (err.response.data.errorCode === "HP-007"){
+          alert(err.response.data.errorMessage);
+        } 
       }
     };
     fetchData();
