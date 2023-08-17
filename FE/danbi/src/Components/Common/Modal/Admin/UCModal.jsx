@@ -59,7 +59,7 @@ const UCModal = () => {
             setImageIdx(imageIdx-1)
           }
         }}>{"<"}</button>
-        <img alt='' src={images[imageIdx]} />
+        <img alt='' src={images[imageIdx].url} />
         <button onClick={()=>{
           if(imageIdx < images.length-1){
             setImageIdx(imageIdx+1)
