@@ -69,7 +69,7 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
         faceType==="contact" ?
         <>
         <Title>도움 유형</Title>
-        <div>
+        <div style={{display: 'flex', justifyContent: 'space-evenly', height: '10rem', padding: '0.5rem 0'}}>
           <FaceTypeBtn $on={helpType==="MOBILE"} onClick={()=>setHelpType("MOBILE")}>이동</FaceTypeBtn>
           <FaceTypeBtn $on={helpType==="ETC"} onClick={()=>setHelpType("ETC")}>기타</FaceTypeBtn>
         </div></> : null
@@ -155,12 +155,6 @@ const Wrap = styled.div`
     flex: 0 0 auto;
   }
   &>div:nth-child(2){
-    display: flex;
-    justify-content: space-evenly;
-    height: 10rem;
-    padding: 0.5rem 0;
-  }
-  &>div:nth-child(4){
     display: flex;
     justify-content: space-evenly;
     height: 10rem;
