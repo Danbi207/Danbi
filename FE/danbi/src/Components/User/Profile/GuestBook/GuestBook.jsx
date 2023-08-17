@@ -60,10 +60,10 @@ const GuestBook = ({ guestBookId, userId }) => {
 
   return (
     <GuestBookWrap>
-        <UserDetail>
-          <ProfileImage $profileUrl={profileUrl} alt="img" />
-          <UserName>{name}</UserName>
-        </UserDetail>
+      <UserDetail>
+        <ProfileImage $profileUrl={profileUrl} alt="img" />
+        <UserName>{name}</UserName>
+      </UserDetail>
       <ChatWrap>
         <ChatSection>
           <ChatForm onSubmit={handleSubmit}>
@@ -118,6 +118,7 @@ const ChatSection = styled.div`
   padding-left: 0.5rem;
   width: 62%;
   padding-right: 0.5rem;
+  margin: 0 1rem;
 `;
 const ChatForm = styled.form`
   width: 100%;
