@@ -75,7 +75,7 @@ const Infomation = ({ help }) => {
                     >
                       {info.name}
                     </div>
-                    {help.accuseStack === 0 ? null : help.accuseStack < 2 ? (
+                    {help.accusePoint === 0 ? null : help.accusePoint < 2 ? (
                       <img
                         alt=""
                         src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`}
@@ -160,7 +160,7 @@ const UserTitle = styled.div`
   display: flex;
   align-items: center;
   width: 7rem;
-  &>:first-child{
+  & > :first-child {
     font-size: 1.5rem;
     cursor: pointer;
   }
