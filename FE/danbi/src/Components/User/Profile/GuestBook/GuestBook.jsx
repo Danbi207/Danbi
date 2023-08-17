@@ -85,6 +85,9 @@ const GuestBook = ({ guestBookId, userId }) => {
 
 const GuestBookWrap = styled.div`
   margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 17.5rem);
 `;
 
 const ChatWrap = styled.div`
@@ -166,7 +169,7 @@ const ChatImg = styled.img.attrs((props) => ({
 
 const Comments = styled.div`
   overflow-y: auto;
-  height: 20rem;
+  height: 100%;
   &::-webkit-scrollbar {
     display: none;
   }
