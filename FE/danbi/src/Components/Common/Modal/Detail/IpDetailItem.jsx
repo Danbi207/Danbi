@@ -127,7 +127,7 @@ const ProfileBTN = styled.div`
   border-radius: 10px;
   display: flex;
   justify-content: center;
-  align-items: cente
+  align-items: center;
 `
 
 const DeleteBTN = styled.button`
