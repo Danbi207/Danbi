@@ -125,7 +125,7 @@ public class HelpPostService {
     }
 
     @Transactional(readOnly = true)
-    public List<HelpPost> searchByMonth(LocalDate time, Long memberId) {
+    public List<HelpPostByMonthDto> searchByMonth(LocalDate time, Long memberId) {
         return helpPostRepository.findHelpPostByMonth(time, memberId);
     }
 

@@ -16,10 +16,7 @@ import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.domain.help.constant.State;
 import com.danbi.domain.help.entity.Help;
 import com.danbi.domain.help.service.HelpService;
-import com.danbi.domain.helppost.dto.HelpPostDetailQeuryDto;
-import com.danbi.domain.helppost.dto.HelpPostFaceDto;
-import com.danbi.domain.helppost.dto.HelpPostMatchedDto;
-import com.danbi.domain.helppost.dto.HelpPostQueryDto;
+import com.danbi.domain.helppost.dto.*;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.entity.Positions;
 import com.danbi.domain.helppost.service.HelpPostService;
@@ -230,12 +227,13 @@ public class HelpPostInfoService {
     }
 
     public HelpPostByMonthResponseDto searchByMonth(LocalDate time, Long memberId) {
-        List<HelpPost> helpPosts = helpPostService.searchByMonth(time, memberId);
+        List<HelpPostByMonthDto> helpPosts = helpPostService.searchByMonth(time, memberId);
         List<HelpPostByMonthDetailDto> helpPostsByMonth = new ArrayList<>();
 
-        for (HelpPost helpPost : helpPosts) {
+        for (HelpPostByMonthDto helpPost : helpPosts) {
             HelpPostByMonthDetailDto helpPostDto = HelpPostByMonthDetailDto.builder()
-                    .helpPostId(helpPost.getId())
+                    .helpPostId(helpPost.getHelpPostId())
+                    .profileId(helpPost.getProfileId())
                     .content(helpPost.getContent())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())

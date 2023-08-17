@@ -169,14 +169,23 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
     }
 
     @Override
-    public List<HelpPost> findHelpPostByMonth(LocalDate time, Long memberId) {
+    public List<HelpPostByMonthDto> findHelpPostByMonth(LocalDate time, Long memberId) {
 
         LocalDateTime startTime = LocalDateTime.of(time.getYear(), time.getMonth(), 1, 0, 0, 0);
         LocalDateTime endTime = startTime.plusMonths(1).minusSeconds(1);
+        QMember ipMember = new QMember("ipMember");
+        QMember helperMember = new QMember("helperMember");
 
-        return jpaQueryFactory.selectFrom(helpPost)
+        return jpaQueryFactory.select(Projections.constructor(HelpPostByMonthDto.class,
+                        helpPost.id, profile.id, helpPost.content,
+                        helpPost.startTime, helpPost.endTime, helpPost.state))
+                .from(helpPost)
+                .innerJoin(help).on(helpPost.eq(help.helpPost))
+                .leftJoin(helpPost.member, ipMember)
+                .leftJoin(help.helper, helperMember)
+                .leftJoin(helperMember.profile, profile)
                 .where(helpPost.startTime.between(startTime,endTime),
-                        helpPost.member.id.eq(memberId),
+                        ipMember.id.eq(memberId),
                         helpPost.state.ne(State.DELETE))
                 .fetch();
     }

@@ -1,19 +1,18 @@
-package com.danbi.api.helppost.dto.searchbymonth;
+package com.danbi.domain.helppost.dto;
 
 import com.danbi.domain.helppost.constant.State;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-public class HelpPostByMonthDetailDto {
+@AllArgsConstructor
+public class HelpPostByMonthDto {
 
     private Long helpPostId;
 
@@ -21,10 +20,8 @@ public class HelpPostByMonthDetailDto {
 
     private String content;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
 
     private State state;

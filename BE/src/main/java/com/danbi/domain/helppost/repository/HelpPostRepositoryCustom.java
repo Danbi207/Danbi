@@ -19,7 +19,7 @@ public interface HelpPostRepositoryCustom {
 
     List<HelpPost> findHelpPostsByBetweenTime(LocalDateTime startTime, LocalDateTime endTime, Long memberId);
 
-    List<HelpPost> findHelpPostByMonth(LocalDate startTime, Long memberId);
+    List<HelpPostByMonthDto> findHelpPostByMonth(LocalDate startTime, Long memberId);
 
     Optional<HelpPost> findHelpPostByNowTime(LocalDateTime time, Long memberId);
 
