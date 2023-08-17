@@ -29,7 +29,7 @@ const GuestBook = ({ guestBookId, userId }) => {
     setTextArea(e.target.value);
   };
 
-  const guestsbookcomments = useMemo(() => {
+  const guestsbookcomments = () => {
     const res = comments.map((comment, index) => (
       <GuestBookComment
         key={index}
@@ -46,7 +46,7 @@ const GuestBook = ({ guestBookId, userId }) => {
       />
     ));
     return res;
-  }, [comments]);
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -78,7 +78,7 @@ const GuestBook = ({ guestBookId, userId }) => {
           </ChatForm>
         </ChatSection>
       </ChatWrap>
-      {guestsbookcomments}
+      <Comments>{guestsbookcomments()}</Comments>
     </GuestBookWrap>
   );
 };
@@ -162,6 +162,16 @@ const ChatImg = styled.img.attrs((props) => ({
 }))`
   width: 20px;
   height: 20px;
+`;
+
+const Comments = styled.div`
+  overflow-y: auto;
+  height: 24rem;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
 `;
 
 export default GuestBook;
