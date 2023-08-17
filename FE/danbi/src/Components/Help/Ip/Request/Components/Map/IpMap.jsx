@@ -114,7 +114,8 @@ const Wrap = styled.div`
 
 const MapWrap = styled.div`
   width: 100%;
-  height: calc(100% - 6.2rem);
+  height: 0;
+  flex: 1;
 `
 
 export default IpMap;

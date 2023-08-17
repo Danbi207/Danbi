@@ -58,12 +58,15 @@ const Friend = () => {
 const Wrap = styled.div`
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 const FriendWrap = styled.div`
   color: ${(props) => props.theme.colors.titleColor};
   font-size: 16px;
   width: 100%;
-  height: calc(100% - 6.2rem);
+  height: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;

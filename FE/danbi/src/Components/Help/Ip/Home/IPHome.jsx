@@ -239,7 +239,8 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: calc(100% - 6.2rem);
+  height: 0;
+  flex: 1;
 `;
 
 const Wrap = styled.div`

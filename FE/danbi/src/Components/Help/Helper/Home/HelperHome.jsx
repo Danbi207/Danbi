@@ -153,7 +153,8 @@ const HelperHome = () => {
 const MainWrap = styled.div`
   margin-top:3px;
   width: 100%;
-  height: calc(100% - 9.5rem);
+  height: 0;
+  flex : 1
 `
 
 const HelperHomeWrap = styled.div`
