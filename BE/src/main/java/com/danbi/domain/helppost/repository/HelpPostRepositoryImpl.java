@@ -215,10 +215,11 @@ public class HelpPostRepositoryImpl implements HelpPostRepositoryCustom{
             .where(
                     help.helper.id.eq(memberId),
                     helpPost.state.eq(State.MATCHED),
-                    helpPost.startTime.between(startTime, endTime)
-                            .or(helpPost.endTime.between(startTime, endTime))
+                    helpPost.startTime.before(endTime).
+                            and(helpPost.endTime.after(startTime))
+                            .or(helpPost.startTime.after(startTime).
+                                    and(helpPost.endTime.before(endTime)))
             ).fetch();
-
     }
 
     @Override

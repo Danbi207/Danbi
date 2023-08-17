@@ -39,7 +39,7 @@ public class HelpService {
         HelpPost helpPost = helpPostRepository.findById(id).get();
         Help help = helpRepository.findByHelpPost(helpPost).get();
 
-        validateHelperIsAlreadyMatched(member.getId(), helpPost.getStartTime(), helpPost.getStartTime());
+        validateHelperIsAlreadyMatched(member.getId(), helpPost.getStartTime(), helpPost.getEndTime());
         validateHelpMatchMember(helpPost,member);
 
         help.updateHelper(member);
