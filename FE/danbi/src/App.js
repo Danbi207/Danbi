@@ -147,5 +147,9 @@ const MobileWrap = styled.div`
   right: 5%;
   width: 400px;
   height: 90%;
+  border-radius: 1rem;
+  border-color: #000;
+  border-style: solid;
+  border-width: 1.2rem 0.8rem;
 `
 export default App;

@@ -6,15 +6,24 @@ import { useState } from 'react';
 const HelpList = ({helpList}) => {
   const [friends,setFriends] = useState([]);
   const [helps,setHelps] = useState([]);
+  const [emergencys,setEmergencys] = useState([]);
 
   useEffect(()=>{
     let keyIdx = 0;
-    setFriends(helpList.filter(e=>e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
-    setHelps(helpList.filter(e=>!e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setEmergencys(helpList.filter(e=>e.emergencyFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setFriends(helpList.filter(e=>e.friendFlag&&!e.emergencyFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setHelps(helpList.filter(e=>!e.friendFlag&&!e.emergencyFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
   },[helpList]);
 
   return (
     <HelpListWrap>
+      {
+        emergencys.length === 0 ? null :
+        <>
+          <HelpTitle>긴급 도움</HelpTitle>
+          {emergencys}
+        </>
+      }
       <HelpTitle>친구 도움</HelpTitle>
       {friends}
       <HR/>
