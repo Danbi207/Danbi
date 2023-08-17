@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Jandi from "../../../../../User/Profile/Jandi/Jandi";
 import { authGet, authPost } from '../../../../../../Util/apis/api';
 import { useNavigate } from 'react-router-dom';
+import AccuseButton from "../../../../../User/Profile/Utils/AccuseButton"
 const Infomation = ({help}) => {
   const [info,setInfo] = useState();
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const Infomation = ({help}) => {
                         help.accuseStack <= 2 ? <img alt='' src={`${process.env.PUBLIC_URL}/assets/yellow-flag.svg`} /> :
                         <img alt='' src={`${process.env.PUBLIC_URL}/assets/red-flag.svg`} />
                       }
+                      <AccuseButton targetId={localStorage.getItem("role")==="ip" ? help.helper.helperId : help.ip.ipId} ></AccuseButton>
                     </UserTitle>
                     <div>{info.accumulatePoint}Dew</div>
                   </div>
