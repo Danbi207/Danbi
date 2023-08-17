@@ -41,6 +41,11 @@ const IpDetailItem = ({data}) => {
     navigate(`/help/ip/matched/${data.helpPostId}`); 
   }
 
+  const ProfileMove = () => {
+    navigate(`user/profile/${data.profileId}`)
+  }
+
+
   return (
     <HelpItemWrap>
       <TitleWrap>도움 정보</TitleWrap>
@@ -56,8 +61,9 @@ const IpDetailItem = ({data}) => {
       <BTNWrap>
         {
           data.state === "MATCHED" ? <DetailBTN onClick={handleMove}>도움받기</DetailBTN> :
-          data.state === "ACTIVATE" ? <><DetailBTN onClick={goToDetail}>수정하기</DetailBTN>
-          <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN></> : null 
+          data.state === "ACTIVATE" ? <><DetailBTN onClick={goToDetail}>수정하기</DetailBTN> 
+          <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN></> : 
+          data.state === "COMPLETED" ? <DetailBTN onClick={ProfileMove}>상대 프로필</DetailBTN> : null
         }
       </BTNWrap>
     </HelpItemWrap>
