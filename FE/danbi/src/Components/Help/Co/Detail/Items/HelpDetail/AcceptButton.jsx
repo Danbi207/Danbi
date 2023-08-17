@@ -12,7 +12,9 @@ const AcceptButton = ({ helpPostId }) => {
         navigate(`/help/helper/matched/${helpPostId}`);
       }
     } catch (err) {
-      console.log(err);
+      if(err.response.data.errorCode==="H-004"){
+        alert(err.response.data.errorMessage);
+      }
     }
   });
 
