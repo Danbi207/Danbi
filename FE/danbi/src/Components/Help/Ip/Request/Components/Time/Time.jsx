@@ -5,6 +5,8 @@ import Calendar from "../Calendar/Calender";
 const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minute,setMinute,year,setYear,month,setMonth,day,setDay,setTap,props}) => {
   const [hourSelect,setHourSelect] = useState(false);
   const [minuteSelect,setMinuteSelect] = useState(false);
+  
+
   return (
     <Wrap>
       <CalendarWrap>
@@ -25,8 +27,16 @@ const Time = ({genderOption,setGenderOption,useTime,setUseTime,hour,setHour,minu
           <div onClick={()=>setMinuteSelect(!minuteSelect)}>{minute}분<SelectImg alt='' src={`${process.env.PUBLIC_URL}/assets/expend.svg`} /></div>
           <Options $open={minuteSelect}>
             {
-              (new Array(11)).fill(0).map((e,idx)=>
-              <Option onClick={()=>{setMinuteSelect(false);setMinute(5+idx*5);}} key={idx}>{5+idx*5}분</Option>)
+              (new Array(11)).fill(0).map((e, idx) => {
+                const minuteValue = (5 + idx * 5) % 60;
+                  return (
+                    <Option 
+                      onClick={() => {setMinuteSelect(false); setMinute(minuteValue);}} 
+                      key={idx}>
+                      {minuteValue}분
+                    </Option>
+                );
+              })
             }
           </Options>
         </Select>
