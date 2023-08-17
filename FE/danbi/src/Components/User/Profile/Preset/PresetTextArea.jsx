@@ -164,7 +164,7 @@ const Btns = styled.div`
 const SaveBtn = styled.button`
   width: 3.5rem;
   height: 1rem;
-  background-color: #6161ff;
+  background-color: #ffea7e;
   border-radius: 10px;
   font-size: 12px;
   text-align: center;
