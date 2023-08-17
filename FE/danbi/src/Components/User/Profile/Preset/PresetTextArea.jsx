@@ -8,8 +8,13 @@ import { setMode } from '../../../../store/Slice/ModalSlice';
 const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) => {
   const [textArea, setTextArea] = useState('');
   const [title, setTitle] = useState('');
+  const [isTitleValid, setIsTitleValid] = useState(true);
   const dispatch = useDispatch();
   const commandMode = useSelector((state) => state.modal.mode);
+
+  useEffect(() => {
+    setIsTitleValid(title.length <= 10);
+  }, [title]);
 
   const SavePreset = async () => {
     setOpenTextArea(!OpenTextArea);
@@ -36,7 +41,7 @@ const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) =>
 
   const handleTitle = (e) => {
     setTitle(e.target.value);
-  }
+  };
 
   const commands = [
     {
@@ -81,7 +86,13 @@ const PresetTextArea = ({ setOpenTextArea, length, OpenTextArea, fetchData }) =>
 
   return (
     <TextAreaWrap>
-      <Title placeholder="제목" value={title} onChange={handleTitle} />
+      <Title
+        placeholder="제목 (10자 이하)"
+        value={title}
+        onChange={handleTitle}
+        $isValid={isTitleValid}
+      />
+      {isTitleValid ? null : <p style={{ color: 'red' }}>제목이 10자를 넘어갑니다.</p>}
       <TextArea
         placeholder="저는 휠체어를 타고 있습니다.
 조심해서 밀어주세요!"
@@ -104,7 +115,7 @@ const TextAreaWrap = styled.div`
 `;
 
 const TextArea = styled.textarea`
-  border: 1px solid ${(props) => props.theme.colors.titleColor};
+  border: 1px solid ${(props) => (props.$isValid ? props.theme.colors.titleColor : red)};
   border-radius: 10px;
   resize: none;
   background-color: transparent;
@@ -114,7 +125,7 @@ const TextArea = styled.textarea`
   padding: 0.5rem 0 0.5rem 5px;
   width: 100%;
   height: 6rem;
-  color: ${(props) => props.theme.colors.titleColor};
+  color: ${(props) => (props.$isValid ? props.theme.colors.titleColor : red)};
   &::placeholder {
     color: #8e8b8b;
   }
@@ -137,10 +148,10 @@ const Title = styled.textarea`
   margin-bottom: 0.5rem;
   overflow: hidden;
   color: ${(props) => props.theme.colors.titleColor};
-  &::placeholder{
+  &::placeholder {
     color: #8e8b8b;
   }
-  ::-webkit-scrollbar{
+  ::-webkit-scrollbar {
     display: none;
   }
 `;
