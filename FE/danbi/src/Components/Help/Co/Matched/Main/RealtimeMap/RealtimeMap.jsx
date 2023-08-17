@@ -35,24 +35,26 @@ const RealtimeMap = ({position,curposition}) => {
       </CustomOverlayMap>);
     }
     
-    res.push(
-      <CustomOverlayMap position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
-        <MarkerWrap>
-          <div>만나는 곳</div>
-          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
-        </MarkerWrap>
-      </CustomOverlayMap>);
-
-    if(("destLatitude" in position) && position.destLatitude && ("destLongitude" in position) && position.destLongitude){
+    if(position){
       res.push(
-        <CustomOverlayMap position={{lat:position.destLatitude,lng:position.destLongitude}}>
+        <CustomOverlayMap position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
           <MarkerWrap>
-            <div>목적지</div>
+            <div>만나는 곳</div>
             <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
           </MarkerWrap>
         </CustomOverlayMap>);
+
+        if(("destLatitude" in position) && position.destLatitude && ("destLongitude" in position) && position.destLongitude){
+          res.push(
+            <CustomOverlayMap position={{lat:position.destLatitude,lng:position.destLongitude}}>
+              <MarkerWrap>
+                <div>목적지</div>
+                <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
+              </MarkerWrap>
+            </CustomOverlayMap>);
+        }
     }
-    
+
     return res;
   }
 
