@@ -100,7 +100,7 @@ const NavBarWrap = styled.div`
   animation: ${props => props.$out ? fadeIn : fadeOut} 0.5s linear;
   transition: visibility 0.5s linear;
   transform-origin : 100% 0 0;
-
+  border: 1px solid #000;
 `
 const fadeIn = keyframes`
   from {

@@ -64,7 +64,7 @@ const IpDetailItem = ({data}) => {
           data.state === "MATCHED" ? <DetailBTN onClick={handleMove}>도움받기</DetailBTN> :
           data.state === "ACTIVATE" ? <><DetailBTN onClick={goToDetail}>수정하기</DetailBTN> 
           <DeleteBTN onClick={handleDelete}>삭제</DeleteBTN></> : 
-          data.state === "COMPLETED" ? <DetailBTN onClick={ProfileMove}>상대 프로필</DetailBTN> : null
+          data.state === "COMPLETED" ? <ProfileBTN onClick={ProfileMove}>상대 프로필</ProfileBTN> : null
         }
       </BTNWrap>
     </HelpItemWrap>
@@ -113,6 +113,13 @@ const BTNWrap = styled.div`
 `
 
 const DetailBTN = styled.button`
+  width: 45%;
+  height: 2rem;
+  background-color: ${props=>props.theme.colors.buttonbgColor};
+  border-radius: 10px;
+`
+
+const ProfileBTN = styled.div`
   width: 45%;
   height: 2rem;
   background-color: ${props=>props.theme.colors.buttonbgColor};
