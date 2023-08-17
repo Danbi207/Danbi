@@ -144,6 +144,26 @@ const IPHome = () => {
       fuzzyMatchingThreshold: 0.2,
     },
     {
+      command: '담비',
+      callback: (command) => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '밤비',
+      callback: (command) => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
       command: '긴급',
       callback: (command) => {
         if (commandMode === 'stt') {
