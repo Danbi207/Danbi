@@ -27,7 +27,7 @@ const HelpDetailInfo = ({ data }) => {
         data.faceFlag ?
         <MapInfo>
           <MapHeader>위치 정보</MapHeader>
-          <DetailMap position={data.position} />
+          <DetailMap position={data.position} emergencyFlag={data.emergencyFlag} />
         </MapInfo>
         :null
       }

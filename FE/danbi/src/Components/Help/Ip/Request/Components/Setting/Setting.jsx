@@ -8,26 +8,32 @@ import { getSpeech } from '../../../../../User/Profile/Utils/TTS';
 const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution,setCaution,cautionTitle,setCautionTitle,setContent,setPosition,setTap,dest,meet,setHelpType,helpType,setFaceType,faceType}) => {
   const [cautionSelect,setCautionSelect] = useState(false);
   const [cautionWrite,setCautionWrite] = useState(true);
-  const [Recording, setRecording] = useState(false);
-
+  const [cautionRecording, setCautionRecording] = useState(false);
+  const [contentRecording, setContentRecording] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
 
  // 녹음 시작 (리셋하면서 시작)
- const StartRecord = () => {
-  setRecording(true);
-  resetTranscript();
-  SpeechRecognition.startListening({ continuous: true });
+ const StartRecord = (type) => {
+    if(type === 'caution'){
+      setCautionRecording(true);
+      resetTranscript();
+      SpeechRecognition.startListening({ continuous: true });
+    } else if(type === 'content'){
+      setContentRecording(true);
+      resetTranscript();
+      SpeechRecognition.startListening({ continuous: true });
+    }
   };
 
   // 녹음 종료
   const StopRecord = (type) => {
     if(type === 'caution'){
       setCaution(transcript);
-      setRecording(false);
+      setCautionRecording(false);
       SpeechRecognition.stopListening();
     } else if(type === 'content') {
       setContent(transcript);
-      setRecording(false);
+      setContentRecording(false);
       SpeechRecognition.stopListening();
     }
   };
@@ -83,10 +89,10 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
           <Buttons>
             <RecordingBtns>
-              <RecordBtn onClick={() => (Recording ? StopRecord() : StartRecord('content'))}>
-                {Recording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
+              <RecordBtn onClick={() => (contentRecording ? StopRecord('content') : StartRecord('content'))}>
+                {contentRecording ? <RecordImg $state={'stop'} /> : <RecordImg $state={'record'} />}
               </RecordBtn>
-              <TTSBtn onClick={handleBtn}>
+              <TTSBtn onClick={handleBtn('content')}>
                 <TTSImg />
               </TTSBtn>
             </RecordingBtns>
@@ -119,10 +125,10 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
           <Buttons>
             <RecordingBtns>
-              <RecordBtn onClick={() => (Recording ? StopRecord() : StartRecord('caution'))}>
-                {Recording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
+              <RecordBtn onClick={() => (cautionRecording ? StopRecord('caution') : StartRecord('caution'))}>
+                {cautionRecording ? <RecordImg $state={'stop'} /> : <RecordImg $state={'record'} />}
               </RecordBtn>
-              <TTSBtn onClick={handleBtn}>
+              <TTSBtn onClick={handleBtn('caution')}>
                 <TTSImg />
               </TTSBtn>
             </RecordingBtns>
