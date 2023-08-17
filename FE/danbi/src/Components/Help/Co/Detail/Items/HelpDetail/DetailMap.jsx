@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Map,CustomOverlayMap   } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 
@@ -12,23 +12,18 @@ const DetailMap = ({ position }) => {
   const markers = ()=>{
     const res = [];
     let key = 0;
-    if(position.meetLatitude && position.meetLongitude!==""){
+    if(position){
       res.push(
         <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
-          <div>만나는 장소</div>
-          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
-        </CustomOverlayMap>
-      );
-    }
+          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Meeting.svg`}></Marker>
+        </CustomOverlayMap>);
 
-
-    if(position.destLatitude && position.destLatitude!==""){
-      res.push(
-        <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
-          <div>목적지</div>
-          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Marker_Normal.svg`}></Marker>
-        </CustomOverlayMap>
-      );
+        if(position.destLatitude && position.destLongitude){
+          res.push(
+            <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
+              <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Destination.svg`}></Marker>
+            </CustomOverlayMap>);
+        }
     }
     
 
@@ -58,9 +53,9 @@ const DetailMap = ({ position }) => {
   );
 };
 const Marker = styled.img`
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
 `
+
 
 export default DetailMap;
