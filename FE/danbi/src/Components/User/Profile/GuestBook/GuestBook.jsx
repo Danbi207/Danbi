@@ -166,7 +166,7 @@ const ChatImg = styled.img.attrs((props) => ({
 
 const Comments = styled.div`
   overflow-y: auto;
-  height: 24rem;
+  height: 20rem;
   &::-webkit-scrollbar {
     display: none;
   }
