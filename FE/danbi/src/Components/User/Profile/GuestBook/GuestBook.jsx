@@ -33,12 +33,16 @@ const GuestBook = ({ guestBookId, userId }) => {
     const res = comments.map((comment, index) => (
       <GuestBookComment
         key={index}
-        comment={comment}
+        //comment={comment}
+        commentId={comment.commentId}
+        content={comment.content}
         writerName={comment.name}
         userId={userId}
         setComment={setComment}
         guestBookId={guestBookId}
         memberId={comment.memberId}
+        profileUrl={comment.profileUrl}
+        created={comment.createdTime}
       />
     ));
     return res;
@@ -60,10 +64,10 @@ const GuestBook = ({ guestBookId, userId }) => {
 
   return (
     <GuestBookWrap>
-        <UserDetail>
-          <ProfileImage $profileUrl={profileUrl} alt="img" />
-          <UserName>{name}</UserName>
-        </UserDetail>
+      <UserDetail>
+        <ProfileImage $profileUrl={profileUrl} alt="img" />
+        <UserName>{name}</UserName>
+      </UserDetail>
       <ChatWrap>
         <ChatSection>
           <ChatForm onSubmit={handleSubmit}>
@@ -84,7 +88,7 @@ const GuestBookWrap = styled.div`
 `;
 
 const ChatWrap = styled.div`
-  height: 3rem;
+  height: auto;
   display: flex;
 `;
 
