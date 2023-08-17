@@ -89,8 +89,8 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
           <Buttons>
             <RecordingBtns>
-              <RecordBtn onClick={() => (contentRecording ? StopRecord() : StartRecord('content'))}>
-                {contentRecording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
+              <RecordBtn onClick={() => (contentRecording ? StopRecord('content') : StartRecord('content'))}>
+                {contentRecording ? <RecordImg $state={'stop'} /> : <RecordImg $state={'record'} />}
               </RecordBtn>
               <TTSBtn onClick={handleBtn('content')}>
                 <TTSImg />
@@ -125,8 +125,8 @@ const Setting = ({content,SendRequestEdit,helpPostId,SendRequest,presets,caution
         {browserSupportsSpeechRecognition && isMicrophoneAvailable ? (
           <Buttons>
             <RecordingBtns>
-              <RecordBtn onClick={() => (cautionRecording ? StopRecord() : StartRecord('caution'))}>
-                {cautionRecording ? <RecordImg $state={'stop'} /> : <RecordImg state={'record'} />}
+              <RecordBtn onClick={() => (cautionRecording ? StopRecord('caution') : StartRecord('caution'))}>
+                {cautionRecording ? <RecordImg $state={'stop'} /> : <RecordImg $state={'record'} />}
               </RecordBtn>
               <TTSBtn onClick={handleBtn('caution')}>
                 <TTSImg />
