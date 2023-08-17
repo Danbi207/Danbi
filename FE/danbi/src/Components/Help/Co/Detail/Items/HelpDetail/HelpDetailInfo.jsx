@@ -11,8 +11,8 @@ const HelpDetailInfo = ({ data }) => {
           <FaceFlag>대면 : {data.faceflag ? '대면' : '비대면'}</FaceFlag>
           <DateTag>날짜 : {data.startTime}</DateTag>
           <TimeTag>시간 : {data.endTime}</TimeTag>
-          <Destination>목적지 : {data.position.destAddr}</Destination>
-          <Meet>만나는 곳 : {data.position.meetAddr}</Meet>
+          {data.faceflag ? <Destination>목적지 : {data.position.destAddr}</Destination> : null}
+          {data.faceflag ? <Meet>만나는 곳 : {data.position.meetAddr}</Meet> : null}
         </BasicBody>
       </BasicInfo>
       <HelpInfo>
