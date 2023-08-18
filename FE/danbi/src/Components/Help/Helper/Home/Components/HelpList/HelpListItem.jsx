@@ -84,6 +84,7 @@ const HelpContent = styled.div`
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: #fff;
+  color: #000;
   border: 1px solid ${props=>props.theme.colors.titleColor};
 `
 
