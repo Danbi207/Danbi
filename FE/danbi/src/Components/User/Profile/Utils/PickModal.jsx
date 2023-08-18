@@ -15,7 +15,7 @@ import { authPost } from '../../../../Util/apis/api';
 
 const PickModal = ({ setPickModalOpen }) => {
   const [ShowAnimation, setShowAnimation] = useState(true);
-  const cur_dew = useSelector((state) => state.Jandi.dew_point);
+  const cur_dew = useSelector((state) => state.Jandi.dewPoint);
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
   const cur_Name = useSelector((state) => state.Jandi.item.name);
@@ -24,7 +24,7 @@ const PickModal = ({ setPickModalOpen }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowAnimation(false);
-      if(cur_Tier === 'legandary'){
+      if(cur_Tier === 'legendary'){
         Jsconfetti.addConfetti({
           confettiColors: [
             "#ff0a54",
@@ -41,7 +41,7 @@ const PickModal = ({ setPickModalOpen }) => {
     }, 1500);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [cur_Tier]);
 
   const CloseModal = () => {
     setPickModalOpen(false);
@@ -49,44 +49,39 @@ const PickModal = ({ setPickModalOpen }) => {
   
   const dispatch = useDispatch();
   
-  const handlePickModal = (pickdata) => {
-    setShowAnimation(true);
-    const pickdata1 = authPost('/api/v1/item', {});
-    
-    setTimeout(() => {
-      setShowAnimation(false);
-      setPickModalOpen(true);
-      dispatch(setName(pickdata.item.name));
-      dispatch(setTier(pickdata.item.tier));
-      dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
-      dispatch(setCheckedRgb(pickdata.item.checkedRgb));
-      dispatch(setDewPoint(pickdata.dew_point));
-      if(pickdata.item.tier === 'legandary'){
-        Jsconfetti.addConfetti({
-          confettiColors: [
-            "#ff0a54",
-            "#ff477e",
-            "#ff7096",
-            "#ff85a1",
-            "#fbb1bd",
-            "#f9bec7",
-          ],
-          confettiRadius: 5,
-          confettiNumber: 500,
-        });
-      }
-    }, 1500);
+  const handlePickModal = async () => {
+    try{
+      const pickdata = await authPost('/api/v1/item', {});
+      setShowAnimation(true);
+      setTimeout(() => {
+        setShowAnimation(false);
+        setPickModalOpen(true);
+        dispatch(setName(pickdata.item.name));
+        dispatch(setTier(pickdata.item.ranking));
+        dispatch(setUnchedkedRgb(pickdata.item.uncheckedRgb));
+        dispatch(setCheckedRgb(pickdata.item.checkedRgb));
+        dispatch(setDewPoint(pickdata.dewPoint));
+        if(pickdata.item.ranking === 'legendary'){
+          Jsconfetti.addConfetti({
+            confettiColors: [
+              "#ff0a54",
+              "#ff477e",
+              "#ff7096",
+              "#ff85a1",
+              "#fbb1bd",
+              "#f9bec7",
+            ],
+            confettiRadius: 5,
+            confettiNumber: 500,
+          });
+        }
+      }, 1500);
+    } catch(err) {
+      alert('뽑기 불가');
+      console.log(err);
+    }
   };
 
-  const pickdata = {
-    item: {
-      name: '보라',
-      uncheckedRgb: '#c283d4',
-      checkedRgb: '#a558b8',
-      tier: 'Rare',
-    },
-    dew_point: 123456,
-  };
 
   return (
     <PickModalWrap>
@@ -104,7 +99,7 @@ const PickModal = ({ setPickModalOpen }) => {
             <CloseBtn onClick={CloseModal}>X</CloseBtn>
           </Header>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            {cur_Tier === 'Rare' ? <Tier $state={'rare'} style={{width: '1.7rem'}} /> : cur_Tier === 'Epic' ? <Tier $state={'epic'} style={{width: '4.5rem'}}/> : <Tier $state={'legendary'} style={{width: '4.5rem'}} />}
+            {cur_Tier === 'rare' ? <Tier $state={'rare'} style={{width: '1.7rem'}} /> : cur_Tier === 'epic' ? <Tier $state={'epic'} style={{width: '4.5rem'}}/> : <Tier $state={'legendary'} style={{width: '4.5rem'}} />}
           </div>
           <ContentWrap>
             <Example>
@@ -119,7 +114,7 @@ const PickModal = ({ setPickModalOpen }) => {
           <Footer>
             <AcceptBtn
               onClick={() => {
-                handlePickModal(pickdata);
+                handlePickModal();
               }}
             >
               한 번 더 사용하기

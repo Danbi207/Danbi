@@ -1,6 +1,6 @@
 import Login from "../Components/User/Login/Login";
 import KakaoOauth from "../Components/User/Login/Oauth/KakaoOauth";
-import IpRequest from "../Components/Help/Ip/Request/IpRequest";
+// import IpRequest from "../Components/Help/Ip/Request/IpRequest";
 import Detail from "../Components/Help/Co/Detail/Detail";
 import MatchedHelp from "../Components/Help/Co/Matched/MatchedHelp";
 import Profile from "../Components/User/Profile/Profile";
@@ -9,6 +9,10 @@ import UserSubmit from "../Components/User/Join/UserSubmit";
 import IPHome from "../Components/Help/Ip/Home/IPHome";
 import HelperHome from "../Components/Help/Helper/Home/HelperHome";
 import Test from "../Components/TEST/TEST"
+import IpMap from '../Components/Help/Ip/Request/Components/Map/IpMap'
+import Admin from "../Components/Admin/Admin";
+import Request from "../Components/Help/Ip/Request/Request";
+
 const routes = [
   {
     path: "/",
@@ -28,7 +32,11 @@ const routes = [
   },
   {
     path : "/help/ip/request",
-    Component : IpRequest
+    Component : Request
+  },
+  {
+    path : "/help/ip/request/map/:mode",
+    Component : IpMap
   },
   {
     path : "/help/helper",
@@ -43,7 +51,7 @@ const routes = [
     Component : MatchedHelp
   },
   {
-    path: "/user/profile/:meberId",
+    path: "/user/profile/:userId",
     Component:Profile
   },
   {
@@ -51,8 +59,12 @@ const routes = [
     Component:Friend
   },
   {
+    path:"/admin",
+    Component:Admin
+  },
+  {
     path:"/test",
     Component:Test
-  }
+  },
 ];
 export default routes;

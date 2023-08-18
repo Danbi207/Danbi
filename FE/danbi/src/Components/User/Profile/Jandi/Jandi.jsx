@@ -1,10 +1,23 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import Buttons from './Buttons.jsx';
-import { setCheckedRgb, setUnchedkedRgb, setTier, setName } from '../../../../store/Slice/JandiSlice.js';
+import {
+  setCheckedRgb,
+  setUnchedkedRgb,
+  setTier,
+  setName,
+  setDewPoint,
+} from '../../../../store/Slice/JandiSlice.js';
 
-const Jandi = ({ help_log, setPickModalOpen, item }) => {
+const Jandi = ({
+  help_log,
+  setPickModalOpen,
+  item,
+  userId,
+  dewPoint,
+  accumulatePoint,
+}) => {
   const colCnt = 8;
   const rowCnt = 2;
 
@@ -22,46 +35,44 @@ const Jandi = ({ help_log, setPickModalOpen, item }) => {
     x: 0,
     y: 0,
     show: false,
-  }
+  };
 
   const [page, setPage] = useState(0); // 이전, 다음 버튼
   const [selectIdx, setSelectIdx] = useState(-1); // 잔디 선택
   const [ShowOverLay, setShowOverLay] = useState(overLay); // 잔디 날짜
-  const [ShowHelp, setShowHelp] = useState(HelpOver);  // ? 아이콘
+  const [ShowHelp, setShowHelp] = useState(HelpOver); // ? 아이콘
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setCheckedRgb(item.checkedRgb));
     dispatch(setUnchedkedRgb(item.uncheckedRgb));
     dispatch(setName(item.name));
-    dispatch(setTier(item.tier));    
-  }, [item])
-  
+    dispatch(setTier(item.ranking));
+    dispatch(setDewPoint(dewPoint));
+  }, [item]);
+
   const cur_UncheckedColor = useSelector((state) => state.Jandi.item.uncheckedRgb);
   const cur_CheckedColor = useSelector((state) => state.Jandi.item.checkedRgb);
-  
-  const onGross = (e, idx) => {
+
+  const onGross = useCallback((e, idx) => {
     if (selectIdx !== idx) {
       setSelectIdx(idx);
-      console.log(typeof selectIdx);
+      setShowOverLay({
+        x: e.clientX,
+        y: e.clientY,
+        show: idx !== ShowOverLay.idx,
+        idx,
+        content: help_log[idx].createdTime,
+      });
     } else {
       setSelectIdx(-1);
+      setShowOverLay(!ShowOverLay.show)
     }
-    setShowOverLay({
-      x: e.clientX,
-      y: e.clientY,
-      show: idx !== ShowOverLay.idx,
-      idx,
-      content: help_log[idx].created_time,
-    });
-  };
+    
+  }, [ShowOverLay.idx, help_log, selectIdx]);
   const GrossItems = useMemo(() => {
     const res = [];
-    for (
-      let i = page * colCnt * rowCnt;
-      i < (page + 1) * colCnt * rowCnt;
-      i++
-    ) {
+    for (let i = page * colCnt * rowCnt; i < (page + 1) * colCnt * rowCnt; i++) {
       if (i < help_log.length) {
         res.push(
           <GrossItem
@@ -79,8 +90,15 @@ const Jandi = ({ help_log, setPickModalOpen, item }) => {
       }
     }
     return res;
-  }, [page, help_log, selectIdx, cur_CheckedColor, cur_UncheckedColor, ShowOverLay, onGross]);
-  
+  }, [
+    page,
+    help_log,
+    selectIdx,
+    cur_CheckedColor,
+    cur_UncheckedColor,
+    ShowOverLay,
+    onGross,
+  ]);
 
   const prevGross = () => {
     if (page !== 0) setPage(page - 1);
@@ -104,45 +122,37 @@ const Jandi = ({ help_log, setPickModalOpen, item }) => {
     setShowHelp({
       x: e.clientX,
       y: e.clientY,
-      show:!ShowHelp.show,
-    })
-  }
-
-  const pickdata = {
-    item: {
-      name: '핑크소세지',
-      uncheckedRgb: '#FFACAC',
-      checkedRgb: '#FFEEBB',
-      tier: 'legandary',
-    },
-    dew_point: 123456,
+      show: !ShowHelp.show,
+    });
   };
 
   return (
     <ChartWrap>
       <ChartHeader>
-        <ChartTitle>
-        나의 도움을 기록해주세요
-        </ChartTitle>
+        <ChartTitle>나의 도움을 기록해주세요</ChartTitle>
         <HelpIcon onClick={(e) => handleHelp(e)} />
       </ChartHeader>
       <GrossWrap $col={colCnt} $row={rowCnt}>
         {GrossItems}
       </GrossWrap>
-      <Buttons prevGross={prevGross} nextGross={nextGross} pickdata={pickdata} setPickModalOpen={setPickModalOpen} />
+      <Buttons
+        prevGross={prevGross}
+        nextGross={nextGross}
+        setPickModalOpen={setPickModalOpen}
+        targetId={userId}
+        accumulatePoint={accumulatePoint}
+      />
       {ShowOverLay.show && (
         <OverRayWrap $position={ShowOverLay} $nowScreenWidth={nowScreenWidth}>
-          {ShowOverLay.content}
+          {ShowOverLay.content.slice(0, 10)}
         </OverRayWrap>
       )}
-      {
-        ShowHelp.show && (
-          <HelpOverLay $position={ShowHelp}>
-            도움 포인트(DEW)를 <br />
-            사용해서 그래프를 꾸며보세요.
-          </HelpOverLay>
-        )
-      }
+      {ShowHelp.show && (
+        <HelpOverLay $position={ShowHelp}>
+          도움 포인트(DEW)를 <br />
+          사용해서 그래프를 꾸며보세요.
+        </HelpOverLay>
+      )}
     </ChartWrap>
   );
 };
@@ -190,7 +200,7 @@ const EmptyItem = styled.div`
 `;
 
 const OverRayWrap = styled.div`
-  background-color: rgba(128, 128, 128, 0.5);
+  background-color: rgba(128, 128, 128, 0.25);
   position: fixed;
   width: auto;
   height: auto;
@@ -201,20 +211,16 @@ const OverRayWrap = styled.div`
       : `${props.$position.x}px`};
 `;
 
-const ChartTitle = styled.span`
-  
-`
-const HelpIcon = styled.img.attrs(props => ({
-  src: props.theme.images.help
-}))`
-  
-`
+const ChartTitle = styled.span``;
+const HelpIcon = styled.img.attrs((props) => ({
+  src: props.theme.images.help,
+}))``;
 const HelpOverLay = styled.span`
   background-color: gray;
   position: fixed;
-  top: ${props => props.$position.y}px;
-  left: ${props => props.$position.x}px;
+  top: ${(props) => props.$position.y}px;
+  left: ${(props) => props.$position.x}px;
   white-space: pre;
-`
+`;
 
 export default Jandi;

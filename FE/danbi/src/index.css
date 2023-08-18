@@ -3,6 +3,11 @@
     src: url("./fonts/NanumGothicExtraBold.otf");
 }
 
+@font-face {
+    font-family: "NanumGothicLight";
+    src: url("./fonts/NanumGothic-Regular.ttf");
+}
+
 *,*::after,*::before{
     font-family: "NanumGothic";
 
@@ -24,15 +29,15 @@
 *{
     font-size: 16px;
 }
-#root,.App{
-    width: 100vw;
-    height: 100vh;
+#root{
+    width: 100%;
+    height: 100%;
+}
+.App{
+    width: 100%;
+    height: 100%;
 }
 
 button {
     white-space: nowrap;
-}
-
-body {
-    min-width: 300px;
 }

@@ -1,10 +1,18 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
+import { useCallback } from 'react';
+import { authPost } from '../../../../../Util/apis/api';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { setIpRequestList, setMode } from '../../../../../store/Slice/ModalSlice';
+import { useSelector } from 'react-redux';
 
 
-const Calendar = () => {
+const Calendar = ({refresh}) => {
+  const dispatch = useDispatch();
+  const isDeleted = useSelector((state)=>state.modal.isDeleted);
   const [year,setYear] = useState((new Date()).getFullYear()); // 연도 저장 2023
   const [month,setMonth] = useState((new Date()).getMonth()); // 달(현재-1) 저장 7
   const [help,setHelpData] = useState({});  // help 정보 저장
@@ -40,41 +48,49 @@ const Calendar = () => {
     if(!(day in help[year][month])){ //day가 help[year][month]에 있는지 판단
       return [];
     }
+
     return help[year][month][day];
   }
 
-  useEffect(()=>{
-    //DO : IP 도움목록을 불러와 데이터 저장
+  // 캘린더에서 달마다 목록을 가져오게 만들기
+  const GetMonth = useCallback(async () => {
+    let temp = month+1;
+    if(temp < 10){
+      temp = "0"+temp;
+    }
     const res = {};
-    axios({
-      method:"get",
-      url:`${process.env.PUBLIC_URL}/IpCalendarList.json`
-    }).then(({data})=>{
-      for(let i = 0; i < data.data.helpList.length; i++){
-        const temp = data.data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
-        const date = temp[0].split("-"); //[year,month,day]
-        
-        if(!(date[0] in res)){ //year가 res안에 있는지 판단
-          res[date[0]]={}; //없다면 객체생성
-        }
-
-        if(!(date[1] in res[date[0]])){ //month가 res[year]에 있는지 판단
-          res[date[0]][date[1]]={}; //없다면 객체s생성
-        }
-        
-        if(!(date[2] in res[date[0]][date[1]])){ //day가 res[year][month]에 있는지 판단
-          res[date[0]][date[1]][date[2]]=[]; //없다면 배열생성
-        }
-
-        res[date[0]][date[1]][date[2]].push(data.data.helpList[i]); //res[year][month][day]에 data를 push
-      }
-
-      setHelpData(res);
-      console.log(res);
-    }).catch((err)=>console.log(err));
-    setHelpData(res);
-  },[]);
+    try {
+      const data = await authPost('/api/v1/help/registers', {"yearAndMonth" : year+"-"+temp+"-01"});
+      if (data) {
+        for(let i = 0; i < data.helpList.length; i++){
+          const temp = data.helpList[i].startTime.split(" "); //[yyyy-MM-dd,HH:mm]
+          const date = temp[0].split("-"); //[year,month,day]
+          
+          if(!(date[0] in res)){ //year가 res안에 있는지 판단
+            res[date[0]]={}; //없다면 객체생성
+          }
   
+          if(!(date[1] in res[date[0]])){ //month가 res[year]에 있는지 판단
+            res[date[0]][date[1]]={}; //없다면 객체s생성
+          }
+          
+          if(!(date[2] in res[date[0]][date[1]])){ //day가 res[year][month]에 있는지 판단
+            res[date[0]][date[1]][date[2]]=[]; //없다면 배열생성
+          }
+  
+          res[date[0]][date[1]][date[2]].push(data.helpList[i]); //res[year][month][day]에 data를 push
+        }
+      }
+      setHelpData(res);
+      return true;
+    }
+    catch (error) {
+      setHelpData(res);
+      console.error("에러 발생", error);
+      return false;
+    }
+  },[year, month])
+
   const nextMonth = ()=> {
     let temp = month+1;
     if(temp === 12){
@@ -95,10 +111,33 @@ const Calendar = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(()=>{
+    if(isDeleted){
+      GetMonth();
+    }else{
+      GetMonth();
+    }
+  },[GetMonth,isDeleted]);
+
+  //DO : 모달창에서 삭제를 실행할 때 달력에 데이터를 입력 
+  useEffect(()=>{
+    GetMonth();
+  },[GetMonth])
+
+  //DO : 긴급요청을 할 때마다 데이터를 입력
+  useEffect(()=>{
+    if(refresh){
+      GetMonth();
+    }else{
+      GetMonth();
+    }
+  },[GetMonth,refresh])
+
+  useEffect((year, month) => {
     //DO : 달이 바뀔때마다 주차 수를 자동으로 계산
     setWeekCnt(getWeek(year, month));
-  }, [year, month]);
+    GetMonth();
+  }, [year, month, GetMonth]);
 
   // 요일을 가져오는 로직
   const getWeekItems = () => {
@@ -140,10 +179,18 @@ const Calendar = () => {
 
       res.push(<CalenderItem
         className={className}
-        onClick={()=>{
-        getHelpData(year ,month, i);
-        console.log(getHelpData(year ,month, i));
-        }} key={"calender"+i}>{i}</CalenderItem>)
+        onClick={async()=>{
+          if(GetMonth()){
+            setSelectedDate(new Date(year, month, i));
+            getHelpData(year ,month, i);
+            dispatch(setIpRequestList(getHelpData(year ,month, i)));
+            dispatch(setMode('ipdetail'));
+          }
+        }} key={"calender"+i}>
+          <div>{i}</div>
+          {/* { getHelpData(year ,month, i).length > 0 && <ActiveIcon/> } */}
+          { getHelpData(year ,month, i).length > 0 && <StyledIcon icon={faCircle}/> }
+        </CalenderItem>)
     }
     
     for (let i = endDate.getDay(); i < 6; i++) { // 마지막 날 이후 날짜 넣기
@@ -189,6 +236,7 @@ const Calendar = () => {
 const CalenderWrap = styled.div `
   width: 100%;
   height: 100%;
+  padding : 1rem;
 `
 
 const HeaderWrap = styled.div `
@@ -196,7 +244,6 @@ const HeaderWrap = styled.div `
   height: 8%;
   display: flex;
   justify-content: space-between;
-  /* background-color: #7979ff; */
 `
 
 const HeaderStart = styled.div`
@@ -211,12 +258,11 @@ const HeaderStart = styled.div`
 const HeaderText = styled.span`
   font-size: 1rem;
   font-weight: 600;
-  /* padding-left: 1rem; */
+  color : ${props=>props.theme.colors.titleColor};
 
   &>.month{
     margin-right: 1rem;
     font-size: 1.6rem;
-    /* padding-left: 0; */
   }
 `
 
@@ -228,16 +274,10 @@ const HeaderEnd = styled.div`
   align-items: center;
   
   &>.Icon{
-    width: 11%;
-    height: fit-content;
-    width: fit-content;
+    width: 1rem;
+    height: 1rem;
     margin-left: 5%;
-    /* color: gray; */
-
-    &:hover {
-      transform: scale(1.2);
-      color: darkgray;
-    }
+    color: gray;
   }
 `
 
@@ -247,7 +287,9 @@ const DaysWrap = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 0.65rem;
-  padding: 2px;
+  padding: 5px 0;
+  column-gap: 5px;
+
 
   &>.col {
   width: 15%;
@@ -256,7 +298,7 @@ const DaysWrap = styled.div`
   justify-content: flex-start;
   align-content: flex-start;
   padding-left: 1%;
-  background-color:#ebcfc6;
+  background-color: ${props=>props.theme.colors.CalDayColor};
   color : #000; 
   border-radius: 10px;
   }
@@ -268,36 +310,53 @@ const Body = styled.div`
   display: grid;
   grid-template-columns: repeat(7,1fr);
   grid-template-rows: repeat(${(props) => props.$weekCnt}, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  grid-auto-rows: 1fr;
 `
 
 const CalenderItem = styled.div`
-  border : 1px solid #000;
+  border : 1px solid ${props=>props.theme.colors.titleColor};
   border-radius: 0.5rem;
-  margin: 0.1rem;
+
   font-size: 0.8rem;
-  padding: 2px 0 0 2px;
 
   &.not-valid{
-    color : #c4c4c4;
+    color : ${props=>props.theme.colors.calDateColor};
   }
 
   &.valid{
-    &:hover {
+    color : ${props=>props.theme.colors.titleColor};
+    /* &:hover {
       transform: scale(1.01);
-      box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
       border: none;
-      background-color: #c4c4c4;
-    }
+      background-color: #f3c5b6;
+    } */
   }
 
   &.selected {
-    transform: scale(1.02);
-    box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1), 0.1;
     border: none;
     background-color: #f3c5b6;
     font-weight: 600;
   }
 `
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: #ff4242;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  margin-left: 0.5rem;
+`
+
+
+// const ActiveIcon = styled.div`
+//   background-color: #ff4242;
+//   width: 5px;
+//   height: 5px;
+//   border-radius: 5px;
+//   margin-left: 0.5rem;
+// `
 
 
 

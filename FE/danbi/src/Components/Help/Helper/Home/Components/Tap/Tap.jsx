@@ -3,9 +3,9 @@ import styled from 'styled-components';
 const Tap = (props) => {
   return (
     <TapWrap>
-      <TapBtn $mode={"untact"===props.mode} onClick={props.setUntact}>비대면 도움</TapBtn>
+      <TapBtn $mode={"untact"===props.mode} onClick={()=>{if(props.mode!=="untact")props.setUntact()}}>비대면 도움</TapBtn>
       <TapBtn $mode={"map"===props.mode} onClick={()=>{if(props.mode!=="map")props.setMap()}}>지도</TapBtn>
-      <TapBtn $mode={"contact"===props.mode} onClick={props.setContact}>대면 도움</TapBtn>
+      <TapBtn $mode={"contact"===props.mode} onClick={()=>{if(props.mode!=="contact")props.setContact()}}>대면 도움</TapBtn>
     </TapWrap>
   )
 }

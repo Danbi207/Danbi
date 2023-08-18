@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import PresetTextArea from './PresetTextArea';
 import Preset from './Preset.jsx';
 import { authGet, authPost } from '../../../../Util/apis/api';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode } from '../../../../store/Slice/ModalSlice';
+import { getSpeech } from '../Utils/TTS';
 
 const PresetModal = ({ setModalOpen }) => {
   const closeBtn = () => {
@@ -10,34 +14,115 @@ const PresetModal = ({ setModalOpen }) => {
   };
   const [OpenTextArea, setOpenTextArea] = useState(false);
   const showTextArea = () => {
-    setOpenTextArea(true);
+    setOpenTextArea(!OpenTextArea);
   };
-
-
-  const [presetList, setPresetList] = useState([
+  const dispatch = useDispatch();
+  const commandMode = useSelector((state) => state.modal.mode);
+  const commands = [
     {
-      preset_id: 1,
-      title: '1asdf',
-      content: '123saf',
-      sequence: 0,
+      command: '단비',
+      callback: () => {
+        if (commandMode === null) {
+          dispatch(setMode('stt'));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
     },
     {
-      preset_id: 2,
-      title: '김민규는 쓰레기입니다.',
-      content: '끼잉 낑.',
-      sequence: 1,
-    }
-  ])
-  
-  // TODO : presetList 조회
-  const [presetList2, setPresetList2] = useState([]);
-  useEffect(() => {
-    setPresetList2(authGet('/api/v1/preset'))
-  }, [])
+      command: '추가',
+      callback: () => {
+        if (commandMode === 'stt') {
+          showTextArea(true);
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '프리셋추가',
+      callback: () => {
+        if (commandMode === 'stt') {
+          showTextArea(true);
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '추가하기',
+      callback: () => {
+        if (commandMode === 'stt') {
+          showTextArea(true);
+          dispatch(setMode(null));
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '닫기',
+      callback: () => {
+        if (commandMode === 'stt') {
+          dispatch(setMode(null));
+          setModalOpen(false);
+        }
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.2,
+    },
+    {
+      command: '저장',
+      callback: () => {
+        if (commandMode === 'stt') {
+          if (commandMode === 'stt') {
+            dispatch(setMode(null));
+            handleSave();
+            getSpeech('저장완료');
+          }
+        }
+      },
+    },
+  ];
 
-  const handleSave = () => {
-    authPost(`api/v1/preset/sequence`);
-  }
+  const { browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
+  useEffect(() => {
+    if (browserSupportsSpeechRecognition) {
+      SpeechRecognition.startListening({ continuous: true, language: 'ko' });
+    }
+  }, [browserSupportsSpeechRecognition]);
+
+  // TODO : presetList 조회
+  const [presetList, setPresetList] = useState([]);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const data = await authGet('/api/v1/preset');
+      setPresetList(data.presetList);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+    // console.log(presetList);
+  }, [fetchData]);
+
+  const handleSave = async () => {
+    const config = {
+      presets: [
+        ...presetList.map((e, idx) => {
+          return { id: e.id, sequence: idx };
+        }),
+      ],
+    };
+    await authPost(`/api/v1/preset/sequence`, config);
+    alert('저장완료');
+    setModalOpen(false);
+  };
 
   return (
     <PresetModalWrap>
@@ -53,7 +138,14 @@ const PresetModal = ({ setModalOpen }) => {
         </ModalHeader>
         <ModalBody>
           <PresetAddBtn onClick={showTextArea}>추가하기</PresetAddBtn>
-          {OpenTextArea && <PresetTextArea setOpenTextArea={setOpenTextArea} />}
+          {OpenTextArea && presetList.length < 3 && (
+            <PresetTextArea
+              setOpenTextArea={setOpenTextArea}
+              OpenTextArea={OpenTextArea}
+              fetchData={fetchData}
+              length={presetList.length}
+            />
+          )}
         </ModalBody>
         <ModalFooter>
           <Preset preset_list={presetList} setPresetList={setPresetList} />
@@ -77,7 +169,7 @@ const PresetModalWrap = styled.div`
 const Modal = styled.div`
   width: 92%;
   height: 21rem;
-  background-color: ${props => props.theme.colors.bgColor};
+  background-color: ${(props) => props.theme.colors.bgColor};
   position: absolute;
   top: 25%;
   margin: 0 4%;
@@ -97,8 +189,8 @@ const CloseModalBtn = styled.button`
   height: 40px;
 `;
 
-const CloseImg = styled.img.attrs(props => ({
-  src: props.theme.images.close
+const CloseImg = styled.img.attrs((props) => ({
+  src: props.theme.images.close,
 }))``;
 
 const ModalName = styled.div`
@@ -109,8 +201,8 @@ const SaveBtn = styled.button`
   width: 48px;
   height: 40px;
 `;
-const SaveImg = styled.img.attrs(props => ({
-  src: props.theme.images.save
+const SaveImg = styled.img.attrs((props) => ({
+  src: props.theme.images.save,
 }))``;
 
 const ModalBody = styled.div`
@@ -125,7 +217,8 @@ const PresetAddBtn = styled.button`
   width: 19rem;
   height: 2rem;
   border-radius: 10px;
-  background-color: #6161ff;
+  background-color: #ffea7e;
+  color: black;
 `;
 
 const ModalFooter = styled.div`

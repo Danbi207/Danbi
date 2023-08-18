@@ -3,18 +3,27 @@ import styled from 'styled-components';
 import HelpListItem from "./HelpListItem";
 import { useEffect } from 'react';
 import { useState } from 'react';
-const HelpList = (props) => {
+const HelpList = ({mode,helpList}) => {
   const [friends,setFriends] = useState([]);
   const [helps,setHelps] = useState([]);
+  const [emergencys,setEmergencys] = useState([]);
 
   useEffect(()=>{
     let keyIdx = 0;
-    setFriends(props.helpList.filter(e=>e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
-    setHelps(props.helpList.filter(e=>!e.friendFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
-  },[props.helpList]);
+    setEmergencys(helpList.filter(e=>e.emergencyFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setFriends(helpList.filter(e=>e.friendFlag&&!e.emergencyFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+    setHelps(helpList.filter(e=>!e.friendFlag&&!e.emergencyFlag).map(e=><HelpListItem key={keyIdx++} help={e} />));
+  },[helpList]);
 
   return (
     <HelpListWrap>
+      {
+        mode==="uncontact"||emergencys.length === 0 ? null :
+        <>
+          <HelpTitle>긴급 도움</HelpTitle>
+          {emergencys}
+        </>
+      }
       <HelpTitle>친구 도움</HelpTitle>
       {friends}
       <HR/>
@@ -24,10 +33,7 @@ const HelpList = (props) => {
   )
 }
 const HR = styled.div`
-  width: 40%;
-  @media screen and (max-width: 500px) {
-    width: 90%;
-  }
+  width: 90%;
   height: 1px;
   background-color: #D5CECE;
 `

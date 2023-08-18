@@ -1,28 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  position : {
+    cur_longitude : '',
+    cur_latitude : '',  
+    cur_addr : '',
+    dest_longitude : '',
+    dest_latitude : '',
+    dest_addr : '', 
+    meet_longitude : '',
+    meet_latitude : '',
+    meet_addr : '',
+  },
+  tabmode : 'time',
+  reservetype : '',
+  meetType : '',
+  category : 'ETC',
+  caution : '',
+  content : '',
+  ischecked : false,
+  currentDay : [],
+  currentTime : [],
+  useTimes : 0,
+}
+
 export const ipSlice = createSlice({
   name: "ip",
-  initialState: {
-    help_id : 1,
-    position : {
-      cur_longitude : "128.3444",
-      cur_latitude : "36.119485",
-      cur_addr : "",
-      dest_longitude : "128.3444",
-      dest_latitude : "128.3444",
-      dest_addr : "", 
-      meet_longitude : "128.3444",
-      meet_latitude : "128.3444",
-      meet_addr : "",
-    },
-    tabmode : 'time',
-    reservetype : '',
-    meetType : '',
-    category : 'NONE',
-    content : '',
-    openIndex : 0,
-    ischecked : false,
-  },
+  initialState,
   reducers: {
     setTabMode : (state,action)=>{
       state.tabmode = action.payload;
@@ -33,14 +37,14 @@ export const ipSlice = createSlice({
     setContent : (state, action) => {
         state.content = action.payload;
     },
+    setCaution : (state, action) => {
+        state.caution = action.payload;
+    },
     setReserveType : (state, action) => {
       state.reservetype = action.payload;
     },
     setIsChecked : (state, action) => {
       state.ischecked = action.payload;
-    },
-    setOpenIndex : (state, action) => {
-      state.openIndex = action.payload;
     },
     setCategory : (state, action) => {
       state.category = action.payload
@@ -69,11 +73,35 @@ export const ipSlice = createSlice({
     setCurLatitude : (state, action) => {
       state.position.cur_latitude = action.payload;
     },
+    setCurrentDay : (state, action) => {
+      state.currentDay = action.payload;
+    },
+    setCurrentTime : (state, action) => {
+      state.currentTime = action.payload;
+    },
+    setUseTimes : (state, action) => {
+      state.useTimes = action.payload;
+    },
+    ResetIpState: () => initialState,
+    SetHelpDetailData : (state, action) => {
+      const [data, time] = action.payload.startTime.aplit(' ');
+      const [year, month, day] = data.split('-');
+      const [hour, minute] = time.split(':');
+
+      state.category = action.payload.category;
+      state.caution = action.payload.caution;
+      state.content = action.payload.content;
+      state.meetType = action.payload.faceFlag;
+      state.currentDay = [year, month, day];
+      state.currentTime = [hour, minute];
+    }
   },
 });
 
-export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setOpenIndex, setCategory,
-               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude
+export const { setTabMode, setMeetType, setContent, setReserveType, setIsChecked, setCategory, setCaution,
+               setMeetLongitude, setMeetLatitude, setMeetAddr, setDestLongitude, setDestLatitude, setDestAddr, setCurLongitude, setCurLatitude,
+               setCurrentDay, setUseTimes, setCurrentTime,
+               ResetIpState
               } = ipSlice.actions;
 
 export default ipSlice.reducer;
