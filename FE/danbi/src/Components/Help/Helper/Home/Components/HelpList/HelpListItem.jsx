@@ -75,6 +75,7 @@ const DetailBtn = styled.button`
   width: 100%;
   height: 3rem;
   border-radius: 1rem;
+  color: #000;
 `
 const HelpContent = styled.div`
   white-space: pre-wrap;
