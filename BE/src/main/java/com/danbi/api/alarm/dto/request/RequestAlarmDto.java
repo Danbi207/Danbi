@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RequestAlarmDto {
 
-    @JsonProperty("from_id")
+    @JsonProperty("fromId")
     private Long fromId;
 
-    @JsonProperty("to_id")
+    @JsonProperty("toId")
     private Long toId;
 
     @JsonProperty("title")
@@ -33,7 +33,7 @@ public class RequestAlarmDto {
     private String content;
 
     @JsonProperty("type")
-    private Type type;
+    private String type;
 
 //    @JsonProperty("created_time")
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")

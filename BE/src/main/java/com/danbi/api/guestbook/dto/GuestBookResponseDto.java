@@ -36,6 +36,9 @@ public class GuestBookResponseDto {
             @Schema(description = "댓글 id")
             private Long commentId;
 
+            @Schema(description = "작성자 id")
+            private Long memberId;
+
             @Schema(description = "댓글 작성자 이름")
             private String name;
 

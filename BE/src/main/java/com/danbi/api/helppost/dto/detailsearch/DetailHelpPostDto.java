@@ -6,11 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class DetailHelpPostDto {
 
     private Long helpPostId;
@@ -24,6 +27,7 @@ public class DetailHelpPostDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
     private boolean friendFlag;
+    private boolean genderFlag;
 
     private String caution;
     private Category category;

@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,4 +47,14 @@ public class AccuseService {
             throw new MisMatchException(ErrorCode.ACCUSE_MISMATCH_TARGET);
         }
     }
+
+    public void checkAccuseTime() {
+        LocalDateTime twoWeeksAgo = LocalDateTime.now().minus(2, ChronoUnit.WEEKS);
+        List<Accuse> accuses = accuseRepository.checkAccuseTime(twoWeeksAgo);
+        for (Accuse accuse : accuses) {
+            accuse.updateAccuse(State.DELETE);
+            accuse.getTargetMember().minusStack();
+        }
+    }
+
 }

@@ -38,6 +38,7 @@ public class GuestBookProfileService {
         List<GuestBookResponseDto.GuestBookDto.CommentDto> commentDtos = comments.stream()
                 .map(comment -> GuestBookResponseDto.GuestBookDto.CommentDto.builder()
                         .commentId(comment.getId())
+                        .memberId(comment.getMember().getId())
                         .name(comment.getMember().getName())
                         .profileUrl(comment.getMember().getProfileUrl())
                         .content(comment.getContent())

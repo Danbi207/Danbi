@@ -1,10 +1,7 @@
 package com.danbi.domain.helppost.service;
 
 import com.danbi.domain.helppost.constant.State;
-import com.danbi.domain.helppost.dto.HelpPostDetailQeuryDto;
-import com.danbi.domain.helppost.dto.HelpPostFaceDto;
-import com.danbi.domain.helppost.dto.HelpPostMatchedDto;
-import com.danbi.domain.helppost.dto.HelpPostQueryDto;
+import com.danbi.domain.helppost.dto.*;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
 import com.danbi.domain.helppost.repository.PositionRepository;
@@ -20,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,7 +101,15 @@ public class HelpPostService {
 
     @Transactional(readOnly = true)
     public HelpPostDetailQeuryDto searchDetail(Long HelpPostId) {
-        return helpPostRepository.searchDetail(HelpPostId);
+        Optional<HelpPostDetailQeuryDto> helpPostDetailQeuryDto = helpPostRepository.searchDetail(HelpPostId);
+        validateDetailIsNotDeleted(helpPostDetailQeuryDto);
+        return helpPostDetailQeuryDto.get();
+    }
+
+    private void validateDetailIsNotDeleted(Optional<HelpPostDetailQeuryDto> helpPostDetailQeuryDto) {
+        if (helpPostDetailQeuryDto.isEmpty()) {
+            throw new MisMatchException(ErrorCode.HELPPOST_MISMATCH_DELETED);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -127,13 +133,33 @@ public class HelpPostService {
     }
 
     @Transactional(readOnly = true)
-    public List<HelpPost> searchByMonth(LocalDate time, Long memberId) {
+    public List<HelpPostByMonthDto> searchByMonth(LocalDate time, Long memberId) {
         return helpPostRepository.findHelpPostByMonth(time, memberId);
     }
 
     @Transactional(readOnly = true)
-    public boolean checkHelperTime(LocalDateTime time, Long memberId) {
-        Optional<HelpPost> helpPostByNowTime = helpPostRepository.findHelpPostByNowTime(time, memberId);
-        return helpPostByNowTime.isPresent() ? true : false;
+    public List<HelpPost> checkHelperTime(LocalDateTime time, Long memberId) {
+        return helpPostRepository.findHelpPostByNowTime(time, memberId);
     }
+
+    public void deleteNotMatchedHelpPost() {
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDateTime startOfDay = yesterday.atStartOfDay();
+        LocalDateTime endOfDay = yesterday.atTime(LocalTime.MAX);
+
+        List<HelpPost> notMatchedHelpPost = helpPostRepository.findNotMatchedHelpPost(startOfDay, endOfDay);
+        for (HelpPost helpPost : notMatchedHelpPost) {
+            helpPost.updateState(State.DELETE);
+        }
+    }
+
+
+    public List<BestHelpMemberDto> searchBestHelpMembers() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime startOfLastMonth = currentDateTime.minusMonths(1).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime endOfLastMonth = currentDateTime.withDayOfMonth(1).minusDays(1).withHour(23).withMinute(59).withSecond(59);
+
+        return helpPostRepository.searchBestMember(startOfLastMonth, endOfLastMonth);
+    }
+
 }

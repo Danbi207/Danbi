@@ -37,7 +37,8 @@ public class GuestBookCommentService {
 
         Comment savedComment = commentService.saveComment(comment);
         return CommentDto.Response.builder()
-                .id(savedComment.getId())
+                .memberId(member.getId())
+                .commentId(savedComment.getId())
                 .content(savedComment.getContent())
                 .name(member.getName())
                 .createTime(savedComment.getCreateTime())
@@ -82,11 +83,15 @@ public class GuestBookCommentService {
      *  댓글이 작성되어 있는 방명록의 주인만 가진다.
      */
     private void validateCommentManager(Comment comment, Member member, GuestBook guestBook) {
-        if(!comment.checkCommenter(member)) {
+//        if(!comment.checkCommenter(member)) {
+//            throw new CommentMisMatchMemberException(ErrorCode.COMMENT_MISMATCH_MEMBER);
+//        }
+//        if(!guestBook.checkMember(member)) {
+//            throw new GuestBookMisMatchMemberException(ErrorCode.GUESTBOOK_MISMATCH_MEMBER);
+//        }
+
+        if(!comment.checkCommenter(member) && !guestBook.checkMember(member)) {
             throw new CommentMisMatchMemberException(ErrorCode.COMMENT_MISMATCH_MEMBER);
-        }
-        if(!guestBook.checkMember(member)) {
-            throw new GuestBookMisMatchMemberException(ErrorCode.GUESTBOOK_MISMATCH_MEMBER);
         }
     }
 

@@ -8,15 +8,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class HelpPostResponseDto {
 
-    private Long helpId;
+    private Long helpPostId;
 
     private Position position;
 
@@ -74,7 +76,7 @@ public class HelpPostResponseDto {
                 .build();
 
         return HelpPostResponseDto.builder()
-                .helpId(helpPost.getId())
+                .helpPostId(helpPost.getId())
                 .position(position)
                 .faceFlag(helpPost.isFaceFlag())
                 .emergencyFlag(helpPost.isEmergencyFlag())

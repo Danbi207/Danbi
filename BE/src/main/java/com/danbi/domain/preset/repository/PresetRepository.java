@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface PresetRepository extends JpaRepository<Preset, Long> {
 
-    List<Preset> findAllByProfile(Profile profile);
+    List<Preset> findAllByProfileOrderBySequence(Profile profile);
 }

@@ -12,15 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseFriendDto {
 
-    @JsonProperty("profile_url")
+    @JsonProperty("friendId")
+    private Long friendId;
+
+    @JsonProperty("profileUrl")
     private String profileUrl;
 
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("dew_point")
+    @JsonProperty("dewPoint")
     private Long dewPoint;
 
-    @JsonProperty("target_id")
+    @JsonProperty("targetId")
     private Long targetId;
 }

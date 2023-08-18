@@ -5,11 +5,13 @@ import com.danbi.api.alarm.dto.response.ResponseAlarmDto;
 import com.danbi.api.alarm.dto.response.ResponseAlarmListDto;
 import com.danbi.api.alarm.service.AlarmInfoService;
 import com.danbi.domain.alarm.constant.State;
+import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.alarm.entity.Alarm;
 import com.danbi.domain.alarm.service.AlarmService;
 import com.danbi.domain.member.service.MemberService;
 import com.danbi.global.error.ErrorCode;
 import com.danbi.global.error.exception.BusinessException;
+import com.danbi.global.error.exception.MisMatchException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -113,7 +115,8 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
         Alarm findAlarm = alarmService.getAlarmById(memberId, alarmId);
         if (findAlarm.getTo().getId() == memberId) {
             alarmService.deleteAlarmByTo(memberId, alarmId);
-        } else {
+        }
+        if(findAlarm.getFrom().getId() == memberId) {
             alarmService.deleteAlarmByFrom(memberId, alarmId);
         }
     }
@@ -130,7 +133,7 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
                 .readFlag(false)
                 .state(State.ACTIVATE)
                 .content(requestAlarmDto.getContent())
-                .type(requestAlarmDto.getType())
+                .type(Type.from(requestAlarmDto.getType()))
                 .build();
 
         Alarm saveAlarm = alarmService.savaAlarm(alarm);
@@ -146,4 +149,12 @@ public class AlarmInfoServiceImpl implements AlarmInfoService {
                 .readFlag(saveAlarm.getReadFlag())
                 .build();
     }
+
+    @Transactional
+    @Override
+    public Integer deleteAllAlarm(Long memberId) {
+        return alarmService.deleteAllAlarm(memberId);
+    }
+
+
 }

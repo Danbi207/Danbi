@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.danbi.domain.helppost.constant.State.DELETE;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -37,7 +39,7 @@ public class HelpService {
         HelpPost helpPost = helpPostRepository.findById(id).get();
         Help help = helpRepository.findByHelpPost(helpPost).get();
 
-        validateHelperIsAlreadyMatched(member.getId(), helpPost.getStartTime(), helpPost.getStartTime());
+        validateHelperIsAlreadyMatched(member.getId(), helpPost.getStartTime(), helpPost.getEndTime());
         validateHelpMatchMember(helpPost,member);
 
         help.updateHelper(member);
@@ -62,6 +64,7 @@ public class HelpService {
     public void cancelHelp(Long helpId) {
         Help help = helpRepository.findById(helpId).get();
         help.delete(State.DELETE);
+        help.getHelpPost().updateState(DELETE);
     }
 
     public void ipComplete(Long helpId, Long memberId) {

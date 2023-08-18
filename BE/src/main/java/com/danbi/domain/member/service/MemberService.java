@@ -7,6 +7,7 @@ import com.danbi.domain.Item.repository.ItemRepository;
 import com.danbi.domain.guestbook.entity.GuestBook;
 import com.danbi.domain.member.constant.Role;
 import com.danbi.domain.member.dto.MemberDataDto;
+import com.danbi.domain.member.dto.TotalBestMemberDto;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
 import com.danbi.domain.point.entity.Point;
@@ -117,5 +118,13 @@ public class MemberService {
 
     public Page<Member> findAll(Pageable pageable) {
         return memberRepository.findAll(pageable);
+    }
+
+    public Page<Member> findAllByRole(Role role, Pageable pageable) {
+        return memberRepository.findAllByRole(role, pageable);
+    }
+
+    public List<TotalBestMemberDto> searchTotalBestMembers() {
+        return memberRepository.searchTotalBestMembers();
     }
 }

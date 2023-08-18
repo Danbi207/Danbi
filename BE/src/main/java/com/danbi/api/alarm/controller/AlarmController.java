@@ -42,8 +42,8 @@ public class AlarmController {
     }
 
     @Operation(summary = "알림 상세조회 API", description = "알림 상세조회")
-    @GetMapping("/{alarm_id}")
-    ApiResponse<ResponseAlarmDto> getAlarmDetail(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("alarm_id") Long alarmId) {
+    @GetMapping("/{alarmId}")
+    ApiResponse<ResponseAlarmDto> getAlarmDetail(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("alarmId") Long alarmId) {
         return ApiResponse.ok(alarmInfoService.getAlarmDetail(memberInfoDto.getMemberId(), alarmId));
     }
 
@@ -55,10 +55,16 @@ public class AlarmController {
     }
 
     @Operation(summary = "알림 삭제처리 API", description = "알림 삭제처리")
-    @DeleteMapping("/{alarm_id}")
-    ApiResponse<String> deleteAlarm(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("alarm_id") Long alarmId) {
+    @DeleteMapping("/{alarmId}")
+    ApiResponse<String> deleteAlarm(@MemberInfo MemberInfoDto memberInfoDto, @PathVariable("alarmId") Long alarmId) {
         alarmInfoService.deleteAlarm(memberInfoDto.getMemberId(), alarmId);
         return ApiResponse.ok("알림을 삭제 처리했습니다.");
+    }
+
+    @Operation(summary = "모든알림 삭제처리 API", description = "모든알림 삭제처리")
+    @DeleteMapping()
+    ApiResponse<Integer> deleteAllAlarm(@MemberInfo MemberInfoDto memberInfoDto) {
+        return ApiResponse.ok(alarmInfoService.deleteAllAlarm(memberInfoDto.getMemberId()));
     }
 
     @Operation(summary = "알림 생성 API", description = "알림 생성")

@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Tag(name = "Preset", description = "프리셋")
 @RestController
 @RequestMapping("/api/v1/preset")
@@ -20,7 +22,7 @@ public class PresetController {
 
     @Operation(summary = "프리셋 1개 생성 및 저장 API", description = "프리셋 저장")
     @PostMapping("/create")
-    public ApiResponse<PresetCreateDto.Response> createPreset(@RequestBody PresetCreateDto.Request requestDto,
+    public ApiResponse<PresetCreateDto.Response> createPreset(@Valid @RequestBody PresetCreateDto.Request requestDto,
                                                                  @MemberInfo MemberInfoDto memberInfoDto) {
         PresetCreateDto.Response response = presetManageService.createPreset(requestDto, memberInfoDto.getMemberId());
         return ApiResponse.ok(response);

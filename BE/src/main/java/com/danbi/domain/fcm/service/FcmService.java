@@ -49,7 +49,8 @@ public class FcmService {
 
     public void sendMessageTo(NotificationRequest notificationRequest) throws IOException, ExecutionException, InterruptedException {
         if(!hasKey(notificationRequest.getEmail())){
-            throw new BusinessException(ErrorCode.NOT_EXIST_FCM_TOKEN);
+            return;
+//            throw new BusinessException(ErrorCode.NOT_EXIST_FCM_TOKEN);
         }
 
         String targetToken = getToken(notificationRequest.getEmail());
@@ -80,11 +81,6 @@ public class FcmService {
     //FCM 알림 메시지 생성
     private Message makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
 
-
-//        FcmMessage.Notification noti = new FcmMessage.Notification(title, body, null);
-//        FcmMessage.Message message = new FcmMessage.Message(noti, targetToken);
-//        FcmMessage fcmMessage = new FcmMessage(false, message);
-
         Message message = Message.builder()
                 .setToken(targetToken)
                 .setWebpushConfig(WebpushConfig.builder().putHeader("ttl", "300")
@@ -96,8 +92,5 @@ public class FcmService {
                 .build();
         return message;
     }
-
-
-
 
 }

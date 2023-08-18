@@ -4,6 +4,7 @@ public enum State {
 
     STAND_BY("신고 대기"),
     APPROVAL("신고 승인"),
+    DELETE("기간 후 삭제"),
     REFUSE("신고 거절")
     ;
 

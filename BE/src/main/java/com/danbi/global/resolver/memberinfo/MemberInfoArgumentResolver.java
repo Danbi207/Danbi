@@ -1,6 +1,7 @@
 package com.danbi.global.resolver.memberinfo;
 
 import com.danbi.domain.member.constant.Role;
+import com.danbi.domain.member.constant.State;
 import com.danbi.global.jwt.service.TokenManager;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class MemberInfoArgumentResolver implements HandlerMethodArgumentResolver
         Claims tokenClaims = tokenManager.getTokenClaims(token);
         Long memberId = Long.valueOf( (Integer) tokenClaims.get("memberId"));
         String role = (String) tokenClaims.get("role");
+        String state = (String) tokenClaims.get("state");
 
         return MemberInfoDto.builder()
                 .memberId(memberId)

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class RequestFriendDto {
 
-    @JsonProperty("target_id")
+    @JsonProperty("targetId")
     @NotNull(message = "targetId값이 필요합니다.")
     private Long targetId;
 
