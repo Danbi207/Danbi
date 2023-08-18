@@ -113,6 +113,7 @@ const Profile = () => {
       <Header />
       <Wrap>
         <UserInfo
+          fetchData={fetchData}
           url={data.profileUrl}
           name={data.name}
           targetId={userId}

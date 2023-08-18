@@ -11,6 +11,7 @@ const UserInfo = ({
   accusePoint,
   requestedFriendFlag,
   requestFriendFlag,
+  fetchData
 }) => {
 
   const handlePlus = async () => {
@@ -19,6 +20,7 @@ const UserInfo = ({
     };
     await authPost('/api/v1/friends', data);
     await authGet(`/api/v1/profile/${targetId}`);
+    fetchData();
   };
 
   const cur_id = useSelector((state) => state.user.userId);
