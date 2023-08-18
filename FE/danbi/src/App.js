@@ -1,6 +1,6 @@
 import './App.css';
 import { useDispatch,useSelector } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import routes from "./router";
 import {dark,light} from "./style/theme.js";
 import { ThemeProvider } from 'styled-components';
@@ -32,9 +32,24 @@ function App() {
       
       if(isLogin){
         requestFcmToken()
+      }else{
+        const path = document.location.href.replaceAll(`${process.env.REACT_APP_SERVER}`,"");
+        console.log(path,path==="/");
+        if(path === "/" || path === "/user/login/oauth"||path ==="/user/join"){
+          return;
+        }
+        alert("로그인 중이 아닙니다!");
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('refreshTokenExpireTime');
+        localStorage.removeItem('role');
+        document.location.href=`${process.env.REACT_APP_SERVER}/`;
       }
     }catch(err){
-      console.log(err);
+      const path = document.location.href.replaceAll(`${process.env.REACT_APP_SERVER}`,"");
+      if(path !== "/" || path !== "/user/login/oauth"||path!=="/user/join"){
+        alert("로그인 중이 아닙니다!");
+        document.location.href=`${process.env.REACT_APP_SERVER}/`;
+      }
     }
   },[requestFcmToken]);
 
@@ -74,6 +89,7 @@ function App() {
     //DO : PC인지 모바일인지 검사
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   },[navigator.userAgent]);
+
   return (
     <>
     {
