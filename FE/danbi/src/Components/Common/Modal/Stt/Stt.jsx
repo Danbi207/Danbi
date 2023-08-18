@@ -103,7 +103,7 @@ const ModalWrap = styled.div`
   width: 80%;
   left: 10%;
   height: 70%;
-  top: 25%;
+  top: 15%;
   padding: 1rem;
   background-color: ${(props) => props.theme.colors.bgColor};
   color:${props=>props.theme.colors.titleColor};
