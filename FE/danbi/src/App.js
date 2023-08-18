@@ -33,8 +33,8 @@ function App() {
       if(isLogin){
         requestFcmToken()
       }else{
-        const path = document.location.href.replaceAll(`${process.env.REACT_APP_SERVER}`,"");
-        console.log(path,path==="/");
+        let path = document.location.href.replaceAll(`${process.env.REACT_APP_SERVER}`,"");
+        path = path.split("?")[0];
         if(path === "/" || path === "/user/login/oauth"||path ==="/user/join"){
           return;
         }
