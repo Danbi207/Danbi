@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import PresetItem from './PresetItem.jsx';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMode } from '../../../../store/Slice/ModalSlice.js';
 
-const Preset = ({preset_list, setPresetList}) => {
-  console.log(preset_list);
+const Preset = ({ preset_list, setPresetList }) => {
+  // console.log(preset_list);
   const [OpenTitle, setOpenTitle] = useState(-1);
+  const [OpenDetail, setOpenDetail] = useState(-1);
   const showDetail = (title) => {
     setOpenTitle(title);
   };
+
+  const showDetailWithIndex = (index) => {
+    setOpenDetail(index);
+  };
+
   const handleChange = (result) => {
     if (!result.destination) return;
     const items = [...preset_list];
@@ -16,6 +25,7 @@ const Preset = ({preset_list, setPresetList}) => {
     items.splice(result.destination.index, 0, reorderedItem);
     setPresetList(items);
   };
+
 
   return (
     <DragDropContext onDragEnd={handleChange}>
@@ -31,9 +41,17 @@ const Preset = ({preset_list, setPresetList}) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       key={index}
-                      isDragging={snapshot.isDragging}
+                      $isDragging={snapshot.isDragging}
                     >
-                      <PresetItem value={value} index={index} OpenTitle={OpenTitle} key={value.title} showDetail={showDetail} />
+                      <PresetItem
+                        value={value}
+                        index={index}
+                        OpenTitle={OpenTitle}
+                        key={value.title}
+                        showDetail={showDetail}
+                        setPresetList={setPresetList}
+                        OpenDetail={OpenDetail}
+                      />
                     </Wrap>
                   )}
                 </Draggable>
@@ -45,7 +63,7 @@ const Preset = ({preset_list, setPresetList}) => {
       </PresetWrap>
     </DragDropContext>
   );
-}
+};
 
 const PresetWrap = styled.div`
   width: 19rem;
@@ -53,13 +71,13 @@ const PresetWrap = styled.div`
 `;
 
 const Wrap = styled.div`
-width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: end;
   height: auto;
   margin-bottom: 0.5rem;
-  transform: ${props => props.isDragging ? 'scale(1.1)' : 'scale(1)'};
+  transform: ${(props) => (props.$isDragging ? 'scale(1.1)' : 'scale(1)')};
 `;
 
 export default Preset;

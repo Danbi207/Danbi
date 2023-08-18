@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import DetailMap from './DetailMap.jsx';
 
 const HelpDetailInfo = ({ data }) => {
-  console.log(data);
   return (
     <DetailWrap>
       <BasicInfo>
@@ -12,8 +11,8 @@ const HelpDetailInfo = ({ data }) => {
           <FaceFlag>대면 : {data.faceflag ? '대면' : '비대면'}</FaceFlag>
           <DateTag>날짜 : {data.startTime}</DateTag>
           <TimeTag>시간 : {data.endTime}</TimeTag>
-          <Destination>목적지 : {data.position.dest_addr}</Destination>
-          <Meet>만나는 곳 : {data.position.meet_addr}</Meet>
+          {data.faceflag ? <Destination>목적지 : {data.position.destAddr}</Destination> : null}
+          {data.faceflag ? <Meet>만나는 곳 : {data.position.meetAddr}</Meet> : null}
         </BasicBody>
       </BasicInfo>
       <HelpInfo>
@@ -24,23 +23,29 @@ const HelpDetailInfo = ({ data }) => {
         <CautionHeader>주의 사항</CautionHeader>
         <CautionBody>{data.caution}</CautionBody>
       </CautionInfo>
-      <MapInfo>
-        <MapHeader>위치 정보</MapHeader>
-        <DetailMap position={data.position} />
-      </MapInfo>
+      {
+        data.faceFlag ?
+        <MapInfo>
+          <MapHeader>위치 정보</MapHeader>
+          <DetailMap position={data.position} emergencyFlag={data.emergencyFlag} />
+        </MapInfo>
+        :null
+      }
     </DetailWrap>
   );
 };
 
 const DetailWrap = styled.div`
+  display: flex;
+  flex-direction:column;
   width: 100%;
-  height: 100%;
+  gap:0.5rem;
+  padding: 0 1rem;
 `;
 const BasicInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
 `;
 const BasicHeader = styled.div`
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 `;
 const BasicBody = styled.div`
   border: 1px solid ${(props) => props.theme.colors.titleColor};
@@ -56,7 +61,6 @@ const TimeTag = styled.div``;
 const Destination = styled.div``;
 const Meet = styled.div``;
 const HelpInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
 `;
 const HelpHeader = styled.div`
   margin-bottom: 0.5rem;
@@ -70,10 +74,9 @@ const HelpBody = styled.div`
   padding: 0.5rem 0 0.5rem 0.5rem;
 `;
 const CautionInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
 `;
 const CautionHeader = styled.div`
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 `;
 const CautionBody = styled.div`
   border: 1px solid ${(props) => props.theme.colors.titleColor};
@@ -85,10 +88,13 @@ const CautionBody = styled.div`
 `;
 
 const MapInfo = styled.div`
-  margin: 1rem 1rem 1.5rem 1rem;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  height: 8rem;
 `;
 
-const MapHeader = styled.span``;
+const MapHeader = styled.span`
+  margin: 0.5rem 0;
+`;
 
 export default HelpDetailInfo;

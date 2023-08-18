@@ -2,10 +2,10 @@ package com.danbi.api.guestbook.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 
@@ -14,9 +14,13 @@ public class CommentDto {
     @Schema(description = "방명록에 댓글 작성 요청 DTO")
     @Setter
     @Getter
-    public static class Reqeust {
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Request {
 
         @Schema(description = "댓글 내용")
+        @Length(max = 500, message = "댓글은 500자 이하여야 합니다.")
+        @NotBlank
         private String content;
     }
 
@@ -26,8 +30,11 @@ public class CommentDto {
     @Builder
     public static class Response {
 
+        @Schema(description = "작성한 멤버 id")
+        private Long memberId;
+
         @Schema(description = "작성된 댓글 id")
-        private Long id;
+        private Long commentId;
 
         @Schema(description = "작성된 댓글 내용")
         private String content;

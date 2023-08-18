@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 const Tap = (props) => {
   return (
-    <TapWrap>
+    <TapWrap $count={props.faceFlag ? 3 : 2}>
       <TapItem $defaultMode="Infomation"  $mode={props.mode} onClick={()=>{
         props.stopCurPosition();
         props.setMode("Infomation");
@@ -12,16 +12,20 @@ const Tap = (props) => {
         props.stopCurPosition();
         props.setMode("Chat");
       }}>소통</TapItem>
-      <TapItem $defaultMode="RealtimeMap" $mode={props.mode} onClick={()=>{
-        props.startCurPosition();
-        props.setMode("RealtimeMap");
-      }}>실시간 위치</TapItem>
+      {
+        props.faceFlag?
+        <TapItem $defaultMode="RealtimeMap" $mode={props.mode} onClick={()=>{
+          props.startCurPosition();
+          props.setMode("RealtimeMap");
+        }}>실시간 위치</TapItem>
+        :null
+      }
     </TapWrap>
   )
 }
 const TapWrap = styled.div`
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(${props=>props.$count},1fr);
   width: 100%;
   height: 3rem;
 `

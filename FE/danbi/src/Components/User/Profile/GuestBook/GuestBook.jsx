@@ -1,63 +1,98 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import example from '../example-profile.jpg';
 import GuestBookComment from './GuestBookComment';
+import { authPost, authGet } from '../../../../Util/apis/api';
+import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
 
-const Comments = [
-  {
-    name: '김민규',
-    profile_url: './example-profile.jpg',
-    content: '저는 쓸개입니다.',
-    created_time: '2023-07-26',
-    updated_time: '2023-07-26',
-  },
-  {
-    name: '윤태웅',
-    profile_url: './example-profile.jpg',
-    content: '역시 김민규 좀 그렇네요...',
-    created_time: '2023-07-25',
-    updated_time: '2023-07-25',
-  },
-  {
-    name: '김민규',
-    profile_url: './example-profile.jpg',
-    content: '저는 쓸개입니다.',
-    created_time: '2023-07-26',
-    updated_time: '2023-07-26',
-  },
-];
+const GuestBook = ({ guestBookId, userId }) => {
+  const [textArea, setTextArea] = useState('');
+  const profileUrl = useSelector((state) => state.user.profileUrl);
+  const name = useSelector((state) => state.user.name);
+  const [comments, setComment] = useState([]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const textJson = {
+      content: textArea,
+    };
+    try {
+      await authPost(`/api/v1/profile/guestbook/${guestBookId}`, textJson);
+      setTextArea('');
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
+      setComment(res.guestBookDto.commentDtos);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-const GuestBook = () => {
+  const handleChange = (e) => {
+    setTextArea(e.target.value);
+  };
+
+  const guestsbookcomments = () => {
+    const res = comments.map((comment, index) => (
+      <GuestBookComment
+        key={index}
+        //comment={comment}
+        commentId={comment.commentId}
+        content={comment.content}
+        writerName={comment.name}
+        userId={userId}
+        setComment={setComment}
+        guestBookId={guestBookId}
+        memberId={comment.memberId}
+        profileUrl={comment.profileUrl}
+        created={comment.createdTime}
+      />
+    ));
+    return res;
+  };
+
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await authGet(`/api/v1/profile/guestbook/${userId}`);
+      setComment(res.guestBookDto.commentDtos);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [userId]);
+
   return (
     <GuestBookWrap>
+      <UserDetail>
+        <ProfileImage $profileUrl={profileUrl} alt="img" />
+        <UserName>{name}</UserName>
+      </UserDetail>
       <ChatWrap>
-        <UserDetail>
-          <ProfileImage src={example} alt="img" />
-          <UserName>김민규</UserName>
-        </UserDetail>
         <ChatSection>
-          <ChatForm>
-            <Chat />
+          <ChatForm onSubmit={handleSubmit}>
+            <Chat value={textArea} onChange={handleChange} />
             <SendBtn>
               <ChatImg />
             </SendBtn>
           </ChatForm>
         </ChatSection>
       </ChatWrap>
-      {Comments.map((comment, index) => (
-        <GuestBookComment key={index} comment={comment} />
-      ))}
+      <Comments>{guestsbookcomments()}</Comments>
     </GuestBookWrap>
   );
 };
 
 const GuestBookWrap = styled.div`
   margin-top: 0.5rem;
-  height: calc(100% - 3.2rem);
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  flex: 1;
 `;
 
 const ChatWrap = styled.div`
-  height: 3rem;
+  height: auto;
   display: flex;
 `;
 
@@ -67,7 +102,9 @@ const UserDetail = styled.div`
   width: 6rem;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImage = styled.img.attrs((props) => ({
+  src: props.$profileUrl,
+}))`
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -82,12 +119,14 @@ const UserName = styled.div`
 `;
 
 const ChatSection = styled.div`
-  width: 14rem;
   display: flex;
   border-bottom: 2px solid ${(props) => props.theme.colors.titleColor};
   align-items: center;
   justify-content: center;
   padding-left: 0.5rem;
+  width: 90%;
+  padding-right: 0.5rem;
+  margin-left: 5%;
 `;
 const ChatForm = styled.form`
   width: 100%;
@@ -112,7 +151,7 @@ const Chat = styled.textarea`
   -ms-overflow-style: none;
   min-height: 24px;
   max-height: 200px;
-  color: white;
+  color: ${(props) => props.theme.colors.titleColor};
 `;
 
 const SendBtn = styled.button`
@@ -122,13 +161,20 @@ const SendBtn = styled.button`
   height: auto;
 `;
 
-const ChatImg = styled.img.attrs(
-props => ({
-  src: props.theme.images.send
-})
-)`
+const ChatImg = styled.img.attrs((props) => ({
+  src: props.theme.images.send,
+}))`
   width: 20px;
   height: 20px;
+`;
+
+const Comments = styled.div`
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
 `;
 
 export default GuestBook;

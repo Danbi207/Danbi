@@ -1,23 +1,19 @@
-import axios from 'axios';
-import React, { useEffect ,useCallback} from 'react'
-import { useDispatch} from "react-redux";
+  import axios from 'axios';
+import React, { useEffect ,useCallback} from 'react';
 import { useNavigate } from 'react-router';
 import { authGet, setToken,setTokenExpireTime } from '../../../../Util/apis/api';
-
 import {requestPermission} from '../../../../Util/hooks/requestPermission';
 
 const KaKaoOauth = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   
   const logout = useCallback(async () => {
-    await authGet("api/v1/member/logout");
+    await authGet("/api/v1/member/logout");
     
     setToken("");
     setTokenExpireTime("");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("refreshTokenExpireTime");
-    localStorage.removeItem("role");
   },[])  
 
   // FCM 토큰 함수 호출
@@ -36,14 +32,13 @@ const KaKaoOauth = () => {
       url : process.env.REACT_APP_KAKAO_OUATH__PATH,
       data : {code,redirectUrl} 
     }).then(({data})=>{
-      
-      setToken(data.access_token);
-      setTokenExpireTime(data.access_token_expiration_time);
+      // console.log(data);
+      setToken(data.accessToken);
+      setTokenExpireTime(data.accessTokenExpirationTime);
       
       //DO : 토큰정보를 저장
       localStorage.setItem("refreshToken",data.refreshToken);
       localStorage.setItem("refreshTokenExpireTime",data.refreshTokenExpireTime);
-      localStorage.setItem("role",data.role);
       
       
       if(data.role === "ROLE_UNCERTIFICATED_IP"){//서류제출까지 완료하였으나 허가안나는 경우
@@ -53,26 +48,34 @@ const KaKaoOauth = () => {
       }
     
       // FCM 토큰을 요청
-      requestFcmToken()
+      requestFcmToken();
 
-      if(data.role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
-        navigate("/userSubmit", { replace: true });
+      // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
+      if(data.role==="ROLE_UNDEFINED" || data.role==="ROLE_UNSUBMIT_IP"){
+        localStorage.setItem("role",data.role);
+        navigate("/user/join", { replace: true });
         return;
       }
 
       if(data.role === "ROLE_IP"){//역할이 IP인 경우
-        navigate("/ip", { replace: true });
+        localStorage.setItem("role","ip");
+        navigate("/help/ip", { replace: true });
       }
 
       if(data.role === "ROLE_HELPER"){//역할이 Helper인경우
-        navigate("/helper", { replace: true });
+        localStorage.setItem("role","helper");
+        navigate("/help/helper", { replace: true });
       }
 
+      if(data.role === "ROLE_ADMIN"){//역할이 관리자인 경우
+        localStorage.setItem("role","admin");
+        navigate("/admin",{replace:true});
+      }
 
     }).catch((err)=>{
       console.log(err);
     });
-  },[dispatch,navigate,logout,requestFcmToken])
+  },[navigate,logout,requestFcmToken])
   return (
     <></>
   )

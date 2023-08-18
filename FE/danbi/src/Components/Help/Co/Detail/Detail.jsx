@@ -1,19 +1,19 @@
-import React, {useEffect} from 'react';
-import { useParams, useNavigate  } from 'react-router-dom';
-import Header from "../../../Common/Header/Header"
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import Header from '../../../Common/Header/Header';
 import Footer from '../../../Common/Footer/Footer';
 import styled from 'styled-components';
-import HelperDetail from './items/HelperDetail.jsx';
+import HelperDetail from './Items/HelperDetail.jsx';
 
 const Detail = () => {
   const { helpPostId } = useParams();
   const { role } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    if (role === 'IP') {
-      navigate('/iprequest', { state: { helpPostId: helpPostId } });
+    if (role === 'ip') {
+      navigate('/help/ip/request', { state: { helpPostId: helpPostId } });
     }
-  }, [role, helpPostId, navigate])
+  }, [role, helpPostId, navigate]);
   return (
     <DetailWrap>
       <Header></Header>
@@ -23,9 +23,9 @@ const Detail = () => {
   );
 };
 
-
-
 const DetailWrap = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `;

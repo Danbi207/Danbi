@@ -16,7 +16,7 @@ const Chat = (props) => {
   const chatRef = useRef();
   const socketRef = useRef();
   const pcRef = useRef();
-  const stream = useRef();
+  const streamRef = useRef();
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const [chatValue,setChatValue] = useState("");
@@ -29,6 +29,7 @@ const Chat = (props) => {
 
   const sendMessage = ()=>{
     const message = {
+      userId:props.myProfile.userId,
       helpId:props.roomId,
       name:props.myProfile.name,
       content:chatValue,
@@ -44,34 +45,37 @@ const Chat = (props) => {
   }
   const setVideoTracks = useCallback(async () => {
     try {
-      stream.current = await navigator.mediaDevices.getUserMedia({
+      const stream = await navigator.mediaDevices.getUserMedia({
         video: onVideo,
         audio: onAudio,
       });
-      if (localVideoRef.current) localVideoRef.current.srcObject = stream.current;
-      if (!(pcRef.current && socketRef.current)) return;
-      stream.current.getTracks().forEach((track) => {
-        if (!pcRef.current) return;
-        pcRef.current.addTrack(track, stream.current);
-      });
-      pcRef.current.onicecandidate = (e) => {
-        if (e.candidate) {
-        if (!socketRef.current) return;
-        socketRef.current.emit("candidate", e.candidate);
-        }
-      };
-      pcRef.current.oniceconnectionstatechange = (e) => {
-        // console.log(e);
-      };
-      pcRef.current.ontrack = (ev) => {
-        // console.log("add remotetrack success");
-        if (remoteVideoRef.current) {
-        remoteVideoRef.current.srcObject = ev.streams[0];
-        }
-      };
-      socketRef.current.emit("join_room", {
-        room: props.roomId,
-      });
+      if(stream){
+        streamRef.current = stream;
+        if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+        if (!(pcRef.current && socketRef.current)) return;
+        stream.getTracks().forEach((track) => {
+          if (!pcRef.current) return;
+          pcRef.current.addTrack(track, stream);
+        });
+        pcRef.current.onicecandidate = (e) => {
+          if (e.candidate) {
+          if (!socketRef.current) return;
+          socketRef.current.emit("candidate", e.candidate);
+          }
+        };
+        pcRef.current.oniceconnectionstatechange = (e) => {
+          // console.log(e);
+        };
+        pcRef.current.ontrack = (ev) => {
+          // console.log("add remotetrack success");
+          if (remoteVideoRef.current) {
+          remoteVideoRef.current.srcObject = ev.streams[0];
+          }
+        };
+        socketRef.current.emit("join_room", {
+          room: props.roomId,
+        });
+      }
     } catch (e) {
       console.error(e);
     }
@@ -108,15 +112,19 @@ const Chat = (props) => {
 
   useEffect(()=>{
     //DO : 지난 채팅내역을 불러옴
-    //FIXME : 채팅내역에서 nickname을 비교해 내가 친 채팅인지 상대방이 친 채팅인지 구분하여 넣기
     axios({
       method:"get",
       url:`/room/chat/${props.roomId}`,
     }).then(({data})=>{
       for(let i = 0; i < data.length; i++){
         const messageEl = document.createElement("div");
-        messageEl.className="RightChatWrap";
-        messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
+        if(data[i].userId===props.myProfile.userId){
+          messageEl.className="RightChatWrap";
+          messageEl.innerHTML = `<span>${data[i].date}</span><span>${data[i].name} : ${data[i].content}</span>`;
+        }else{
+          messageEl.className="LeftChatWrap";
+          messageEl.innerHTML = `<span>${data[i].name} : ${data[i].content}</span><span>${data[i].date}</span>`;
+        }
         chatRef.current.appendChild(messageEl);
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
       }
@@ -185,7 +193,7 @@ const Chat = (props) => {
           <Video muted ref={localVideoRef} autoPlay></Video>
           <ControlBtnWrap>
             <ControlBtn onClick={()=>{
-              stream.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
+              streamRef.current.getVideoTracks().forEach(track=>track.enabled = !track.enabled);
               setOnVideo(!onVideo);
             }} ><img alt='' src={`${process.env.PUBLIC_URL}/assets/videocam_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
@@ -193,7 +201,7 @@ const Chat = (props) => {
               }
             </ControlBtn>
             <ControlBtn onClick={()=>{
-              stream.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
+              streamRef.current.getAudioTracks().forEach(track=>track.enabled = !track.enabled);
               setOnAudio(!onAudio);
             }}><img alt='' src={`${process.env.PUBLIC_URL}/assets/volume_up_FILL1_wght400_GRAD0_opsz48 1.svg`} />
               {
@@ -216,8 +224,9 @@ const Chat = (props) => {
 }
 const ChatBtn = styled.button`
   background-image: url(${props=>props.theme.images.send});
-  width: 1rem;
-  height: 1rem;
+  background-repeat:no-repeat;
+  width: 1.5rem;
+  height: 1.5rem;
 `
 const ChatInput = styled.input`
   width: calc(100% - 1.5rem);
@@ -234,6 +243,7 @@ const ControlBtn = styled.button`
   border-radius: 1rem;
   background-color: #FFEA7E;
   color: #000;
+  font-size: 10px;
   &>img{
     vertical-align: middle;
   }
@@ -252,12 +262,8 @@ const VideoTitle = styled.div`
   text-align: center;
 `
 const Video = styled.video`
-  width: 95%;
-  height: 100%;
-  @media screen and (max-width: 500px) {
-    width: 160px;
-    height: 160px;
-  }
+  width: 160px;
+  height: 160px;
   background-color: #000;
 `
 const VideoSubWrap = styled.div`
@@ -265,17 +271,14 @@ const VideoSubWrap = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 90%;
-  @media screen and (max-width: 500px) {
-    width: 100%;
-    height: 12rem;
-  }
+  height: 12rem;
 `
 const VideoWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(2,1fr);
   grid-column-gap:0.5rem;
   width: 100%;
+  height: 40%;
   padding: 1rem;
 `
 const ChatItems = styled.div`
@@ -296,12 +299,8 @@ const ChatItems = styled.div`
 `
 const ChatWrap = styled.div`
   padding: 1rem;
-  width: 25%;
-  height: calc(100% - 3.5rem);
-  @media screen and (max-width: 500px) {
-    width: 100%;
-    height: calc(100% - 16rem);
-  }
+  width: 100%;
+  height: 60%;
   &>:last-child{
     margin-top: 1rem;
     width: 100%;
@@ -314,8 +313,6 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  @media screen and (max-width: 500px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `
 export default Chat

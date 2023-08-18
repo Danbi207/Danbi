@@ -4,11 +4,14 @@ server:
     context-path: /
 
 spring:
-  # 개발 데이터베이스 연결
-#  datasource:
-#    url: jdbc:h2:tcp://localhost/~/danbi
-#    username: sa
-#    password:
+
+  redis:
+    pool:
+      min-idle: 0 # pool에서 관리하는 idle 최소 커넥션  수
+      max-idle: 8 # pool의 idle 최대 커넥션 수
+      max-active: 8  # pool에 할당될 수 있는 최대 커넥션
+    port: 6379
+    host: 127.0.0.1 # 레디스 서버 호스트
 
   jpa:
     hibernate:
@@ -18,7 +21,9 @@ spring:
       hibernate:
         format_sql: true # sql 예쁘게 출력
         default_batch_fetch_size: 500 # 일대다 컬렉션 조회 시 성능 최적화 : 100 ~ 1000 권장
+        dialect: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false # 영속성 컨텍스트의 생존 범위를 트랜잭션 범위로 한정 (default 인 true 에서는 interceptor, controller, view 까지 살아있음)
+
 
   servlet:
     multipart:
@@ -55,6 +60,17 @@ token:
   access-token-expiration-time: 90000000  # 15분 1000(ms) x 60(s) x 15(m)
   refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
 
+# S3
+cloud:
+  aws:
+    s3:
+      bucket: danbi-help
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ENC(KzyGTfZ93uzfRpeAVP27uHfLq1Pktdy5KgwreeeG4hM=)
+      secretKey: ENC(rFtftLJvm6oN0F1d2KZ8KWMqwqwfHc55tff8Y1mKFaBiB4a7XRHPxc8nIrK1i52KKbxqoexBQqg=)
+
 #springdoc swagger
 springdoc:
   packages-to-scan: com.danbi.api
@@ -65,3 +81,6 @@ springdoc:
     disable-swagger-default-url: true
     display-request-duration: true
     operations-sorter: alpha
+
+fcm:
+  certification: ENC(RoPa8n/InwLP1VfUsUmhHdn5yDM8Vnsk04zPJb6LZg0iQ2w6WHRmJ9SEEcP8Ou0y)

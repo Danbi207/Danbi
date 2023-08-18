@@ -1,4 +1,7 @@
 spring:
+  config:
+    activate:
+      on-profile: local
   # 개발 데이터베이스 연결
   datasource:
     url: jdbc:h2:tcp://localhost/~/danbi

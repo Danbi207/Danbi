@@ -4,6 +4,8 @@ public enum State {
 
     ACTIVATE,
     DELETE,
+    MATCHED,
+    COMPLETED,
     ;
 
     public static State from(String state) {

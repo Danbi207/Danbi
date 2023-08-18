@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FriendRepository extends JpaRepository<Friend, Long> {
+public interface FriendRepository extends JpaRepository<Friend, Long>, FriendRepositoryCustom {
 
 
+    boolean existsByFromAndToAndTypeAndState(Member from, Member to, Type type, State state);
     boolean existsByFromAndToAndState(Member from, Member to, State state);
     List<Friend> findAllByFromAndTypeAndState(Member from, Type type, State state);
 
@@ -22,4 +23,5 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
     Optional<Friend> findByFromAndToAndState(Member from, Member to, State state);
 
     List<Friend> findAllByFromOrToAndTypeAndState(Member from, Member to, Type type, State state);
+
 }

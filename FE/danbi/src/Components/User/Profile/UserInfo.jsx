@@ -1,18 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
-import example from './example-profile.jpg';
 import AccuseButton from './Utils/AccuseButton.jsx';
+import { authPost, authGet } from '../../../Util/apis/api.js';
+import { useSelector } from 'react-redux';
+const UserInfo = ({
+  url,
+  name,
+  targetId,
+  friendFlag,
+  accusePoint,
+  requestedFriendFlag,
+  requestFriendFlag,
+}) => {
 
-const UserInfo = () => {
+  const handlePlus = async () => {
+    const data = {
+      targetId,
+    };
+    await authPost('/api/v1/friends', data);
+    await authGet(`/api/v1/profile/${targetId}`);
+  };
+
+  const cur_id = useSelector((state) => state.user.userId);
   return (
     <UserInfoWrap>
-      <ProfileImage src={example} alt="img" />
+      <ProfileImage $profileUrl={url} alt="img" />
       <UserDetail>
-        <UserName>김민규</UserName>
-        <Btns>
-          <PlusButton>친구추가</PlusButton>
-          <AccuseButton />
-        </Btns>
+        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '0.75rem' }}>
+          <UserName>{name}</UserName>
+          {friendFlag ? <FriendBadge /> : null}
+          {accusePoint === 0 ? null : accusePoint === 1 ? (
+            <AccuseBadge $state={'yellowcard'} />
+          ) : (
+            <AccuseBadge $state={'redcard'} />
+          )}
+        </div>
+        {cur_id === Number(targetId) ? null : (
+          <Btns>
+            {friendFlag || requestedFriendFlag || requestFriendFlag ? null : (
+              <PlusButton onClick={handlePlus}>친구추가</PlusButton>
+            )}
+            <AccuseButton targetId={targetId} />
+          </Btns>
+        )}
       </UserDetail>
     </UserInfoWrap>
   );
@@ -25,9 +55,11 @@ const UserInfoWrap = styled.div`
   padding: 0 1rem 0 2.5rem;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImage = styled.img.attrs((props) => ({
+  src: props.$profileUrl,
+}))`
   height: 6rem;
-  width: 7rem;
+  width: 6rem;
   border-radius: 50%;
 `;
 
@@ -44,13 +76,11 @@ const UserName = styled.div`
   font-size: 17px;
   height: 1rem;
   text-align: start;
-  margin-bottom: 0.75rem;
   margin-left: 0.25rem;
 `;
 
 const PlusButton = styled.button`
-  background-color: #6161ff;
-  color: white;
+  background-color: #FFEA7E;
   border-radius: 10px;
   width: 8rem;
   height: 2rem;
@@ -61,5 +91,16 @@ const Btns = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
+const FriendBadge = styled.img.attrs((props) => ({
+  src: props.theme.images.friendBadge,
+}))``;
+
+const AccuseBadge = styled.img.attrs((props) => ({
+  src:
+    props.$state === 'yellowcard'
+      ? props.theme.images.yellowcard
+      : props.theme.images.redcard,
+}))``;
 
 export default UserInfo;

@@ -9,6 +9,7 @@ import com.danbi.domain.profile.entity.Profile;
 import com.danbi.domain.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ public class GuestBookProfileService {
     private final ProfileService profileService;
     private final CommentService commentService;
 
-    public GuestBookResponseDto getGuestBook(Long profileId) {
+    public GuestBookResponseDto getGuestBook(Long profileId, Pageable pageable) {
         Profile profile = profileService.getProfileById(profileId);
         Member member = profile.getMember();
         log.info("memberId={}", member.getId());
@@ -33,10 +34,11 @@ public class GuestBookProfileService {
         GuestBook guestBook = member.getGuestBook();
         log.info("guestBookId={}", guestBook.getId());
 
-        List<Comment> comments = commentService.findByGuestBook(guestBook);
+        List<Comment> comments = commentService.findByGuestBook(guestBook, pageable);
         List<GuestBookResponseDto.GuestBookDto.CommentDto> commentDtos = comments.stream()
                 .map(comment -> GuestBookResponseDto.GuestBookDto.CommentDto.builder()
                         .commentId(comment.getId())
+                        .memberId(comment.getMember().getId())
                         .name(comment.getMember().getName())
                         .profileUrl(comment.getMember().getProfileUrl())
                         .content(comment.getContent())

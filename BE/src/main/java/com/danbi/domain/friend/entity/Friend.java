@@ -18,15 +18,16 @@ public class Friend extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "friend_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_member_id")
-    Member from;
+    private Member from;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_member_id")
-    Member to;
+    private Member to;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)

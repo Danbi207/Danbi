@@ -4,7 +4,8 @@ public enum AccuseType {
 
     SEXUAL_HARASSMENT("성희롱"),
     ABUSE("욕설"),
-    VIOLENCE("폭력")
+    VIOLENCE("폭력"),
+    ETC("기타")
     ;
 
     public static AccuseType from(String state) {

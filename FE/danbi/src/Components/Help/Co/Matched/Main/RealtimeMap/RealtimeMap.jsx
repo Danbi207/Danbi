@@ -1,55 +1,14 @@
-import axios from 'axios';
-import React, { useRef, useState } from 'react'
-import { useEffect } from 'react';
-import styled from 'styled-components';
-const RealtimeMap = (props) => {
-  const [map,setMap] = useState();
-  const [curMarker,setCurMarker] = useState(null);
-  const mapRef = useRef();
-  const {kakao} = window;
- 
+import React, { useEffect ,useState} from "react"
+import {Map,CustomOverlayMap,Polyline} from "react-kakao-maps-sdk";
+import axios from "axios";
+import styled, { keyframes } from 'styled-components';
+const RealtimeMap = ({position,curposition}) => {
+  const [linePath,setLinePath] = useState([]);
   useEffect(()=>{
-    if(props.curposition !== null){
-      const curPosition = new kakao.maps.LatLng(props.curposition.coords.latitude,props.curposition.coords.longitude);
-      console.log(props.curposition.coords);
-      const marker = new kakao.maps.Marker({
-        position: curPosition
-      });
-      if(curMarker !== null){curMarker.setMap(null);}
-      marker.setMap(map);
-      setCurMarker(marker);
-    }
-  },[kakao,props.curposition,map]);
-
-  useEffect(()=>{
-    //DO : 카카오 맵 초기설정
-    const meetPosition = new kakao.maps.LatLng(props.position.meet_latitude,props.position.meet_longitude);
-    const mapOption = { 
-      center: meetPosition, //만나는장소 위치
-      level: 7 // 지도의 확대 레벨
-    };
-    const map = new kakao.maps.Map(mapRef.current, mapOption);
-    setMap(map);
-    
-    const coordinates = [];
-    //만나는 장소마커 생성
-    const meetMarker = new kakao.maps.Marker({
-      position: meetPosition
-    });
-    meetMarker.setMap(map);
-    coordinates.push([props.position.meet_longitude,props.position.meet_latitude]);
-
-    //목적지 장소마커 생성
-    let destMarker = null;
-    if(props.position.dest_latitude){
-      const destPosition = new kakao.maps.LatLng(props.position.dest_latitude,props.position.dest_longitude)
-      destMarker = new kakao.maps.Marker({
-        position: destPosition
-      });
-      destMarker.setMap(map);
-      coordinates.push([props.position.dest_longitude,props.position.dest_latitude]);
-
-      //DO : 경로찾기 및 지도에 표시
+    if(position && position.destLatitude){
+      const coordinates = [];
+      coordinates.push([position.meetLongitude,position.meetLatitude]);
+      coordinates.push([position.destLongitude,position.destLatitude]);
       axios({
         method:"post",
         url:"https://api.openrouteservice.org/v2/directions/driving-car/geojson",
@@ -58,33 +17,86 @@ const RealtimeMap = (props) => {
         },
         data:{"coordinates":coordinates}
       }).then(({data})=>{
+        const res = [];
         // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
-        const linePath = [];
         for(let i = 0; i < data.features[0].geometry.coordinates.length; i++){
-          linePath.push(new kakao.maps.LatLng(data.features[0].geometry.coordinates[i][1],data.features[0].geometry.coordinates[i][0]));
+          res.push({lat : data.features[0].geometry.coordinates[i][1],lng : data.features[0].geometry.coordinates[i][0]});
         }
-        // 지도에 표시할 선을 생성합니다
-        const polyline = new kakao.maps.Polyline({
-          path: linePath, // 선을 구성하는 좌표배열 입니다
-          strokeWeight: 10, // 선의 두께 입니다
-          strokeColor: '#FFAE00', // 선의 색깔입니다
-          strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-          strokeStyle: 'solid' // 선의 스타일입니다
-        });
-  
-        // 지도에 선을 표시합니다 
-        polyline.setMap(map);  
-      });
+        setLinePath([...res]);
+      }).catch(err=>{
+        console.log(err);
+      })
     }
-  },[props.position,mapRef,kakao]);
+  },[position])
+
+  const getMakers = ()=>{
+    const res = [];
+    let key = 0;
+    if(curposition){
+      res.push(
+      <CustomOverlayMap key={key++} position={{lat:curposition.coords.latitude,lng:curposition.coords.longitude}}>
+        <CurMarker alt='' src={`${process.env.PUBLIC_URL}/assets/curMarker.svg`}></CurMarker>
+      </CustomOverlayMap>);
+    }
+    
+    if(position){
+      res.push(
+        <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
+          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Meeting.svg`}></Marker>
+        </CustomOverlayMap>);
+
+        if(position.destLatitude && position.destLongitude){
+          res.push(
+            <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
+              <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Destination.svg`}></Marker>
+            </CustomOverlayMap>);
+        }
+    }
+
+    return res;
+  }
 
   return (
-    <RealtimeMapWrap ref={mapRef}>
-    </RealtimeMapWrap>
+    <Map
+      center={{lat:position ? position.meetLatitude : 36.1071233,lng: position ? position.meetLongitude : 128.416481}}
+      style={{width:"100%",height:"100%"}}
+      level={7}
+    >
+      {
+        getMakers()
+      }
+      <Polyline
+        path={[
+          linePath,
+        ]}
+        strokeWeight={5} // 선의 두께 입니다
+        strokeColor={"#FFAE00"} // 선의 색깔입니다
+        strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle={"solid"} // 선의 스타일입니다
+      />
+    </Map>
   )
 }
-const RealtimeMapWrap = styled.div`
-  width: 100%;
-  height: 100%;
+
+const rotateMarker = keyframes`
+  from{
+    transform: rotateY(0deg);
+  }
+  to{
+    transform: rotateY(180deg);
+  }
 `
+
+const CurMarker = styled.img`
+  width: 1rem;
+  height: 2rem;
+  animation: ${rotateMarker} 1s linear infinite;
+`
+
+const Marker = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+`
+
+
 export default RealtimeMap

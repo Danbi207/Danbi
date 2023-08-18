@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 
 public class PresetCreateDto {
 
@@ -13,9 +16,12 @@ public class PresetCreateDto {
     @Builder
     public static class Request {
         @Schema(description = "프리셋 제목")
+        @Length(max = 30)
+        @NotBlank
         private String title;
 
         @Schema(description = "프리셋 내용")
+        @NotBlank
         private String content;
 
         @Schema(description = "프리셋 순서")

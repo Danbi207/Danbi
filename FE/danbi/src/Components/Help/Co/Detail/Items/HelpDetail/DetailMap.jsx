@@ -1,55 +1,61 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Map,CustomOverlayMap   } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 
-const DetailMap = ({ position }) => {
-  console.log(position);
-  const { kakao } = window;
-  const mapRef = useRef();
-  const [map, setMap] = useState(null);
+const DetailMap = ({ position, emergencyFlag }) => {
+  const [state, setState] = useState({
+    // 지도의 초기 위치
+    center: { lat: 33.452613, lng: 126.570888 },
+    // 지도 위치 변경시 panto를 이용할지에 대해서 정의
+    isPanto: true,
+  })
+  const markers = ()=>{
+    const res = [];
+    let key = 0;
+    if(position){
+      res.push(
+        <CustomOverlayMap key={key++} position={{lat:position.meetLatitude,lng:position.meetLongitude}}>
+          <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Meeting.svg`}></Marker>
+        </CustomOverlayMap>);
 
-  // 카카오 맵 생성
-  useEffect(() => {
-    const mapOption = {
-      center: new kakao.maps.LatLng(position.latitude, position.longitude),
-      level: 5,
-    };
-    setMap(new kakao.maps.Map(mapRef.current, mapOption));
-  }, [mapRef, kakao, position]);
-
-  // 맵 위에 목적지 및 만나는 곳 마커 찍기
-  useEffect(() => {
-    const positions = [
-      {
-        latitude: position.dest_latitude,
-        longitude: position.dest_longitude,
-      },
-      {
-        latitude: position.meet_latitude,
-        longitude: position.meet_longitude,
-      },
-    ];
-    for (let i = 0; i < positions.length; i++) {
-      const markerPosition = new kakao.maps.LatLng(
-        positions[i].latitude,
-        positions[i].longitude
-      );
-      const marker = new kakao.maps.Marker({
-        position: markerPosition,
-      });
-      marker.setMap(map);
+        if(!emergencyFlag && position.destLatitude && position.destLongitude){
+          res.push(
+            <CustomOverlayMap key={key++} position={{lat:position.destLatitude,lng:position.destLongitude}}>
+              <Marker alt='' src={`${process.env.PUBLIC_URL}/assets/Destination.svg`}></Marker>
+            </CustomOverlayMap>);
+        }
     }
-  }, [map, position, kakao]);
+    
+
+    return res;
+  }
+
+  useEffect(()=>{
+    if(position.meetLatitude){
+      setState({
+        center: { lat: position.meetLatitude, lng: position.meetLongitude },
+        isPanto: true,
+      });
+    }
+  },[position])
 
   return (
-    <>
-      <MapWrap ref={mapRef}></MapWrap>;
-    </>
+    <Map 
+      center={state.center}
+      isPanto={state.isPanto}
+      style={{width:"100%",height:"100%"}}
+      level={7}
+    >
+      {
+        markers()
+      }
+    </Map>
   );
 };
+const Marker = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+`
 
-const MapWrap = styled.div`
-  width: 100%;
-  height: 8rem;
-`;
 
 export default DetailMap;
