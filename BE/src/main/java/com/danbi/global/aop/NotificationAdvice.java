@@ -1,10 +1,8 @@
 package com.danbi.global.aop;
 
-import com.danbi.api.ApiResponse;
+
 import com.danbi.api.accuse.dto.accuse.AccuseRequestDto;
-import com.danbi.api.accuse.dto.accuse.AccuseResponseDto;
 import com.danbi.api.friend.dto.request.RequestFriendDto;
-import com.danbi.api.help.dto.assign.HelpAssignDto;
 import com.danbi.domain.accuse.entity.Accuse;
 import com.danbi.domain.accuse.repository.AccuseRepository;
 import com.danbi.domain.alarm.constant.State;
@@ -13,29 +11,18 @@ import com.danbi.domain.alarm.entity.Alarm;
 import com.danbi.domain.alarm.service.AlarmService;
 import com.danbi.domain.fcm.dto.NotificationRequest;
 import com.danbi.domain.fcm.service.FcmService;
-import com.danbi.domain.friend.entity.Friend;
 import com.danbi.domain.help.repository.HelpRepository;
 import com.danbi.domain.helppost.repository.HelpPostRepository;
-import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.repository.MemberRepository;
-import com.danbi.domain.member.service.MemberService;
-import com.danbi.global.resolver.memberinfo.MemberInfo;
 import com.danbi.global.resolver.memberinfo.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
