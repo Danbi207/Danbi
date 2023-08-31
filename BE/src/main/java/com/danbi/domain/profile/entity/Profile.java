@@ -17,19 +17,22 @@ public class Profile extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profile_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER) // TODO: LAZY 해야됨
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "point_id")
     private Point point;
 
     @Builder
-    public Profile(Long id, Member member) {
+    public Profile(Long id, Member member, Point point) {
         this.id = id;
         this.member = member;
+        this.point = point;
     }
 
     public void assignMember(Member member) {

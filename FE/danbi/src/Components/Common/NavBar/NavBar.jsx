@@ -1,14 +1,38 @@
-import React,{useState} from 'react'
-import styled, { keyframes } from 'styled-components';
+import React,{useCallback, useState} from 'react'
+import styled from 'styled-components';
 import Setting from '../Setting/Setting';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { authPost } from '../../../Util/apis/api';
+import { reset } from '../../../store/Slice/userSlice';
+
+import { ReactComponent as Home } from '../../../static/Home-white.svg'
+import { ReactComponent as Profile } from '../../../static/Profile-white.svg'
+import { ReactComponent as Logout } from '../../../static/Logout-white.svg'
+import { ReactComponent as setting } from '../../../static/Setting-white.svg'
+
 const NavBar = (props) => {
   const [settingFlag,setSettingFlag] = useState(false);
-  const user =  {
-    "profile_id" : 1,
-    "name" : "김민규",
-    "profile_url" : "https://i.namu.wiki/i/N94T4asE48XKf-FdLoOMec_uc4NbJWMF6ivJw0LDCO00ttNOd1bR0d043NsFEUH1faK_4P5ggxkT4JGkZneOEw.webp",
-    "dew_point" : 123,
-  }
+  const navigate = useNavigate();
+  const role = localStorage.getItem('role');
+  const userId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
+
+  const handleLogout = useCallback( async () => {
+    try{
+      const res = await authPost('/api/v1/member/logout');
+      if(res){
+        localStorage.removeItem("role");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("refreshTokenExpireTime");
+        dispatch(reset());
+        navigate('/',{replace:true});
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }, []);
+
   return (
     <>
       {
@@ -16,52 +40,32 @@ const NavBar = (props) => {
         <Setting setSettingFlag={setSettingFlag} ></Setting>:
         <NavBarWrap>
           <CloseBtn onClick={()=>props.setNavFlag(false)}>{"<"}닫기</CloseBtn>
-          <UserWrap>
-            <UserProfileImg src={user.profile_url}></UserProfileImg>
-            <UserTitleWrap>
-              <UserTitle>{user.name}</UserTitle>
-              <UserPoint><DewImg src='/assets/Dew.svg' />&nbsp;{user.dew_point}&nbsp;Dew</UserPoint>
-            </UserTitleWrap>
-          </UserWrap>
-          <NavBarItem><HomeImg/>홈</NavBarItem>
-          <NavBarItem><ProfileImg/>프로필</NavBarItem>
-          <NavBarItem onClick={()=>setSettingFlag(true)}><SettingImg/>세팅</NavBarItem>
-          <NavBarItem><LogoutImg/>로그아웃</NavBarItem>
+        
+            <NavBarItem onClick={() => navigate(`/help/${role}`)}>
+              <Box>
+                <HomeImg/>홈
+              </Box>
+            </NavBarItem>
+            <NavBarItem onClick={() => navigate(`/user/profile/${userId}`)}>
+              <Box>
+                <ProfileImg/>프로필
+              </Box>
+            </NavBarItem>
+            <NavBarItem onClick={()=>setSettingFlag(true)}>
+              <Box>
+              <SettingImg/>세팅
+              </Box>
+            </NavBarItem>
+            <NavBarItem onClick={handleLogout}>
+              <Box>
+                <LogoutImg/>로그아웃
+              </Box>
+            </NavBarItem>
         </NavBarWrap>
       }
     </>
   )
 }
-const DewImg = styled.img`
-  height: 1.5rem;
-  vertical-align: middle;
-`
-const UserWrap = styled.div`
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  height: 5rem;
-  margin: 1rem 0;
-`
-const UserTitle=styled.div`
-  line-height: 3rem;
-  font-size: 1.5rem;
-`
-const UserPoint=styled.div`
-  line-height: 2rem;
-  display: flex;
-`
-const UserTitleWrap = styled.div`
-  width: 5rem;
-  display: flex;
-  flex-direction: column;
-`
-
-const UserProfileImg = styled.img`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 5rem;
-`
 
 const NavBarItem = styled.div`
   height: 4rem;
@@ -71,31 +75,40 @@ const NavBarItem = styled.div`
   gap: 1rem;
   cursor: pointer;
 `
-const HomeImg = styled.div`
-  background-image: url(${props=>props.theme.images.home});
-  background-repeat: no-repeat;
-  width: 3rem;
+
+const Box = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size : 1.5rem;
 `
-const ProfileImg = styled.div`
-  background-image: url(${props=>props.theme.images.profile});
-  background-repeat: no-repeat;
+
+
+const HomeImg = styled(Home)`
+  fill: ${props =>props.theme.colors.titleColor};
   width: 3rem;
+  margin-right: 1rem;
 `
-const SettingImg = styled.div`
-  background-image: url(${props=>props.theme.images.setting});
-  background-repeat: no-repeat;
+const ProfileImg = styled(Profile)`
+  fill: ${props =>props.theme.colors.titleColor};
   width: 3rem;
+  margin-right: 1rem;
 `
-const LogoutImg = styled.div`
-  background-image: url(${props=>props.theme.images.logout});
-  background-repeat: no-repeat;
+const SettingImg = styled(setting)`
+  fill: ${props =>props.theme.colors.titleColor};
   width: 3rem;
+  margin-right: 1rem;
+`
+const LogoutImg = styled(Logout)`
+  fill: ${props =>props.theme.colors.titleColor};
+  width: 3rem;
+  margin-right: 1rem;
 `
 
 const CloseBtn = styled.div`
   cursor: pointer;
   font-size: 1.5rem;
-  height: 1.5rem;
+  height: 2rem;
 `
 
 const NavBarWrap = styled.div`

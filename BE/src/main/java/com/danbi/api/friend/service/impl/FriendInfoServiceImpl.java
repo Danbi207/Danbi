@@ -96,9 +96,11 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getTo().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .friendId(friend.getId())
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getTo().getId())
                     .build();
             result.add(responseFriendDto);
         }
@@ -116,10 +118,12 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
-                            .profileUrl(friend.getFrom().getProfileUrl())
-                            .name(friend.getFrom().getName())
-                            .dewPoint(point.getAccumulateDewPoint())
-                            .build();
+                    .friendId(friend.getId())
+                    .profileUrl(friend.getFrom().getProfileUrl())
+                    .name(friend.getFrom().getName())
+                    .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getFrom().getId())
+                    .build();
             result.add(responseFriendDto);
         }
 
@@ -137,9 +141,11 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getTo().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .friendId(friend.getId())
                     .profileUrl(friend.getTo().getProfileUrl())
                     .name(friend.getTo().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getTo().getId())
                     .build();
             result.add(responseFriendDto);
         }
@@ -149,9 +155,11 @@ public class FriendInfoServiceImpl implements FriendInfoService {
             Point point = pointService.getAccumulatePoint(friend.getFrom().getProfile());
 
             ResponseFriendDto responseFriendDto = ResponseFriendDto.builder()
+                    .friendId(friend.getId())
                     .profileUrl(friend.getFrom().getProfileUrl())
                     .name(friend.getFrom().getName())
                     .dewPoint(point.getAccumulateDewPoint())
+                    .targetId(friend.getFrom().getId())
                     .build();
             result.add(responseFriendDto);
         }
@@ -160,7 +168,7 @@ public class FriendInfoServiceImpl implements FriendInfoService {
     }
 
     @Override
-    public boolean isFriend(Long from, Long to){
+    public boolean isFriend(Long from, Long to) {
         Member fromMember = memberService.findByMemberId(from);
         Member toMember = memberService.findByMemberId(to);
         Friend friend = Friend.builder()
@@ -169,9 +177,39 @@ public class FriendInfoServiceImpl implements FriendInfoService {
                 .type(Type.PERMIT)
                 .state(State.ACTIVATE)
                 .build();
-
         return friendService.isFriend(friend);
 
     }
 
+    @Override
+    public boolean isMyWaitFriend(Long from, Long to) {
+        Member fromMember = memberService.findByMemberId(from);
+        Member toMember = memberService.findByMemberId(to);
+        Friend friend = Friend.builder()
+                .from(fromMember)
+                .to(toMember)
+                .type(Type.WAIT)
+                .state(State.ACTIVATE)
+                .build();
+        return friendService.isMyWaitFriend(friend);
+    }
+
+    @Override
+    public boolean isOtherWaitFriend(Long from, Long to) {
+        Member fromMember = memberService.findByMemberId(from);
+        Member toMember = memberService.findByMemberId(to);
+        Friend friend = Friend.builder()
+                .from(fromMember)
+                .to(toMember)
+                .type(Type.WAIT)
+                .state(State.ACTIVATE)
+                .build();
+        return friendService.isOtherWaitFriend(friend);
+    }
+
+
+    @Override
+    public boolean checkFriend(Long fromMemberId, Long toMemberId) {
+        return friendService.checkFriend(fromMemberId, toMemberId);
+    }
 }

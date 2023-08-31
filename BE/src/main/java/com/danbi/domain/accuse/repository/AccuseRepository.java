@@ -8,10 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AccuseRepository extends JpaRepository<Accuse, Long> {
+public interface AccuseRepository extends JpaRepository<Accuse, Long>, AccuseRepositoryCustom {
 
-    List<Accuse> findByTargetMember(Member member);
-
-    @Query("SELECT a FROM Accuse a WHERE a.targetMember = :member AND a.state = 'APPROVAL'")
-    List<Accuse> findApprovalAccusesByMember(@Param("member") Member member); // TODO : 확인 필요
 }

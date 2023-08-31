@@ -17,11 +17,12 @@ import java.util.List;
 public class ProfileQueryDto {
 
     private Long profileId;
+    private Long guestBookId;
     private String name;
     private String profileUrl;
     private int accusePoint;
     private Long dewPoint;
-
+    private Long accumulatePoint;
     private Ranking ranking;
     private Color color;
 

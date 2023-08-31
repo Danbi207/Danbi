@@ -17,6 +17,8 @@ public class HelpPostByMonthDetailDto {
 
     private Long helpPostId;
 
+    private Long profileId;
+
     private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")

@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class CommentModifyDto {
@@ -19,6 +20,7 @@ public class CommentModifyDto {
 
         @Schema(description = "수정할 댓글 내용, 500자 이하")
         @Length(max = 500, message = "댓글은 500자 이하여야 합니다.")
+        @NotBlank
         private String content;
     }
 

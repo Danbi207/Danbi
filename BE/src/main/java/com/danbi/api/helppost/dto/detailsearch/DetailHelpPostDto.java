@@ -6,24 +6,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class DetailHelpPostDto {
 
     private Long helpPostId;
     private IpDto ip;
     private Position position;
     private boolean faceFlag;
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
     private boolean friendFlag;
+    private boolean genderFlag;
 
     private String caution;
     private Category category;
@@ -37,22 +41,16 @@ public class DetailHelpPostDto {
 
         private String addr;
 
-        @JsonProperty("dest_latitude")
         private String destLatitude;
 
-        @JsonProperty("dest_longitude")
         private String destLongitude;
 
-        @JsonProperty("dest_addr")
         private String destAddr;
 
-        @JsonProperty("meet_latitude")
         private String meetLatitude;
 
-        @JsonProperty("meet_longitude")
         private String meetLongitude;
 
-        @JsonProperty("meet_addr")
         private String meetAddr;
     }
 }

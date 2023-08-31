@@ -32,8 +32,9 @@ public class HelpPostDetailQeuryDto {
     private String meetLongitude;
     private String meetAddr;
 
+    private boolean genderFlag;
     private boolean faceFlag;
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
     private String content;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

@@ -54,14 +54,20 @@ dependencies {
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
 	// h2 db
 	runtimeOnly 'com.h2database:h2'
 	// mysql db
 	runtimeOnly 'com.mysql:mysql-connector-j'
+//	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
+//	implementation 'mysql:mysql-connector-java'
+
 	// spring test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//FCM
-	implementation 'com.google.firebase:firebase-admin:7.1.1'
+	implementation 'com.google.firebase:firebase-admin:9.2.0'
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	// embedded redis(test)
@@ -79,6 +85,11 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+
+jar{
+	enabled = false
 }
 
 // script for querydsl

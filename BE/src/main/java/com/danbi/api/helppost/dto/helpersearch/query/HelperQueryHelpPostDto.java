@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class HelperQueryHelpPostDto {
 
@@ -20,7 +22,7 @@ public class HelperQueryHelpPostDto {
 
     private String profileUrl;
 
-    private String caution;
+    private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
@@ -28,7 +30,7 @@ public class HelperQueryHelpPostDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
 
-    private boolean faceFlag;
+    private boolean emergencyFlag;
 
     private int accuseStack;
 

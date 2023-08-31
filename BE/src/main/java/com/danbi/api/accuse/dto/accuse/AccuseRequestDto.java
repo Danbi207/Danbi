@@ -5,21 +5,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Getter
 @Builder
 @AllArgsConstructor
 public class AccuseRequestDto {
 
+    private List<MultipartFile> files;
+
     private Long targetMemberId;
-
-    private String evidenceUrl;
-
-    private String title;
 
     private String content;
 
-    @JsonProperty("accuse_type")
     private AccuseType accuseType;
 
 }

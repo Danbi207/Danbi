@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class HelpPostMatchedDto {
 
+    private Long helpId;
     private Long helpPostId;
     private State state;
 
@@ -41,7 +42,7 @@ public class HelpPostMatchedDto {
     private String meetAddr;
 
     private boolean faceFlag;
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
     private String content;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

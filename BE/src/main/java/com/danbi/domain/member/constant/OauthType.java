@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 
 public enum OauthType {
 
-    KAKAO
+    KAKAO,
+    TEST
     ;
 
     public static OauthType from(String type) {

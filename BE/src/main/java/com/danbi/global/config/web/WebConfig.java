@@ -2,7 +2,8 @@ package com.danbi.global.config.web;
 
 import com.danbi.global.interceptor.AdminAuthorizationInterceptor;
 import com.danbi.global.interceptor.AuthenticationInterceptor;
-import com.danbi.global.resolver.MemberInfoArgumentResolver;
+import com.danbi.global.resolver.memberinfo.MemberInfoArgumentResolver;
+import com.danbi.global.resolver.paging.LimitedPageableArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,8 +25,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1/**") // 어떤 api 경로에 매핑할지
-//                .allowedOrigins("http://localhost:8082") // cors 허용할 경로
-                .allowedOrigins("*")
+                .allowedOrigins(
+                        "http://localhost:3000",
+                        "http://localhost:8080",
+                        "http://i9d207.p.ssafy.io:8080",
+                        "https://i9d207.p.ssafy.io:8080",
+                        "http://i9d207.p.ssafy.io3000",
+                        "https://i9d207.p.ssafy.io:3000",
+                        "https://i9d207.p.ssafy.io")// cors 허용할 경로
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
@@ -34,6 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.DELETE.name(),
                         HttpMethod.OPTIONS.name()
                 )
+                .allowCredentials(true)
                 .maxAge(3600); // preflight
     }
 
@@ -47,7 +55,11 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/v1/oauth/login",
                         "/api/v1/access-token/issue",
                         "/api/v1/logout",
-                        "/api/v1/health");
+                        "/api/v1/health",
+                        "/api/v1/scheduler/help-post",
+                        "/api/v1/scheduler/accuse-stack",
+                        "/api/v1/test/member/login",
+                        "/api/v1/test/member/signup");
 
         registry.addInterceptor(adminAuthorizationInterceptor)
                 .order(2)
@@ -57,6 +69,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(memberInfoArgumentResolver);
+        resolvers.add(new LimitedPageableArgumentResolver());
     }
 
 }

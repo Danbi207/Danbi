@@ -1,13 +1,12 @@
 package com.danbi.domain.alarm.service;
 
-import com.danbi.domain.alarm.constant.Type;
 import com.danbi.domain.alarm.entity.Alarm;
+import lombok.extern.java.Log;
 
 import java.util.List;
 
 public interface AlarmService {
 
-    List<Alarm> getAlarmList(Long memberId);
 
     Alarm savaAlarm(Alarm alarm);
 
@@ -30,4 +29,9 @@ public interface AlarmService {
     Long countNotReadAlarm(Long memberId);
 
     List<Alarm> getNotReadAlarm(Long memberId);
+
+    List<Alarm> getMyAlarms(Long memberId);
+
+    Integer deleteAllAlarm(Long memberId);
+
 }

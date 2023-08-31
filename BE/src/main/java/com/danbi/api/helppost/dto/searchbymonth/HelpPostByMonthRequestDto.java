@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class HelpPostByMonthRequestDto {
 
-    @JsonProperty("year_and_month")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate yearAndMonth;
 }

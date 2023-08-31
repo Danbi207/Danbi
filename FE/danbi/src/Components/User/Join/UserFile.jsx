@@ -1,27 +1,59 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import { useRef } from 'react';
 import styled from 'styled-components'
+import { authPost, reissueAccessToken, authFilePost } from '../../../Util/apis/api';
+import { useNavigate } from 'react-router-dom';
 
-const UserFile = (props) => {
+const UserFile = () => {
+  const hiddenFileInputRef = useRef();
   const [imagePreviews, setImagePreviews] = useState([]); // 이미지 미리보기 URL 배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 표시 중인 이미지의 인덱스
+  const [imageFiles, setImageFiles] = useState([]); // 이미지 파일들을 저장하기 위한 state
+  const navigate = useNavigate();
 
-  const onChange = (e) => {
-    const files = e.target.files; // 선택된 파일들의 목록
-    const formData = new FormData(); // FormData 객체 생성
-
-    // 선택된 모든 파일들을 FormData에 추가
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const fileName = file.name
-      formData.append(fileName, file);
+  const PutFileRole = useCallback(async () => {
+    try {
+      await authPost('/api/v1/member/role', {"role" : "ROLE_UNCERTIFICATED_IP"});
+      await reissueAccessToken();
+      localStorage.setItem('role', "ROLE_UNCERTIFICATED_IP");  
+    } catch (error) {
+        console.error("에러 발생:", error);
     }
+  }, []);
+
+  const FileSubmit = useCallback(async () => {
+    try {
+      // 이미지 파일 업로드 여부 확인
+      if (imageFiles.length === 0) {
+        alert("이미지 파일을 제출해주세요.")
+        return;
+      }
+      const formData = new FormData(); 
+      imageFiles.forEach((imgFile) => {
+        formData.append('file', imgFile);
+      });
+
+      await authFilePost('/api/v1/submit/ip/certification', formData);
+      // console.log(imageFiles)
+      // DO : 로그아웃
+      await authPost('/api/v1/member/logout', {}) 
+      localStorage.removeItem('role');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('refreshTokenExpireTime');
+      navigate('/')
+    } catch (error) {
+        console.error("에러 발생:", error);
+    }
+  }, [imageFiles, navigate]);
+  
+  const onChange = (e) => {
+    const files = [...e.target.files]; 
+    setImageFiles(files); 
 
     // 이미지 파일 미리보기 생성
     const previewURLs = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    files.forEach((file) => {
       const reader = new FileReader();
-
       reader.onloadend = () => {
         previewURLs.push(reader.result);
         if (previewURLs.length === files.length) {
@@ -29,8 +61,7 @@ const UserFile = (props) => {
         }
       };
       reader.readAsDataURL(file);
-    }
-
+    });
     // 초기화: 첫 번째 이미지로 돌아가기
     setCurrentImageIndex(0);
   };
@@ -51,12 +82,15 @@ const UserFile = (props) => {
       <UploadWrap>  
         <ImgPrevBtn onClick={prevImage}>{"<"}-</ImgPrevBtn>
         <ImgDiv>
-          <img src={imagePreviews[currentImageIndex]} alt=''/>
+          { imagePreviews.length > 0 ? 
+            <img src={imagePreviews[currentImageIndex]} alt=''/>
+            : null }
         </ImgDiv>
         <ImgNextBtn onClick={nextImage}>-{">"}</ImgNextBtn>
       </UploadWrap>
-      <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange} />
-      <NextBTN>제출</NextBTN>
+      <SubmitInput type='file' accept='image/*' multiple name='profile_img' onChange={onChange}
+        ref={hiddenFileInputRef}  />
+      <NextBTN onClick={()=>{PutFileRole(); FileSubmit()}}>제출</NextBTN>
     </SubmitWrap>
   );
 }
@@ -65,30 +99,10 @@ const SubmitWrap = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${props=>props.theme.colors.bgColor};
-`
-const Question = styled.div`
-  width: 100%;
-  height: 5rem;
-  line-height: 5rem;
-  font-size: 1.5rem;
-  text-align: center;
-`
-
-const NextBTN  = styled.button`
-  position: absolute;
-  left : calc(( 100% - 30rem )/2);
-  bottom: 1rem;
-  width: 30rem;
-  height: 3rem;
-  border-radius: 0.75rem;
-  background-color: ${props => props.theme.colors.buttonbgColor};
-  color: ${props => props.theme.colors.buttontextColor};
-  font-size : 2rem;
-  @media screen and (max-width: 500px) {
-    width: 20rem;
-    height: 3rem;
-    left : calc(( 100% - 20rem )/2);
-  }
+  color : ${props=>props.theme.colors.titleColor};
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 `
 
 const UploadWrap = styled.div `
@@ -98,20 +112,32 @@ const UploadWrap = styled.div `
   position: relative;
 `
 
+const Question = styled.div`
+  font-size: 1.8rem;
+  text-align: center;
+  color : ${props=>props.theme.colors.titleColor};
+  margin: 3rem 0;
+  @media screen and (max-height : 680px) {
+    margin: 2.5rem 0;
+    padding-bottom: 1rem;
+  }
+`
+
 const ImgPrevBtn = styled.button`
   position: absolute;
   font-size: 3rem;
-  left: 1rem;
+  left: 0.2rem;
+  color : ${props=>props.theme.colors.titleColor};
 `
 
 const ImgDiv = styled.div`
   border: 1px solid ${props=>props.theme.colors.titleColor};
-  @media screen and (max-width: 500px) {
+  width: 25rem;
+  height: 25rem;
+  @media screen and (max-width: 680px) {
     width: 20rem;
     height: 20rem;
   }
-  width: 25rem;
-  height: 25rem;
   & img{
     width: 100%;
     height: 100%;
@@ -121,17 +147,32 @@ const ImgDiv = styled.div`
 const ImgNextBtn = styled.button`
   position: absolute;
   font-size: 3rem;
-  right: 1rem;
+  right: 0.2rem;
+  color : ${props=>props.theme.colors.titleColor};
 `
 
 const SubmitInput = styled.input`
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 680px) {
     width: 20rem;
     margin-left: calc((100% - 20rem)/2);
   }
   width: 30rem;
-  margin-left: calc((100% - 25rem)/2);
   margin-top: 1rem;
+`
+
+const NextBTN  = styled.button`
+  position: absolute;
+  bottom: 2rem;
+  width: 92%;
+  height: 3rem;
+  left : calc(( 100% - 92% )/2);
+  border-radius: 0.75rem;
+  background-color: ${props => props.theme.colors.buttonbgColor};
+  color: ${props => props.theme.colors.buttontextColor};
+  font-size : 2rem;
+  @media screen and (max-width: 680px) {
+    
+  }
 `
 
 export default UserFile;

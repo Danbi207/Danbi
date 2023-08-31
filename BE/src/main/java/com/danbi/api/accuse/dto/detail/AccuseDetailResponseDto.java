@@ -12,7 +12,6 @@ import lombok.Getter;
 public class AccuseDetailResponseDto {
 
     private Long accuseId;
-    private String title;
     private String content;
     private AccuseType accuseType;
     private State state;

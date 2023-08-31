@@ -10,28 +10,31 @@ import com.danbi.api.helppost.dto.helpersearch.face.HelperFaceHelpPostDto;
 import com.danbi.api.helppost.dto.helpersearch.query.HelperQueryHelpPostDto;
 import com.danbi.api.helppost.dto.HelpPostRequestDto;
 import com.danbi.api.helppost.dto.HelpPostResponseDto;
+import com.danbi.api.helppost.dto.helpertime.HelperTimeResponseDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthDetailDto;
 import com.danbi.api.helppost.dto.searchbymonth.HelpPostByMonthResponseDto;
 import com.danbi.domain.help.constant.State;
 import com.danbi.domain.help.entity.Help;
 import com.danbi.domain.help.service.HelpService;
-import com.danbi.domain.helppost.dto.HelpPostDetailQeuryDto;
-import com.danbi.domain.helppost.dto.HelpPostFaceDto;
-import com.danbi.domain.helppost.dto.HelpPostMatchedDto;
-import com.danbi.domain.helppost.dto.HelpPostQueryDto;
+import com.danbi.domain.helppost.dto.*;
 import com.danbi.domain.helppost.entity.HelpPost;
 import com.danbi.domain.helppost.entity.Positions;
 import com.danbi.domain.helppost.service.HelpPostService;
 import com.danbi.domain.helppost.service.PositionService;
 import com.danbi.domain.member.entity.Member;
 import com.danbi.domain.member.service.MemberService;
+import com.danbi.domain.preset.entity.Preset;
+import com.danbi.domain.preset.service.PresetService;
+import com.danbi.domain.profile.entity.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +46,7 @@ public class HelpPostInfoService {
     private final MemberService memberService;
     private final FriendInfoService friendInfoService;
     private final PositionService positionService;
+    private final PresetService presetService;
 
     // 도움 요청 게시글, 도움 생성
     public HelpPostResponseDto getHelpPostInfo(Long memberId, HelpPostRequestDto helpPostRequestDto) {
@@ -51,6 +55,15 @@ public class HelpPostInfoService {
 
         Positions positions = HelpPostRequestDto.fromPositions(helpPostRequestDto);
         Positions savedPositions = positionService.create(positions);
+
+        if (helpPostRequestDto.getCaution().equals("긴급요청입니다!주의해주세요.")) {
+            Profile profile = member.getProfile();
+            List<Preset> presets = presetService.findPresetsByProfile(profile);
+
+            if (!presets.isEmpty()) {
+                helpPostRequestDto.setCaution(presets.get(0).getContent());
+            }
+        }
 
         HelpPost helpPost = HelpPostRequestDto.from(helpPostRequestDto, member, savedPositions);
         HelpPost newHelpPost = helpPostService.create(helpPost, memberId);
@@ -91,22 +104,22 @@ public class HelpPostInfoService {
     }
 
 
-    public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String longitude, String latitude) {
-        List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(longitude, latitude);
+    public List<HelperQueryHelpPostDto> searchQueryHelpPost(Long memberId, String gender) {
+        List<HelpPostQueryDto> helpPosts = helpPostService.searchAllByQuery(gender);
         List<HelperQueryHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostQueryDto helpPost : helpPosts) {
 
-            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getIpId());
+            boolean isFriend = friendInfoService.checkFriend(memberId, helpPost.getIpId()); // 바꾼거
 
             HelperQueryHelpPostDto post = HelperQueryHelpPostDto.builder()
                     .helpPostId(helpPost.getHelpPostId())
                     .ipId(helpPost.getIpId())
                     .name(helpPost.getName())
                     .profileUrl(helpPost.getProfileUrl())
-                    .caution(helpPost.getCaution())
+                    .content(helpPost.getContent())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
-                    .faceFlag(helpPost.isFaceFlag())
+                    .emergencyFlag(helpPost.isEmergencyFlag())
                     .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
@@ -114,12 +127,13 @@ public class HelpPostInfoService {
         return helpList;
     }
 
-    public List<HelperFaceHelpPostDto> searchFaceHelpPost(Long memberId, String longitude, String latitude) {
-        List<HelpPostFaceDto> helpPosts = helpPostService.searchAllByFace(longitude, latitude);
+    public List<HelperFaceHelpPostDto> searchFaceHelpPost(Long memberId, String longitude,
+                                                          String latitude, String gender) {
+        List<HelpPostFaceDto> helpPosts = helpPostService.searchAllByFace(longitude, latitude, gender);
         List<HelperFaceHelpPostDto> helpList = new ArrayList<>();
         for (HelpPostFaceDto helpPost : helpPosts) {
 
-            boolean isFriend = friendInfoService.isFriend(memberId, helpPost.getIpId());
+            boolean isFriend = friendInfoService.checkFriend(memberId, helpPost.getIpId());
 
             HelperFaceHelpPostDto post = HelperFaceHelpPostDto.builder()
                     .helpPostId(helpPost.getHelpPostId())
@@ -130,9 +144,10 @@ public class HelpPostInfoService {
                             .meetAddr(helpPost.getMeetAddr()).build())
                     .name(helpPost.getName())
                     .profileUrl(helpPost.getProfileUrl())
-                    .caution(helpPost.getCaution())
+                    .content(helpPost.getContent())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
+                    .emergencyFlag(helpPost.isEmergencyFlag())
                     .accuseStack(helpPost.getAccuseStack())
                     .friendFlag(isFriend).build();
             helpList.add(post);
@@ -150,13 +165,15 @@ public class HelpPostInfoService {
                 .ip(IpDto.builder()
                         .ipId(helpPost.getIpId())
                         .name(helpPost.getName())
+                        .profileUrl(helpPost.getProfileUrl())
                         .accumulateDewPoint(helpPost.getAccumulateDewPoint())
                         .accusePoint(helpPost.getAccusePoint()).build())
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
+                .genderFlag(helpPost.isGenderFlag())
                 .friendFlag(isFriend)
                 .caution(helpPost.getCaution())
                 .category(helpPost.getCategory())
@@ -176,19 +193,22 @@ public class HelpPostInfoService {
         HelpPostMatchedDto helpPost = helpPostService.searchMatchedDetail(helpPostId);
 
         return DetailMatchedHelpPostDto.builder()
+                .helpId(helpPost.getHelpId())
                 .helpPostId(helpPostId)
                 .ip(IpMatchedDto.builder()
                         .ipId(helpPost.getIpId())
                         .name(helpPost.getIpName())
+                        .profileUrl(helpPost.getIpProfileUrl())
                         .accumulateDewPoint(helpPost.getIpAccumulateDewPoint())
                         .accusePoint(helpPost.getIpAccusePoint()).build())
                 .helper(HelperMatchedDto.builder()
                         .helperId(helpPost.getHelperId())
                         .name(helpPost.getHelperName())
+                        .profileUrl(helpPost.getHelperProfileUrl())
                         .accumulateDewPoint(helpPost.getHelperAccumulateDewPoint())
                         .accusePoint(helpPost.getHelperAccusePoint()).build())
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
@@ -207,12 +227,13 @@ public class HelpPostInfoService {
     }
 
     public HelpPostByMonthResponseDto searchByMonth(LocalDate time, Long memberId) {
-        List<HelpPost> helpPosts = helpPostService.searchByMonth(time, memberId);
+        List<HelpPostByMonthDto> helpPosts = helpPostService.searchByMonth(time, memberId);
         List<HelpPostByMonthDetailDto> helpPostsByMonth = new ArrayList<>();
 
-        for (HelpPost helpPost : helpPosts) {
+        for (HelpPostByMonthDto helpPost : helpPosts) {
             HelpPostByMonthDetailDto helpPostDto = HelpPostByMonthDetailDto.builder()
-                    .helpPostId(helpPost.getId())
+                    .helpPostId(helpPost.getHelpPostId())
+                    .profileId(helpPost.getProfileId())
                     .content(helpPost.getContent())
                     .startTime(helpPost.getStartTime())
                     .endTime(helpPost.getEndTime())
@@ -222,5 +243,13 @@ public class HelpPostInfoService {
 
         return HelpPostByMonthResponseDto.builder()
                 .helpList(helpPostsByMonth).build();
+    }
+
+    public HelperTimeResponseDto checkHelperMatchedTime(Long memberId) {
+        LocalDateTime time = LocalDateTime.now();
+        List<HelpPost> helpPost = helpPostService.checkHelperTime(time, memberId);
+        return HelperTimeResponseDto.builder()
+                .helperMatched(helpPost.size() > 0 ? true : false)
+                .helpPostId(helpPost.size() > 0 ? helpPost.get(0).getId() : null).build();
     }
 }

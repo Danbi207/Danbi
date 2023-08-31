@@ -13,11 +13,16 @@ import java.util.List;
 @NoArgsConstructor
 public class ProfileResponseDto {
 
+    private boolean friendFlag;
+    private boolean requestFriendFlag;
+    private boolean requestedFriendFlag;
     private Long profileId;
+    private Long guestBookId;
     private String name;
     private String profileUrl;
     private int accusePoint;
     private Long dewPoint;
+    private Long accumulatePoint;
 
     private ProfileItemResponseDto item;
     private List<ProfileHelpResponseDto> helpLog;

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class HelperFaceHelpPostDto {
 
     private Long helpPostId;
@@ -23,13 +24,15 @@ public class HelperFaceHelpPostDto {
 
     private String profileUrl;
 
-    private String caution;
+    private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
+
+    private boolean emergencyFlag;
 
     private int accuseStack;
 

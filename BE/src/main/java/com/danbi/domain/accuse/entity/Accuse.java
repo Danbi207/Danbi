@@ -18,6 +18,7 @@ public class Accuse extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accuse_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,15 +29,10 @@ public class Accuse extends BaseEntity {
     @JoinColumn(name = "reporter_id")
     private Member reporter;
 
-    @Column(nullable = false, length = 20)
-    private String title;
-
     @Lob
     @Column(nullable = false)
     private String content;
 
-    @Column(length = 200) // TODO: 확인후 추가
-    private String evidenceUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
@@ -51,12 +47,10 @@ public class Accuse extends BaseEntity {
     }
 
     @Builder
-    public Accuse(Member targetMember, Member reporter,String title, String content, String evidenceUrl, AccuseType accuseType, State state) {
+    public Accuse(Member targetMember, Member reporter, String content, AccuseType accuseType, State state) {
         this.targetMember = targetMember;
         this.reporter = reporter;
-        this.title = title;
         this.content = content;
-        this.evidenceUrl = evidenceUrl;
         this.accuseType = accuseType;
         this.state = state;
     }

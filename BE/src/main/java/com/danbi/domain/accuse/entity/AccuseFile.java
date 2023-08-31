@@ -1,6 +1,7 @@
 package com.danbi.domain.accuse.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,11 @@ public class AccuseFile{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accuse_id")
     private Accuse accuse;
+
+    @Builder
+    public AccuseFile(String originName, String url, Accuse accuse) {
+        this.originName = originName;
+        this.url = url;
+        this.accuse = accuse;
+    }
 }

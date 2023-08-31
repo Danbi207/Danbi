@@ -1,70 +1,70 @@
-import React,{useEffect,useCallback} from 'react'
-import styled from 'styled-components';
-import { reissueAccessToken } from '../../../Util/apis/api';
+import React, { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { requestPermission } from '../../../Util/hooks/requestPermission';
+import styled from 'styled-components';
+import { TestLogin, reissueAccessToken } from '../../../Util/apis/api';
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const getUserInfo = useCallback(async()=>{
-    try{
-      const data = await authGet("/api/v1/member");
-      if(data){
-        dispatch(setUserInfo(data));
-        console.log(data);
-      }
-    }catch(err){
-      console.log(err.response);
-    }
-  },[dispatch]);
-
-  // FCM 토큰 함수 호출
-  const  requestFcmToken = useCallback(async ()=> {
-    await requestPermission()
-  },[])
 
   const autoLogin = useCallback(async()=>{
-    const isLogin = await reissueAccessToken();
-    
-    if(isLogin){
-      const role = localStorage.getItem("role");
-      if(role==="ROLE_UNDEFINED"){//역할이 정해지지 않은 경우
-        // navigate("/user/join", { replace: true });
-        return;
-      }
+    try{
+      const isLogin = await reissueAccessToken();
       
-      // FCM 토큰 함수 호출
-      requestFcmToken()
+      if(isLogin){
+        const role = localStorage.getItem("role");
+        // 역할이 정해지지 않은 경우 or 서류 제출 안한 경우
+        if(role==="ROLE_UNDEFINED" || role==="ROLE_UNSUBMIT_IP"){
+          navigate("/user/join", { replace: true });
+          return;
+        }
 
-      //유저정보 저장
-      getUserInfo();
+        if(role === "admin"){//역할이 관리자인 경우
+          localStorage.setItem("role","admin");
+          navigate("/admin",{replace:true});
+        }
 
-      if(role === "ROLE_IP"){//역할이 IP인 경우
-        localStorage.setItem("role","ip");
-        navigate("/help/ip", { replace: true });
+        if(role === "ip"){//역할이 IP인 경우
+          localStorage.setItem("role","ip");
+          navigate("/help/ip", { replace: true });
+        }
+
+        if(role === "helper"){//역할이 Helper인경우
+          localStorage.setItem("role","helper");
+          navigate("/help/helper", { replace: true });
+        }
       }
-
-      if(role === "ROLE_HELPER"){//역할이 Helper인경우
-        localStorage.setItem("role","helper");
-        navigate("/help/helper", { replace: true });
-      }
+    }catch(err){
+      console.log(err);
     }
-  },[navigate,requestFcmToken]);
+  },[]);
 
   useEffect(()=>{
     autoLogin();
   },[autoLogin]);
- 
+
   const kakaoLogin=()=>{
     //TODO : 카카오 로그인 요청 및 인가코드받기 
     window.location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_RESTAPI_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_OAUTH_REDIRECT_URI}&response_type=code`;
   }
+
   return (
     <LoginWrap>
       <Logo/>
       <KakaoLoginBtn src={`${process.env.PUBLIC_URL}/assets/kakaoLoginBtn.svg`} onClick={()=>kakaoLogin()} alt="카카오 로그인"/>
+      <Btn onClick={async()=>{
+        const email = prompt("ID를 입력하세요");
+        try{
+          const res = await TestLogin(email);
+          const role = localStorage.getItem("role");
+          if(res){
+            alert("테스트용 로그인에 성공하셨습니다.");
+            navigate(`/help/${role}`,{replace:true});
+          }
+        }catch(err){
+          alert("로그인에 실패했습니다.");
+          console.log(err);
+        }
+      }}>테스트 로그인</Btn>
     </LoginWrap>
   )
 }
@@ -83,20 +83,20 @@ const LoginWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
-  width: 28rem;
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
+  width: 100%;
   height: 100%;
   background-color: ${props=>props.theme.colors.bgColor};
   color: ${props=>props.theme.colors.titleColor};
 `
-
+const Btn = styled.button`
+  margin-left: 10%;
+  width: 80%;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: #FEE500;
+`
 const KakaoLoginBtn = styled.img`
-  @media screen and (max-width: 500px) {
-    height: 3rem;
-  }
-  height: 3.5rem;
+  height: 3rem;
   margin: 0 auto;
   cursor: pointer;
 `

@@ -8,23 +8,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class HelpPostResponseDto {
 
-    private Long helpId;
+    private Long helpPostId;
 
     private Position position;
 
-    @JsonProperty("face_flag")
     private boolean faceFlag;
 
-    @JsonProperty("reservation_flag")
-    private boolean reservationFlag;
+    private boolean emergencyFlag;
 
     private String content;
 
@@ -48,22 +48,16 @@ public class HelpPostResponseDto {
 
         private String addr;
 
-        @JsonProperty("dest_latitude")
         private String destLatitude;
 
-        @JsonProperty("dest_longitude")
         private String destLongitude;
 
-        @JsonProperty("dest_addr")
         private String destAddr;
 
-        @JsonProperty("meet_latitude")
         private String meetLatitude;
 
-        @JsonProperty("meet_longitude")
         private String meetLongitude;
 
-        @JsonProperty("meet_addr")
         private String meetAddr;
     }
 
@@ -82,10 +76,10 @@ public class HelpPostResponseDto {
                 .build();
 
         return HelpPostResponseDto.builder()
-                .helpId(helpPost.getId())
+                .helpPostId(helpPost.getId())
                 .position(position)
                 .faceFlag(helpPost.isFaceFlag())
-                .reservationFlag(helpPost.isReservationFlag())
+                .emergencyFlag(helpPost.isEmergencyFlag())
                 .content(helpPost.getContent())
                 .startTime(helpPost.getStartTime())
                 .endTime(helpPost.getEndTime())
