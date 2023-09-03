@@ -1,9 +1,3 @@
-<style>
-    img{
-        display:block;
-        margin: 0 auto;
-    }
-</style>
 <h1>단비 - 장애인을 위한 도움중계 플랫폼</h1>
 <img alt="Danbi" src="./DOCS/DanbiLogo.svg" height="100%">
 
