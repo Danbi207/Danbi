@@ -1,5 +1,13 @@
+<head>
+  <style>
+    img{
+        display:block;
+        margin: 0 auto;
+    }
+  </style>
+</head>
 <h1>단비 - 장애인을 위한 도움중계 플랫폼</h1>
-<img alt="Danbi" src="./DOCS/DanbiLogo.svg" width="100%" height="100%">
+<img alt="Danbi" src="./DOCS/DanbiLogo.svg" height="100%">
 
 # 목차
 <ul>
@@ -26,27 +34,27 @@
 <ul>
     <li>
         <div>로그인</div>
-        <img alt="로그인" src="./DOCS/로그인.gif"  width="100%" height="100%"/>
+        <img alt="로그인" src="./DOCS/로그인.gif"/>
     </li>
     <li>Impairment
         <ul>
             <li>
                 <div>도움 요청하기</div>
-                <img alt="도움요청하기" src="./DOCS/도움요청.gif"  width="100%" height="100%"/></li>
+                <img alt="도움요청하기" src="./DOCS/도움요청.gif" height="100%"/></li>
             <li>
                 <div>도움 긴급요청하기</div>
-                <img alt="긴급요청" src="./DOCS/STT-긴급요청.gif"  width="100%" height="100%"/></li>
+                <img alt="긴급요청" src="./DOCS/STT-긴급요청.gif" height="100%"/></li>
         </ul>
     </li>
     <li>Helper
         <ul>
             <li>
                 <div>도움 주기</div>
-                <img alt="helper 도움주기" src="./DOCS/헬퍼홈화면.gif"  width="100%" height="100%"/>
+                <img alt="helper 도움주기" src="./DOCS/헬퍼홈화면.gif" height="100%"/>
             </li>
             <li>
                 <div>상세화면</div>
-                <img alt="helper 상세화면" src="./DOCS/헬퍼상세화면.gif"  width="100%" height="100%"/>
+                <img alt="helper 상세화면" src="./DOCS/헬퍼상세화면.gif" height="100%"/>
             </li>
         </ul>
     </li>
@@ -54,15 +62,15 @@
         <ul>
             <li>
                 <div>도움정보 확인 화면</div>
-                <img alt="도움정보 확인 화면" src="./DOCS/도움수락.gif"  width="100%" height="100%"/>
+                <img alt="도움정보 확인 화면" src="./DOCS/도움수락.gif" height="100%"/>
             </li>
             <li>
                 <div>소통 화면</div>
-                <img alt="소통 화면" src="./DOCS/RTC.gif"  width="100%" height="100%"/>
+                <img alt="소통 화면" src="./DOCS/RTC.gif" height="100%"/>
             </li>
             <li>
                 <div>실시간 위치</div>
-                <img alt="실시간 위치" src="./DOCS/매칭-지도.gif"  width="100%" height="100%"/>
+                <img alt="실시간 위치" src="./DOCS/매칭-지도.gif" height="100%"/>
             </li>
         </ul>
     </li>
@@ -70,13 +78,13 @@
         <ul>
             <li>
                 <div>도움기록 꾸미기 - 뽑기</div>
-                <img alt="뽑기" src="./DOCS/뽑기.gif"  width="100%" height="100%"/>
+                <img alt="뽑기" src="./DOCS/뽑기.gif" height="100%"/>
             </li>
         </ul>
     </li>
     <li>
         <div>신고</div>
-        <img alt="신고" src="./DOCS/신고.gif"  width="100%" height="100%"/>
+        <img alt="신고" src="./DOCS/신고.gif" height="100%"/>
     </li>
 </ul>
 
