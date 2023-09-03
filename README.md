@@ -5,7 +5,6 @@
 <ul>
     <li><a href="#소개">프로젝트 소개</a></li>
     <li><a href="#서비스화면">서비스 화면</a></li>
-    <li><a href="#화면설계서">화면 설계서</a></li>
     <li><a href="#아키텍처">아키텍처</a></li>
     <li><a href="#ERD">ERD</a></li>
     <li><a href="#Stack">Stack</a></li>
