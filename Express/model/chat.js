@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 
 // mongoDB에 회원정보를 저장할 스키마를 chatSchema에 정의
 const chatSchema = mongoose.Schema({
+  userId : {
+    type:Number,
+    required:true
+  },
   helpId:{
     type:Number,
     required:true,
